@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/splashFragment">
+
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="com.bhardwaj.passkey.ui.fragments.onBoarding.SplashFragment"
+        android:label="splashFragment"
+        tools:layout="@layout/fragment_splash">
+        <action
+            android:id="@+id/splashFragment_to_bankFragment"
+            app:destination="@id/bankFragment"
+            app:popUpTo="@id/splashFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/splashFragment_to_onBoardingFragment"
+            app:destination="@id/onBoardingFragment"
+            app:popUpTo="@id/splashFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/onBoardingFragment"
+        android:name="com.bhardwaj.passkey.ui.fragments.onBoarding.OnBoardingFragment"
+        android:label="onBoardingFragment"
+        tools:layout="@layout/fragment_on_boarding">
+        <action
+            android:id="@+id/onBoardingFragment_to_bankFragment"
+            app:destination="@id/bankFragment"
+            app:popUpTo="@id/onBoardingFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/bankFragment"
+        android:name="com.bhardwaj.passkey.ui.fragments.BankFragment"
+        android:label="bankFragment"
+        tools:layout="@layout/fragment_bank">
+        <action
+            android:id="@+id/bankFragment_to_mailFragment"
+            app:destination="@id/mailFragment"
+            app:launchSingleTop="true" />
+        <action
+            android:id="@+id/bankFragment_to_othersFragment"
+            app:destination="@id/othersFragment"
+            app:launchSingleTop="true" />
+        <action
+            android:id="@+id/bankFragment_to_appsFragment"
+            app:destination="@id/appsFragment"
+            app:launchSingleTop="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/mailFragment"
+        android:name="com.bhardwaj.passkey.ui.fragments.MailFragment"
+        android:label="mailFragment"
+        tools:layout="@layout/fragment_mail">
+        <action
+            android:id="@+id/mailFragment_to_bankFragment"
+            app:destination="@id/bankFragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/bankFragment" />
+        <action
+            android:id="@+id/mailFragment_to_appsFragment"
+            app:destination="@id/appsFragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/bankFragment" />
+        <action
+            android:id="@+id/mailFragment_to_othersFragment"
+            app:destination="@id/othersFragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/bankFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/appsFragment"
+        android:name="com.bhardwaj.passkey.ui.fragments.AppsFragment"
+        android:label="fragment_apps"
+        tools:layout="@layout/fragment_apps">
+        <action
+            android:id="@+id/appsFragment_to_bankFragment"
+            app:destination="@id/bankFragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/bankFragment" />
+        <action
+            android:id="@+id/appsFragment_to_mailFragment"
+            app:destination="@id/mailFragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/bankFragment" />
+        <action
+            android:id="@+id/appsFragment_to_othersFragment"
+            app:destination="@id/othersFragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/bankFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/othersFragment"
+        android:name="com.bhardwaj.passkey.ui.fragments.OthersFragment"
+        android:label="othersFragment"
+        tools:layout="@layout/fragment_others">
+        <action
+            android:id="@+id/othersFragment_to_bankFragment"
+            app:destination="@id/bankFragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/bankFragment" />
+        <action
+            android:id="@+id/othersFragment_to_mailFragment"
+            app:destination="@id/mailFragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/bankFragment" />
+        <action
+            android:id="@+id/othersFragment_to_appsFragment"
+            app:destination="@id/appsFragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/bankFragment" />
+    </fragment>
+</navigation>

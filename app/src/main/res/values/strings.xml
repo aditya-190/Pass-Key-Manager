@@ -1,0 +1,27 @@
+<resources>
+    <!--    Splash Screen-->
+    <string name="app_name">PassKey</string>
+    <string name="splash_description">The only password manager you’ll ever need.</string>
+    <string name="pass">PASS</string>
+    <string name="key">KEY</string>
+
+    <!--    OnBoarding Screens-->
+    <string name="_1">1</string>
+    <string name="_2">2</string>
+    <string name="_3">3</string>
+    <string name="skip">Skip</string>
+    <string name="next">Next</string>
+    <string name="first_heading">Generate \n<font fgcolor='#ff6464'>Secure</font>\nPasswords.</string>
+    <string name="second_heading">All Your \n<font fgcolor='#ff6464'>Passwords</font> Are \nHere.</string>
+    <string name="third_heading">Don\'t Type, \n<font fgcolor='#ff6464'>Autofill</font> Your \nCredentials.</string>
+    <string name="first_description">Stop using unsecure passwords for your online \naccounts, level up with OnePass. Get the most secure \nand difficult-to-crack passwords.</string>
+    <string name="second_description">Store and manage all of your passwords from one \nplace. Don’t remember hundreds of passwords, just \nremember one.</string>
+    <string name="third_description">Don’t compromise your passwords by typing them in \npublic, let OnePass autofill those and keep your \ncredentials secure.</string>
+
+    <!--    Bottom Navigation-->
+    <string name="icon_bank">Icon Bank</string>
+    <string name="icon_others">Icon Others</string>
+    <string name="icon_apps">Icon Apps</string>
+    <string name="icon_mail">Icon Emails</string>
+    <string name="floating_action_button">Floating Action Button</string>
+</resources>

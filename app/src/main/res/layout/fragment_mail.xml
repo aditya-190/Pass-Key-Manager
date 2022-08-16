@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.fragments.MailFragment">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Mail"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:contentDescription="@string/floating_action_button"
+        app:backgroundTint="@color/primary"
+        app:fabCustomSize="60dp"
+        app:layout_constraintBottom_toBottomOf="@id/vBottomNavigation"
+        app:layout_constraintEnd_toEndOf="@id/vBottomNavigation"
+        app:layout_constraintStart_toStartOf="@id/vBottomNavigation"
+        app:layout_constraintTop_toTopOf="@id/vBottomNavigation"
+        app:srcCompat="@drawable/icon_add"
+        app:tint="@color/white" />
+
+    <View
+        android:id="@+id/vBottomNavigation"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:layout_margin="20dp"
+        android:background="@drawable/bottom_navigation_bg"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/ivBank"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/icon_bank"
+        android:padding="8dp"
+        android:src="@drawable/icon_bank"
+        app:layout_constraintBottom_toBottomOf="@id/vBottomNavigation"
+        app:layout_constraintEnd_toStartOf="@id/ivEmail"
+        app:layout_constraintStart_toStartOf="@id/vBottomNavigation"
+        app:layout_constraintTop_toTopOf="@id/vBottomNavigation" />
+
+    <ImageView
+        android:id="@+id/ivEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/icon_mail"
+        android:padding="8dp"
+        android:src="@drawable/icon_mail"
+        app:layout_constraintBottom_toBottomOf="@id/vBottomNavigation"
+        app:layout_constraintEnd_toStartOf="@id/ivInvisible"
+        app:layout_constraintStart_toEndOf="@id/ivBank"
+        app:layout_constraintTop_toTopOf="@id/vBottomNavigation" />
+
+    <ImageView
+        android:id="@+id/ivInvisible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="false"
+        android:contentDescription="@string/icon_mail"
+        android:focusable="false"
+        android:padding="8dp"
+        android:src="@drawable/icon_mail"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@id/vBottomNavigation"
+        app:layout_constraintEnd_toStartOf="@id/ivApps"
+        app:layout_constraintStart_toEndOf="@id/ivEmail"
+        app:layout_constraintTop_toTopOf="@id/vBottomNavigation" />
+
+    <ImageView
+        android:id="@+id/ivApps"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/icon_apps"
+        android:padding="8dp"
+        android:src="@drawable/icon_apps"
+        app:layout_constraintBottom_toBottomOf="@id/vBottomNavigation"
+        app:layout_constraintEnd_toStartOf="@id/ivOthers"
+        app:layout_constraintStart_toEndOf="@id/ivInvisible"
+        app:layout_constraintTop_toTopOf="@id/vBottomNavigation" />
+
+    <ImageView
+        android:id="@+id/ivOthers"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/icon_others"
+        android:padding="8dp"
+        android:src="@drawable/icon_other"
+        app:layout_constraintBottom_toBottomOf="@id/vBottomNavigation"
+        app:layout_constraintEnd_toEndOf="@id/vBottomNavigation"
+        app:layout_constraintStart_toEndOf="@id/ivApps"
+        app:layout_constraintTop_toTopOf="@id/vBottomNavigation" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
