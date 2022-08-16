@@ -18,10 +18,18 @@
     <string name="second_description">Store and manage all of your passwords from one \nplace. Don’t remember hundreds of passwords, just \nremember one.</string>
     <string name="third_description">Don’t compromise your passwords by typing them in \npublic, let OnePass autofill those and keep your \ncredentials secure.</string>
 
-    <!--    Bottom Navigation-->
+    <!--    Bottom Navigation and Content Description's-->
     <string name="icon_bank">Icon Bank</string>
     <string name="icon_others">Icon Others</string>
     <string name="icon_apps">Icon Apps</string>
     <string name="icon_mail">Icon Emails</string>
+    <string name="icon_drag">Icon Drag</string>
+    <string name="icon_no_result">Icon No Result</string>
     <string name="floating_action_button">Floating Action Button</string>
+
+    <!--    Main Screens-->
+    <string name="banks">Banks</string>
+    <string name="mails">Mails</string>
+    <string name="apps">Apps</string>
+    <string name="others">Others</string>
 </resources>

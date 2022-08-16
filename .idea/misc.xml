@@ -10,13 +10,18 @@
         <entry key="app/src/main/res/drawable/icon_add.xml" value="0.138" />
         <entry key="app/src/main/res/drawable/icon_apps.xml" value="0.138" />
         <entry key="app/src/main/res/drawable/icon_bank.xml" value="0.138" />
+        <entry key="app/src/main/res/drawable/icon_delete.xml" value="0.138" />
+        <entry key="app/src/main/res/drawable/icon_drag.xml" value="0.138" />
         <entry key="app/src/main/res/drawable/icon_logo.xml" value="0.138" />
         <entry key="app/src/main/res/drawable/icon_mail.xml" value="0.138" />
+        <entry key="app/src/main/res/drawable/icon_next.xml" value="0.138" />
         <entry key="app/src/main/res/drawable/icon_other.xml" value="0.138" />
         <entry key="app/src/main/res/drawable/round_outline_bg.xml" value="0.138" />
+        <entry key="app/src/main/res/drawable/round_outline_button.xml" value="0.138" />
         <entry key="app/src/main/res/drawable/round_solid_bg.xml" value="0.138" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.24375" />
         <entry key="app/src/main/res/layout/activity_splash_screen.xml" value="0.2578125" />
+        <entry key="app/src/main/res/layout/custom_swiped.xml" value="0.25677083333333334" />
         <entry key="app/src/main/res/layout/fragment_apps.xml" value="0.2578125" />
         <entry key="app/src/main/res/layout/fragment_bank.xml" value="0.2578125" />
         <entry key="app/src/main/res/layout/fragment_first.xml" value="0.21481481481481482" />
@@ -28,6 +33,8 @@
         <entry key="app/src/main/res/layout/fragment_second.xml" value="0.2578125" />
         <entry key="app/src/main/res/layout/fragment_splash.xml" value="0.2578125" />
         <entry key="app/src/main/res/layout/fragment_third.xml" value="0.2578125" />
+        <entry key="app/src/main/res/layout/single_item.xml" value="0.2578125" />
+        <entry key="app/src/main/res/layout/single_preview.xml" value="0.2578125" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.131" />
       </map>
     </option>

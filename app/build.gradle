@@ -80,6 +80,9 @@ dependencies {
     kapt "androidx.room:room-compiler:2.4.3"
     androidTestImplementation "androidx.room:room-testing:2.4.3"
 
+    // Swipe to Delete Gesture.
+    implementation 'com.ernestoyaquello.dragdropswiperecyclerview:drag-drop-swipe-recyclerview:1.1.1'
+
     // Kotlin Coroutines, ViewModels and LiveData.
     implementation 'androidx.activity:activity-ktx:1.5.1'
     implementation 'androidx.fragment:fragment-ktx:1.5.2'
