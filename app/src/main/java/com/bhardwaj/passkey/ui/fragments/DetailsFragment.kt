@@ -5,51 +5,56 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bhardwaj.passkey.R
-import com.bhardwaj.passkey.databinding.FragmentAppsBinding
-import com.bhardwaj.passkey.ui.adapter.PreviewAdapter
+import com.bhardwaj.passkey.data.Details
+import com.bhardwaj.passkey.databinding.FragmentDetailsBinding
+import com.bhardwaj.passkey.ui.adapter.DetailsAdapter
 import com.ernestoyaquello.dragdropswiperecyclerview.DragDropSwipeRecyclerView
 import com.ernestoyaquello.dragdropswiperecyclerview.listener.OnItemDragListener
 import com.ernestoyaquello.dragdropswiperecyclerview.listener.OnItemSwipeListener
 import com.ernestoyaquello.dragdropswiperecyclerview.listener.OnListScrollListener
 
-class AppsFragment : Fragment() {
-    private var binding: FragmentAppsBinding? = null
+class DetailsFragment : Fragment() {
+    private var binding: FragmentDetailsBinding? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentAppsBinding.inflate(layoutInflater)
+        binding = FragmentDetailsBinding.inflate(layoutInflater)
         return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        bottomNavigationControls()
         setUpRecyclerView()
     }
 
     private fun setUpRecyclerView() {
-        val previewsList = arrayListOf("Instagram", "Facebook", "Whatsapp", "Hotstar", "Zee5")
-        val previewAdapter = PreviewAdapter(previewsList, false, findNavController(), "apps")
+        val detailsList = arrayListOf(
+            Details(question = "Name", answer = "Axis Bank"),
+            Details(question = "Account Number", answer = "92000000182638276"),
+            Details(question = "mPIN", answer = "0987"),
+            Details(question = "Password", answer = "aditya@8888"),
+        )
 
-        val onItemSwipeListener = object : OnItemSwipeListener<String> {
+        val detailsAdapter = DetailsAdapter(detailsList)
+
+        val onItemSwipeListener = object : OnItemSwipeListener<Details> {
             override fun onItemSwiped(
                 position: Int,
                 direction: OnItemSwipeListener.SwipeDirection,
-                item: String
+                item: Details
             ): Boolean {
                 return false
             }
         }
-        val onItemDragListener = object : OnItemDragListener<String> {
-            override fun onItemDragged(previousPosition: Int, newPosition: Int, item: String) {
+        val onItemDragListener = object : OnItemDragListener<Details> {
+            override fun onItemDragged(previousPosition: Int, newPosition: Int, item: Details) {
             }
 
-            override fun onItemDropped(initialPosition: Int, finalPosition: Int, item: String) {
+            override fun onItemDropped(initialPosition: Int, finalPosition: Int, item: Details) {
             }
         }
         val onListScrollListener = object : OnListScrollListener {
@@ -63,42 +68,28 @@ class AppsFragment : Fragment() {
             }
         }
 
-        checkForNoResults(previewsList)
+        checkForNoResults(detailsList)
 
-        binding?.rvApps.also {
+        binding?.rvDetails.also {
             it?.layoutManager = LinearLayoutManager(activity)
-            it?.adapter = previewAdapter
+            it?.adapter = detailsAdapter
             it?.orientation =
                 DragDropSwipeRecyclerView.ListOrientation.VERTICAL_LIST_WITH_VERTICAL_DRAGGING
             it?.swipeListener = onItemSwipeListener
             it?.dragListener = onItemDragListener
             it?.scrollListener = onListScrollListener
-            it?.behindSwipedItemLayoutId = R.layout.custom_preview_swiped
+            it?.behindSwipedItemLayoutId = R.layout.custom_details_swiped
             it?.disableSwipeDirection(DragDropSwipeRecyclerView.ListOrientation.DirectionFlag.RIGHT)
         }
     }
 
-    private fun checkForNoResults(previewsList: ArrayList<String>) {
-        if (previewsList.isNotEmpty()) {
-            binding?.rvApps?.visibility = View.VISIBLE
+    private fun checkForNoResults(detailsList: ArrayList<Details>) {
+        if (detailsList.isNotEmpty()) {
+            binding?.rvDetails?.visibility = View.VISIBLE
             binding?.ivNoResults?.visibility = View.GONE
         } else {
-            binding?.rvApps?.visibility = View.GONE
+            binding?.rvDetails?.visibility = View.GONE
             binding?.ivNoResults?.visibility = View.VISIBLE
-        }
-    }
-
-    private fun bottomNavigationControls() {
-        binding?.ivBank?.setOnClickListener {
-            findNavController().navigate(R.id.appsFragment_to_bankFragment)
-        }
-
-        binding?.ivEmail?.setOnClickListener {
-            findNavController().navigate(R.id.appsFragment_to_mailFragment)
-        }
-
-        binding?.ivOthers?.setOnClickListener {
-            findNavController().navigate(R.id.appsFragment_to_othersFragment)
         }
     }
 }

@@ -49,6 +49,9 @@
             android:id="@+id/bankFragment_to_appsFragment"
             app:destination="@id/appsFragment"
             app:launchSingleTop="true" />
+        <action
+            android:id="@+id/bankFragment_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/mailFragment"
@@ -70,6 +73,9 @@
             app:destination="@id/othersFragment"
             app:launchSingleTop="true"
             app:popUpTo="@id/bankFragment" />
+        <action
+            android:id="@+id/mailFragment_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/appsFragment"
@@ -91,6 +97,9 @@
             app:destination="@id/othersFragment"
             app:launchSingleTop="true"
             app:popUpTo="@id/bankFragment" />
+        <action
+            android:id="@+id/appsFragment_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/othersFragment"
@@ -112,5 +121,12 @@
             app:destination="@id/appsFragment"
             app:launchSingleTop="true"
             app:popUpTo="@id/bankFragment" />
+        <action
+            android:id="@+id/othersFragment_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/detailsFragment"
+        android:name="com.bhardwaj.passkey.ui.fragments.DetailsFragment"
+        android:label="detailsFragment" />
 </navigation>

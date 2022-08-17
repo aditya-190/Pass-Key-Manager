@@ -33,7 +33,7 @@ class MailFragment : Fragment() {
 
     private fun setUpRecyclerView() {
         val previewsList = arrayListOf("aadi.bbhardwaj@gmail.com", "yrkkh.cclub@gmail.com", "aditirdr05@gmail.com", "ab2225@srmist.edu.in", "arvind.bhardwaj@timetechnoplast.com")
-        val previewAdapter = PreviewAdapter(previewsList, true)
+        val previewAdapter = PreviewAdapter(previewsList, true, findNavController(), "mails")
 
         val onItemSwipeListener = object : OnItemSwipeListener<String> {
             override fun onItemSwiped(
@@ -72,7 +72,7 @@ class MailFragment : Fragment() {
             it?.swipeListener = onItemSwipeListener
             it?.dragListener = onItemDragListener
             it?.scrollListener = onListScrollListener
-            it?.behindSwipedItemLayoutId = R.layout.custom_swiped
+            it?.behindSwipedItemLayoutId = R.layout.custom_preview_swiped
             it?.disableSwipeDirection(DragDropSwipeRecyclerView.ListOrientation.DirectionFlag.RIGHT)
         }
     }

@@ -34,7 +34,7 @@ class OthersFragment : Fragment() {
 
     private fun setUpRecyclerView() {
         val previewsList = arrayListOf("Personal", "Notes")
-        val previewAdapter = PreviewAdapter(previewsList, false)
+        val previewAdapter = PreviewAdapter(previewsList, false, findNavController(), "others")
 
         val onItemSwipeListener = object : OnItemSwipeListener<String> {
             override fun onItemSwiped(
@@ -73,7 +73,7 @@ class OthersFragment : Fragment() {
             it?.swipeListener = onItemSwipeListener
             it?.dragListener = onItemDragListener
             it?.scrollListener = onListScrollListener
-            it?.behindSwipedItemLayoutId = R.layout.custom_swiped
+            it?.behindSwipedItemLayoutId = R.layout.custom_preview_swiped
             it?.disableSwipeDirection(DragDropSwipeRecyclerView.ListOrientation.DirectionFlag.RIGHT)
         }
     }
