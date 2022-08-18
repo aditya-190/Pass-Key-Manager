@@ -6,6 +6,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
+import android.widget.TextView
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,6 +20,7 @@ import com.ernestoyaquello.dragdropswiperecyclerview.DragDropSwipeRecyclerView
 import com.ernestoyaquello.dragdropswiperecyclerview.listener.OnItemDragListener
 import com.ernestoyaquello.dragdropswiperecyclerview.listener.OnItemSwipeListener
 import com.ernestoyaquello.dragdropswiperecyclerview.listener.OnListScrollListener
+import com.google.android.material.bottomsheet.BottomSheetDialog
 
 class OthersFragment : Fragment() {
     private var binding: FragmentOthersBinding? = null
@@ -40,8 +43,22 @@ class OthersFragment : Fragment() {
 
     private fun clickListeners() {
         binding?.fabOthers?.setOnClickListener {
-            Log.d("ADITYA", "Fab Others Clicked")
+            showBottomSheetDialog()
         }
+    }
+
+    private fun showBottomSheetDialog() {
+        val bottomSheetDialog = BottomSheetDialog(requireContext())
+        bottomSheetDialog.setContentView(R.layout.bottom_sheet_preview)
+
+        val tvSave = bottomSheetDialog.findViewById<TextView>(R.id.tvSave)
+        val etHeading = bottomSheetDialog.findViewById<EditText>(R.id.etHeading)
+
+        tvSave?.setOnClickListener {
+            bottomSheetDialog.dismiss()
+        }
+
+        bottomSheetDialog.show()
     }
 
     private fun setUpRecyclerView() {

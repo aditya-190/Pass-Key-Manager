@@ -5,11 +5,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
+import android.widget.TextView
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bhardwaj.passkey.R
 import com.bhardwaj.passkey.data.entity.Details
-import com.bhardwaj.passkey.data.entity.Preview
 import com.bhardwaj.passkey.databinding.FragmentDetailsBinding
 import com.bhardwaj.passkey.ui.adapter.DetailsAdapter
 import com.bhardwaj.passkey.viewModels.MainViewModel
@@ -17,9 +18,11 @@ import com.ernestoyaquello.dragdropswiperecyclerview.DragDropSwipeRecyclerView
 import com.ernestoyaquello.dragdropswiperecyclerview.listener.OnItemDragListener
 import com.ernestoyaquello.dragdropswiperecyclerview.listener.OnItemSwipeListener
 import com.ernestoyaquello.dragdropswiperecyclerview.listener.OnListScrollListener
+import com.google.android.material.bottomsheet.BottomSheetDialog
 
 class DetailsFragment : Fragment() {
     private var binding: FragmentDetailsBinding? = null
+    private val mainViewModel: MainViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,10 +35,32 @@ class DetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpRecyclerView()
+        clickListeners()
+    }
+
+    private fun clickListeners() {
+        binding?.fabDetails?.setOnClickListener {
+            showBottomSheetDialog()
+        }
+    }
+
+    private fun showBottomSheetDialog() {
+        val bottomSheetDialog = BottomSheetDialog(requireContext())
+        bottomSheetDialog.setContentView(R.layout.bottom_sheet_details)
+
+        val tvSave = bottomSheetDialog.findViewById<TextView>(R.id.tvSave)
+        val etAnswer = bottomSheetDialog.findViewById<EditText>(R.id.etAnswer)
+        val etQuestion = bottomSheetDialog.findViewById<EditText>(R.id.etQuestion)
+
+        tvSave?.setOnClickListener {
+            bottomSheetDialog.dismiss()
+        }
+
+        bottomSheetDialog.show()
     }
 
     private fun setUpRecyclerView() {
-        val detailsList = arrayListOf<Details>()
+        var detailsList = arrayListOf<Details>()
 
         val detailsAdapter = DetailsAdapter(
             detailsList,
@@ -69,8 +94,6 @@ class DetailsFragment : Fragment() {
             }
         }
 
-        checkForNoResults(detailsList)
-
         binding?.rvDetails.also {
             it?.layoutManager = LinearLayoutManager(activity)
             it?.adapter = detailsAdapter
@@ -81,6 +104,12 @@ class DetailsFragment : Fragment() {
             it?.scrollListener = onListScrollListener
             it?.behindSwipedItemLayoutId = R.layout.custom_details_swiped
             it?.disableSwipeDirection(DragDropSwipeRecyclerView.ListOrientation.DirectionFlag.RIGHT)
+        }
+
+        mainViewModel.allDetails.observe(viewLifecycleOwner) { details ->
+            detailsList = details as ArrayList<Details>
+            checkForNoResults(detailsList)
+            detailsAdapter.updateInList(details)
         }
     }
 
