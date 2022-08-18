@@ -4,11 +4,12 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import com.bhardwaj.passkey.R
-import com.bhardwaj.passkey.data.Details
+import com.bhardwaj.passkey.data.entity.Details
 import com.ernestoyaquello.dragdropswiperecyclerview.DragDropSwipeAdapter
 
 class DetailsAdapter(
     details: ArrayList<Details>,
+    private val categoryName: String
 ) : DragDropSwipeAdapter<Details, DetailsAdapter.PreviewViewHolder>(details) {
 
     class PreviewViewHolder(itemView: View) : DragDropSwipeAdapter.ViewHolder(itemView) {

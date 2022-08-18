@@ -4,16 +4,17 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.os.bundleOf
 import androidx.navigation.NavController
 import com.bhardwaj.passkey.R
+import com.bhardwaj.passkey.data.entity.Preview
 import com.ernestoyaquello.dragdropswiperecyclerview.DragDropSwipeAdapter
 
 class PreviewAdapter(
-    previews: ArrayList<String>,
+    private var previews: ArrayList<Preview>,
     private val smallerText: Boolean,
     private val navController: NavController,
-    private val fragmentName: String
-) : DragDropSwipeAdapter<String, PreviewAdapter.PreviewViewHolder>(previews) {
+) : DragDropSwipeAdapter<Preview, PreviewAdapter.PreviewViewHolder>(previews) {
 
     class PreviewViewHolder(itemView: View) : DragDropSwipeAdapter.ViewHolder(itemView) {
         val clSingleItem: ConstraintLayout = itemView.findViewById(R.id.clSingleItem)
@@ -24,34 +25,52 @@ class PreviewAdapter(
 
     override fun getViewHolder(itemView: View) = PreviewViewHolder(itemView)
 
-    override fun onBindViewHolder(item: String, viewHolder: PreviewViewHolder, position: Int) {
+    override fun onBindViewHolder(item: Preview, viewHolder: PreviewViewHolder, position: Int) {
         if (smallerText) viewHolder.tvSingleText.textSize = 12F
-        viewHolder.tvSingleText.text = item
+        viewHolder.tvSingleText.text = item.heading
+        val categoryName = item.categoryName
+        val bundle = bundleOf("categoryName" to categoryName)
 
         viewHolder.clSingleItem.setOnClickListener {
-            when (fragmentName) {
-                "banks" -> navController.navigate(R.id.bankFragment_to_detailsFragment)
-                "mails" -> navController.navigate(R.id.mailFragment_to_detailsFragment)
-                "apps" -> navController.navigate(R.id.appsFragment_to_detailsFragment)
-                "others" -> navController.navigate(R.id.othersFragment_to_detailsFragment)
+            when (categoryName) {
+                "banks" -> navController.navigate(R.id.bankFragment_to_detailsFragment, bundle)
+                "mails" -> navController.navigate(R.id.mailFragment_to_detailsFragment, bundle)
+                "apps" -> navController.navigate(R.id.appsFragment_to_detailsFragment, bundle)
+                "others" -> navController.navigate(R.id.othersFragment_to_detailsFragment, bundle)
             }
         }
 
         viewHolder.ivSingleButton.setOnClickListener {
-            when (fragmentName) {
-                "banks" -> navController.navigate(R.id.bankFragment_to_detailsFragment)
-                "mails" -> navController.navigate(R.id.mailFragment_to_detailsFragment)
-                "apps" -> navController.navigate(R.id.appsFragment_to_detailsFragment)
-                "others" -> navController.navigate(R.id.othersFragment_to_detailsFragment)
+            when (categoryName) {
+                "banks" -> navController.navigate(R.id.bankFragment_to_detailsFragment, bundle)
+                "mails" -> navController.navigate(R.id.mailFragment_to_detailsFragment, bundle)
+                "apps" -> navController.navigate(R.id.appsFragment_to_detailsFragment, bundle)
+                "others" -> navController.navigate(R.id.othersFragment_to_detailsFragment, bundle)
             }
         }
     }
 
     override fun getViewToTouchToStartDraggingItem(
-        item: String,
+        item: Preview,
         viewHolder: PreviewViewHolder,
         position: Int
     ): View {
         return viewHolder.ivSingleDrag
+    }
+
+    fun updateInList(updatedList: List<Preview>) {
+        previews.clear()
+        previews = updatedList as ArrayList<Preview>
+        notifyDataSetChanged()
+    }
+
+    fun deleteInList(position: Int) {
+        previews.removeAt(position)
+        notifyDataSetChanged()
+    }
+
+    fun insertInList(position: Int, preview: Preview) {
+        previews.add(position, preview)
+        notifyDataSetChanged()
     }
 }

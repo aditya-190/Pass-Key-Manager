@@ -128,5 +128,10 @@
     <fragment
         android:id="@+id/detailsFragment"
         android:name="com.bhardwaj.passkey.ui.fragments.DetailsFragment"
-        android:label="detailsFragment" />
+        android:label="detailsFragment" >
+        <argument
+            android:name="categoryName"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
 </navigation>

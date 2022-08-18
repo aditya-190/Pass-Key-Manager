@@ -1,15 +1,19 @@
 package com.bhardwaj.passkey.ui.fragments
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bhardwaj.passkey.R
+import com.bhardwaj.passkey.data.entity.Preview
 import com.bhardwaj.passkey.databinding.FragmentBankBinding
 import com.bhardwaj.passkey.ui.adapter.PreviewAdapter
+import com.bhardwaj.passkey.viewModels.MainViewModel
 import com.ernestoyaquello.dragdropswiperecyclerview.DragDropSwipeRecyclerView
 import com.ernestoyaquello.dragdropswiperecyclerview.listener.OnItemDragListener
 import com.ernestoyaquello.dragdropswiperecyclerview.listener.OnItemSwipeListener
@@ -17,6 +21,7 @@ import com.ernestoyaquello.dragdropswiperecyclerview.listener.OnListScrollListen
 
 class BankFragment : Fragment() {
     private var binding: FragmentBankBinding? = null
+    private val mainViewModel: MainViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,26 +35,33 @@ class BankFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         bottomNavigationControls()
         setUpRecyclerView()
+        clickListeners()
+    }
+
+    private fun clickListeners() {
+        binding?.fabBanks?.setOnClickListener {
+            Log.d("ADITYA", "Fab Banks Clicked")
+        }
     }
 
     private fun setUpRecyclerView() {
-        val previewsList = arrayListOf("Axis", "BOB", "SBI", "PPF", "Others")
-        val previewAdapter = PreviewAdapter(previewsList, false, findNavController(), "banks")
+        var previewsList = arrayListOf<Preview>()
+        val previewAdapter = PreviewAdapter(previewsList, false, findNavController())
 
-        val onItemSwipeListener = object : OnItemSwipeListener<String> {
+        val onItemSwipeListener = object : OnItemSwipeListener<Preview> {
             override fun onItemSwiped(
                 position: Int,
                 direction: OnItemSwipeListener.SwipeDirection,
-                item: String
+                item: Preview
             ): Boolean {
                 return false
             }
         }
-        val onItemDragListener = object : OnItemDragListener<String> {
-            override fun onItemDragged(previousPosition: Int, newPosition: Int, item: String) {
+        val onItemDragListener = object : OnItemDragListener<Preview> {
+            override fun onItemDragged(previousPosition: Int, newPosition: Int, item: Preview) {
             }
 
-            override fun onItemDropped(initialPosition: Int, finalPosition: Int, item: String) {
+            override fun onItemDropped(initialPosition: Int, finalPosition: Int, item: Preview) {
             }
         }
         val onListScrollListener = object : OnListScrollListener {
@@ -63,8 +75,6 @@ class BankFragment : Fragment() {
             }
         }
 
-        checkForNoResults(previewsList)
-
         binding?.rvBanks.also {
             it?.layoutManager = LinearLayoutManager(activity)
             it?.adapter = previewAdapter
@@ -76,9 +86,15 @@ class BankFragment : Fragment() {
             it?.behindSwipedItemLayoutId = R.layout.custom_preview_swiped
             it?.disableSwipeDirection(DragDropSwipeRecyclerView.ListOrientation.DirectionFlag.RIGHT)
         }
+
+        mainViewModel.allPreviews.observe(viewLifecycleOwner) { previews ->
+            previewsList = previews as ArrayList<Preview>
+            checkForNoResults(previewsList)
+            previewAdapter.updateInList(previews)
+        }
     }
 
-    private fun checkForNoResults(previewsList: ArrayList<String>) {
+    private fun checkForNoResults(previewsList: ArrayList<Preview>) {
         if (previewsList.isNotEmpty()) {
             binding?.rvBanks?.visibility = View.VISIBLE
             binding?.ivNoResults?.visibility = View.GONE

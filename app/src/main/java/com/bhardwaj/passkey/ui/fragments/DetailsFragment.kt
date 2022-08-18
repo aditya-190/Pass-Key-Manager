@@ -5,11 +5,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bhardwaj.passkey.R
-import com.bhardwaj.passkey.data.Details
+import com.bhardwaj.passkey.data.entity.Details
+import com.bhardwaj.passkey.data.entity.Preview
 import com.bhardwaj.passkey.databinding.FragmentDetailsBinding
 import com.bhardwaj.passkey.ui.adapter.DetailsAdapter
+import com.bhardwaj.passkey.viewModels.MainViewModel
 import com.ernestoyaquello.dragdropswiperecyclerview.DragDropSwipeRecyclerView
 import com.ernestoyaquello.dragdropswiperecyclerview.listener.OnItemDragListener
 import com.ernestoyaquello.dragdropswiperecyclerview.listener.OnItemSwipeListener
@@ -32,14 +35,12 @@ class DetailsFragment : Fragment() {
     }
 
     private fun setUpRecyclerView() {
-        val detailsList = arrayListOf(
-            Details(question = "Name", answer = "Axis Bank"),
-            Details(question = "Account Number", answer = "92000000182638276"),
-            Details(question = "mPIN", answer = "0987"),
-            Details(question = "Password", answer = "aditya@8888"),
-        )
+        val detailsList = arrayListOf<Details>()
 
-        val detailsAdapter = DetailsAdapter(detailsList)
+        val detailsAdapter = DetailsAdapter(
+            detailsList,
+            arguments?.getString("categoryName").toString()
+        )
 
         val onItemSwipeListener = object : OnItemSwipeListener<Details> {
             override fun onItemSwiped(

@@ -22,6 +22,8 @@
         <entry key="app/src/main/res/drawable/round_solid_bg.xml" value="0.138" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.24375" />
         <entry key="app/src/main/res/layout/activity_splash_screen.xml" value="0.2578125" />
+        <entry key="app/src/main/res/layout/custom_details_swiped.xml" value="0.2578125" />
+        <entry key="app/src/main/res/layout/custom_preview_swiped.xml" value="0.2578125" />
         <entry key="app/src/main/res/layout/custom_swiped.xml" value="0.25677083333333334" />
         <entry key="app/src/main/res/layout/fragment_apps.xml" value="0.2578125" />
         <entry key="app/src/main/res/layout/fragment_bank.xml" value="0.2578125" />
