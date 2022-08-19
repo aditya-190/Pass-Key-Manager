@@ -7,10 +7,10 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface PreviewDao {
 
-    @Query("SELECT * FROM preview_table")
+    @Query("SELECT * FROM preview_table ORDER BY priority ASC")
     fun getPreviews(): Flow<List<Preview>>
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertPreview(previews: Preview)
 
     @Delete

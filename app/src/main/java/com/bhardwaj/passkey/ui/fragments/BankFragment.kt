@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -24,6 +25,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 class BankFragment : Fragment() {
     private var binding: FragmentBankBinding? = null
     private val mainViewModel: MainViewModel by activityViewModels()
+    private lateinit var previewsList: ArrayList<Preview>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -54,6 +56,19 @@ class BankFragment : Fragment() {
         val etHeading = bottomSheetDialog.findViewById<EditText>(R.id.etHeading)
 
         tvSave?.setOnClickListener {
+            if (etHeading?.text.toString().trim().isNotEmpty()) {
+                val preview = Preview(
+                    previewId = 0,
+                    priority = previewsList.size + 1,
+                    heading = etHeading?.text.toString().trim(),
+                    categoryName = "banks"
+                )
+
+                mainViewModel.insertPreview(preview)
+
+            } else {
+                Toast.makeText(requireContext(), "Enter a Valid Heading.", Toast.LENGTH_SHORT).show()
+            }
             bottomSheetDialog.dismiss()
         }
 
@@ -61,10 +76,6 @@ class BankFragment : Fragment() {
     }
 
     private fun setUpRecyclerView() {
-        var previewsList = arrayListOf<Preview>()
-
-        val previewAdapter = PreviewAdapter(previewsList, false, findNavController())
-
         val onItemSwipeListener = object : OnItemSwipeListener<Preview> {
             override fun onItemSwiped(
                 position: Int,
@@ -92,22 +103,23 @@ class BankFragment : Fragment() {
             }
         }
 
-        binding?.rvBanks.also {
-            it?.layoutManager = LinearLayoutManager(activity)
-            it?.adapter = previewAdapter
-            it?.orientation =
-                DragDropSwipeRecyclerView.ListOrientation.VERTICAL_LIST_WITH_VERTICAL_DRAGGING
-            it?.swipeListener = onItemSwipeListener
-            it?.dragListener = onItemDragListener
-            it?.scrollListener = onListScrollListener
-            it?.behindSwipedItemLayoutId = R.layout.custom_preview_swiped
-            it?.disableSwipeDirection(DragDropSwipeRecyclerView.ListOrientation.DirectionFlag.RIGHT)
-        }
-
         mainViewModel.allPreviews.observe(viewLifecycleOwner) { previews ->
-            previewsList = previews as ArrayList<Preview>
+            previewsList = (previews).filter { s -> s.categoryName == "banks" } as ArrayList<Preview>
+            val previewAdapter = PreviewAdapter(previewsList, false, findNavController())
+
             checkForNoResults(previewsList)
-            previewAdapter.updateInList(previews)
+
+            binding?.rvBanks.also {
+                it?.layoutManager = LinearLayoutManager(activity)
+                it?.adapter = previewAdapter
+                it?.orientation =
+                    DragDropSwipeRecyclerView.ListOrientation.VERTICAL_LIST_WITH_VERTICAL_DRAGGING
+                it?.swipeListener = onItemSwipeListener
+                it?.dragListener = onItemDragListener
+                it?.scrollListener = onListScrollListener
+                it?.behindSwipedItemLayoutId = R.layout.custom_preview_swiped
+                it?.disableSwipeDirection(DragDropSwipeRecyclerView.ListOrientation.DirectionFlag.RIGHT)
+            }
         }
     }
 

@@ -7,10 +7,10 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface DetailsDao {
 
-    @Query("SELECT * FROM details_table")
+    @Query("SELECT * FROM details_table ORDER BY priority ASC")
     fun getDetails(): Flow<List<Details>>
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertDetails(details: Details)
 
     @Delete
