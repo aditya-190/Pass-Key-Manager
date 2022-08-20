@@ -138,6 +138,7 @@
         app:layout_constraintBottom_toBottomOf="@id/vBottomNavigation"
         app:layout_constraintEnd_toEndOf="@id/vBottomNavigation"
         app:layout_constraintStart_toEndOf="@id/ivApps"
-        app:layout_constraintTop_toTopOf="@id/vBottomNavigation" />
+        app:layout_constraintTop_toTopOf="@id/vBottomNavigation"
+        app:tint="@color/primary" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

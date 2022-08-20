@@ -22,11 +22,11 @@ import com.ernestoyaquello.dragdropswiperecyclerview.listener.OnItemSwipeListene
 import com.ernestoyaquello.dragdropswiperecyclerview.listener.OnListScrollListener
 import com.google.android.material.bottomsheet.BottomSheetDialog
 
-
 class AppsFragment : Fragment() {
     private var binding: FragmentAppsBinding? = null
     private val mainViewModel: MainViewModel by activityViewModels()
-    private lateinit var previewsList: ArrayList<Preview>
+    private var previewsList: ArrayList<Preview> = arrayListOf()
+    private lateinit var previewAdapter: PreviewAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -68,7 +68,8 @@ class AppsFragment : Fragment() {
                 mainViewModel.insertPreview(preview)
 
             } else {
-                Toast.makeText(requireContext(), "Enter a Valid Heading.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Enter a Valid Heading.", Toast.LENGTH_SHORT)
+                    .show()
             }
             bottomSheetDialog.dismiss()
         }
@@ -83,6 +84,7 @@ class AppsFragment : Fragment() {
                 direction: OnItemSwipeListener.SwipeDirection,
                 item: Preview
             ): Boolean {
+                mainViewModel.deletePreview(item)
                 return false
             }
         }
@@ -104,23 +106,24 @@ class AppsFragment : Fragment() {
             }
         }
 
+        previewAdapter = PreviewAdapter(previewsList, false, findNavController())
+
+        binding?.rvApps.also {
+            it?.layoutManager = LinearLayoutManager(activity)
+            it?.adapter = previewAdapter
+            it?.orientation =
+                DragDropSwipeRecyclerView.ListOrientation.VERTICAL_LIST_WITH_VERTICAL_DRAGGING
+            it?.swipeListener = onItemSwipeListener
+            it?.dragListener = onItemDragListener
+            it?.scrollListener = onListScrollListener
+            it?.behindSwipedItemLayoutId = R.layout.custom_preview_swiped
+            it?.disableSwipeDirection(DragDropSwipeRecyclerView.ListOrientation.DirectionFlag.RIGHT)
+        }
+
         mainViewModel.allPreviews.observe(viewLifecycleOwner) { previews ->
             previewsList = (previews).filter { s -> s.categoryName == "apps" } as ArrayList<Preview>
-            val previewAdapter = PreviewAdapter(previewsList, false, findNavController())
-
             checkForNoResults(previewsList)
-
-            binding?.rvApps.also {
-                it?.layoutManager = LinearLayoutManager(activity)
-                it?.adapter = previewAdapter
-                it?.orientation =
-                    DragDropSwipeRecyclerView.ListOrientation.VERTICAL_LIST_WITH_VERTICAL_DRAGGING
-                it?.swipeListener = onItemSwipeListener
-                it?.dragListener = onItemDragListener
-                it?.scrollListener = onListScrollListener
-                it?.behindSwipedItemLayoutId = R.layout.custom_preview_swiped
-                it?.disableSwipeDirection(DragDropSwipeRecyclerView.ListOrientation.DirectionFlag.RIGHT)
-            }
+            previewAdapter.dataSet = previewsList
         }
     }
 

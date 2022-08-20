@@ -87,7 +87,8 @@
         app:layout_constraintBottom_toBottomOf="@id/vBottomNavigation"
         app:layout_constraintEnd_toStartOf="@id/ivEmail"
         app:layout_constraintStart_toStartOf="@id/vBottomNavigation"
-        app:layout_constraintTop_toTopOf="@id/vBottomNavigation" />
+        app:layout_constraintTop_toTopOf="@id/vBottomNavigation"
+        app:tint="@color/primary" />
 
     <ImageView
         android:id="@+id/ivEmail"

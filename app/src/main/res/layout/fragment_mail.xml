@@ -99,7 +99,8 @@
         app:layout_constraintBottom_toBottomOf="@id/vBottomNavigation"
         app:layout_constraintEnd_toStartOf="@id/ivInvisible"
         app:layout_constraintStart_toEndOf="@id/ivBank"
-        app:layout_constraintTop_toTopOf="@id/vBottomNavigation" />
+        app:layout_constraintTop_toTopOf="@id/vBottomNavigation"
+        app:tint="@color/primary" />
 
     <ImageView
         android:id="@+id/ivInvisible"

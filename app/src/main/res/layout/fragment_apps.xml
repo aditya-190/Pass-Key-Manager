@@ -43,10 +43,10 @@
     <ImageView
         android:id="@+id/ivNoResults"
         android:layout_width="wrap_content"
-        android:visibility="gone"
         android:layout_height="wrap_content"
         android:contentDescription="@string/icon_no_result"
         android:src="@drawable/icon_no_result"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -126,7 +126,8 @@
         app:layout_constraintBottom_toBottomOf="@id/vBottomNavigation"
         app:layout_constraintEnd_toStartOf="@id/ivOthers"
         app:layout_constraintStart_toEndOf="@id/ivInvisible"
-        app:layout_constraintTop_toTopOf="@id/vBottomNavigation" />
+        app:layout_constraintTop_toTopOf="@id/vBottomNavigation"
+        app:tint="@color/primary" />
 
     <ImageView
         android:id="@+id/ivOthers"

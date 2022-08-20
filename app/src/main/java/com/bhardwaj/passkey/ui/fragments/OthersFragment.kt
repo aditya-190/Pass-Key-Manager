@@ -26,7 +26,8 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 class OthersFragment : Fragment() {
     private var binding: FragmentOthersBinding? = null
     private val mainViewModel: MainViewModel by activityViewModels()
-    private lateinit var previewsList: ArrayList<Preview>
+    private var previewsList: ArrayList<Preview> = arrayListOf()
+    private lateinit var previewAdapter: PreviewAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -68,7 +69,8 @@ class OthersFragment : Fragment() {
                 mainViewModel.insertPreview(preview)
 
             } else {
-                Toast.makeText(requireContext(), "Enter a Valid Heading.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Enter a Valid Heading.", Toast.LENGTH_SHORT)
+                    .show()
             }
             bottomSheetDialog.dismiss()
         }
@@ -83,6 +85,7 @@ class OthersFragment : Fragment() {
                 direction: OnItemSwipeListener.SwipeDirection,
                 item: Preview
             ): Boolean {
+                mainViewModel.deletePreview(item)
                 return false
             }
         }
@@ -104,23 +107,25 @@ class OthersFragment : Fragment() {
             }
         }
 
+        previewAdapter = PreviewAdapter(previewsList, false, findNavController())
+
+        binding?.rvOthers.also {
+            it?.layoutManager = LinearLayoutManager(activity)
+            it?.adapter = previewAdapter
+            it?.orientation =
+                DragDropSwipeRecyclerView.ListOrientation.VERTICAL_LIST_WITH_VERTICAL_DRAGGING
+            it?.swipeListener = onItemSwipeListener
+            it?.dragListener = onItemDragListener
+            it?.scrollListener = onListScrollListener
+            it?.behindSwipedItemLayoutId = R.layout.custom_preview_swiped
+            it?.disableSwipeDirection(DragDropSwipeRecyclerView.ListOrientation.DirectionFlag.RIGHT)
+        }
+
         mainViewModel.allPreviews.observe(viewLifecycleOwner) { previews ->
-            previewsList = (previews).filter { s -> s.categoryName == "others" } as ArrayList<Preview>
-            val previewAdapter = PreviewAdapter(previewsList, false, findNavController())
-
+            previewsList =
+                (previews).filter { s -> s.categoryName == "others" } as ArrayList<Preview>
             checkForNoResults(previewsList)
-
-            binding?.rvOthers.also {
-                it?.layoutManager = LinearLayoutManager(activity)
-                it?.adapter = previewAdapter
-                it?.orientation =
-                    DragDropSwipeRecyclerView.ListOrientation.VERTICAL_LIST_WITH_VERTICAL_DRAGGING
-                it?.swipeListener = onItemSwipeListener
-                it?.dragListener = onItemDragListener
-                it?.scrollListener = onListScrollListener
-                it?.behindSwipedItemLayoutId = R.layout.custom_preview_swiped
-                it?.disableSwipeDirection(DragDropSwipeRecyclerView.ListOrientation.DirectionFlag.RIGHT)
-            }
+            previewAdapter.dataSet = previewsList
         }
     }
 

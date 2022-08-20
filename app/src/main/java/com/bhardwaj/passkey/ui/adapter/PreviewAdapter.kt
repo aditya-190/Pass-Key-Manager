@@ -11,7 +11,7 @@ import com.bhardwaj.passkey.data.entity.Preview
 import com.ernestoyaquello.dragdropswiperecyclerview.DragDropSwipeAdapter
 
 class PreviewAdapter(
-    private var previews: ArrayList<Preview>,
+    previews: ArrayList<Preview>,
     private val smallerText: Boolean,
     private val navController: NavController,
 ) : DragDropSwipeAdapter<Preview, PreviewAdapter.PreviewViewHolder>(previews) {
@@ -56,21 +56,5 @@ class PreviewAdapter(
         position: Int
     ): View {
         return viewHolder.ivSingleDrag
-    }
-
-    fun updateInList(updatedList: List<Preview>) {
-        previews.clear()
-        previews = updatedList as ArrayList<Preview>
-        notifyDataSetChanged()
-    }
-
-    fun deleteInList(position: Int) {
-        previews.removeAt(position)
-        notifyDataSetChanged()
-    }
-
-    fun insertInList(position: Int, preview: Preview) {
-        previews.add(position, preview)
-        notifyDataSetChanged()
     }
 }
