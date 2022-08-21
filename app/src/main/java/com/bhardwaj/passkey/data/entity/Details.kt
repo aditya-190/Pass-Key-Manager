@@ -9,5 +9,6 @@ data class Details(
     val detailsId: Long,
     val question: String,
     val answer: String,
-    val priority: Int
+    val priority: Int,
+    val categoryName: String,
 )

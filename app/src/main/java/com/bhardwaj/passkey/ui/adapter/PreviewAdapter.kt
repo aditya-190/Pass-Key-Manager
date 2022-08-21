@@ -29,7 +29,7 @@ class PreviewAdapter(
         if (smallerText) viewHolder.tvSingleText.textSize = 12F
         viewHolder.tvSingleText.text = item.heading
         val categoryName = item.categoryName
-        val bundle = bundleOf("categoryName" to categoryName)
+        val bundle = bundleOf("categoryName" to item.heading)
 
         viewHolder.clSingleItem.setOnClickListener {
             when (categoryName) {

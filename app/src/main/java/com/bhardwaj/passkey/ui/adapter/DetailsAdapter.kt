@@ -9,8 +9,7 @@ import com.bhardwaj.passkey.data.entity.Details
 import com.ernestoyaquello.dragdropswiperecyclerview.DragDropSwipeAdapter
 
 class DetailsAdapter(
-    private var details: ArrayList<Details>,
-    private val categoryName: String
+    details: ArrayList<Details>
 ) : DragDropSwipeAdapter<Details, DetailsAdapter.PreviewViewHolder>(details) {
 
     class PreviewViewHolder(itemView: View) : DragDropSwipeAdapter.ViewHolder(itemView) {
@@ -32,21 +31,5 @@ class DetailsAdapter(
         position: Int
     ): View {
         return viewHolder.ivSingleDrag
-    }
-
-    fun updateInList(updatedList: List<Details>) {
-        details.clear()
-        details = updatedList as ArrayList<Details>
-        notifyDataSetChanged()
-    }
-
-    fun deleteInList(position: Int) {
-        details.removeAt(position)
-        notifyDataSetChanged()
-    }
-
-    fun insertInList(position: Int, preview: Details) {
-        details.add(position, preview)
-        notifyDataSetChanged()
     }
 }

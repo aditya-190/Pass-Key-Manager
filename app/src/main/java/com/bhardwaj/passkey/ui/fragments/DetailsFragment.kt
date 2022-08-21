@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bhardwaj.passkey.R
@@ -23,6 +24,9 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 class DetailsFragment : Fragment() {
     private var binding: FragmentDetailsBinding? = null
     private val mainViewModel: MainViewModel by activityViewModels()
+    private var detailsList: ArrayList<Details> = arrayListOf()
+    private lateinit var detailsAdapter: DetailsAdapter
+    private lateinit var categoryName: String
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,6 +38,9 @@ class DetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        categoryName = arguments?.getString("categoryName").toString()
+
         setUpRecyclerView()
         clickListeners()
     }
@@ -53,6 +60,28 @@ class DetailsFragment : Fragment() {
         val etQuestion = bottomSheetDialog.findViewById<EditText>(R.id.etQuestion)
 
         tvSave?.setOnClickListener {
+            if (etQuestion?.text.toString().trim().isNotEmpty() and etAnswer?.text.toString().trim()
+                    .isNotEmpty()
+            ) {
+                val detail =
+                    Details(
+                        detailsId = 0,
+                        question = etQuestion?.text.toString().trim(),
+                        answer = etAnswer?.text.toString().trim(),
+                        priority = detailsList.size + 1,
+                        categoryName = categoryName
+                    )
+
+                mainViewModel.insertDetails(detail)
+
+            } else {
+                Toast.makeText(
+                    requireContext(),
+                    "Enter a Valid Question and Answer.",
+                    Toast.LENGTH_SHORT
+                )
+                    .show()
+            }
             bottomSheetDialog.dismiss()
         }
 
@@ -60,19 +89,13 @@ class DetailsFragment : Fragment() {
     }
 
     private fun setUpRecyclerView() {
-        var detailsList = arrayListOf<Details>()
-
-        val detailsAdapter = DetailsAdapter(
-            detailsList,
-            arguments?.getString("categoryName").toString()
-        )
-
         val onItemSwipeListener = object : OnItemSwipeListener<Details> {
             override fun onItemSwiped(
                 position: Int,
                 direction: OnItemSwipeListener.SwipeDirection,
                 item: Details
             ): Boolean {
+                mainViewModel.deleteDetails(item)
                 return false
             }
         }
@@ -94,6 +117,8 @@ class DetailsFragment : Fragment() {
             }
         }
 
+        detailsAdapter = DetailsAdapter(detailsList)
+
         binding?.rvDetails.also {
             it?.layoutManager = LinearLayoutManager(activity)
             it?.adapter = detailsAdapter
@@ -107,9 +132,10 @@ class DetailsFragment : Fragment() {
         }
 
         mainViewModel.allDetails.observe(viewLifecycleOwner) { details ->
-            detailsList = details as ArrayList<Details>
+            detailsList =
+                (details).filter { s -> s.categoryName == categoryName } as ArrayList<Details>
             checkForNoResults(detailsList)
-            detailsAdapter.updateInList(details)
+            detailsAdapter.dataSet = detailsList
         }
     }
 

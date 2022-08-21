@@ -21,6 +21,7 @@ import com.ernestoyaquello.dragdropswiperecyclerview.listener.OnItemDragListener
 import com.ernestoyaquello.dragdropswiperecyclerview.listener.OnItemSwipeListener
 import com.ernestoyaquello.dragdropswiperecyclerview.listener.OnListScrollListener
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import kotlin.collections.ArrayList
 
 class AppsFragment : Fragment() {
     private var binding: FragmentAppsBinding? = null
