@@ -26,7 +26,7 @@ class SecondPage : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding?.tvSkip?.setOnClickListener {
-            findNavController().navigate(R.id.onBoardingFragment_to_bankFragment)
+            findNavController().navigate(R.id.onBoardingFragment_to_homeFragment)
             onBoardingFinished()
         }
 

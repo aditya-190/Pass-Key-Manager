@@ -31,11 +31,11 @@ class SplashFragment : Fragment() {
     ): View? {
         Handler(Looper.myLooper()!!).postDelayed({
             if (onBoardingFinished()) {
-                findNavController().navigate(R.id.splashFragment_to_bankFragment)
+                findNavController().navigate(R.id.splashFragment_to_homeFragment)
             } else {
                 findNavController().navigate(R.id.splashFragment_to_onBoardingFragment)
             }
-        }, 3000)
+        }, 1000)
 
         binding = FragmentSplashBinding.inflate(layoutInflater)
         return binding?.root

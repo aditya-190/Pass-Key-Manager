@@ -3,10 +3,10 @@ package com.bhardwaj.passkey.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
+import com.bhardwaj.passkey.data.Categories
 import com.bhardwaj.passkey.data.entity.Details
 import com.bhardwaj.passkey.data.entity.Preview
-import com.bhardwaj.passkey.data.repository.DetailsRepository
-import com.bhardwaj.passkey.data.repository.PreviewRepository
+import com.bhardwaj.passkey.data.repository.PassKeyRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -14,34 +14,42 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val previewRepository: PreviewRepository,
-    private val detailsRepository: DetailsRepository
+    private val passKeyRepository: PassKeyRepository
 ) : ViewModel() {
-    val allPreviews = previewRepository.allPreviews.asLiveData()
+    val allPreviews = passKeyRepository.allPreviews.asLiveData()
 
     fun insertPreview(preview: Preview) {
         viewModelScope.launch(Dispatchers.IO) {
-            previewRepository.insertPreview(preview = preview)
+            passKeyRepository.insertPreview(preview = preview)
         }
     }
 
     fun deletePreview(preview: Preview) {
         viewModelScope.launch(Dispatchers.IO) {
-            previewRepository.deletePreview(preview = preview)
+            passKeyRepository.deletePreview(preview = preview)
         }
     }
 
-    val allDetails = detailsRepository.allDetails.asLiveData()
+    val allDetails = passKeyRepository.allDetails.asLiveData()
 
     fun insertDetails(details: Details) {
         viewModelScope.launch(Dispatchers.IO) {
-            detailsRepository.insertDetails(details = details)
+            passKeyRepository.insertDetails(details = details)
         }
     }
 
     fun deleteDetails(details: Details) {
         viewModelScope.launch(Dispatchers.IO) {
-            detailsRepository.deleteDetails(details = details)
+            passKeyRepository.deleteDetails(details = details)
+        }
+    }
+
+    fun deleteDetailWithConditions(headingName: String, categoryName: Categories) {
+        viewModelScope.launch(Dispatchers.IO) {
+            passKeyRepository.deleteDetailWithConditions(
+                headingName = headingName,
+                categoryName = categoryName
+            )
         }
     }
 }

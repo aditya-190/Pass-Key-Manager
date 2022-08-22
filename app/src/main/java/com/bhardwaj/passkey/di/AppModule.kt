@@ -2,8 +2,7 @@ package com.bhardwaj.passkey.di
 
 import android.content.Context
 import androidx.room.Room
-import com.bhardwaj.passkey.data.database.DetailsDatabase
-import com.bhardwaj.passkey.data.database.PreviewDatabase
+import com.bhardwaj.passkey.data.database.PassKeyDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -16,29 +15,19 @@ import javax.inject.Singleton
 object AppModule {
     @Singleton
     @Provides
-    fun providePreviewDatabase(@ApplicationContext context: Context): PreviewDatabase {
+    fun providePassKeyDatabase(@ApplicationContext context: Context): PassKeyDatabase {
         return Room.databaseBuilder(
             context,
-            PreviewDatabase::class.java,
-            "preview_database"
+            PassKeyDatabase::class.java,
+            "passkey_database"
         ).build()
     }
 
     @Singleton
     @Provides
-    fun provideDetailsDatabase(@ApplicationContext context: Context): DetailsDatabase {
-        return Room.databaseBuilder(
-            context,
-            DetailsDatabase::class.java,
-            "details_database"
-        ).build()
-    }
+    fun providePreviewDao(db: PassKeyDatabase) = db.previewDao()
 
     @Singleton
     @Provides
-    fun providePreviewDao(db: PreviewDatabase) = db.previewDao()
-
-    @Singleton
-    @Provides
-    fun provideDetailsDao(db: DetailsDatabase) = db.detailsDao()
+    fun provideDetailsDao(db: PassKeyDatabase) = db.detailsDao()
 }

@@ -2,6 +2,7 @@ package com.bhardwaj.passkey.data.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.bhardwaj.passkey.data.Categories
 
 @Entity(tableName = "details_table")
 data class Details(
@@ -10,5 +11,6 @@ data class Details(
     val question: String,
     val answer: String,
     val priority: Int,
-    val categoryName: String,
+    val headingName: String,
+    val categoryName: Categories
 )

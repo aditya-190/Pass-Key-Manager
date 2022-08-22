@@ -28,25 +28,14 @@ class PreviewAdapter(
     override fun onBindViewHolder(item: Preview, viewHolder: PreviewViewHolder, position: Int) {
         if (smallerText) viewHolder.tvSingleText.textSize = 12F
         viewHolder.tvSingleText.text = item.heading
-        val categoryName = item.categoryName
-        val bundle = bundleOf("categoryName" to item.heading)
+        val bundle = bundleOf("headingName" to item.heading, "categoryName" to item.categoryName)
 
         viewHolder.clSingleItem.setOnClickListener {
-            when (categoryName) {
-                "banks" -> navController.navigate(R.id.bankFragment_to_detailsFragment, bundle)
-                "mails" -> navController.navigate(R.id.mailFragment_to_detailsFragment, bundle)
-                "apps" -> navController.navigate(R.id.appsFragment_to_detailsFragment, bundle)
-                "others" -> navController.navigate(R.id.othersFragment_to_detailsFragment, bundle)
-            }
+            navController.navigate(R.id.homeFragment_to_detailsFragment, bundle)
         }
 
         viewHolder.ivSingleButton.setOnClickListener {
-            when (categoryName) {
-                "banks" -> navController.navigate(R.id.bankFragment_to_detailsFragment, bundle)
-                "mails" -> navController.navigate(R.id.mailFragment_to_detailsFragment, bundle)
-                "apps" -> navController.navigate(R.id.appsFragment_to_detailsFragment, bundle)
-                "others" -> navController.navigate(R.id.othersFragment_to_detailsFragment, bundle)
-            }
+            navController.navigate(R.id.homeFragment_to_detailsFragment, bundle)
         }
     }
 
