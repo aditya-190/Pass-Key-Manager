@@ -8,7 +8,10 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
+import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bhardwaj.passkey.R
 import com.bhardwaj.passkey.data.Categories
@@ -44,6 +47,14 @@ class DetailsFragment : Fragment() {
         categoryName = arguments?.getSerializable("categoryName") as Categories
         clickListeners()
         setUpRecyclerView()
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    val bundle = bundleOf("categoryName" to categoryName)
+                    findNavController().navigate(R.id.detailsFragment_to_homeFragment, bundle)
+                }
+            })
     }
 
     private fun clickListeners() {

@@ -59,5 +59,10 @@
             android:name="categoryName"
             app:argType="com.bhardwaj.passkey.data.Categories"
             app:nullable="false" />
+        <action
+            android:id="@+id/detailsFragment_to_homeFragment"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/detailsFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 </navigation>
