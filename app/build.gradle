@@ -17,6 +17,11 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        Properties properties = new Properties()
+        properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
+        buildConfigField "String", "PASS_PHRASE", "\"${properties.getProperty('PASS_PHRASE')}\""
     }
 
     buildTypes {
@@ -76,6 +81,7 @@ dependencies {
 
     // Room DB
     implementation "androidx.room:room-ktx:2.4.3"
+    implementation 'net.zetetic:android-database-sqlcipher:4.5.0'
     kapt "androidx.room:room-compiler:2.4.3"
     androidTestImplementation "androidx.room:room-testing:2.4.3"
 
