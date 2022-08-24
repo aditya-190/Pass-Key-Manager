@@ -11,6 +11,9 @@ interface DetailsDao {
     @Query("SELECT * FROM details_table ORDER BY priority ASC")
     fun getDetails(): Flow<List<Details>>
 
+    @Query("SELECT * FROM details_table")
+    fun getDetailsForExport(): Flow<List<Details>>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertDetails(details: Details)
 

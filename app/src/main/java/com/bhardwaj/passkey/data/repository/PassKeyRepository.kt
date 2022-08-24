@@ -16,6 +16,7 @@ class PassKeyRepository @Inject constructor(
     suspend fun deletePreview(preview: Preview) = previewDao.deletePreview(previews = preview)
 
     val allDetails = detailsDao.getDetails()
+    val allDetailsForExport = detailsDao.getDetailsForExport()
     suspend fun insertDetails(details: Details) = detailsDao.insertDetails(details = details)
     suspend fun deleteDetails(details: Details) = detailsDao.deleteDetail(details = details)
     suspend fun deleteDetailWithConditions(headingName: String, categoryName: Categories) =

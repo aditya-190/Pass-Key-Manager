@@ -1,6 +1,7 @@
 package com.bhardwaj.passkey.ui.fragments
 
 import android.os.Bundle
+import android.os.Environment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,6 +24,7 @@ import com.ernestoyaquello.dragdropswiperecyclerview.listener.OnItemDragListener
 import com.ernestoyaquello.dragdropswiperecyclerview.listener.OnItemSwipeListener
 import com.ernestoyaquello.dragdropswiperecyclerview.listener.OnListScrollListener
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import java.io.File
 
 class HomeFragment : Fragment() {
     private var binding: FragmentHomeBinding? = null
@@ -62,6 +64,33 @@ class HomeFragment : Fragment() {
         }
         binding?.fabAdd?.setOnClickListener {
             showBottomSheetDialog()
+        }
+        binding?.ivExport?.setOnClickListener {
+            exportDatabase()
+        }
+    }
+
+    private fun exportDatabase() {
+        try {
+            val file = File(
+                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
+                "pass_key_manager.csv"
+            )
+            if (file.exists()) file.delete()
+            file.createNewFile()
+
+            val header = "question,answer,heading,category\n"
+            file.appendText(header)
+
+            mainViewModel.allDetailsForExport.observe(viewLifecycleOwner) { details ->
+                details.forEach { single ->
+                    file.appendText("${single.question},${single.answer},${single.headingName},${single.categoryName}\n")
+                }
+            }
+            Toast.makeText(context, "File Exported to Downloads folder.", Toast.LENGTH_SHORT).show()
+
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 

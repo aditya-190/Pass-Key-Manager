@@ -31,6 +31,7 @@ class MainViewModel @Inject constructor(
     }
 
     val allDetails = passKeyRepository.allDetails.asLiveData()
+    val allDetailsForExport = passKeyRepository.allDetailsForExport.asLiveData()
 
     fun insertDetails(details: Details) {
         viewModelScope.launch(Dispatchers.IO) {
