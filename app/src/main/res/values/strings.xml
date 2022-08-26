@@ -1,31 +1,37 @@
 <resources>
+    <!--    Not to Be translated-->
     <!--    Splash Screen-->
-    <string name="app_name">PassKey</string>
-    <string name="splash_description">The only password manager you’ll ever need.</string>
-    <string name="pass">PASS</string>
-    <string name="key">KEY</string>
+    <string name="app_name" translatable="false">PassKey</string>
+    <string name="pass" translatable="false">PASS</string>
+    <string name="key" translatable="false">KEY</string>
 
     <!--    OnBoarding Screens-->
-    <string name="_1">1</string>
-    <string name="_2">2</string>
-    <string name="_3">3</string>
-    <string name="skip">Skip</string>
-    <string name="next">Next</string>
-    <string name="first_heading">Generate \n<font fgcolor='#ff6464'>Secure</font>\nPasswords.</string>
-    <string name="second_heading">All Your \n<font fgcolor='#ff6464'>Passwords</font> Are \nHere.</string>
-    <string name="third_heading">Don\'t Type, \n<font fgcolor='#ff6464'>Autofill</font> Your \nCredentials.</string>
-    <string name="first_description">Stop using unsecure passwords for your online \naccounts, level up with OnePass. Get the most secure \nand difficult-to-crack passwords.</string>
-    <string name="second_description">Store and manage all of your passwords from one \nplace. Don’t remember hundreds of passwords, just \nremember one.</string>
-    <string name="third_description">Don’t compromise your passwords by typing them in \npublic, let OnePass autofill those and keep your \ncredentials secure.</string>
+    <string name="_1" translatable="false">1</string>
+    <string name="_2" translatable="false">2</string>
+    <string name="_3" translatable="false">3</string>
 
     <!--    Bottom Navigation and Content Description's-->
-    <string name="icon_bank">Icon Bank</string>
-    <string name="icon_others">Icon Others</string>
-    <string name="icon_apps">Icon Apps</string>
-    <string name="icon_mail">Icon Emails</string>
-    <string name="icon_drag">Icon Drag</string>
-    <string name="icon_no_result">Icon No Result</string>
-    <string name="floating_action_button">Floating Action Button</string>
+    <string name="icon_bank" translatable="false">Icon Bank</string>
+    <string name="icon_others" translatable="false">Icon Others</string>
+    <string name="icon_apps" translatable="false">Icon Apps</string>
+    <string name="icon_mail" translatable="false">Icon Emails</string>
+    <string name="icon_drag" translatable="false">Icon Drag</string>
+    <string name="icon_no_result" translatable="false">Icon No Result</string>
+    <string name="floating_action_button" translatable="false">Floating Action Button</string>
+
+    <!--    To Be translated-->
+    <!--    Splash Screen-->
+    <string name="splash_description">The only password manager you’ll ever need.</string>
+
+    <!--    OnBoarding Screens-->
+    <string name="skip">Skip</string>
+    <string name="next">Next</string>
+    <string name="first_heading">Generate\n<font fgcolor='#ff6464'>Secure</font>\nPasswords.</string>
+    <string name="second_heading">All Your\n<font fgcolor='#ff6464'>Passwords</font> Are\nHere.</string>
+    <string name="third_heading">Don\'t Type,\n<font fgcolor='#ff6464'>Autofill</font> Your\nCredentials.</string>
+    <string name="first_description">Stop using unsecure passwords for your online \naccounts, level up with PassKey. Get the most secure \nand difficult-to-crack passwords.</string>
+    <string name="second_description">Store and manage all of your passwords from one \nplace. Don’t remember hundreds of passwords, just \nremember one.</string>
+    <string name="third_description">Don’t compromise your passwords by typing them in \npublic, let PassKey autofill those and keep your \ncredentials secure.</string>
 
     <!--    Main Screens-->
     <string name="banks">Banks</string>
@@ -35,18 +41,24 @@
     <string name="details">Details</string>
     <string name="question">Question</string>
     <string name="answer">Answer</string>
+    <string name="export_download">File Exported to Downloads folder.</string>
+
+    <!--    Edit Text Hints-->
+    <string name="type_here">Type here…</string>
     <string name="type_your_question_here">Type your question here…</string>
     <string name="type_your_answer_here">Type your answer here…</string>
     <string name="type_your_heading_here">Type your heading here…</string>
-    <string name="type_here">Type here…</string>
+    <string name="enter_valid_heading">Enter a Valid Heading.</string>
+    <string name="enter_valid_question_n_answer">Enter a Valid Question and Answer.</string>
+
+    <!--    Buttons Text-->
     <string name="add">Add</string>
     <string name="save_changes">SAVE CHANGES</string>
     <string name="heading">Heading</string>
+
+    <!--    Authentication Screen-->
     <string name="welcome_to_pass_key">Welcome to PassKey Manager</string>
     <string name="authentication_failed">Authentication Failed.</string>
     <string name="something_went_wrong">Something Went Wrong..</string>
     <string name="set_password">Please set password for your device first.</string>
-    <string name="export_download">File Exported to Downloads folder.</string>
-    <string name="enter_valid_heading">Enter a Valid Heading.</string>
-    <string name="enter_valid_question_n_answer">Enter a Valid Question and Answer.</string>
 </resources>

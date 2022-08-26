@@ -25,7 +25,7 @@ class ThirdPage : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding?.tvNext?.setOnClickListener {
-            findNavController().navigate(R.id.onBoardingFragment_to_homeFragment)
+            findNavController().navigate(R.id.onBoardingFragment_to_authFragment)
             onBoardingFinished()
         }
     }

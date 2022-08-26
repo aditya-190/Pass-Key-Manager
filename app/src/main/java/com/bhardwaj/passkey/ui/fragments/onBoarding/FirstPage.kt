@@ -26,7 +26,7 @@ class FirstPage : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding?.tvSkip?.setOnClickListener {
-            findNavController().navigate(R.id.onBoardingFragment_to_homeFragment)
+            findNavController().navigate(R.id.onBoardingFragment_to_authFragment)
             onBoardingFinished()
         }
 

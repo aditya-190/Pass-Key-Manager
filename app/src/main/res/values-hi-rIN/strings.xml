@@ -1,0 +1,43 @@
+<resources>
+    <!--    Splash Screen-->
+    <string name="splash_description">एकमात्र पासवर्ड मैनेजर जिसकी आपको कभी आवश्यकता होगी</string>
+
+    <!--    OnBoarding Screens-->
+    <string name="skip">छोड़ें</string>
+    <string name="next">अगला</string>
+    <string name="first_heading">जनरेट करें\n<font fgcolor="#ff6464">सुरक्षित</font>\nपासवर्ड</string>
+    <string name="second_heading">आपके सभी\n<font fgcolor="#ff6464">पासवर्ड</font>\nयहाँ हैं</string>
+    <string name="third_heading">टाइप करने की\n<font fgcolor="#ff6464">कोई जरूरत</font>\nनही</string>
+    <string name="first_description">अपने ऑनलाइन खातों के लिए असुरक्षित पासवर्ड का उपयोग बंद करें, PassKey के साथ स्तर बढ़ाएं। सबसे सुरक्षित और मुश्किल से टूटने वाले पासवर्ड प्राप्त करें</string>
+    <string name="second_description">अपने सभी पासवर्ड एक स्थान से संगृहीत और प्रबंधित करें। सैकड़ों पासवर्ड याद न रखें, बस एक पासवर्ड याद रखें</string>
+    <string name="third_description">अपने पासवर्ड को सार्वजनिक रूप से टाइप करके समझौता न करें, PassKey को उन्हें अपने आप भरने दें और अपने क्रेडेंशियल को सुरक्षित रखें</string>
+
+    <!--    Main Screens-->
+    <string name="banks">बैंक</string>
+    <string name="mails">मेल</string>
+    <string name="apps">ऐप्स</string>
+    <string name="others">अन्य</string>
+    <string name="details">विवरण</string>
+    <string name="question">प्रश्न</string>
+    <string name="answer">उत्तर</string>
+    <string name="export_download">फ़ाइल डाउनलोड फ़ोल्डर में निर्यात की गई।</string>
+
+    <!--    Edit Text Hints-->
+    <string name="type_here">यहा लिखें…</string>
+    <string name="type_your_question_here">यहाँ अपने प्रश्न लिखें…</string>
+    <string name="type_your_answer_here">अपना उत्तर यहां लिखें…</string>
+    <string name="type_your_heading_here">अपना शीर्षक यहां लिखें…</string>
+    <string name="enter_valid_heading">एक मान्य शीर्षक दर्ज करें।</string>
+    <string name="enter_valid_question_n_answer">एक मान्य प्रश्न और उत्तर दर्ज करें।</string>
+
+    <!--    Buttons Text-->
+    <string name="add">जोड़ें</string>
+    <string name="save_changes">परिवर्तनों को सुरक्षित करें</string>
+    <string name="heading">शीर्षक</string>
+
+    <!--    Authentication Screen-->
+    <string name="welcome_to_pass_key">PassKey प्रबंधक में आपका स्वागत है</string>
+    <string name="authentication_failed">प्रमाणीकरण विफल हो गया।</string>
+    <string name="something_went_wrong">कुछ गलत हो गया..</string>
+    <string name="set_password">कृपया पहले अपने डिवाइस के लिए पासवर्ड सेट करें।</string>
+</resources>

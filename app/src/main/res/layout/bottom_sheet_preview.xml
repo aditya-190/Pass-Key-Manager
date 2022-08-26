@@ -3,12 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/white"
     android:paddingHorizontal="20dp">
 
     <TextView
         android:id="@+id/tvHeading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:fontFamily="@font/bebas_neue"
         android:text="@string/add"
         android:textColor="@color/secondary"
@@ -21,7 +23,7 @@
         android:id="@+id/clHeading"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="40dp"
         android:background="@drawable/round_outline_button"
         android:minHeight="70dp"
         app:layout_constraintEnd_toEndOf="parent"

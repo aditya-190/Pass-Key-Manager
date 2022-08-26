@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:padding="20dp"
     tools:context=".ui.fragments.onBoarding.ThirdPage">
 
@@ -88,6 +89,8 @@
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="30dp"
         android:background="@drawable/round_outline_bg"
+        android:clickable="false"
+        android:focusable="false"
         android:fontFamily="@font/bebas_neue"
         android:gravity="center_horizontal"
         android:paddingHorizontal="20dp"
