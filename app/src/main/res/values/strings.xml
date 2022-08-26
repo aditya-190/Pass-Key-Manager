@@ -42,4 +42,11 @@
     <string name="add">Add</string>
     <string name="save_changes">SAVE CHANGES</string>
     <string name="heading">Heading</string>
+    <string name="welcome_to_pass_key">Welcome to PassKey Manager</string>
+    <string name="authentication_failed">Authentication Failed.</string>
+    <string name="something_went_wrong">Something Went Wrong..</string>
+    <string name="set_password">Please set password for your device first.</string>
+    <string name="export_download">File Exported to Downloads folder.</string>
+    <string name="enter_valid_heading">Enter a Valid Heading.</string>
+    <string name="enter_valid_question_n_answer">Enter a Valid Question and Answer.</string>
 </resources>

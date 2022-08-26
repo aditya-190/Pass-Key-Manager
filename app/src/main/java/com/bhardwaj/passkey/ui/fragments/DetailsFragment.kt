@@ -152,8 +152,8 @@ class DetailsFragment : Fragment() {
             } else {
                 Toast.makeText(
                     requireContext(),
-                    "Enter a Valid Question and Answer.",
-                    Toast.LENGTH_SHORT
+                    getString(R.string.enter_valid_question_n_answer),
+                    Toast.LENGTH_LONG
                 ).show()
             }
             bottomSheetDialog.dismiss()

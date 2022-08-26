@@ -31,6 +31,7 @@
         <entry key="app/src/main/res/layout/custom_preview_swiped.xml" value="0.2578125" />
         <entry key="app/src/main/res/layout/custom_swiped.xml" value="0.25677083333333334" />
         <entry key="app/src/main/res/layout/fragment_apps.xml" value="0.2578125" />
+        <entry key="app/src/main/res/layout/fragment_authentication.xml" value="0.24270833333333333" />
         <entry key="app/src/main/res/layout/fragment_bank.xml" value="0.2578125" />
         <entry key="app/src/main/res/layout/fragment_category.xml" value="0.2578125" />
         <entry key="app/src/main/res/layout/fragment_details.xml" value="0.25" />
