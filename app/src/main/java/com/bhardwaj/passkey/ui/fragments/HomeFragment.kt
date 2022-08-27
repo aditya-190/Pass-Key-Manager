@@ -18,6 +18,8 @@ import com.bhardwaj.passkey.data.Categories
 import com.bhardwaj.passkey.data.entity.Preview
 import com.bhardwaj.passkey.databinding.FragmentHomeBinding
 import com.bhardwaj.passkey.ui.adapter.PreviewAdapter
+import com.bhardwaj.passkey.utils.Constants.Companion.CATEGORY_NAME
+import com.bhardwaj.passkey.utils.Constants.Companion.FILE_NAME
 import com.bhardwaj.passkey.viewModels.MainViewModel
 import com.ernestoyaquello.dragdropswiperecyclerview.DragDropSwipeRecyclerView
 import com.ernestoyaquello.dragdropswiperecyclerview.listener.OnItemDragListener
@@ -43,7 +45,7 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        categoryName = arguments?.getSerializable("categoryName") as Categories
+        categoryName = arguments?.getSerializable(CATEGORY_NAME) as Categories
         changeHeading(categoryName)
         clickListeners()
         setUpRecyclerView()
@@ -74,7 +76,7 @@ class HomeFragment : Fragment() {
         try {
             val file = File(
                 Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
-                "pass_key_manager.csv"
+                FILE_NAME
             )
             if (file.exists()) file.delete()
             file.createNewFile()
@@ -87,7 +89,11 @@ class HomeFragment : Fragment() {
                     file.appendText("${single.question},${single.answer},${single.headingName},${single.categoryName}\n")
                 }
             }
-            Toast.makeText(context, getString(R.string.export_download), Toast.LENGTH_LONG)
+            Toast.makeText(
+                context,
+                getString(R.string.export_download),
+                Toast.LENGTH_LONG
+            )
                 .show()
         } catch (e: Exception) {
             e.printStackTrace()
@@ -102,7 +108,10 @@ class HomeFragment : Fragment() {
                 item: Preview
             ): Boolean {
                 mainViewModel.deletePreview(item)
-                mainViewModel.deleteDetailWithConditions(item.heading, categoryName = categoryName)
+                mainViewModel.deleteDetailWithConditions(
+                    item.heading,
+                    categoryName = categoryName
+                )
                 return false
             }
         }
@@ -110,7 +119,11 @@ class HomeFragment : Fragment() {
             override fun onItemDragged(previousPosition: Int, newPosition: Int, item: Preview) {
             }
 
-            override fun onItemDropped(initialPosition: Int, finalPosition: Int, item: Preview) {
+            override fun onItemDropped(
+                initialPosition: Int,
+                finalPosition: Int,
+                item: Preview
+            ) {
             }
         }
         val onListScrollListener = object : OnListScrollListener {

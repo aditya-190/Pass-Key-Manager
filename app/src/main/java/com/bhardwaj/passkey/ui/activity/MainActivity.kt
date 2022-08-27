@@ -3,7 +3,6 @@ package com.bhardwaj.passkey.ui.activity
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import com.bhardwaj.passkey.R
 import com.bhardwaj.passkey.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 

@@ -8,6 +8,8 @@ import androidx.core.os.bundleOf
 import androidx.navigation.NavController
 import com.bhardwaj.passkey.R
 import com.bhardwaj.passkey.data.entity.Preview
+import com.bhardwaj.passkey.utils.Constants.Companion.CATEGORY_NAME
+import com.bhardwaj.passkey.utils.Constants.Companion.HEADING_NAME
 import com.ernestoyaquello.dragdropswiperecyclerview.DragDropSwipeAdapter
 
 class PreviewAdapter(
@@ -28,7 +30,7 @@ class PreviewAdapter(
     override fun onBindViewHolder(item: Preview, viewHolder: PreviewViewHolder, position: Int) {
         if (smallerText) viewHolder.tvSingleText.textSize = 12F
         viewHolder.tvSingleText.text = item.heading
-        val bundle = bundleOf("headingName" to item.heading, "categoryName" to item.categoryName)
+        val bundle = bundleOf(HEADING_NAME to item.heading, CATEGORY_NAME to item.categoryName)
 
         viewHolder.clSingleItem.setOnClickListener {
             navController.navigate(R.id.homeFragment_to_detailsFragment, bundle)

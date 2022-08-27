@@ -3,8 +3,9 @@ package com.bhardwaj.passkey.data.entity
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.bhardwaj.passkey.data.Categories
+import com.bhardwaj.passkey.utils.Constants.Companion.DETAILS_TABLE
 
-@Entity(tableName = "details_table")
+@Entity(tableName = DETAILS_TABLE)
 data class Details(
     @PrimaryKey(autoGenerate = true)
     val detailsId: Long,

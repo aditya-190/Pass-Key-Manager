@@ -9,6 +9,8 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.bhardwaj.passkey.R
 import com.bhardwaj.passkey.databinding.FragmentSplashBinding
+import com.bhardwaj.passkey.utils.Constants.Companion.FINISHED
+import com.bhardwaj.passkey.utils.Constants.Companion.ON_BOARDING
 
 class SplashFragment : Fragment() {
     private var binding: FragmentSplashBinding? = null
@@ -29,7 +31,7 @@ class SplashFragment : Fragment() {
     }
 
     private fun onBoardingFinished(): Boolean {
-        val sharedPref = requireActivity().getSharedPreferences("onBoarding", Context.MODE_PRIVATE)
-        return sharedPref.getBoolean("Finished", false)
+        val sharedPref = requireActivity().getSharedPreferences(ON_BOARDING, Context.MODE_PRIVATE)
+        return sharedPref.getBoolean(FINISHED, false)
     }
 }

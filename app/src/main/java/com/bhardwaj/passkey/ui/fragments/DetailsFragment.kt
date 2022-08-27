@@ -18,6 +18,8 @@ import com.bhardwaj.passkey.data.Categories
 import com.bhardwaj.passkey.data.entity.Details
 import com.bhardwaj.passkey.databinding.FragmentDetailsBinding
 import com.bhardwaj.passkey.ui.adapter.DetailsAdapter
+import com.bhardwaj.passkey.utils.Constants.Companion.CATEGORY_NAME
+import com.bhardwaj.passkey.utils.Constants.Companion.HEADING_NAME
 import com.bhardwaj.passkey.viewModels.MainViewModel
 import com.ernestoyaquello.dragdropswiperecyclerview.DragDropSwipeRecyclerView
 import com.ernestoyaquello.dragdropswiperecyclerview.listener.OnItemDragListener
@@ -43,15 +45,15 @@ class DetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        headingName = arguments?.getString("headingName").toString()
-        categoryName = arguments?.getSerializable("categoryName") as Categories
+        headingName = arguments?.getString(HEADING_NAME).toString()
+        categoryName = arguments?.getSerializable(CATEGORY_NAME) as Categories
         clickListeners()
         setUpRecyclerView()
         requireActivity().onBackPressedDispatcher.addCallback(
             viewLifecycleOwner,
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    val bundle = bundleOf("categoryName" to categoryName)
+                    val bundle = bundleOf(CATEGORY_NAME to categoryName)
                     findNavController().navigate(R.id.detailsFragment_to_homeFragment, bundle)
                 }
             })

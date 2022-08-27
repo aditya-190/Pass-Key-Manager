@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import com.bhardwaj.passkey.BuildConfig
 import com.bhardwaj.passkey.data.database.PassKeyDatabase
+import com.bhardwaj.passkey.utils.Constants.Companion.PASS_KEY_DATABASE
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -21,7 +22,7 @@ object AppModule {
         return Room.databaseBuilder(
             context,
             PassKeyDatabase::class.java,
-            "passkey_database"
+            PASS_KEY_DATABASE
         ).openHelperFactory(SupportFactory(BuildConfig.PASS_PHRASE.toByteArray())).build()
     }
 

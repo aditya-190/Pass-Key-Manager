@@ -10,6 +10,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.bhardwaj.passkey.R
 import com.bhardwaj.passkey.databinding.FragmentFirstBinding
+import com.bhardwaj.passkey.utils.Constants.Companion.FINISHED
+import com.bhardwaj.passkey.utils.Constants.Companion.ON_BOARDING
 
 class FirstPage : Fragment() {
     private var binding: FragmentFirstBinding? = null
@@ -36,7 +38,7 @@ class FirstPage : Fragment() {
     }
 
     private fun onBoardingFinished() {
-        val sharedPref = requireActivity().getSharedPreferences("onBoarding", Context.MODE_PRIVATE)
-        sharedPref.edit().putBoolean("Finished", true).apply()
+        val sharedPref = requireActivity().getSharedPreferences(ON_BOARDING, Context.MODE_PRIVATE)
+        sharedPref.edit().putBoolean(FINISHED, true).apply()
     }
 }
