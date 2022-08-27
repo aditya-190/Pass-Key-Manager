@@ -41,5 +41,6 @@
     <string name="something_went_wrong">कुछ गलत हो गया..</string>
     <string name="set_password">कृपया पहले अपने डिवाइस के लिए पासवर्ड सेट करें।</string>
     <string name="permission_required">संग्रहण अनुमति की आवश्यकता है</string>
+    <string name="permission_denied">अनुमति नहीं है</string>
     <string name="ok">स्वीकृति दें</string>
 </resources>

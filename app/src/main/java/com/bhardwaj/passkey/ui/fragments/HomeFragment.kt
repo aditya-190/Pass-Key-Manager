@@ -1,5 +1,7 @@
 package com.bhardwaj.passkey.ui.fragments
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.Environment
 import android.view.LayoutInflater
@@ -8,6 +10,8 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -26,6 +30,7 @@ import com.ernestoyaquello.dragdropswiperecyclerview.listener.OnItemDragListener
 import com.ernestoyaquello.dragdropswiperecyclerview.listener.OnItemSwipeListener
 import com.ernestoyaquello.dragdropswiperecyclerview.listener.OnListScrollListener
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.snackbar.Snackbar
 import java.io.File
 
 class HomeFragment : Fragment() {
@@ -34,6 +39,26 @@ class HomeFragment : Fragment() {
     private var previewsList: ArrayList<Preview> = arrayListOf()
     private lateinit var previewAdapter: PreviewAdapter
     private lateinit var categoryName: Categories
+    private lateinit var requestPermissionLauncher: ActivityResultLauncher<String>
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        requestPermissionLauncher =
+            registerForActivityResult(
+                ActivityResultContracts.RequestPermission()
+            ) { isGranted: Boolean ->
+                if (isGranted) {
+                    exportDatabase()
+                } else {
+                    Snackbar.make(
+                        requireView(),
+                        getString(R.string.permission_denied),
+                        Snackbar.LENGTH_LONG
+                    ).show()
+                }
+            }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -68,7 +93,35 @@ class HomeFragment : Fragment() {
             showBottomSheetDialog()
         }
         binding?.ivExport?.setOnClickListener {
-            exportDatabase()
+            checkForPermission()
+        }
+    }
+
+    private fun checkForPermission() {
+        val manifestPermission = Manifest.permission.WRITE_EXTERNAL_STORAGE
+
+        when {
+            ContextCompat.checkSelfPermission(
+                requireContext(),
+                manifestPermission
+            ) == PackageManager.PERMISSION_GRANTED -> {
+                exportDatabase()
+            }
+
+            shouldShowRequestPermissionRationale(manifestPermission) -> {
+                val snackBar = Snackbar.make(
+                    requireView(),
+                    getString(R.string.permission_required),
+                    Snackbar.LENGTH_LONG
+                )
+                snackBar.show()
+                snackBar.setAction(getString(R.string.ok)) {
+                    requestPermissionLauncher.launch(manifestPermission)
+                }
+            }
+            else -> {
+                requestPermissionLauncher.launch(manifestPermission)
+            }
         }
     }
 

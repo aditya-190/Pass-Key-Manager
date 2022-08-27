@@ -64,15 +64,6 @@ class AuthFragment : Fragment() {
                     super.onAuthenticationSucceeded(result)
                     findNavController().navigate(R.id.authFragment_to_homeFragment)
                 }
-
-                override fun onAuthenticationFailed() {
-                    super.onAuthenticationFailed()
-                    Toast.makeText(
-                        requireContext(),
-                        getString(R.string.authentication_failed),
-                        Toast.LENGTH_LONG
-                    ).show()
-                }
             }
         )
 
