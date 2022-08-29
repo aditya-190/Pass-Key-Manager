@@ -196,7 +196,7 @@ class HomeFragment : Fragment() {
         }
 
         previewAdapter =
-            PreviewAdapter(previewsList, categoryName == Categories.MAILS, findNavController())
+            PreviewAdapter(previewsList, findNavController())
 
         binding?.rvAll.also {
             it?.layoutManager = LinearLayoutManager(activity)
@@ -216,6 +216,7 @@ class HomeFragment : Fragment() {
     private fun persistChangesInOrdering(initialPosition: Int, finalPosition: Int, item: Preview) {
         if (finalPosition > initialPosition) {
             mainViewModel.decrementPriority(
+                isPreview = true,
                 initialPosition = initialPosition + 1,
                 finalPosition = finalPosition + 1,
                 headingName = item.heading,
@@ -223,6 +224,7 @@ class HomeFragment : Fragment() {
             )
         } else {
             mainViewModel.incrementPriority(
+                isPreview = true,
                 initialPosition = initialPosition + 1,
                 finalPosition = finalPosition + 1,
                 headingName = item.heading,

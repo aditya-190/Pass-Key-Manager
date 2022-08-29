@@ -23,4 +23,28 @@ interface DetailsDao {
 
     @Query("DELETE FROM $DETAILS_TABLE WHERE categoryName=:categoryName AND headingName=:headingName")
     suspend fun deleteDetailWithConditions(headingName: String, categoryName: Categories)
+
+    @Query("UPDATE $DETAILS_TABLE SET priority = priority + 1 WHERE categoryName=:categoryName AND headingName =:headingName AND priority BETWEEN :finalPosition AND :initialPosition")
+    suspend fun incrementPriority(
+        initialPosition: Int,
+        finalPosition: Int,
+        headingName: String,
+        categoryName: Categories
+    )
+
+    @Query("UPDATE $DETAILS_TABLE SET priority = priority - 1 WHERE categoryName=:categoryName AND headingName =:headingName AND priority BETWEEN :initialPosition AND :finalPosition")
+    suspend fun decrementPriority(
+        initialPosition: Int,
+        finalPosition: Int,
+        headingName: String,
+        categoryName: Categories
+    )
+
+    @Query("UPDATE $DETAILS_TABLE SET priority = :finalPosition WHERE categoryName = :categoryName AND priority = :initialPosition AND headingName =:headingName")
+    suspend fun changePriority(
+        initialPosition: Int,
+        finalPosition: Int,
+        headingName: String,
+        categoryName: Categories
+    )
 }

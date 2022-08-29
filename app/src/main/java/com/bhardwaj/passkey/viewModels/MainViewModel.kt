@@ -43,6 +43,7 @@ class MainViewModel @Inject constructor(
     }
 
     fun incrementPriority(
+        isPreview: Boolean,
         initialPosition: Int,
         finalPosition: Int,
         headingName: String,
@@ -50,6 +51,7 @@ class MainViewModel @Inject constructor(
     ) {
         viewModelScope.launch(Dispatchers.IO) {
             passKeyRepository.incrementPriority(
+                isPreview = isPreview,
                 initialPosition = initialPosition,
                 finalPosition = finalPosition,
                 headingName = headingName,
@@ -59,6 +61,7 @@ class MainViewModel @Inject constructor(
     }
 
     fun decrementPriority(
+        isPreview: Boolean,
         initialPosition: Int,
         finalPosition: Int,
         headingName: String,
@@ -66,6 +69,7 @@ class MainViewModel @Inject constructor(
     ) {
         viewModelScope.launch(Dispatchers.IO) {
             passKeyRepository.decrementPriority(
+                isPreview = isPreview,
                 initialPosition = initialPosition,
                 finalPosition = finalPosition,
                 headingName = headingName,
@@ -83,9 +87,21 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    fun deleteDetails(details: Details) {
+    fun deleteDetails(
+        details: Details,
+        headingName: String,
+        categoryName: Categories,
+        initialPosition: Int,
+        finalPosition: Int
+    ) {
         viewModelScope.launch(Dispatchers.IO) {
-            passKeyRepository.deleteDetails(details = details)
+            passKeyRepository.deleteDetails(
+                details = details,
+                headingName = headingName,
+                categoryName = categoryName,
+                initialPosition = initialPosition,
+                finalPosition = finalPosition
+            )
         }
     }
 }

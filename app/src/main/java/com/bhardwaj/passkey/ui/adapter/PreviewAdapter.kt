@@ -14,7 +14,6 @@ import com.ernestoyaquello.dragdropswiperecyclerview.DragDropSwipeAdapter
 
 class PreviewAdapter(
     previews: ArrayList<Preview>,
-    private val smallerText: Boolean,
     private val navController: NavController,
 ) : DragDropSwipeAdapter<Preview, PreviewAdapter.PreviewViewHolder>(previews) {
 
@@ -28,7 +27,6 @@ class PreviewAdapter(
     override fun getViewHolder(itemView: View) = PreviewViewHolder(itemView)
 
     override fun onBindViewHolder(item: Preview, viewHolder: PreviewViewHolder, position: Int) {
-        if (smallerText) viewHolder.tvSingleText.textSize = 12F
         viewHolder.tvSingleText.text = item.heading
         val bundle = bundleOf(HEADING_NAME to item.heading, CATEGORY_NAME to item.categoryName)
 

@@ -72,7 +72,13 @@ class DetailsFragment : Fragment() {
                 direction: OnItemSwipeListener.SwipeDirection,
                 item: Details
             ): Boolean {
-                mainViewModel.deleteDetails(item)
+                mainViewModel.deleteDetails(
+                    details = item,
+                    headingName = item.headingName,
+                    categoryName = categoryName,
+                    initialPosition = position + 1,
+                    finalPosition = detailsAdapter.itemCount + 1
+                )
                 return false
             }
         }
@@ -81,6 +87,9 @@ class DetailsFragment : Fragment() {
             }
 
             override fun onItemDropped(initialPosition: Int, finalPosition: Int, item: Details) {
+                if (initialPosition != finalPosition) {
+                    persistChangesInOrdering(initialPosition, finalPosition, item)
+                }
             }
         }
         val onListScrollListener = object : OnListScrollListener {
@@ -109,6 +118,26 @@ class DetailsFragment : Fragment() {
         }
 
         observeAllDetails()
+    }
+
+    private fun persistChangesInOrdering(initialPosition: Int, finalPosition: Int, item: Details) {
+        if (finalPosition > initialPosition) {
+            mainViewModel.decrementPriority(
+                isPreview = false,
+                initialPosition = initialPosition + 1,
+                finalPosition = finalPosition + 1,
+                headingName = item.headingName,
+                categoryName = item.categoryName
+            )
+        } else {
+            mainViewModel.incrementPriority(
+                isPreview = false,
+                initialPosition = initialPosition + 1,
+                finalPosition = finalPosition + 1,
+                headingName = item.headingName,
+                categoryName = item.categoryName
+            )
+        }
     }
 
     private fun observeAllDetails() {

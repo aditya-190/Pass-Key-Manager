@@ -33,45 +33,91 @@ class PassKeyRepository @Inject constructor(
     }
 
     suspend fun incrementPriority(
+        isPreview: Boolean,
         initialPosition: Int,
         finalPosition: Int,
         headingName: String,
         categoryName: Categories
     ) {
-        previewDao.incrementPriority(
-            initialPosition = initialPosition,
-            finalPosition = finalPosition,
-            categoryName = categoryName
-        )
-        previewDao.changePriority(
-            initialPosition = initialPosition + 1,
-            finalPosition = finalPosition,
-            headingName = headingName,
-            categoryName = categoryName
-        )
+        if (isPreview) {
+            previewDao.incrementPriority(
+                initialPosition = initialPosition,
+                finalPosition = finalPosition,
+                categoryName = categoryName
+            )
+            previewDao.changePriority(
+                initialPosition = initialPosition + 1,
+                finalPosition = finalPosition,
+                headingName = headingName,
+                categoryName = categoryName
+            )
+        } else {
+            detailsDao.incrementPriority(
+                initialPosition = initialPosition,
+                finalPosition = finalPosition,
+                headingName = headingName,
+                categoryName = categoryName
+            )
+            detailsDao.changePriority(
+                initialPosition = initialPosition + 1,
+                finalPosition = finalPosition,
+                headingName = headingName,
+                categoryName = categoryName
+            )
+        }
     }
 
     suspend fun decrementPriority(
+        isPreview: Boolean,
         initialPosition: Int,
         finalPosition: Int,
         headingName: String,
         categoryName: Categories
     ) {
-        previewDao.decrementPriority(
-            initialPosition = initialPosition,
-            finalPosition = finalPosition,
-            categoryName = categoryName
-        )
-        previewDao.changePriority(
-            initialPosition = initialPosition - 1,
-            finalPosition = finalPosition,
-            headingName = headingName,
-            categoryName = categoryName
-        )
+        if (isPreview) {
+            previewDao.decrementPriority(
+                initialPosition = initialPosition,
+                finalPosition = finalPosition,
+                categoryName = categoryName
+            )
+            previewDao.changePriority(
+                initialPosition = initialPosition - 1,
+                finalPosition = finalPosition,
+                headingName = headingName,
+                categoryName = categoryName
+            )
+        } else {
+            detailsDao.decrementPriority(
+                initialPosition = initialPosition,
+                finalPosition = finalPosition,
+                headingName = headingName,
+                categoryName = categoryName
+            )
+            detailsDao.changePriority(
+                initialPosition = initialPosition - 1,
+                finalPosition = finalPosition,
+                headingName = headingName,
+                categoryName = categoryName
+            )
+        }
     }
 
     val allDetails = detailsDao.getDetails()
     val allDetailsForExport = detailsDao.getDetailsForExport()
     suspend fun insertDetails(details: Details) = detailsDao.insertDetails(details = details)
-    suspend fun deleteDetails(details: Details) = detailsDao.deleteDetail(details = details)
+    suspend fun deleteDetails(
+        details: Details,
+        headingName: String,
+        categoryName: Categories,
+        initialPosition: Int,
+        finalPosition: Int
+    ) {
+        detailsDao.deleteDetail(details = details)
+        detailsDao.decrementPriority(
+            initialPosition = initialPosition,
+            finalPosition = finalPosition,
+            headingName = headingName,
+            categoryName = categoryName
+        )
+    }
 }
