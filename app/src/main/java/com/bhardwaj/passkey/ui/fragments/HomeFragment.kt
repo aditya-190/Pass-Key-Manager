@@ -160,10 +160,12 @@ class HomeFragment : Fragment() {
                 direction: OnItemSwipeListener.SwipeDirection,
                 item: Preview
             ): Boolean {
-                mainViewModel.deletePreview(item)
-                mainViewModel.deleteDetailWithConditions(
-                    item.heading,
-                    categoryName = categoryName
+                mainViewModel.deletePreview(
+                    preview = item,
+                    heading = item.heading,
+                    categoryName = categoryName,
+                    initialPosition = position + 1,
+                    finalPosition = previewAdapter.itemCount + 1
                 )
                 return false
             }
@@ -177,6 +179,9 @@ class HomeFragment : Fragment() {
                 finalPosition: Int,
                 item: Preview
             ) {
+                if (initialPosition != finalPosition) {
+                    persistChangesInOrdering(initialPosition, finalPosition, item)
+                }
             }
         }
         val onListScrollListener = object : OnListScrollListener {
@@ -206,6 +211,24 @@ class HomeFragment : Fragment() {
         }
 
         observeAllPreviews()
+    }
+
+    private fun persistChangesInOrdering(initialPosition: Int, finalPosition: Int, item: Preview) {
+        if (finalPosition > initialPosition) {
+            mainViewModel.decrementPriority(
+                initialPosition = initialPosition + 1,
+                finalPosition = finalPosition + 1,
+                headingName = item.heading,
+                categoryName = item.categoryName
+            )
+        } else {
+            mainViewModel.incrementPriority(
+                initialPosition = initialPosition + 1,
+                finalPosition = finalPosition + 1,
+                headingName = item.heading,
+                categoryName = item.categoryName
+            )
+        }
     }
 
     private fun observeAllPreviews() {
