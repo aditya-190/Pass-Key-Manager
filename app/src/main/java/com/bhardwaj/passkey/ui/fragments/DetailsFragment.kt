@@ -30,6 +30,8 @@ import com.ernestoyaquello.dragdropswiperecyclerview.listener.OnItemDragListener
 import com.ernestoyaquello.dragdropswiperecyclerview.listener.OnItemSwipeListener
 import com.ernestoyaquello.dragdropswiperecyclerview.listener.OnListScrollListener
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.snackbar.BaseTransientBottomBar
+import com.google.android.material.snackbar.Snackbar
 
 class DetailsFragment : Fragment() {
     private var binding: FragmentDetailsBinding? = null
@@ -76,13 +78,35 @@ class DetailsFragment : Fragment() {
                 direction: OnItemSwipeListener.SwipeDirection,
                 item: Details
             ): Boolean {
-                mainViewModel.deleteDetails(
-                    details = item,
-                    headingName = item.headingName,
-                    categoryName = categoryName,
-                    initialPosition = position + 1,
-                    finalPosition = detailsAdapter.itemCount + 1
-                )
+                var clickedUndo = false
+
+                val snackBar = Snackbar.make(binding?.root!!, "Deleted.", Snackbar.LENGTH_LONG)
+                snackBar.also {
+                    it.setAction("Undo") {
+                        detailsAdapter.insertItem(position, item)
+                        clickedUndo = true
+                    }
+                        .addCallback(object :
+                            BaseTransientBottomBar.BaseCallback<Snackbar>() {
+                            override fun onDismissed(
+                                transientBottomBar: Snackbar?,
+                                event: Int
+                            ) {
+                                if (!clickedUndo) {
+                                    mainViewModel.deleteDetails(
+                                        details = item,
+                                        headingName = item.headingName,
+                                        categoryName = categoryName,
+                                        initialPosition = position + 1,
+                                        finalPosition = detailsAdapter.itemCount + 1
+                                    )
+                                }
+                                super.onDismissed(transientBottomBar, event)
+                            }
+                        })
+                    it.show()
+                }
+
                 return false
             }
         }

@@ -23,7 +23,7 @@ object AppModule {
             context,
             PassKeyDatabase::class.java,
             PASS_KEY_DATABASE
-        ).build()//openHelperFactory(SupportFactory(BuildConfig.PASS_PHRASE.toByteArray())).build()
+        ).openHelperFactory(SupportFactory(BuildConfig.PASS_PHRASE.toByteArray())).build()
     }
 
     @Singleton
