@@ -42,8 +42,7 @@ PassKey - Password Manager does not store your credentials on servers so your pa
 https://play.google.com/store/apps/details?id=com.bhardwaj.passkey
 
 ## 📽 Sample Demo:
-
-[SAVE YOUR DEMO URL HERE]
+https://user-images.githubusercontent.com/63164037/187469596-29dd8287-50d8-4f6f-98a7-b5bbec1b8fd0.mp4
 
 ## 🧪 Steps to Build locally:
 - Open Android Studio IDE.
