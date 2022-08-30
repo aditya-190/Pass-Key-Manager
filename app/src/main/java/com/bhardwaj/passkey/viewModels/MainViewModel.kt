@@ -47,7 +47,9 @@ class MainViewModel @Inject constructor(
         initialPosition: Int,
         finalPosition: Int,
         headingName: String,
-        categoryName: Categories
+        categoryName: Categories,
+        question: String,
+        answer: String
     ) {
         viewModelScope.launch(Dispatchers.IO) {
             passKeyRepository.incrementPriority(
@@ -55,7 +57,9 @@ class MainViewModel @Inject constructor(
                 initialPosition = initialPosition,
                 finalPosition = finalPosition,
                 headingName = headingName,
-                categoryName = categoryName
+                categoryName = categoryName,
+                question = question,
+                answer = answer
             )
         }
     }
@@ -65,7 +69,9 @@ class MainViewModel @Inject constructor(
         initialPosition: Int,
         finalPosition: Int,
         headingName: String,
-        categoryName: Categories
+        categoryName: Categories,
+        question: String,
+        answer: String
     ) {
         viewModelScope.launch(Dispatchers.IO) {
             passKeyRepository.decrementPriority(
@@ -73,7 +79,9 @@ class MainViewModel @Inject constructor(
                 initialPosition = initialPosition,
                 finalPosition = finalPosition,
                 headingName = headingName,
-                categoryName = categoryName
+                categoryName = categoryName,
+                question = question,
+                answer = answer
             )
         }
     }

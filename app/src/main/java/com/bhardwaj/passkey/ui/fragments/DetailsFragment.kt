@@ -127,7 +127,9 @@ class DetailsFragment : Fragment() {
                 initialPosition = initialPosition + 1,
                 finalPosition = finalPosition + 1,
                 headingName = item.headingName,
-                categoryName = item.categoryName
+                categoryName = item.categoryName,
+                question = item.question,
+                answer = item.answer
             )
         } else {
             mainViewModel.incrementPriority(
@@ -135,7 +137,9 @@ class DetailsFragment : Fragment() {
                 initialPosition = initialPosition + 1,
                 finalPosition = finalPosition + 1,
                 headingName = item.headingName,
-                categoryName = item.categoryName
+                categoryName = item.categoryName,
+                question = item.question,
+                answer = item.answer
             )
         }
     }

@@ -40,11 +40,13 @@ interface DetailsDao {
         categoryName: Categories
     )
 
-    @Query("UPDATE $DETAILS_TABLE SET priority = :finalPosition WHERE categoryName = :categoryName AND priority = :initialPosition AND headingName =:headingName")
+    @Query("UPDATE $DETAILS_TABLE SET priority = :finalPosition WHERE categoryName = :categoryName AND priority = :initialPosition AND headingName =:headingName AND question =:question AND answer =:answer")
     suspend fun changePriority(
         initialPosition: Int,
         finalPosition: Int,
         headingName: String,
-        categoryName: Categories
+        categoryName: Categories,
+        question: String,
+        answer: String
     )
 }

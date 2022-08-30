@@ -37,7 +37,9 @@ class PassKeyRepository @Inject constructor(
         initialPosition: Int,
         finalPosition: Int,
         headingName: String,
-        categoryName: Categories
+        categoryName: Categories,
+        question: String,
+        answer: String
     ) {
         if (isPreview) {
             previewDao.incrementPriority(
@@ -62,7 +64,9 @@ class PassKeyRepository @Inject constructor(
                 initialPosition = initialPosition + 1,
                 finalPosition = finalPosition,
                 headingName = headingName,
-                categoryName = categoryName
+                categoryName = categoryName,
+                question = question,
+                answer = answer
             )
         }
     }
@@ -72,7 +76,9 @@ class PassKeyRepository @Inject constructor(
         initialPosition: Int,
         finalPosition: Int,
         headingName: String,
-        categoryName: Categories
+        categoryName: Categories,
+        question: String,
+        answer: String
     ) {
         if (isPreview) {
             previewDao.decrementPriority(
@@ -97,7 +103,9 @@ class PassKeyRepository @Inject constructor(
                 initialPosition = initialPosition - 1,
                 finalPosition = finalPosition,
                 headingName = headingName,
-                categoryName = categoryName
+                categoryName = categoryName,
+                question = question,
+                answer = answer
             )
         }
     }
