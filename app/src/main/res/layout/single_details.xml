@@ -28,25 +28,30 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <EditText
-            android:id="@+id/etAnswer"
+        <TextView
+            android:id="@+id/tvAnswer"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
-            android:autofillHints="username"
-            android:background="@null"
             android:fontFamily="@font/poppins"
-            android:hint="@string/type_here"
-            android:imeOptions="actionDone"
-            android:inputType="textCapSentences"
             android:maxLines="2"
             android:textColor="@color/secondary"
             android:textColorHint="@color/secondaryVariant"
             android:textSize="18sp"
             android:textStyle="normal"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/ivEdit"
             app:layout_constraintStart_toEndOf="@id/ivSingleDrag"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/ivEdit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/icon_edit"
+            android:padding="10dp"
+            android:src="@drawable/icon_edit"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

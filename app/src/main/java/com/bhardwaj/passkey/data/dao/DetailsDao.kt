@@ -18,6 +18,9 @@ interface DetailsDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertDetails(details: Details)
 
+    @Update
+    suspend fun updateDetails(details: Details)
+
     @Delete
     suspend fun deleteDetail(details: Details)
 

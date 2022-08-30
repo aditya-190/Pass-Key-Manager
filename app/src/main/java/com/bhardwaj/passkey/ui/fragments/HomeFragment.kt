@@ -1,7 +1,11 @@
 package com.bhardwaj.passkey.ui.fragments
 
 import android.Manifest
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context.CLIPBOARD_SERVICE
 import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.view.LayoutInflater
@@ -13,6 +17,7 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -24,6 +29,7 @@ import com.bhardwaj.passkey.databinding.FragmentHomeBinding
 import com.bhardwaj.passkey.ui.adapter.PreviewAdapter
 import com.bhardwaj.passkey.utils.Constants.Companion.CATEGORY_NAME
 import com.bhardwaj.passkey.utils.Constants.Companion.FILE_NAME
+import com.bhardwaj.passkey.utils.Constants.Companion.HEADING_NAME
 import com.bhardwaj.passkey.viewModels.MainViewModel
 import com.ernestoyaquello.dragdropswiperecyclerview.DragDropSwipeRecyclerView
 import com.ernestoyaquello.dragdropswiperecyclerview.listener.OnItemDragListener
@@ -196,7 +202,12 @@ class HomeFragment : Fragment() {
         }
 
         previewAdapter =
-            PreviewAdapter(previewsList, findNavController())
+            PreviewAdapter(previewsList, { heading, category ->
+                val bundle = bundleOf(HEADING_NAME to heading, CATEGORY_NAME to category)
+                findNavController().navigate(R.id.homeFragment_to_detailsFragment, bundle)
+            }, { heading ->
+                copyToClipBoard(heading)
+            })
 
         binding?.rvAll.also {
             it?.layoutManager = LinearLayoutManager(activity)
@@ -211,6 +222,14 @@ class HomeFragment : Fragment() {
         }
 
         observeAllPreviews()
+    }
+
+    private fun copyToClipBoard(heading: String) {
+        val clipboardManager =
+            requireActivity().getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
+        clipboardManager.setPrimaryClip(ClipData.newPlainText("Heading", heading))
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.S_V2)
+            Toast.makeText(requireContext(), "Copied", Toast.LENGTH_SHORT).show()
     }
 
     private fun persistChangesInOrdering(initialPosition: Int, finalPosition: Int, item: Preview) {

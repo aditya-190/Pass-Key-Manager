@@ -1,5 +1,9 @@
 package com.bhardwaj.passkey.ui.fragments
 
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -61,7 +65,7 @@ class DetailsFragment : Fragment() {
 
     private fun clickListeners() {
         binding?.fabDetails?.setOnClickListener {
-            showBottomSheetDialog()
+            showBottomSheetDialog(editMode = false, details = null)
         }
     }
 
@@ -103,7 +107,11 @@ class DetailsFragment : Fragment() {
             }
         }
 
-        detailsAdapter = DetailsAdapter(detailsList)
+        detailsAdapter = DetailsAdapter(detailsList, { details ->
+            showBottomSheetDialog(editMode = true, details = details)
+        }, { answer ->
+            copyToClipBoard(answer)
+        })
 
         binding?.rvDetails.also {
             it?.layoutManager = LinearLayoutManager(activity)
@@ -118,6 +126,14 @@ class DetailsFragment : Fragment() {
         }
 
         observeAllDetails()
+    }
+
+    private fun copyToClipBoard(answer: String) {
+        val clipboardManager =
+            requireActivity().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        clipboardManager.setPrimaryClip(ClipData.newPlainText("Answer", answer))
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.S_V2)
+            Toast.makeText(requireContext(), "Copied", Toast.LENGTH_SHORT).show()
     }
 
     private fun persistChangesInOrdering(initialPosition: Int, finalPosition: Int, item: Details) {
@@ -163,33 +179,55 @@ class DetailsFragment : Fragment() {
         }
     }
 
-    private fun showBottomSheetDialog() {
+    private fun showBottomSheetDialog(editMode: Boolean, details: Details?) {
         val bottomSheetDialog = BottomSheetDialog(requireContext())
         bottomSheetDialog.setContentView(R.layout.bottom_sheet_details)
 
         val etAnswer = bottomSheetDialog.findViewById<EditText>(R.id.etAnswer)
         val etQuestion = bottomSheetDialog.findViewById<EditText>(R.id.etQuestion)
 
+        if (editMode) {
+            etAnswer?.setText(details?.answer)
+            etQuestion?.setText(details?.question)
+        }
+
         bottomSheetDialog.findViewById<TextView>(R.id.tvSave)?.setOnClickListener {
-            if (etQuestion?.text.toString().trim().isNotEmpty() and etAnswer?.text.toString().trim()
-                    .isNotEmpty()
-            ) {
-                val detail =
-                    Details(
-                        detailsId = 0,
-                        question = etQuestion?.text.toString().trim(),
-                        answer = etAnswer?.text.toString().trim(),
-                        priority = detailsList.size + 1,
-                        categoryName = categoryName,
-                        headingName = headingName
-                    )
-                mainViewModel.insertDetails(detail)
+            val changedQuestion = etQuestion?.text.toString().trim()
+            val changedAnswer = etAnswer?.text.toString().trim()
+
+            if (editMode) {
+                if (changedQuestion.isEmpty() or changedAnswer.isEmpty()) {
+                    Toast.makeText(
+                        requireContext(),
+                        getString(R.string.enter_valid_question_n_answer),
+                        Toast.LENGTH_LONG
+                    ).show()
+                } else if ((changedQuestion != details?.question) or (changedAnswer != details?.answer)) {
+                    val detail =
+                        details?.copy(question = changedQuestion, answer = changedAnswer)
+                    if (detail != null) {
+                        mainViewModel.updateDetails(detail)
+                    }
+                }
             } else {
-                Toast.makeText(
-                    requireContext(),
-                    getString(R.string.enter_valid_question_n_answer),
-                    Toast.LENGTH_LONG
-                ).show()
+                if (changedQuestion.isEmpty() or changedAnswer.isEmpty()) {
+                    Toast.makeText(
+                        requireContext(),
+                        getString(R.string.enter_valid_question_n_answer),
+                        Toast.LENGTH_LONG
+                    ).show()
+                } else {
+                    val detail =
+                        Details(
+                            detailsId = 0,
+                            question = changedQuestion,
+                            answer = changedAnswer,
+                            priority = detailsList.size + 1,
+                            categoryName = categoryName,
+                            headingName = headingName
+                        )
+                    mainViewModel.insertDetails(detail)
+                }
             }
             bottomSheetDialog.dismiss()
         }

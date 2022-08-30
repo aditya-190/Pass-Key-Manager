@@ -4,17 +4,15 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.os.bundleOf
-import androidx.navigation.NavController
 import com.bhardwaj.passkey.R
+import com.bhardwaj.passkey.data.Categories
 import com.bhardwaj.passkey.data.entity.Preview
-import com.bhardwaj.passkey.utils.Constants.Companion.CATEGORY_NAME
-import com.bhardwaj.passkey.utils.Constants.Companion.HEADING_NAME
 import com.ernestoyaquello.dragdropswiperecyclerview.DragDropSwipeAdapter
 
 class PreviewAdapter(
     previews: ArrayList<Preview>,
-    private val navController: NavController,
+    private var onItemClicked: ((heading: String, category: Categories) -> Unit),
+    private var onItemLongPressed: ((headingName: String) -> Unit)
 ) : DragDropSwipeAdapter<Preview, PreviewAdapter.PreviewViewHolder>(previews) {
 
     class PreviewViewHolder(itemView: View) : DragDropSwipeAdapter.ViewHolder(itemView) {
@@ -28,14 +26,18 @@ class PreviewAdapter(
 
     override fun onBindViewHolder(item: Preview, viewHolder: PreviewViewHolder, position: Int) {
         viewHolder.tvSingleText.text = item.heading
-        val bundle = bundleOf(HEADING_NAME to item.heading, CATEGORY_NAME to item.categoryName)
 
         viewHolder.clSingleItem.setOnClickListener {
-            navController.navigate(R.id.homeFragment_to_detailsFragment, bundle)
+            onItemClicked(item.heading, item.categoryName)
         }
 
         viewHolder.ivSingleButton.setOnClickListener {
-            navController.navigate(R.id.homeFragment_to_detailsFragment, bundle)
+            onItemClicked(item.heading, item.categoryName)
+        }
+
+        viewHolder.clSingleItem.setOnLongClickListener {
+            onItemLongPressed(item.heading)
+            return@setOnLongClickListener true
         }
     }
 

@@ -113,6 +113,7 @@ class PassKeyRepository @Inject constructor(
     val allDetails = detailsDao.getDetails()
     val allDetailsForExport = detailsDao.getDetailsForExport()
     suspend fun insertDetails(details: Details) = detailsDao.insertDetails(details = details)
+    suspend fun updateDetails(details: Details) = detailsDao.updateDetails(details = details)
     suspend fun deleteDetails(
         details: Details,
         headingName: String,

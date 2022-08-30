@@ -95,6 +95,12 @@ class MainViewModel @Inject constructor(
         }
     }
 
+    fun updateDetails(details: Details) {
+        viewModelScope.launch(Dispatchers.IO) {
+            passKeyRepository.updateDetails(details = details)
+        }
+    }
+
     fun deleteDetails(
         details: Details,
         headingName: String,

@@ -16,6 +16,7 @@
     <string name="icon_apps" translatable="false">Icon Apps</string>
     <string name="icon_mail" translatable="false">Icon Emails</string>
     <string name="icon_drag" translatable="false">Icon Drag</string>
+    <string name="icon_edit" translatable="false">Icon Edit</string>
     <string name="icon_no_result" translatable="false">Icon No Result</string>
     <string name="floating_action_button" translatable="false">Floating Action Button</string>
 
