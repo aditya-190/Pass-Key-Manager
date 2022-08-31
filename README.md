@@ -24,6 +24,8 @@ Pass Key app helps you to store all your logins, passwords, and other private in
 
 PassKey - Password Manager does not store your credentials on servers so your passwords are in your hands, no need to worry.
 
+I created this app being inspired by a design -> https://www.figma.com/community/file/1116675775484733517
+
 ## 🤩 Features:
 
 - Fully Offline : No internet permission required.
