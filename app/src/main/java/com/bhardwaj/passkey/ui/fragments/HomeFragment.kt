@@ -7,7 +7,6 @@ import android.content.Context.CLIPBOARD_SERVICE
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import android.os.Environment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +15,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.widget.PopupMenu
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
@@ -28,7 +28,6 @@ import com.bhardwaj.passkey.data.entity.Preview
 import com.bhardwaj.passkey.databinding.FragmentHomeBinding
 import com.bhardwaj.passkey.ui.adapter.PreviewAdapter
 import com.bhardwaj.passkey.utils.Constants.Companion.CATEGORY_NAME
-import com.bhardwaj.passkey.utils.Constants.Companion.FILE_NAME
 import com.bhardwaj.passkey.utils.Constants.Companion.HEADING_NAME
 import com.bhardwaj.passkey.viewModels.MainViewModel
 import com.ernestoyaquello.dragdropswiperecyclerview.DragDropSwipeRecyclerView
@@ -38,7 +37,7 @@ import com.ernestoyaquello.dragdropswiperecyclerview.listener.OnListScrollListen
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
-import java.io.File
+
 
 class HomeFragment : Fragment() {
     private var binding: FragmentHomeBinding? = null
@@ -46,18 +45,21 @@ class HomeFragment : Fragment() {
     private var previewsList: ArrayList<Preview> = arrayListOf()
     private lateinit var previewAdapter: PreviewAdapter
     private lateinit var categoryName: Categories
-    private lateinit var requestPermissionLauncher: ActivityResultLauncher<String>
+    private var readPermissionGranted = false
+    private var writePermissionGranted = false
+    private lateinit var permissionLauncher: ActivityResultLauncher<Array<String>>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        requestPermissionLauncher =
-            registerForActivityResult(
-                ActivityResultContracts.RequestPermission()
-            ) { isGranted: Boolean ->
-                if (isGranted) {
-                    exportDatabase()
-                } else {
+        permissionLauncher =
+            registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
+                readPermissionGranted =
+                    permissions[Manifest.permission.READ_EXTERNAL_STORAGE] ?: readPermissionGranted
+                writePermissionGranted = permissions[Manifest.permission.WRITE_EXTERNAL_STORAGE]
+                    ?: writePermissionGranted
+
+                if(!readPermissionGranted || !writePermissionGranted) {
                     Snackbar.make(
                         requireView(),
                         getString(R.string.permission_denied),
@@ -99,23 +101,66 @@ class HomeFragment : Fragment() {
         binding?.fabAdd?.setOnClickListener {
             showBottomSheetDialog()
         }
-        binding?.ivExport?.setOnClickListener {
-            checkForPermission()
+        binding?.ivImportExport?.setOnClickListener {
+            val popupMenu = PopupMenu(requireContext(), binding?.ivImportExport!!)
+            popupMenu.menuInflater.inflate(R.menu.popup_menu, popupMenu.menu)
+            popupMenu.setOnMenuItemClickListener { item ->
+                when (item.itemId) {
+                    R.id.action_import -> importData()
+                    R.id.action_export -> exportData()
+                }
+                true
+            }
+            popupMenu.show()
         }
     }
 
-    private fun checkForPermission() {
-        val manifestPermission = Manifest.permission.WRITE_EXTERNAL_STORAGE
+    private fun exportData() {
+        Toast.makeText(
+            requireContext(),
+            getString(R.string.export_download),
+            Toast.LENGTH_LONG
+        ).show()
+    }
 
-        when {
-            ContextCompat.checkSelfPermission(
-                requireContext(),
-                manifestPermission
-            ) == PackageManager.PERMISSION_GRANTED -> {
-                exportDatabase()
-            }
+    private fun importData() {
+        Toast.makeText(
+            requireContext(),
+            "Clicked Import",
+            Toast.LENGTH_LONG
+        ).show()
+    }
 
-            shouldShowRequestPermissionRationale(manifestPermission) -> {
+    private fun updateOrRequestPermission(): Boolean {
+        val hasReadPermission = ContextCompat.checkSelfPermission(
+            requireContext(),
+            Manifest.permission.READ_EXTERNAL_STORAGE
+        ) == PackageManager.PERMISSION_GRANTED
+
+        val hasWritePermission = ContextCompat.checkSelfPermission(
+            requireContext(),
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+        ) == PackageManager.PERMISSION_GRANTED
+
+        val minSdk29 = Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q
+
+        readPermissionGranted = hasReadPermission
+        writePermissionGranted = hasWritePermission || minSdk29
+
+        val permissionsToRequest = mutableListOf<String>()
+
+        if (!readPermissionGranted) {
+            permissionsToRequest.add(Manifest.permission.READ_EXTERNAL_STORAGE)
+        }
+
+        if (!writePermissionGranted) {
+            permissionsToRequest.add(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        }
+
+        return when {
+            permissionsToRequest.isEmpty() -> true
+
+            shouldShowRequestPermissionRationale(permissionsToRequest[0]) -> {
                 val snackBar = Snackbar.make(
                     requireView(),
                     getString(R.string.permission_required),
@@ -123,40 +168,14 @@ class HomeFragment : Fragment() {
                 )
                 snackBar.show()
                 snackBar.setAction(getString(R.string.ok)) {
-                    requestPermissionLauncher.launch(manifestPermission)
+                    permissionLauncher.launch(permissionsToRequest.toTypedArray())
                 }
+                false
             }
             else -> {
-                requestPermissionLauncher.launch(manifestPermission)
+                permissionLauncher.launch(permissionsToRequest.toTypedArray())
+                false
             }
-        }
-    }
-
-    private fun exportDatabase() {
-        try {
-            val file = File(
-                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
-                FILE_NAME
-            )
-            if (file.exists()) file.delete()
-            file.createNewFile()
-
-            val header = "question,answer,heading,category\n"
-            file.appendText(header)
-
-            mainViewModel.allDetailsForExport.observe(viewLifecycleOwner) { details ->
-                details.forEach { single ->
-                    file.appendText("${single.question},${single.answer},${single.headingName},${single.categoryName}\n")
-                }
-            }
-            Toast.makeText(
-                context,
-                getString(R.string.export_download),
-                Toast.LENGTH_LONG
-            )
-                .show()
-        } catch (e: Exception) {
-            e.printStackTrace()
         }
     }
 
@@ -442,5 +461,11 @@ class HomeFragment : Fragment() {
             bottomSheetDialog.dismiss()
         }
         bottomSheetDialog.show()
+    }
+
+    private inline fun <T> sdk29AndUp(onSdk29: () -> T): T? {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            onSdk29()
+        } else null
     }
 }

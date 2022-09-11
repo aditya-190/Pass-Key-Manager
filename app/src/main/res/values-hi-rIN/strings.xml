@@ -21,6 +21,8 @@
     <string name="question">प्रश्न</string>
     <string name="answer">उत्तर</string>
     <string name="export_download">फ़ाइल डाउनलोड फ़ोल्डर में निर्यात की गई।</string>
+    <string name="import_data">फ़ाइलें आयात करें</string>
+    <string name="export_data">फ़ाइलें निर्यात करें</string>
 
     <!--    Edit Text Hints-->
     <string name="type_here">यहा लिखें…</string>
