@@ -223,7 +223,7 @@ class DetailsFragment : Fragment() {
                 if (changedQuestion.isEmpty() or changedAnswer.isEmpty()) {
                     Toast.makeText(
                         requireContext(),
-                        getString(R.string.enter_valid_question_n_answer),
+                        getString(R.string.enter_valid_title_n_response),
                         Toast.LENGTH_LONG
                     ).show()
                 } else if ((changedQuestion != details?.question) or (changedAnswer != details?.answer)) {
@@ -237,7 +237,7 @@ class DetailsFragment : Fragment() {
                 if (changedQuestion.isEmpty() or changedAnswer.isEmpty()) {
                     Toast.makeText(
                         requireContext(),
-                        getString(R.string.enter_valid_question_n_answer),
+                        getString(R.string.enter_valid_title_n_response),
                         Toast.LENGTH_LONG
                     ).show()
                 } else {

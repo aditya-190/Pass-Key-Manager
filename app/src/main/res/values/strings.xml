@@ -40,19 +40,19 @@
     <string name="apps">Apps</string>
     <string name="others">Others</string>
     <string name="details">Details</string>
-    <string name="question">Title</string>
-    <string name="answer">Response</string>
+    <string name="title">Title</string>
+    <string name="response">Response</string>
     <string name="export_download">File Exported to Downloads folder.</string>
     <string name="import_data">Import Data</string>
     <string name="export_data">Export Data</string>
 
     <!--    Edit Text Hints-->
     <string name="type_here">Type here…</string>
-    <string name="type_your_question_here">Type your title here…</string>
-    <string name="type_your_answer_here">Type your response here…</string>
-    <string name="type_your_heading_here">Type your title here…</string>
-    <string name="enter_valid_heading">Enter a Valid Title.</string>
-    <string name="enter_valid_question_n_answer">Enter a Valid title and response.</string>
+    <string name="type_your_title_here">Type your title here…</string>
+    <string name="type_your_response_here">Type your response here…</string>
+    <string name="type_your_heading_here">Type your heading here…</string>
+    <string name="enter_valid_heading">Enter a Valid Heading.</string>
+    <string name="enter_valid_title_n_response">Enter a Valid title and response.</string>
 
     <!--    Buttons Text-->
     <string name="add">Add</string>
