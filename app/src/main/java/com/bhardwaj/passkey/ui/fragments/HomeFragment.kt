@@ -59,7 +59,7 @@ class HomeFragment : Fragment() {
                 writePermissionGranted = permissions[Manifest.permission.WRITE_EXTERNAL_STORAGE]
                     ?: writePermissionGranted
 
-                if(!readPermissionGranted || !writePermissionGranted) {
+                if (!readPermissionGranted || !writePermissionGranted) {
                     Snackbar.make(
                         requireView(),
                         getString(R.string.permission_denied),
@@ -106,29 +106,13 @@ class HomeFragment : Fragment() {
             popupMenu.menuInflater.inflate(R.menu.popup_menu, popupMenu.menu)
             popupMenu.setOnMenuItemClickListener { item ->
                 when (item.itemId) {
-                    R.id.action_import -> importData()
-                    R.id.action_export -> exportData()
+                    R.id.action_import -> if (updateOrRequestPermission()) mainViewModel.importData()
+                    R.id.action_export -> if (updateOrRequestPermission()) mainViewModel.exportData()
                 }
                 true
             }
             popupMenu.show()
         }
-    }
-
-    private fun exportData() {
-        Toast.makeText(
-            requireContext(),
-            getString(R.string.export_download),
-            Toast.LENGTH_LONG
-        ).show()
-    }
-
-    private fun importData() {
-        Toast.makeText(
-            requireContext(),
-            "Clicked Import",
-            Toast.LENGTH_LONG
-        ).show()
     }
 
     private fun updateOrRequestPermission(): Boolean {
@@ -275,7 +259,11 @@ class HomeFragment : Fragment() {
             Toast.makeText(requireContext(), "Copied", Toast.LENGTH_SHORT).show()
     }
 
-    private fun persistChangesInOrdering(initialPosition: Int, finalPosition: Int, item: Preview) {
+    private fun persistChangesInOrdering(
+        initialPosition: Int,
+        finalPosition: Int,
+        item: Preview
+    ) {
         if (finalPosition > initialPosition) {
             mainViewModel.decrementPriority(
                 isPreview = true,
@@ -461,11 +449,5 @@ class HomeFragment : Fragment() {
             bottomSheetDialog.dismiss()
         }
         bottomSheetDialog.show()
-    }
-
-    private inline fun <T> sdk29AndUp(onSdk29: () -> T): T? {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            onSdk29()
-        } else null
     }
 }

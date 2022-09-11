@@ -9,7 +9,7 @@ class Constants {
         const val CATEGORY_NAME = "categoryName"
         const val ON_BOARDING = "onBoarding"
         const val FINISHED = "Finished"
-        const val FILE_NAME = "pass_key_manager.csv"
+        const val FILE_NAME = "pass_key_manager.adi"
         const val FILE_HEADER = "question,answer,heading,category\n"
     }
 }
