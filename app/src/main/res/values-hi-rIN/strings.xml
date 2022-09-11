@@ -18,7 +18,7 @@
     <string name="apps">ऐप्स</string>
     <string name="others">अन्य</string>
     <string name="details">विवरण</string>
-    <string name="question">प्रश्न</string>
+    <string name="question">शीर्षक</string>
     <string name="answer">उत्तर</string>
     <string name="export_download">फ़ाइल डाउनलोड फ़ोल्डर में निर्यात की गई।</string>
     <string name="import_data">फ़ाइलें आयात करें</string>
@@ -26,11 +26,11 @@
 
     <!--    Edit Text Hints-->
     <string name="type_here">यहा लिखें…</string>
-    <string name="type_your_question_here">यहाँ अपने प्रश्न लिखें…</string>
+    <string name="type_your_question_here">यहाँ अपने शीर्षक लिखें…</string>
     <string name="type_your_answer_here">अपना उत्तर यहां लिखें…</string>
     <string name="type_your_heading_here">अपना शीर्षक यहां लिखें…</string>
     <string name="enter_valid_heading">एक मान्य शीर्षक दर्ज करें।</string>
-    <string name="enter_valid_question_n_answer">एक मान्य प्रश्न और उत्तर दर्ज करें।</string>
+    <string name="enter_valid_question_n_answer">एक मान्य शीर्षक और उत्तर दर्ज करें।</string>
 
     <!--    Buttons Text-->
     <string name="add">जोड़ें</string>
