@@ -26,6 +26,7 @@
         android:layout_marginTop="40dp"
         android:background="@drawable/round_outline_button"
         android:minHeight="70dp"
+        android:paddingVertical="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvHeading">
@@ -33,7 +34,7 @@
         <EditText
             android:id="@+id/etHeading"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginHorizontal="10dp"
             android:autofillHints="username"
             android:background="@null"
@@ -41,8 +42,7 @@
             android:gravity="center|start"
             android:hint="@string/type_your_heading_here"
             android:imeOptions="actionDone"
-            android:inputType="textCapSentences"
-            android:maxLines="2"
+            android:inputType="textMultiLine"
             android:textColor="@color/secondary"
             android:textColorHint="@color/secondaryVariant"
             android:textSize="16sp"
