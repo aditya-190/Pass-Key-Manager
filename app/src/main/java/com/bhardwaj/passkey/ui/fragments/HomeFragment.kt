@@ -99,7 +99,7 @@ class HomeFragment : Fragment() {
             changeHeading(changeTo = Categories.OTHERS)
         }
         binding?.fabAdd?.setOnClickListener {
-            showBottomSheetDialog()
+            showBottomSheetDialog(editMode = false, previews = null)
         }
         binding?.ivImportExport?.setOnClickListener {
             val popupMenu = PopupMenu(requireContext(), binding?.ivImportExport!!)
@@ -232,6 +232,8 @@ class HomeFragment : Fragment() {
             PreviewAdapter(previewsList, { heading, category ->
                 val bundle = bundleOf(HEADING_NAME to heading, CATEGORY_NAME to category)
                 findNavController().navigate(R.id.homeFragment_to_detailsFragment, bundle)
+            }, { preview ->
+                showBottomSheetDialog(editMode = true, previews = preview)
             }, { heading ->
                 copyToClipBoard(heading)
             })
@@ -422,29 +424,49 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun showBottomSheetDialog() {
+    private fun showBottomSheetDialog(editMode: Boolean, previews: Preview?) {
         val bottomSheetDialog = BottomSheetDialog(requireContext())
         bottomSheetDialog.setContentView(R.layout.bottom_sheet_preview)
 
         val etHeading =
             bottomSheetDialog.findViewById<EditText>(R.id.etHeading)
 
+        if (editMode) {
+            etHeading?.setText(previews?.heading)
+        }
+
         bottomSheetDialog.findViewById<TextView>(R.id.tvSave)?.setOnClickListener {
-            if (etHeading?.text.toString().trim().isNotEmpty()) {
-                val preview = Preview(
-                    previewId = 0,
-                    priority = previewsList.size + 1,
-                    heading = etHeading?.text.toString().trim(),
-                    categoryName = categoryName
-                )
-                mainViewModel.insertPreview(preview)
+            val changedHeading = etHeading?.text.toString().trim()
+
+            if (editMode) {
+                if (changedHeading.isEmpty()) {
+                    Toast.makeText(
+                        requireContext(),
+                        getString(R.string.enter_valid_heading),
+                        Toast.LENGTH_LONG
+                    ).show()
+                } else if ((changedHeading != previews?.heading)) {
+                    val preview =
+                        previews?.copy(heading = changedHeading)
+                    if (preview != null) {
+                        mainViewModel.updatePreview(preview)
+                    }
+                }
             } else {
-                Toast.makeText(
-                    requireContext(),
-                    getString(R.string.enter_valid_heading),
-                    Toast.LENGTH_LONG
-                )
-                    .show()
+                if (changedHeading.isEmpty()) {
+                    Toast.makeText(
+                        requireContext(),
+                        getString(R.string.enter_valid_heading),
+                        Toast.LENGTH_LONG
+                    ).show()
+                } else {
+                    val preview =
+                        Preview(
+                            previewId = 0, heading = changedHeading, categoryName = categoryName, priority = previewsList.size + 1
+
+                        )
+                    mainViewModel.insertPreview(preview)
+                }
             }
             bottomSheetDialog.dismiss()
         }

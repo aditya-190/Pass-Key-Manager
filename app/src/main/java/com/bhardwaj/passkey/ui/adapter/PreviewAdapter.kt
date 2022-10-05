@@ -12,13 +12,15 @@ import com.ernestoyaquello.dragdropswiperecyclerview.DragDropSwipeAdapter
 class PreviewAdapter(
     previews: ArrayList<Preview>,
     private var onItemClicked: ((heading: String, category: Categories) -> Unit),
+    private var onEditClicked: ((item: Preview) -> Unit),
     private var onItemLongPressed: ((headingName: String) -> Unit)
 ) : DragDropSwipeAdapter<Preview, PreviewAdapter.PreviewViewHolder>(previews) {
 
     class PreviewViewHolder(itemView: View) : ViewHolder(itemView) {
         val clSingleItem: ConstraintLayout = itemView.findViewById(R.id.clSingleItem)
         val tvSingleText: TextView = itemView.findViewById(R.id.tvSingleText)
-        val ivSingleButton: ImageView = itemView.findViewById(R.id.ivSingleButton)
+        val ivEdit: ImageView = itemView.findViewById(R.id.ivEdit)
+//        val ivSingleButton: ImageView = itemView.findViewById(R.id.ivSingleButton)
         val ivSingleDrag: ImageView = itemView.findViewById(R.id.ivSingleDrag)
     }
 
@@ -31,9 +33,11 @@ class PreviewAdapter(
             onItemClicked(item.heading, item.categoryName)
         }
 
-        viewHolder.ivSingleButton.setOnClickListener {
-            onItemClicked(item.heading, item.categoryName)
-        }
+//        viewHolder.ivSingleButton.setOnClickListener {
+//            onItemClicked(item.heading, item.categoryName)
+//        }
+
+        viewHolder.ivEdit.setOnClickListener { onEditClicked(item) }
 
         viewHolder.clSingleItem.setOnLongClickListener {
             onItemLongPressed(item.heading)

@@ -13,6 +13,7 @@ class PassKeyRepository @Inject constructor(
 ) {
     val allPreviews = previewDao.getPreviews()
     suspend fun insertPreview(preview: Preview) = previewDao.insertPreview(previews = preview)
+    suspend fun updatePreview(preview: Preview) = previewDao.updatePreview(previews = preview)
     suspend fun deletePreview(
         preview: Preview,
         heading: String,

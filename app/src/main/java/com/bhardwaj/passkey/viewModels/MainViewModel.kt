@@ -37,6 +37,12 @@ class MainViewModel @Inject constructor(
         }
     }
 
+    fun updatePreview(preview: Preview) {
+        viewModelScope.launch(Dispatchers.IO) {
+            passKeyRepository.updatePreview(preview = preview)
+        }
+    }
+
     fun deletePreview(
         preview: Preview,
         heading: String,
