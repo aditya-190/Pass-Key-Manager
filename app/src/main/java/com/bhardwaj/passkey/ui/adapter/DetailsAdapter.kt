@@ -14,7 +14,7 @@ class DetailsAdapter(
     private var onItemLongPressed: ((answer: String) -> Unit)
 ) : DragDropSwipeAdapter<Details, DetailsAdapter.PreviewViewHolder>(details) {
 
-    class PreviewViewHolder(itemView: View) : DragDropSwipeAdapter.ViewHolder(itemView) {
+    class PreviewViewHolder(itemView: View) : ViewHolder(itemView) {
         val clSingleItem: ConstraintLayout = itemView.findViewById(R.id.clSingleItem)
         val ivSingleDrag: ImageView = itemView.findViewById(R.id.ivSingleDrag)
         val ivEdit: ImageView = itemView.findViewById(R.id.ivEdit)

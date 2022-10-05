@@ -15,7 +15,7 @@ class PreviewAdapter(
     private var onItemLongPressed: ((headingName: String) -> Unit)
 ) : DragDropSwipeAdapter<Preview, PreviewAdapter.PreviewViewHolder>(previews) {
 
-    class PreviewViewHolder(itemView: View) : DragDropSwipeAdapter.ViewHolder(itemView) {
+    class PreviewViewHolder(itemView: View) : ViewHolder(itemView) {
         val clSingleItem: ConstraintLayout = itemView.findViewById(R.id.clSingleItem)
         val tvSingleText: TextView = itemView.findViewById(R.id.tvSingleText)
         val ivSingleButton: ImageView = itemView.findViewById(R.id.ivSingleButton)
