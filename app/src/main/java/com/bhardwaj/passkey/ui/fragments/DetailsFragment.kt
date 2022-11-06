@@ -3,6 +3,7 @@ package com.bhardwaj.passkey.ui.fragments
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
+import android.content.DialogInterface
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,6 +13,7 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.app.AlertDialog
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -30,8 +32,6 @@ import com.ernestoyaquello.dragdropswiperecyclerview.listener.OnItemDragListener
 import com.ernestoyaquello.dragdropswiperecyclerview.listener.OnItemSwipeListener
 import com.ernestoyaquello.dragdropswiperecyclerview.listener.OnListScrollListener
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.google.android.material.snackbar.BaseTransientBottomBar
-import com.google.android.material.snackbar.Snackbar
 
 class DetailsFragment : Fragment() {
     private var binding: FragmentDetailsBinding? = null
@@ -78,35 +78,31 @@ class DetailsFragment : Fragment() {
                 direction: OnItemSwipeListener.SwipeDirection,
                 item: Details
             ): Boolean {
-                var clickedUndo = false
+                val builder = AlertDialog.Builder(requireContext())
 
-                val snackBar = Snackbar.make(binding?.root!!, "Deleted.", Snackbar.LENGTH_LONG)
-                snackBar.also {
-                    it.setAction("Undo") {
-                        detailsAdapter.insertItem(position, item)
-                        clickedUndo = true
-                    }
-                        .addCallback(object :
-                            BaseTransientBottomBar.BaseCallback<Snackbar>() {
-                            override fun onDismissed(
-                                transientBottomBar: Snackbar?,
-                                event: Int
-                            ) {
-                                if (!clickedUndo) {
-                                    mainViewModel.deleteDetails(
-                                        details = item,
-                                        headingName = item.headingName,
-                                        categoryName = categoryName,
-                                        initialPosition = position + 1,
-                                        finalPosition = detailsAdapter.itemCount + 1
-                                    )
-                                }
-                                super.onDismissed(transientBottomBar, event)
-                            }
-                        })
-                    it.show()
+                val positiveButtonClick = { _: DialogInterface, _: Int ->
+                    mainViewModel.deleteDetails(
+                        details = item,
+                        headingName = item.headingName,
+                        categoryName = categoryName,
+                        initialPosition = position + 1,
+                        finalPosition = detailsAdapter.itemCount + 1
+                    )
                 }
 
+                val negativeButtonClick = { _: DialogInterface, _: Int ->
+                    detailsAdapter.insertItem(position, item)
+                }
+
+                with(builder)
+                {
+                    setTitle("Confirm delete")
+                    setMessage("Are you sure you want to delete question - ${item.question}?")
+                    setPositiveButton("Delete", DialogInterface.OnClickListener(function = positiveButtonClick))
+                    setNegativeButton("Cancel", negativeButtonClick)
+                    setCancelable(false)
+                    show()
+                }
                 return false
             }
         }

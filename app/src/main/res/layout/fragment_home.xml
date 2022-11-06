@@ -100,7 +100,7 @@
         android:padding="8dp"
         android:src="@drawable/icon_bank"
         app:layout_constraintBottom_toBottomOf="@id/vBottomNavigation"
-        app:layout_constraintEnd_toStartOf="@id/ivEmail"
+        app:layout_constraintEnd_toStartOf="@id/ivApps"
         app:layout_constraintStart_toStartOf="@id/vBottomNavigation"
         app:layout_constraintTop_toTopOf="@id/vBottomNavigation"
         app:tint="@color/primary" />
@@ -113,8 +113,8 @@
         android:padding="8dp"
         android:src="@drawable/icon_mail"
         app:layout_constraintBottom_toBottomOf="@id/vBottomNavigation"
-        app:layout_constraintEnd_toStartOf="@id/ivInvisible"
-        app:layout_constraintStart_toEndOf="@id/ivBank"
+        app:layout_constraintEnd_toStartOf="@id/ivOthers"
+        app:layout_constraintStart_toEndOf="@id/ivInvisible"
         app:layout_constraintTop_toTopOf="@id/vBottomNavigation" />
 
     <ImageView
@@ -140,8 +140,8 @@
         android:padding="8dp"
         android:src="@drawable/icon_apps"
         app:layout_constraintBottom_toBottomOf="@id/vBottomNavigation"
-        app:layout_constraintEnd_toStartOf="@id/ivOthers"
-        app:layout_constraintStart_toEndOf="@id/ivInvisible"
+        app:layout_constraintEnd_toStartOf="@id/ivInvisible"
+        app:layout_constraintStart_toEndOf="@id/ivBank"
         app:layout_constraintTop_toTopOf="@id/vBottomNavigation" />
 
     <ImageView
@@ -153,7 +153,7 @@
         android:src="@drawable/icon_other"
         app:layout_constraintBottom_toBottomOf="@id/vBottomNavigation"
         app:layout_constraintEnd_toEndOf="@id/vBottomNavigation"
-        app:layout_constraintStart_toEndOf="@id/ivApps"
+        app:layout_constraintStart_toEndOf="@id/ivEmail"
         app:layout_constraintTop_toTopOf="@id/vBottomNavigation" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

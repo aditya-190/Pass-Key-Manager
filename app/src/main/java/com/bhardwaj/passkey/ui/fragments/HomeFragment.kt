@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context.CLIPBOARD_SERVICE
+import android.content.DialogInterface
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
@@ -15,6 +16,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.PopupMenu
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
@@ -35,7 +37,6 @@ import com.ernestoyaquello.dragdropswiperecyclerview.listener.OnItemDragListener
 import com.ernestoyaquello.dragdropswiperecyclerview.listener.OnItemSwipeListener
 import com.ernestoyaquello.dragdropswiperecyclerview.listener.OnListScrollListener
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 
 
@@ -170,36 +171,61 @@ class HomeFragment : Fragment() {
                 direction: OnItemSwipeListener.SwipeDirection,
                 item: Preview
             ): Boolean {
-                var clickedUndo = false
+//                var clickedUndo = false
+//
+//                val snackBar = Snackbar.make(binding?.root!!, "Deleted.", Snackbar.LENGTH_LONG)
+//                snackBar.also {
+//                    it.setAction("Undo") {
+//                        previewAdapter.insertItem(position, item)
+//                        clickedUndo = true
+//                    }
+//                        .addCallback(object :
+//                            BaseTransientBottomBar.BaseCallback<Snackbar>() {
+//                            override fun onDismissed(
+//                                transientBottomBar: Snackbar?,
+//                                event: Int
+//                            ) {
+//                                if (!clickedUndo) {
+//                                    mainViewModel.deletePreview(
+//                                        preview = item,
+//                                        heading = item.heading,
+//                                        categoryName = categoryName,
+//                                        initialPosition = position + 1,
+//                                        finalPosition = previewAdapter.itemCount + 1
+//                                    )
+//                                }
+//                                super.onDismissed(transientBottomBar, event)
+//                            }
+//                        })
+//                    it.anchorView = binding?.fabAdd
+//                    it.show()
+//                }
 
-                val snackBar = Snackbar.make(binding?.root!!, "Deleted.", Snackbar.LENGTH_LONG)
-                snackBar.also {
-                    it.setAction("Undo") {
-                        previewAdapter.insertItem(position, item)
-                        clickedUndo = true
-                    }
-                        .addCallback(object :
-                            BaseTransientBottomBar.BaseCallback<Snackbar>() {
-                            override fun onDismissed(
-                                transientBottomBar: Snackbar?,
-                                event: Int
-                            ) {
-                                if (!clickedUndo) {
-                                    mainViewModel.deletePreview(
-                                        preview = item,
-                                        heading = item.heading,
-                                        categoryName = categoryName,
-                                        initialPosition = position + 1,
-                                        finalPosition = previewAdapter.itemCount + 1
-                                    )
-                                }
-                                super.onDismissed(transientBottomBar, event)
-                            }
-                        })
-                    it.anchorView = binding?.fabAdd
-                    it.show()
+                val builder = AlertDialog.Builder(requireContext())
+
+                val positiveButtonClick = { _: DialogInterface, _: Int ->
+                    mainViewModel.deletePreview(
+                        preview = item,
+                        heading = item.heading,
+                        categoryName = categoryName,
+                        initialPosition = position + 1,
+                        finalPosition = previewAdapter.itemCount + 1
+                    )
                 }
 
+                val negativeButtonClick = { _: DialogInterface, _: Int ->
+                    previewAdapter.insertItem(position, item)
+                }
+
+                with(builder)
+                {
+                    setTitle("Confirm delete")
+                    setMessage("Are you sure you want to delete heading - ${item.heading}?")
+                    setPositiveButton("Delete", DialogInterface.OnClickListener(function = positiveButtonClick))
+                    setNegativeButton("Cancel", negativeButtonClick)
+                    setCancelable(false)
+                    show()
+                }
                 return false
             }
         }
