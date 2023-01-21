@@ -171,36 +171,6 @@ class HomeFragment : Fragment() {
                 direction: OnItemSwipeListener.SwipeDirection,
                 item: Preview
             ): Boolean {
-//                var clickedUndo = false
-//
-//                val snackBar = Snackbar.make(binding?.root!!, "Deleted.", Snackbar.LENGTH_LONG)
-//                snackBar.also {
-//                    it.setAction("Undo") {
-//                        previewAdapter.insertItem(position, item)
-//                        clickedUndo = true
-//                    }
-//                        .addCallback(object :
-//                            BaseTransientBottomBar.BaseCallback<Snackbar>() {
-//                            override fun onDismissed(
-//                                transientBottomBar: Snackbar?,
-//                                event: Int
-//                            ) {
-//                                if (!clickedUndo) {
-//                                    mainViewModel.deletePreview(
-//                                        preview = item,
-//                                        heading = item.heading,
-//                                        categoryName = categoryName,
-//                                        initialPosition = position + 1,
-//                                        finalPosition = previewAdapter.itemCount + 1
-//                                    )
-//                                }
-//                                super.onDismissed(transientBottomBar, event)
-//                            }
-//                        })
-//                    it.anchorView = binding?.fabAdd
-//                    it.show()
-//                }
-
                 val builder = AlertDialog.Builder(requireContext())
 
                 val positiveButtonClick = { _: DialogInterface, _: Int ->
