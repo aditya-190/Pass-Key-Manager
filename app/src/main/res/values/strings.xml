@@ -67,4 +67,14 @@
     <string name="permission_required">Storage access is required to export database.</string>
     <string name="permission_denied">Permission Denied</string>
     <string name="ok">OK</string>
+
+    <!--    Dialogs and Requests-->
+    <string name="import_success">Data imported successfully.</string>
+    <string name="import_failed">Failed to import data.</string>
+    <string name="copied">Copied</string>
+    <string name="delete">Delete</string>
+    <string name="cancel">Cancel</string>
+    <string name="confirm_delete_title">Confirm delete</string>
+    <string name="confirm_delete_description_question">Are you sure you want to delete question</string>
+    <string name="confirm_delete_description_heading">Are you sure you want to delete heading</string>
 </resources>

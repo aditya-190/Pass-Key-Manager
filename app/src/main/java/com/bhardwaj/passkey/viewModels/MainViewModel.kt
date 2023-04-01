@@ -142,7 +142,7 @@ class MainViewModel @Inject constructor(
                 withContext(Dispatchers.Main) {
                     Toast.makeText(
                         getApplication(),
-                        "Coming Soon.",
+                        getApplication<PassKeyApplication>().getString(R.string.import_success),
                         Toast.LENGTH_LONG
                     ).show()
                 }

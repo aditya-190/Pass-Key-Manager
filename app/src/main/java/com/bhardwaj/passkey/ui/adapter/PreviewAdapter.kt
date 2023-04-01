@@ -20,7 +20,6 @@ class PreviewAdapter(
         val clSingleItem: ConstraintLayout = itemView.findViewById(R.id.clSingleItem)
         val tvSingleText: TextView = itemView.findViewById(R.id.tvSingleText)
         val ivEdit: ImageView = itemView.findViewById(R.id.ivEdit)
-//        val ivSingleButton: ImageView = itemView.findViewById(R.id.ivSingleButton)
         val ivSingleDrag: ImageView = itemView.findViewById(R.id.ivSingleDrag)
     }
 
@@ -32,10 +31,6 @@ class PreviewAdapter(
         viewHolder.clSingleItem.setOnClickListener {
             onItemClicked(item.heading, item.categoryName)
         }
-
-//        viewHolder.ivSingleButton.setOnClickListener {
-//            onItemClicked(item.heading, item.categoryName)
-//        }
 
         viewHolder.ivEdit.setOnClickListener { onEditClicked(item) }
 

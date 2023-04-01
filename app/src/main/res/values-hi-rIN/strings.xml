@@ -45,4 +45,14 @@
     <string name="permission_required">संग्रहण अनुमति की आवश्यकता है</string>
     <string name="permission_denied">अनुमति नहीं है</string>
     <string name="ok">स्वीकृति दें</string>
+
+    <!--    Dialogs and Requests-->
+    <string name="import_success">डेटा सफलतापूर्वक आयात किया गया।</string>
+    <string name="import_failed">डेटा आयात करने में विफल.</string>
+    <string name="copied">कॉपी किया</string>
+    <string name="delete">डिलीट हो गया</string>
+    <string name="cancel">रद्द करें</string>
+    <string name="confirm_delete_title">हटाने की पुष्टि करें</string>
+    <string name="confirm_delete_description_question">क्या आप वाकई प्रश्न हटाना चाहते हैं?</string>
+    <string name="confirm_delete_description_heading">क्या आप वाकई शीर्षक हटाना चाहते हैं?</string>
 </resources>

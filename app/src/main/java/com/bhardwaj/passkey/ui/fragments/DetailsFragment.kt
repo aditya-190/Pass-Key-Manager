@@ -96,10 +96,13 @@ class DetailsFragment : Fragment() {
 
                 with(builder)
                 {
-                    setTitle("Confirm delete")
-                    setMessage("Are you sure you want to delete question - ${item.question}?")
-                    setPositiveButton("Delete", DialogInterface.OnClickListener(function = positiveButtonClick))
-                    setNegativeButton("Cancel", negativeButtonClick)
+                    setTitle(getString(R.string.confirm_delete_title))
+                    setMessage("${getString(R.string.confirm_delete_description_question)} - ${item.question}?")
+                    setPositiveButton(
+                        getString(R.string.delete),
+                        DialogInterface.OnClickListener(function = positiveButtonClick)
+                    )
+                    setNegativeButton(getString(R.string.cancel), negativeButtonClick)
                     setCancelable(false)
                     show()
                 }
@@ -153,7 +156,7 @@ class DetailsFragment : Fragment() {
             requireActivity().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
         clipboardManager.setPrimaryClip(ClipData.newPlainText("Answer", answer))
         if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.S_V2)
-            Toast.makeText(requireContext(), "Copied", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), getString(R.string.copied), Toast.LENGTH_SHORT).show()
     }
 
     private fun persistChangesInOrdering(initialPosition: Int, finalPosition: Int, item: Details) {

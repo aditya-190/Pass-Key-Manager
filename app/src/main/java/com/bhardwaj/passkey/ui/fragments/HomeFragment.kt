@@ -190,10 +190,13 @@ class HomeFragment : Fragment() {
 
                 with(builder)
                 {
-                    setTitle("Confirm delete")
-                    setMessage("Are you sure you want to delete heading - ${item.heading}?")
-                    setPositiveButton("Delete", DialogInterface.OnClickListener(function = positiveButtonClick))
-                    setNegativeButton("Cancel", negativeButtonClick)
+                    setTitle(getString(R.string.confirm_delete_title))
+                    setMessage("${getString(R.string.confirm_delete_description_heading)} - ${item.heading}?")
+                    setPositiveButton(
+                        getString(R.string.delete),
+                        DialogInterface.OnClickListener(function = positiveButtonClick)
+                    )
+                    setNegativeButton(getString(R.string.cancel), negativeButtonClick)
                     setCancelable(false)
                     show()
                 }
@@ -255,7 +258,7 @@ class HomeFragment : Fragment() {
             requireActivity().getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
         clipboardManager.setPrimaryClip(ClipData.newPlainText("Heading", heading))
         if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.S_V2)
-            Toast.makeText(requireContext(), "Copied", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), getString(R.string.copied), Toast.LENGTH_SHORT).show()
     }
 
     private fun persistChangesInOrdering(
@@ -459,7 +462,10 @@ class HomeFragment : Fragment() {
                 } else {
                     val preview =
                         Preview(
-                            previewId = 0, heading = changedHeading, categoryName = categoryName, priority = previewsList.size + 1
+                            previewId = 0,
+                            heading = changedHeading,
+                            categoryName = categoryName,
+                            priority = previewsList.size + 1
 
                         )
                     mainViewModel.insertPreview(preview)
