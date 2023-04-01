@@ -128,8 +128,9 @@ class HomeFragment : Fragment() {
         ) == PackageManager.PERMISSION_GRANTED
 
         val minSdk29 = Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q
+        val minSdk33 = Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU
 
-        readPermissionGranted = hasReadPermission
+        readPermissionGranted = hasReadPermission || minSdk33
         writePermissionGranted = hasWritePermission || minSdk29
 
         val permissionsToRequest = mutableListOf<String>()

@@ -13,7 +13,7 @@ interface DetailsDao {
     fun getDetails(): Flow<List<Details>>
 
     @Query("SELECT * FROM $DETAILS_TABLE")
-    fun getDetailsForExport(): Flow<List<Details>>
+    suspend fun getDetailsForExport(): List<Details>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertDetails(details: Details)

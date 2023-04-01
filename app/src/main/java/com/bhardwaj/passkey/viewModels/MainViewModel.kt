@@ -16,7 +16,6 @@ import com.bhardwaj.passkey.data.entity.Details
 import com.bhardwaj.passkey.data.entity.Preview
 import com.bhardwaj.passkey.data.repository.PassKeyRepository
 import com.bhardwaj.passkey.utils.Constants
-import com.bhardwaj.passkey.utils.Constants.Companion.FILE_HEADER
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -106,7 +105,6 @@ class MainViewModel @Inject constructor(
     }
 
     val allDetails = passKeyRepository.allDetails.asLiveData()
-    private val allDetailsForExport = passKeyRepository.allDetailsForExport.asLiveData()
 
     fun insertDetails(details: Details) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -157,16 +155,18 @@ class MainViewModel @Inject constructor(
     fun exportData() {
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                var dataToExport = FILE_HEADER
+                val fileName =
+                    "${Constants.FILE_NAME}_${System.currentTimeMillis()}.${Constants.FILE_TYPE}"
+                var dataToExport = Constants.FILE_HEADER
 
-                allDetailsForExport.value?.forEach { single ->
-                    dataToExport += "${single.question},${single.answer},${single.headingName},${single.categoryName}\n"
+                passKeyRepository.getDetailsForExport().forEach { single ->
+                    dataToExport += "${single.categoryName},${single.headingName},${single.question},${single.answer}\n"
                 }
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                     val contentValues = ContentValues().apply {
-                        put(MediaStore.MediaColumns.DISPLAY_NAME, Constants.FILE_NAME)
-                        put(MediaStore.MediaColumns.MIME_TYPE, "text/adi")
+                        put(MediaStore.MediaColumns.DISPLAY_NAME, fileName)
+                        put(MediaStore.MediaColumns.MIME_TYPE, "text/csv")
                         put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_DOWNLOADS)
                     }
 
@@ -183,7 +183,7 @@ class MainViewModel @Inject constructor(
                 } else {
                     val target = File(
                         Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
-                        Constants.FILE_NAME
+                        fileName
                     )
 
                     FileOutputStream(target).use { output ->
@@ -198,6 +198,13 @@ class MainViewModel @Inject constructor(
                     ).show()
                 }
             } catch (e: Exception) {
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(
+                        getApplication(),
+                        getApplication<PassKeyApplication>().getString(R.string.something_went_wrong),
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
                 e.printStackTrace()
             }
         }
