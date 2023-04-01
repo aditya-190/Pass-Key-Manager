@@ -1,5 +1,6 @@
 package com.bhardwaj.passkey.ui.fragments
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -9,7 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.biometric.BiometricManager
+import androidx.biometric.BiometricManager.*
 import androidx.biometric.BiometricManager.Authenticators.*
 import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
@@ -25,7 +26,7 @@ class AuthFragment : Fragment() {
     private lateinit var biometricPrompt: BiometricPrompt
     private lateinit var promptInfo: BiometricPrompt.PromptInfo
     private val biometricManager by lazy {
-        BiometricManager.from(requireContext())
+        from(requireContext())
     }
 
     override fun onCreateView(
@@ -74,22 +75,32 @@ class AuthFragment : Fragment() {
             .build()
 
         when (biometricManager.canAuthenticate(DEVICE_CREDENTIAL or BIOMETRIC_WEAK or BIOMETRIC_STRONG)) {
-            BiometricManager.BIOMETRIC_SUCCESS -> {
+            BIOMETRIC_SUCCESS -> {
                 biometricPrompt.authenticate(promptInfo)
             }
-            BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE,
-            BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE,
-            BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED -> {
+            BIOMETRIC_ERROR_NO_HARDWARE,
+            BIOMETRIC_ERROR_HW_UNAVAILABLE,
+            BIOMETRIC_ERROR_NONE_ENROLLED -> {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                     val getResult =
                         registerForActivityResult(
                             ActivityResultContracts.StartActivityForResult()
-                        ) {}
+                        ) { result ->
+                            if (result.resultCode == Activity.RESULT_CANCELED) {
+                                Toast.makeText(
+                                    requireContext(),
+                                    getString(R.string.set_password),
+                                    Toast.LENGTH_LONG
+                                ).show()
+                                startActivity(Intent(Settings.ACTION_SETTINGS))
+                                requireActivity().finish()
+                            }
+                        }
 
                     val intent = Intent(Settings.ACTION_BIOMETRIC_ENROLL).apply {
                         putExtra(
                             Settings.EXTRA_BIOMETRIC_AUTHENTICATORS_ALLOWED,
-                            BIOMETRIC_STRONG or DEVICE_CREDENTIAL
+                            BIOMETRIC_STRONG or BIOMETRIC_WEAK or DEVICE_CREDENTIAL
                         )
                     }
                     getResult.launch(intent)
@@ -99,12 +110,20 @@ class AuthFragment : Fragment() {
                         getString(R.string.set_password),
                         Toast.LENGTH_LONG
                     ).show()
+                    startActivity(Intent(Settings.ACTION_SETTINGS))
                     requireActivity().finish()
                 }
             }
-            BiometricManager.BIOMETRIC_ERROR_SECURITY_UPDATE_REQUIRED -> {}
-            BiometricManager.BIOMETRIC_ERROR_UNSUPPORTED -> {}
-            BiometricManager.BIOMETRIC_STATUS_UNKNOWN -> {}
+            BIOMETRIC_ERROR_SECURITY_UPDATE_REQUIRED,
+            BIOMETRIC_ERROR_UNSUPPORTED,
+            BIOMETRIC_STATUS_UNKNOWN -> {
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.something_went_wrong),
+                    Toast.LENGTH_LONG
+                ).show()
+                requireActivity().finish()
+            }
         }
     }
 }
