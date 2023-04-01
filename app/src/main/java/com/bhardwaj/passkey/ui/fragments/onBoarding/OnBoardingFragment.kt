@@ -33,9 +33,6 @@ class OnBoardingFragment : Fragment() {
             lifecycle
         )
 
-        binding?.pager?.apply {
-            this.adapter = adapter
-            this.setPageTransformer(ViewPagerTransformer())
-        }
+        binding?.pager?.adapter = adapter
     }
 }
