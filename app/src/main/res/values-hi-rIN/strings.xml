@@ -3,8 +3,8 @@
     <string name="splash_description">एकमात्र पासवर्ड मैनेजर जिसकी आपको कभी आवश्यकता होगी</string>
 
     <!--    OnBoarding Screens-->
-    <string name="skip">छोड़ें</string>
-    <string name="next">अगला</string>
+    <string name="skip">स्किप करे</string>
+    <string name="next">आगे बढे</string>
     <string name="first_heading">जनरेट करें\n<font fgcolor="#ff6464">सुरक्षित</font>\nपासवर्ड</string>
     <string name="second_heading">आपके सभी\n<font fgcolor="#ff6464">पासवर्ड</font>\nयहाँ हैं</string>
     <string name="third_heading">टाइप करने की\n<font fgcolor="#ff6464">कोई जरूरत</font>\nनही</string>
@@ -50,7 +50,7 @@
     <string name="import_success">डेटा सफलतापूर्वक आयात किया गया।</string>
     <string name="import_failed">डेटा आयात करने में विफल.</string>
     <string name="copied">कॉपी किया</string>
-    <string name="delete">डिलीट हो गया</string>
+    <string name="delete">डिलीट करें</string>
     <string name="cancel">रद्द करें</string>
     <string name="confirm_delete_title">हटाने की पुष्टि करें</string>
     <string name="confirm_delete_description_question">क्या आप वाकई प्रश्न हटाना चाहते हैं?</string>
