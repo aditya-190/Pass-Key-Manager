@@ -13,6 +13,9 @@ class PassKeyRepository @Inject constructor(
 ) {
     val allPreviews = previewDao.getPreviews()
     suspend fun insertPreview(preview: Preview) = previewDao.insertPreview(previews = preview)
+    suspend fun insertAllPreview(allPreviews: List<Preview>) =
+        previewDao.insertAllPreview(allPreviews = allPreviews)
+
     suspend fun updatePreview(preview: Preview) = previewDao.updatePreview(previews = preview)
     suspend fun deletePreview(
         preview: Preview,
@@ -114,6 +117,9 @@ class PassKeyRepository @Inject constructor(
     val allDetails = detailsDao.getDetails()
     suspend fun getDetailsForExport() = detailsDao.getDetailsForExport()
     suspend fun insertDetails(details: Details) = detailsDao.insertDetails(details = details)
+    suspend fun insertAllDetails(allDetails: List<Details>) =
+        detailsDao.insertAllDetails(allDetails = allDetails)
+
     suspend fun updateDetails(details: Details) = detailsDao.updateDetails(details = details)
     suspend fun deleteDetails(
         details: Details,

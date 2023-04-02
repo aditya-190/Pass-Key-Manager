@@ -2,9 +2,11 @@ package com.bhardwaj.passkey.viewModels
 
 import android.app.Application
 import android.content.ContentValues
+import android.net.Uri
 import android.os.Build
 import android.os.Environment
 import android.provider.MediaStore
+import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.asLiveData
@@ -16,12 +18,14 @@ import com.bhardwaj.passkey.data.entity.Details
 import com.bhardwaj.passkey.data.entity.Preview
 import com.bhardwaj.passkey.data.repository.PassKeyRepository
 import com.bhardwaj.passkey.utils.Constants
+import com.opencsv.CSVReaderBuilder
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.File
 import java.io.FileOutputStream
+import java.io.InputStreamReader
 import javax.inject.Inject
 
 @HiltViewModel
@@ -136,9 +140,25 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    fun importData() {
+    fun importData(fileUri: Uri) {
         viewModelScope.launch(Dispatchers.IO) {
             try {
+                val resolver = getApplication<PassKeyApplication>().contentResolver
+                val csvReader =
+                    CSVReaderBuilder(InputStreamReader(resolver.openInputStream(fileUri)))
+                        .withSkipLines(1)
+                        .build()
+
+                val allPreviews = mutableListOf<Preview>()
+                val allDetails = mutableListOf<Details>()
+                var current: Array<String>?
+                while (csvReader.readNext().also { current = it } != null) {
+                    Log.d("ADITYA", "importData: ${current!![0]}")
+                }
+                csvReader.close()
+                passKeyRepository.insertAllPreview(allPreviews = allPreviews)
+                passKeyRepository.insertAllDetails(allDetails = allDetails)
+
                 withContext(Dispatchers.Main) {
                     Toast.makeText(
                         getApplication(),
@@ -147,6 +167,13 @@ class MainViewModel @Inject constructor(
                     ).show()
                 }
             } catch (e: Exception) {
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(
+                        getApplication(),
+                        getApplication<PassKeyApplication>().getString(R.string.import_failed),
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
                 e.printStackTrace()
             }
         }

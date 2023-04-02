@@ -15,6 +15,9 @@ interface PreviewDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertPreview(previews: Preview)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAllPreview(allPreviews: List<Preview>)
+
     @Update
     suspend fun updatePreview(previews: Preview)
 

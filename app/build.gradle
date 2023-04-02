@@ -92,6 +92,9 @@ dependencies {
     // Swipe to Delete Gesture.
     implementation 'com.ernestoyaquello.dragdropswiperecyclerview:drag-drop-swipe-recyclerview:1.1.1'
 
+    // Reading CSV.
+    implementation "com.opencsv:opencsv:5.7.1"
+
     // Kotlin Coroutines, ViewModels and LiveData.
     implementation 'androidx.activity:activity-ktx:1.7.0'
     implementation 'androidx.fragment:fragment-ktx:1.5.6'

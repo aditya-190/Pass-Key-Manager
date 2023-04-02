@@ -1,10 +1,12 @@
 package com.bhardwaj.passkey.ui.fragments
 
 import android.Manifest
+import android.app.Activity
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context.CLIPBOARD_SERVICE
 import android.content.DialogInterface
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
@@ -49,6 +51,7 @@ class HomeFragment : Fragment() {
     private var readPermissionGranted = false
     private var writePermissionGranted = false
     private lateinit var permissionLauncher: ActivityResultLauncher<Array<String>>
+    private lateinit var getFileLauncher: ActivityResultLauncher<Intent>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,6 +69,13 @@ class HomeFragment : Fragment() {
                         getString(R.string.permission_denied),
                         Snackbar.LENGTH_LONG
                     ).show()
+                }
+            }
+
+        getFileLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+                if (result.resultCode == Activity.RESULT_OK) {
+                    result.data?.data?.let { fileUri -> mainViewModel.importData(fileUri) }
                 }
             }
     }
@@ -107,13 +117,21 @@ class HomeFragment : Fragment() {
             popupMenu.menuInflater.inflate(R.menu.popup_menu, popupMenu.menu)
             popupMenu.setOnMenuItemClickListener { item ->
                 when (item.itemId) {
-                    R.id.action_import -> if (updateOrRequestPermission()) mainViewModel.importData()
+                    R.id.action_import -> if (updateOrRequestPermission()) importData()
                     R.id.action_export -> if (updateOrRequestPermission()) mainViewModel.exportData()
                 }
                 true
             }
             popupMenu.show()
         }
+    }
+
+    private fun importData() {
+        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
+            addCategory(Intent.CATEGORY_OPENABLE)
+            type = "*/*"
+        }
+        getFileLauncher.launch(intent)
     }
 
     private fun updateOrRequestPermission(): Boolean {
