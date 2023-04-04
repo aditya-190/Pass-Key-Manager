@@ -6,7 +6,6 @@ import android.net.Uri
 import android.os.Build
 import android.os.Environment
 import android.provider.MediaStore
-import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.asLiveData
@@ -152,8 +151,37 @@ class MainViewModel @Inject constructor(
                 val allPreviews = mutableListOf<Preview>()
                 val allDetails = mutableListOf<Details>()
                 var current: Array<String>?
+                val uniquePreviews = mutableMapOf<String, HashSet<String>>()
+                var detailsPriorityNum = 0
                 while (csvReader.readNext().also { current = it } != null) {
-                    Log.d("ADITYA", "importData: ${current!![0]}")
+                    val (category, heading, question, answer) = current ?: arrayOf("", "", "", "")
+                    if (!uniquePreviews.containsKey(category)) {
+                        uniquePreviews[category] = hashSetOf()
+                    }
+                    uniquePreviews[category]?.add(heading)
+                    val details = Details(
+                        detailsId = 0,
+                        priority = detailsPriorityNum,
+                        question = question,
+                        answer = answer,
+                        headingName = heading,
+                        categoryName = Categories.valueOf(category)
+                    )
+                    allDetails.add(details)
+                    detailsPriorityNum += 1
+                }
+                for ((category, headingList) in uniquePreviews) {
+                    var previewPriorityNum = 0
+                    for (singleHeading in headingList) {
+                        val preview = Preview(
+                            previewId = 0,
+                            priority = previewPriorityNum,
+                            heading = singleHeading,
+                            categoryName = Categories.valueOf(category)
+                        )
+                        allPreviews.add(preview)
+                        previewPriorityNum += 1
+                    }
                 }
                 csvReader.close()
                 passKeyRepository.insertAllPreview(allPreviews = allPreviews)
