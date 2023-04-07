@@ -41,7 +41,7 @@
 
         <TextView
             android:id="@+id/tvRateApp"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:fontFamily="@font/poppins"
@@ -53,7 +53,7 @@
 
         <TextView
             android:id="@+id/tvImportData"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:fontFamily="@font/poppins"
@@ -65,7 +65,7 @@
 
         <TextView
             android:id="@+id/tvExportData"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:fontFamily="@font/poppins"
@@ -77,7 +77,7 @@
 
         <TextView
             android:id="@+id/tvPrivacy"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:fontFamily="@font/poppins"
@@ -89,7 +89,7 @@
 
         <TextView
             android:id="@+id/tvTerms"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:fontFamily="@font/poppins"
@@ -101,7 +101,7 @@
 
         <TextView
             android:id="@+id/tvAbout"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:fontFamily="@font/poppins"
