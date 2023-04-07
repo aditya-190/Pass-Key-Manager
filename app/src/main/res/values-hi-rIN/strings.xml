@@ -18,9 +18,14 @@
     <string name="apps">ऐप्स</string>
     <string name="others">अन्य</string>
     <string name="details">विवरण</string>
+    <string name="more">अन्य सेटिंग</string>
     <string name="title">शीर्षक</string>
     <string name="response">उत्तर</string>
     <string name="export_download">फ़ाइल डाउनलोड फ़ोल्डर में निर्यात की गई।</string>
+    <string name="rate_app">ऐप रेटिंग</string>
+    <string name="privacy">प्राइवेसी</string>
+    <string name="terms_n_condition">नियम एवं शर्तें</string>
+    <string name="about">एबाउट</string>
     <string name="import_data">फ़ाइलें आयात करें</string>
     <string name="export_data">फ़ाइलें निर्यात करें</string>
 
@@ -55,4 +60,7 @@
     <string name="confirm_delete_title">हटाने की पुष्टि करें</string>
     <string name="confirm_delete_description_question">क्या आप वाकई प्रश्न हटाना चाहते हैं?</string>
     <string name="confirm_delete_description_heading">क्या आप वाकई शीर्षक हटाना चाहते हैं?</string>
+    <string name="about_message">About Message</string>
+    <string name="privacy_message">Privacy Message</string>
+    <string name="terms_n_condition_message">Terms and Condition Message</string>
 </resources>

@@ -11,12 +11,11 @@
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
-        <!-- Customize your theme here. -->
-        <item name="android:dropDownListViewStyle">@style/PopupMenuListView</item>
     </style>
-
-    <style name="PopupMenuListView" parent="@style/Widget.AppCompat.ListView.DropDown">
-        <item name="android:divider">#dddddd</item>
-        <item name="android:dividerHeight">1dp</item>
+    <style name="customAlertDialog" parent="Animation.Design.BottomSheetDialog">
+        <item name="android:textColor">@color/secondary</item>
+        <item name="android:textColorPrimary">@color/secondaryVariantDark</item>
+        <item name="textColorAlertDialogListItem">@color/secondaryVariantDark</item>
+        <item name="buttonTint">@color/primary</item>
     </style>
 </resources>

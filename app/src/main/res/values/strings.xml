@@ -1,6 +1,7 @@
 <resources>
     <!--    Not to Be translated-->
     <!--    Splash Screen-->
+    <string name="app_version" translatable="false">App Version %1$s</string>
     <string name="app_name" translatable="false">PassKey</string>
     <string name="pass" translatable="false">PASS</string>
     <string name="key" translatable="false">KEY</string>
@@ -40,9 +41,14 @@
     <string name="apps">Apps</string>
     <string name="others">Others</string>
     <string name="details">Details</string>
+    <string name="more">More</string>
     <string name="title">Title</string>
     <string name="response">Response</string>
     <string name="export_download">File Exported to Downloads folder.</string>
+    <string name="rate_app">Rate App</string>
+    <string name="privacy">Privacy</string>
+    <string name="terms_n_condition">Terms and Conditions</string>
+    <string name="about">About</string>
     <string name="import_data">Import Data</string>
     <string name="export_data">Export Data</string>
 
@@ -77,4 +83,7 @@
     <string name="confirm_delete_title">Confirm delete</string>
     <string name="confirm_delete_description_question">Are you sure you want to delete question</string>
     <string name="confirm_delete_description_heading">Are you sure you want to delete heading</string>
+    <string name="about_message">About Message</string>
+    <string name="privacy_message">Privacy Message</string>
+    <string name="terms_n_condition_message">Terms and Condition Message</string>
 </resources>

@@ -52,14 +52,14 @@ class DetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         headingName = arguments?.getString(HEADING_NAME).toString()
-        categoryName = arguments?.getSerializable(CATEGORY_NAME) as Categories
+        categoryName = Categories.valueOf(arguments?.getString(CATEGORY_NAME, "BANKS").toString())
         clickListeners()
         setUpRecyclerView()
         requireActivity().onBackPressedDispatcher.addCallback(
             viewLifecycleOwner,
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    val bundle = bundleOf(CATEGORY_NAME to categoryName)
+                    val bundle = bundleOf(CATEGORY_NAME to categoryName.toString())
                     findNavController().navigate(R.id.detailsFragment_to_homeFragment, bundle)
                 }
             })
