@@ -5,11 +5,20 @@
     <string name="app_name" translatable="false">PassKey</string>
     <string name="pass" translatable="false">PASS</string>
     <string name="key" translatable="false">KEY</string>
+    <string name="splash_description" translatable="false">The only password manager you’ll ever need.</string>
 
     <!--    OnBoarding Screens-->
     <string name="_1" translatable="false">1</string>
     <string name="_2" translatable="false">2</string>
     <string name="_3" translatable="false">3</string>
+    <string name="skip" translatable="false">Skip</string>
+    <string name="next" translatable="false">Next</string>
+    <string name="first_heading" translatable="false">Generate\n<font fgcolor='#ff6464'>Secure</font>\nPasswords.</string>
+    <string name="second_heading" translatable="false">All Your\n<font fgcolor='#ff6464'>Passwords</font> Are\nHere.</string>
+    <string name="third_heading" translatable="false">Don\'t Type,\n<font fgcolor='#ff6464'>Autofill</font> Your\nCredentials.</string>
+    <string name="first_description" translatable="false">Stop using unsecure passwords for your online \naccounts, level up with PassKey. Get the most secure \nand difficult-to-crack passwords.</string>
+    <string name="second_description" translatable="false">Store and manage all of your passwords from one \nplace. Don’t remember hundreds of passwords, just \nremember one.</string>
+    <string name="third_description" translatable="false">Don’t compromise your passwords by typing them in \npublic, let PassKey autofill those and keep your \ncredentials secure.</string>
 
     <!--    Bottom Navigation and Content Description's-->
     <string name="icon_bank" translatable="false">Icon Bank</string>
@@ -18,23 +27,11 @@
     <string name="icon_mail" translatable="false">Icon Emails</string>
     <string name="icon_drag" translatable="false">Icon Drag</string>
     <string name="icon_edit" translatable="false">Icon Edit</string>
+    <string name="icon_back" translatable="false">Icon Back</string>
     <string name="icon_no_result" translatable="false">Icon No Result</string>
     <string name="floating_action_button" translatable="false">Floating Action Button</string>
 
     <!--    To Be translated-->
-    <!--    Splash Screen-->
-    <string name="splash_description">The only password manager you’ll ever need.</string>
-
-    <!--    OnBoarding Screens-->
-    <string name="skip">Skip</string>
-    <string name="next">Next</string>
-    <string name="first_heading">Generate\n<font fgcolor='#ff6464'>Secure</font>\nPasswords.</string>
-    <string name="second_heading">All Your\n<font fgcolor='#ff6464'>Passwords</font> Are\nHere.</string>
-    <string name="third_heading">Don\'t Type,\n<font fgcolor='#ff6464'>Autofill</font> Your\nCredentials.</string>
-    <string name="first_description">Stop using unsecure passwords for your online \naccounts, level up with PassKey. Get the most secure \nand difficult-to-crack passwords.</string>
-    <string name="second_description">Store and manage all of your passwords from one \nplace. Don’t remember hundreds of passwords, just \nremember one.</string>
-    <string name="third_description">Don’t compromise your passwords by typing them in \npublic, let PassKey autofill those and keep your \ncredentials secure.</string>
-
     <!--    Main Screens-->
     <string name="banks">Banks</string>
     <string name="mails">Mails</string>
@@ -46,6 +43,7 @@
     <string name="response">Response</string>
     <string name="export_download">File Exported to Downloads folder.</string>
     <string name="rate_app">Rate App</string>
+    <string name="change_language">Change Language</string>
     <string name="privacy">Privacy</string>
     <string name="terms_n_condition">Terms and Conditions</string>
     <string name="about">About</string>
@@ -75,11 +73,14 @@
     <string name="ok">OK</string>
 
     <!--    Dialogs and Requests-->
+    <string name="change">Change</string>
+    <string name="language">language</string>
     <string name="import_success">Data imported successfully.</string>
     <string name="import_failed">Failed to import data.</string>
     <string name="copied">Copied</string>
     <string name="delete">Delete</string>
     <string name="cancel">Cancel</string>
+    <string name="coming_soon">Coming Soon</string>
     <string name="confirm_delete_title">Confirm delete</string>
     <string name="confirm_delete_description_question">Are you sure you want to delete question</string>
     <string name="confirm_delete_description_heading">Are you sure you want to delete heading</string>

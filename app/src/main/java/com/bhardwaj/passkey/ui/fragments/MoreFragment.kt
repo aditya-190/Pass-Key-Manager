@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
@@ -19,6 +20,7 @@ import androidx.fragment.app.activityViewModels
 import com.bhardwaj.passkey.BuildConfig
 import com.bhardwaj.passkey.R
 import com.bhardwaj.passkey.databinding.FragmentMoreBinding
+import com.bhardwaj.passkey.ui.activity.MainActivity
 import com.bhardwaj.passkey.viewModels.MainViewModel
 import com.google.android.material.snackbar.Snackbar
 
@@ -75,6 +77,21 @@ class MoreFragment : Fragment() {
     }
 
     private fun clickListeners() {
+        binding?.tvChangeLanguage?.setOnClickListener {
+            LanguageFragment { languageId, comingSoon ->
+                if (comingSoon) {
+                    Toast.makeText(
+                        requireContext(),
+                        getString(R.string.coming_soon),
+                        Toast.LENGTH_LONG
+                    ).show()
+                } else {
+                    (activity as MainActivity).changeLanguage(languageId)
+                    (activity as MainActivity).recreate()
+                }
+            }.show(parentFragmentManager, "change language")
+        }
+
         binding?.tvRateApp?.setOnClickListener { rateApp() }
 
         binding?.tvPrivacy?.setOnClickListener {
