@@ -6,6 +6,7 @@
     <string name="others">Andere</string>
     <string name="details">Details</string>
     <string name="more">Mehr</string>
+    <string name="search">Suche</string>
     <string name="title">Titel</string>
     <string name="response">Antwort</string>
     <string name="export_download">Datei wurde in den Downloads-Ordner exportiert.</string>
@@ -27,6 +28,7 @@
 
     <!--    Buttons Text-->
     <string name="add">Hinzufügen</string>
+    <string name="edit">bearbeiten</string>
     <string name="save_changes">Änderungen speichern</string>
     <string name="heading">Überschrift</string>
 
@@ -47,6 +49,9 @@
     <string name="copied">Kopiert</string>
     <string name="delete">Löschen</string>
     <string name="cancel">stornieren</string>
+    <string name="security_heading">PassKey ist gesperrt</string>
+    <string name="security_description">Zur Nutzung der PassKey-App ist eine Authentifizierung erforderlich.</string>
+    <string name="security_button">Jetzt entsperren</string>
     <string name="coming_soon">Demnächst verfügbar</string>
     <string name="confirm_delete_title">Bestätigen Sie die Löschung.</string>
     <string name="confirm_delete_description_question">Sind Sie sicher, dass Sie die Frage löschen möchten?</string>
