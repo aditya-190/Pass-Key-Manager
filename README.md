@@ -28,17 +28,23 @@ I created this app being inspired by a design -> https://www.figma.com/community
 
 ## 🤩 Features:
 
-- Fully Offline : No internet permission required.
-- Open Source.
-- Encrypted Database.
+- Kotlin & Jetpack Compose.
+- Clean Architecture.
+- Kotlin Flows.
 - Dark Mode Support.
-- Screenshot Blocked.
 - Biometric Authentication.
-- Drag & Drop and Swipe to Delete Feature.
+- Dagger-Hilt (Dependency Injection).
+- DataStore Preferences.
+- Encrypted Database.
+- Screenshot Blocked.
+- Open Source.
+- Swipe to Delete Feature.
+- Drag & Drop Feature.
 - Seperation of content.
-- LiveData and MVVM Architecture used.
-- SQL Cipher (For Room DB Backup Encryption and Decryption)
-- Dagger-Hilt (Dependency Injection)
+- SQL Cipher (For Room DB Encryption and Decryption).
+- Import / Export Data to and from Storage.
+- Fully Offline : No internet permission required.
+
 
 ## 🌎 Released Android Application:
 https://play.google.com/store/apps/details?id=com.bhardwaj.passkey
