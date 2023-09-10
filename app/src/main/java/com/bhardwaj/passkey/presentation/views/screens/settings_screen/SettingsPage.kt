@@ -1,5 +1,6 @@
 package com.bhardwaj.passkey.presentation.views.screens.settings_screen
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -110,6 +111,7 @@ fun SettingsScreen(
             Box(
                 modifier = Modifier
                     .fillMaxSize()
+                    .background(MaterialTheme.colorScheme.background)
                     .padding(16.dp)
             ) {
                 Column(
@@ -174,7 +176,7 @@ fun SettingsScreen(
                         text = stringResource(id = R.string.app_version, viewModel.appVersion),
                         fontFamily = Poppins,
                         fontSize = 12.sp,
-                        color = MaterialTheme.colorScheme.secondary,
+                        color = MaterialTheme.colorScheme.outline,
                         textAlign = TextAlign.Center
                     )
                 }

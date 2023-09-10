@@ -31,6 +31,6 @@ fun SettingsText(
         text = text,
         fontSize = 18.sp,
         fontFamily = Poppins,
-        color = MaterialTheme.colorScheme.secondary
+        color = MaterialTheme.colorScheme.onBackground
     )
 }

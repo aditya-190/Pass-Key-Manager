@@ -36,7 +36,7 @@ fun PassKeyButton(
                         .background(MaterialTheme.colorScheme.primary)
                 } else {
                     Modifier.border(
-                        width = 2.dp,
+                        width = 1.dp,
                         color = MaterialTheme.colorScheme.primary,
                         shape = RoundedCornerShape(10.dp)
                     )

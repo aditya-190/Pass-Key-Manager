@@ -38,7 +38,7 @@ fun PassKeyTextField(
                 .fillMaxWidth()
                 .padding(vertical = 6.dp)
                 .border(
-                    width = 2.dp,
+                    width = 1.dp,
                     color = MaterialTheme.colorScheme.outlineVariant,
                     shape = RoundedCornerShape(10.dp)
                 )
@@ -66,7 +66,7 @@ fun PassKeyTextField(
             fontFamily = BebasNeue,
             fontWeight = FontWeight.Normal,
             fontSize = 14.sp,
-            color = MaterialTheme.colorScheme.secondary,
+            color = MaterialTheme.colorScheme.onBackground,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis
         )

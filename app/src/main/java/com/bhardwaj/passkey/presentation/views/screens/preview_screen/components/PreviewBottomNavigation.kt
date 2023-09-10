@@ -98,7 +98,7 @@ fun MainBottomNavigation(
                                 }
                             })
                         .alpha(if (item.isVisible) 1F else 0F),
-                    tint = if (selectedIndex == index) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.secondary,
+                    tint = if (selectedIndex == index) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline,
                 )
             }
         }
@@ -107,12 +107,10 @@ fun MainBottomNavigation(
             onClick = { onFabClick() },
             shape = CircleShape,
             containerColor = MaterialTheme.colorScheme.primary,
-            contentColor = MaterialTheme.colorScheme.onPrimary,
             content = {
                 Icon(
                     imageVector = Icons.Default.Add,
                     contentDescription = "Add Preview",
-                    tint = MaterialTheme.colorScheme.onPrimary
                 )
             },
         )

@@ -45,7 +45,7 @@ fun OnBoardingPageIndicator(
                 Text(
                     modifier = modifier.padding(end = 10.dp),
                     text = (index + 1).toString(),
-                    color = if (currentPage == index) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.secondary,
+                    color = if (currentPage == index) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline,
                     fontFamily = BebasNeue,
                     fontSize = if (currentPage == index) 24.sp else 14.sp,
                     fontStyle = FontStyle.Normal

@@ -75,7 +75,7 @@ fun PreviewBottomSheet(
                         fontSize = 16.sp,
                         fontStyle = FontStyle.Normal,
                         fontWeight = FontWeight.Normal,
-                        color = MaterialTheme.colorScheme.secondary,
+                        color = MaterialTheme.colorScheme.onBackground,
                     ),
                     modifier = Modifier.padding(top = 24.dp)
                 )

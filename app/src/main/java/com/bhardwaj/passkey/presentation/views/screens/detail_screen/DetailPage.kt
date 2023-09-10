@@ -96,12 +96,10 @@ fun DetailScreen(
                 },
                 shape = CircleShape,
                 containerColor = MaterialTheme.colorScheme.primary,
-                contentColor = MaterialTheme.colorScheme.onPrimary,
                 content = {
                     Icon(
                         imageVector = Icons.Default.Add,
                         contentDescription = "Add Detail",
-                        tint = MaterialTheme.colorScheme.onPrimary
                     )
                 },
             )
@@ -110,6 +108,7 @@ fun DetailScreen(
         Box(
             modifier = Modifier
                 .fillMaxSize()
+                .background(MaterialTheme.colorScheme.background)
                 .padding(paddingValues)
                 .padding(16.dp)
         ) {
@@ -220,34 +219,34 @@ fun DetailScreen(
                     }
                 )
             }
-
-            if (viewModel.isAlertOpen) {
-                AlertDialog(
-                    onDismissRequest = {
-                        viewModel.onEvent(DetailEvents.OnDismissAlertDialog)
-                    },
-                    title = { Text(text = stringResource(id = R.string.confirm_delete_title)) },
-                    text = { Text(text = stringResource(id = R.string.confirm_delete_description_question)) },
-                    confirmButton = {
-                        PassKeyButton(
-                            onClick = {
-                                viewModel.onEvent(DetailEvents.OnDeleteClick)
-                            },
-                            text = stringResource(id = R.string.delete),
-                            buttonType = ButtonType.DEFAULT
-                        )
-                    },
-                    dismissButton = {
-                        PassKeyButton(
-                            onClick = {
-                                viewModel.onEvent(DetailEvents.OnCancelClick)
-                            },
-                            text = stringResource(id = R.string.cancel),
-                            buttonType = ButtonType.OUTLINED
-                        )
-                    }
-                )
-            }
+        }
+        if (viewModel.isAlertOpen) {
+            AlertDialog(
+                containerColor = MaterialTheme.colorScheme.background,
+                onDismissRequest = {
+                    viewModel.onEvent(DetailEvents.OnDismissAlertDialog)
+                },
+                title = { Text(text = stringResource(id = R.string.confirm_delete_title)) },
+                text = { Text(text = stringResource(id = R.string.confirm_delete_description_question)) },
+                confirmButton = {
+                    PassKeyButton(
+                        onClick = {
+                            viewModel.onEvent(DetailEvents.OnDeleteClick)
+                        },
+                        text = stringResource(id = R.string.delete),
+                        buttonType = ButtonType.DEFAULT
+                    )
+                },
+                dismissButton = {
+                    PassKeyButton(
+                        onClick = {
+                            viewModel.onEvent(DetailEvents.OnCancelClick)
+                        },
+                        text = stringResource(id = R.string.cancel),
+                        buttonType = ButtonType.OUTLINED
+                    )
+                },
+            )
         }
     }
 }

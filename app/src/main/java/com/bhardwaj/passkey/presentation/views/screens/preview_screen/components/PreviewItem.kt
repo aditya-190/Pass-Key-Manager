@@ -44,7 +44,7 @@ fun PreviewItem(
                 .padding(bottom = 24.dp)
                 .background(Color.Transparent)
                 .border(
-                    width = 2.dp,
+                    width = 1.dp,
                     color = MaterialTheme.colorScheme.outlineVariant,
                     shape = RoundedCornerShape(10.dp)
                 )
@@ -77,7 +77,7 @@ fun PreviewItem(
                 fontFamily = Poppins,
                 fontWeight = FontWeight.Normal,
                 fontSize = 18.sp,
-                color = MaterialTheme.colorScheme.secondary,
+                color = MaterialTheme.colorScheme.onBackground,
             )
             Icon(
                 modifier = Modifier.clickable(

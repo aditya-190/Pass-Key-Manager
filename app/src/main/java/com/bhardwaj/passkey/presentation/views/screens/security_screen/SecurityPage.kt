@@ -130,33 +130,33 @@ fun SecurityScreen(
                     Card(
                         shape = RoundedCornerShape(10.dp),
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(4.dp),
-                        elevation = CardDefaults.cardElevation(8.dp)
+                            .fillMaxWidth(),
+                        elevation = CardDefaults.cardElevation(8.dp),
                     ) {
-                        Column(modifier = Modifier.fillMaxWidth()) {
+                        Column(
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
                             Text(
                                 modifier = Modifier.padding(16.dp),
                                 text = stringResource(id = R.string.security_heading),
                                 fontSize = 16.sp,
                                 fontStyle = FontStyle.Normal,
                                 fontWeight = FontWeight.Bold,
-
-                                )
+                                color = MaterialTheme.colorScheme.onBackground
+                            )
                             Text(
-                                modifier = Modifier.padding(start = 16.dp, end = 16.dp),
+                                modifier = Modifier.padding(
+                                    start = 16.dp,
+                                    end = 16.dp,
+                                    bottom = 24.dp
+                                ),
                                 text = stringResource(id = R.string.security_description),
                                 fontSize = 16.sp,
                                 fontStyle = FontStyle.Normal,
                                 fontWeight = FontWeight.Normal,
+                                color = MaterialTheme.colorScheme.onBackground
                             )
-                            Divider(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(top = 16.dp),
-                                thickness = 1.dp,
-                                color = MaterialTheme.colorScheme.secondary.copy(alpha = 0.1F)
-                            )
+                            Divider(color = MaterialTheme.colorScheme.outline)
                             Text(
                                 modifier = Modifier
                                     .fillMaxWidth()
@@ -180,10 +180,10 @@ fun SecurityScreen(
                                         }
                                     )
                                     .padding(8.dp),
-                                text = stringResource(id = R.string.security_heading),
+                                text = stringResource(id = R.string.security_button),
                                 fontWeight = FontWeight.Bold,
                                 fontSize = 16.sp,
-                                color = MaterialTheme.colorScheme.secondary,
+                                color = MaterialTheme.colorScheme.onBackground,
                                 fontStyle = FontStyle.Normal,
                                 fontFamily = Poppins,
                                 textAlign = TextAlign.Center

@@ -44,21 +44,17 @@ fun LanguageItem(
             fontFamily = Poppins,
             fontWeight = FontWeight.Bold,
             fontSize = 16.sp,
+            color = MaterialTheme.colorScheme.onBackground
         )
         Text(
-            modifier = Modifier.padding(horizontal = 16.dp),
+            modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 4.dp),
             text = language.languageNameInEnglish,
             fontFamily = Poppins,
             fontWeight = FontWeight.Normal,
             fontSize = 14.sp,
+            color = MaterialTheme.colorScheme.onBackground
         )
-        Divider(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 4.dp),
-            thickness = 1.dp,
-            color = MaterialTheme.colorScheme.secondary.copy(alpha = 0.1F)
-        )
+        Divider()
     }
 }
 
@@ -187,6 +183,7 @@ fun LanguageBottomSheet(
             fontFamily = Poppins,
             fontWeight = FontWeight.Bold,
             fontSize = 30.sp,
+            color = MaterialTheme.colorScheme.onBackground
         )
         Text(
             modifier = Modifier.padding(start = 16.dp),
@@ -194,6 +191,7 @@ fun LanguageBottomSheet(
             fontFamily = Poppins,
             fontWeight = FontWeight.Normal,
             fontSize = 26.sp,
+            color = MaterialTheme.colorScheme.onBackground
         )
         LazyColumn {
             items(languageList) { single ->

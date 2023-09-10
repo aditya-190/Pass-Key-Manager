@@ -16,7 +16,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.bhardwaj.passkey.R
 import com.bhardwaj.passkey.presentation.views.screens.onboarding_screens.OnBoardingScreen
-import com.bhardwaj.passkey.presentation.views.theme.BebasNeue
 import com.bhardwaj.passkey.presentation.views.theme.Poppins
 
 
@@ -47,7 +46,7 @@ fun OnBoardingItem(
             fontFamily = Poppins,
             fontStyle = FontStyle.Normal,
             fontSize = 16.sp,
-            color = MaterialTheme.colorScheme.secondary
+            color = MaterialTheme.colorScheme.outline
         )
     }
 }

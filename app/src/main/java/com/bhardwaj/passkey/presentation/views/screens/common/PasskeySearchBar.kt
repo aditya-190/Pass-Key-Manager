@@ -40,7 +40,7 @@ fun PasskeySearchBar(
     Row(
         modifier = modifier
             .border(
-                width = 2.dp,
+                width = 1.dp,
                 color = MaterialTheme.colorScheme.outlineVariant,
                 shape = RoundedCornerShape(48.dp)
             )
@@ -51,7 +51,7 @@ fun PasskeySearchBar(
         Icon(
             imageVector = Icons.Default.Search,
             contentDescription = "Search Icon",
-            tint = MaterialTheme.colorScheme.secondary
+            tint = MaterialTheme.colorScheme.outline
         )
 
         BasicTextField(
@@ -65,7 +65,7 @@ fun PasskeySearchBar(
                 fontSize = 16.sp,
                 fontStyle = FontStyle.Normal,
                 fontWeight = FontWeight.Normal,
-                color = MaterialTheme.colorScheme.secondary,
+                color = MaterialTheme.colorScheme.onBackground,
             ),
             maxLines = 1,
             decorationBox = { innerTextField ->
@@ -73,7 +73,7 @@ fun PasskeySearchBar(
                     if (query.isEmpty()) {
                         Text(
                             text = stringResource(id = R.string.search),
-                            color = MaterialTheme.colorScheme.outlineVariant
+                            color = MaterialTheme.colorScheme.outline
                         )
                     }
                     innerTextField()
@@ -90,7 +90,7 @@ fun PasskeySearchBar(
                 ),
                 imageVector = Icons.Default.Close,
                 contentDescription = "Close Icon",
-                tint = MaterialTheme.colorScheme.secondary
+                tint = MaterialTheme.colorScheme.outline
             )
         }
     }

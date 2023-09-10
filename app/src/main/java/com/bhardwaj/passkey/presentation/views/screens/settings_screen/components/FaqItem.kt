@@ -35,37 +35,35 @@ fun FaqItem(openedBy: AlertBy) {
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
-            .padding(16.dp)
     ) {
         stickyHeader {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(bottom = 16.dp)
                     .background(MaterialTheme.colorScheme.background),
             ) {
                 Text(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
                     text = stringResource(id = bottomSheetContent[openedBy]!!.first),
                     fontWeight = FontWeight.Bold,
                     fontSize = 24.sp,
-                    color = MaterialTheme.colorScheme.secondary
+                    color = MaterialTheme.colorScheme.onBackground
                 )
-                Divider(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 16.dp),
-                    thickness = 1.dp,
-                    color = MaterialTheme.colorScheme.secondary.copy(alpha = 0.1F)
-                )
+                Divider()
             }
         }
 
         item {
             Text(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
                 text = stringResource(id = bottomSheetContent[openedBy]!!.second),
                 fontWeight = FontWeight.Normal,
                 fontSize = 16.sp,
-                color = MaterialTheme.colorScheme.secondary,
+                color = MaterialTheme.colorScheme.onBackground,
             )
         }
     }

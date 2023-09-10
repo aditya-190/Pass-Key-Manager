@@ -15,24 +15,23 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
-private val darkColorScheme = darkColorScheme(
-    primary = primaryDark,
-    secondary = secondaryDark,
-    tertiary = tertiaryDark,
-    onSurface = bottomNavigationLight
+private val lightColorScheme = lightColorScheme(
+    primary = colorPrimary[0],
+    onPrimary = colorOnPrimary[0],
+    secondary = colorSecondary[0],
+    tertiary = colorTertiary[0],
 )
 
-private val lightColorScheme = lightColorScheme(
-    primary = primaryLight,
-    secondary = secondaryLight,
-    tertiary = tertiaryLight,
-    onSurface = bottomNavigationDark
+private val darkColorScheme = darkColorScheme(
+    primary = colorPrimary[1],
+    onPrimary = colorOnPrimary[1],
+    secondary = colorSecondary[1],
+    tertiary = colorTertiary[1],
 )
 
 @Composable
 fun PassKeyTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    // Dynamic color is available on Android 12+
     dynamicColor: Boolean = false,
     content: @Composable () -> Unit
 ) {

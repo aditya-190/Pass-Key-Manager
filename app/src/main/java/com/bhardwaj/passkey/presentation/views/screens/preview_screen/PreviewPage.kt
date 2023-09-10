@@ -120,6 +120,7 @@ fun PreviewScreen(
         Box(
             modifier = Modifier
                 .fillMaxSize()
+                .background(MaterialTheme.colorScheme.background)
                 .padding(paddingValues)
                 .padding(start = 16.dp, end = 16.dp, top = 16.dp)
         ) {
@@ -244,34 +245,34 @@ fun PreviewScreen(
                     }
                 )
             }
-
-            if (viewModel.isAlertOpen) {
-                AlertDialog(
-                    onDismissRequest = {
-                        viewModel.onEvent(PreviewEvents.OnDismissAlertDialog)
-                    },
-                    title = { Text(text = stringResource(id = R.string.confirm_delete_title)) },
-                    text = { Text(text = stringResource(id = R.string.confirm_delete_description_heading)) },
-                    confirmButton = {
-                        PassKeyButton(
-                            onClick = {
-                                viewModel.onEvent(PreviewEvents.OnDeleteClick)
-                            },
-                            text = stringResource(id = R.string.delete),
-                            buttonType = ButtonType.DEFAULT
-                        )
-                    },
-                    dismissButton = {
-                        PassKeyButton(
-                            onClick = {
-                                viewModel.onEvent(PreviewEvents.OnCancelClick)
-                            },
-                            text = stringResource(id = R.string.cancel),
-                            buttonType = ButtonType.OUTLINED
-                        )
-                    }
-                )
-            }
+        }
+        if (viewModel.isAlertOpen) {
+            AlertDialog(
+                containerColor = MaterialTheme.colorScheme.background,
+                onDismissRequest = {
+                    viewModel.onEvent(PreviewEvents.OnDismissAlertDialog)
+                },
+                title = { Text(text = stringResource(id = R.string.confirm_delete_title)) },
+                text = { Text(text = stringResource(id = R.string.confirm_delete_description_heading)) },
+                confirmButton = {
+                    PassKeyButton(
+                        onClick = {
+                            viewModel.onEvent(PreviewEvents.OnDeleteClick)
+                        },
+                        text = stringResource(id = R.string.delete),
+                        buttonType = ButtonType.DEFAULT
+                    )
+                },
+                dismissButton = {
+                    PassKeyButton(
+                        onClick = {
+                            viewModel.onEvent(PreviewEvents.OnCancelClick)
+                        },
+                        text = stringResource(id = R.string.cancel),
+                        buttonType = ButtonType.OUTLINED
+                    )
+                }
+            )
         }
     }
 }

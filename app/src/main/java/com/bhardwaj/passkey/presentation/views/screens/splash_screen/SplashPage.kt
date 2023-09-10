@@ -4,6 +4,7 @@ import android.view.animation.OvershootInterpolator
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -66,7 +67,9 @@ fun SplashPage(
     }
 
     Box(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background),
         contentAlignment = Alignment.BottomCenter
     ) {
         Image(
@@ -79,13 +82,15 @@ fun SplashPage(
         )
         Text(
             text = stringResource(id = R.string.app_description),
-            modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 16.dp),
             textAlign = TextAlign.Center,
             fontFamily = Poppins,
             fontSize = 12.sp,
             fontStyle = FontStyle.Normal,
             fontWeight = FontWeight.Normal,
-            color = MaterialTheme.colorScheme.outline
+            color = MaterialTheme.colorScheme.onSurface
         )
     }
 }
