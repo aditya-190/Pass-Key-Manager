@@ -38,12 +38,25 @@ I created this app being inspired by a design -> https://www.figma.com/community
 - Encrypted Database.
 - Screenshot Blocked.
 - Open Source.
+- Drag & Drop to reorder list.
 - Swipe to Delete Feature.
-- Drag & Drop Feature.
 - Seperation of content.
+- Import / Export data to and from storage.
 - SQL Cipher (For Room DB Encryption and Decryption).
-- Import / Export Data to and from Storage.
 - Fully Offline : No internet permission required.
+
+## Checklist Before New Release
+
+- [x] Use Jetpack Compose
+- [x] Use Clean Architecure
+- [x] Add Search functionality.
+- [x] Handle Biometric authentication efficently.
+- [x] KSP Support.
+- [ ] Dark Mode + Dynamic **[In Progress]**
+- [ ] Drag & Drop to reorder list.
+- [ ] Import / Export data to and from storage.
+- [ ] Handle permissions needed to imprt/export data.
+- [ ] Handle Data migration for existing users to prevent data loss.
 
 
 ## 🌎 Released Android Application:
