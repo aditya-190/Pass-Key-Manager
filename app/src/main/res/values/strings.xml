@@ -3,6 +3,7 @@
     <!--    Splash Screen    -->
     <string name="app_version" translatable="false">App Version %1$s</string>
     <string name="app_name" translatable="false">PassKey</string>
+    <string name="app_description" translatable="false">The only password manager you\'ll ever need</string>
 
     <!--    OnBoarding Screens    -->
     <string name="skip" translatable="false">Skip</string>

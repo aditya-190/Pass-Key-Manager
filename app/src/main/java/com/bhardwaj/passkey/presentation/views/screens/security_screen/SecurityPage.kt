@@ -96,7 +96,7 @@ fun SecurityScreen(
             viewModel.onEvent(SecurityEvents.OnAuthenticationError)
         }
 
-    val title = stringResource(id = R.string.title)
+    val title = stringResource(id = R.string.app_name)
     val subTitle = stringResource(id = R.string.welcome_to_pass_key)
 
     LaunchedEffect(key1 = Unit) {
