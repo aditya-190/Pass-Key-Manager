@@ -10,9 +10,9 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.fragment.app.FragmentActivity
 import androidx.navigation.compose.rememberNavController
-import com.bhardwaj.passkey.presentation.viewModels.SplashViewModel
-import com.bhardwaj.passkey.presentation.views.navigation.NavGraph
-import com.bhardwaj.passkey.presentation.views.theme.PassKeyTheme
+import com.bhardwaj.passkey.domain.viewModels.SplashViewModel
+import com.bhardwaj.passkey.presentation.navigation.NavGraph
+import com.bhardwaj.passkey.presentation.theme.PassKeyTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

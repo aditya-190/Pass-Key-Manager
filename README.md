@@ -40,7 +40,7 @@ I created this app being inspired by a design -> https://www.figma.com/community
 - Open Source.
 - Drag & Drop to reorder list.
 - Swipe to Delete Feature.
-- Seperation of content.
+- Separation of content.
 - Import / Export data to and from storage.
 - SQL Cipher (For Room DB Encryption and Decryption).
 - Fully Offline : No internet permission required.
@@ -48,14 +48,14 @@ I created this app being inspired by a design -> https://www.figma.com/community
 ## Checklist Before New Release
 
 - [x] Use Jetpack Compose
-- [x] Use Clean Architecure
+- [x] Use Clean Architecture
 - [x] Add Search functionality.
-- [x] Handle Biometric authentication efficently.
+- [x] Handle Biometric authentication efficiently.
 - [x] KSP Support.
-- [ ] Dark Mode + Dynamic **[In Progress]**
-- [ ] Drag & Drop to reorder list.
+- [x] Dark Mode + Dynamic
+- [ ] Drag & Drop to reorder list. **[In Progress]**
 - [ ] Import / Export data to and from storage.
-- [ ] Handle permissions needed to imprt/export data.
+- [ ] Handle permissions needed to import/export data.
 - [ ] Handle Data migration for existing users to prevent data loss.
 
 
