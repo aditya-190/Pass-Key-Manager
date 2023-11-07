@@ -52,8 +52,8 @@ I created this app being inspired by a design -> https://www.figma.com/community
 - [x] Add Search functionality.
 - [x] Handle Biometric authentication efficently.
 - [x] KSP Support.
-- [ ] Dark Mode + Dynamic **[In Progress]**
-- [ ] Drag & Drop to reorder list.
+- [x] Dark Mode + Dynamic
+- [ ] Drag & Drop to reorder list. **[In Progress]**
 - [ ] Import / Export data to and from storage.
 - [ ] Handle permissions needed to imprt/export data.
 - [ ] Handle Data migration for existing users to prevent data loss.
