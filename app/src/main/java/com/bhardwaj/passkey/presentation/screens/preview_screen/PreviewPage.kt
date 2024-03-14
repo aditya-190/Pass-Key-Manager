@@ -223,6 +223,7 @@ fun PreviewScreen(
                                         PreviewItem(preview = preview, onEvent = viewModel::onEvent)
                                     },
                                     enableDismissFromEndToStart = true,
+                                    enableDismissFromStartToEnd = false
                                 )
                             }
                         }

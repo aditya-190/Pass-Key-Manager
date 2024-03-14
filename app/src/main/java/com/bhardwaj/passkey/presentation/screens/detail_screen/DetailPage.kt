@@ -192,6 +192,7 @@ fun DetailScreen(
                                         DetailsItem(details = detail, onEvent = viewModel::onEvent)
                                     },
                                     enableDismissFromEndToStart = true,
+                                    enableDismissFromStartToEnd = false
                                 )
                             }
                         }
