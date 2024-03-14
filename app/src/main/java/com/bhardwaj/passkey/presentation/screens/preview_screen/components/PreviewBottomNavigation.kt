@@ -13,9 +13,9 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.Article
 import androidx.compose.material.icons.filled.AccountBalance
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Article
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Gamepad
 import androidx.compose.material3.FloatingActionButton
@@ -58,7 +58,7 @@ val bottomNavigationList = listOf(
     ),
     BottomNavigationItem(
         title = Categories.OTHERS.name,
-        icon = Icons.Filled.Article
+        icon = Icons.AutoMirrored.Filled.Article
     )
 )
 

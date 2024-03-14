@@ -18,17 +18,16 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.DismissDirection
-import androidx.compose.material3.DismissValue
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.SwipeToDismiss
+import androidx.compose.material3.SwipeToDismissBox
+import androidx.compose.material3.SwipeToDismissBoxValue
 import androidx.compose.material3.Text
-import androidx.compose.material3.rememberDismissState
+import androidx.compose.material3.rememberSwipeToDismissBoxState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -190,9 +189,9 @@ fun PreviewScreen(
                             if (searchText.isNotBlank()) {
                                 PreviewItem(preview = preview, onEvent = viewModel::onEvent)
                             } else {
-                                val state = rememberDismissState(
+                                val state = rememberSwipeToDismissBoxState(
                                     confirmValueChange = {
-                                        if (it == DismissValue.DismissedToStart) {
+                                        if (it == SwipeToDismissBoxValue.EndToStart) {
                                             viewModel.onEvent(PreviewEvents.OnSwipedLeft(preview))
                                         }
                                         true
@@ -201,9 +200,9 @@ fun PreviewScreen(
                                         0.6F * density
                                     }
                                 )
-                                SwipeToDismiss(
+                                SwipeToDismissBox(
                                     state = state,
-                                    background = {
+                                    backgroundContent = {
                                         Box(
                                             modifier = Modifier
                                                 .fillMaxSize()
@@ -220,10 +219,10 @@ fun PreviewScreen(
                                             )
                                         }
                                     },
-                                    dismissContent = {
+                                    content = {
                                         PreviewItem(preview = preview, onEvent = viewModel::onEvent)
                                     },
-                                    directions = setOf(DismissDirection.EndToStart)
+                                    enableDismissFromEndToStart = true,
                                 )
                             }
                         }

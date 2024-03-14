@@ -9,8 +9,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material3.Divider
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -54,7 +54,7 @@ fun LanguageItem(
             fontSize = 14.sp,
             color = MaterialTheme.colorScheme.onBackground
         )
-        Divider()
+        HorizontalDivider()
     }
 }
 
@@ -174,7 +174,7 @@ fun LanguageBottomSheet(
                     indication = null,
                     onClick = { onBackIconClick() }
                 ),
-            imageVector = Icons.Default.ArrowBack,
+            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
             contentDescription = "Back Icon"
         )
         Text(
