@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface PreviewDao {
-    @Query("SELECT * FROM $PREVIEW_TABLE ORDER BY previewId ASC")
+    @Query("SELECT * FROM $PREVIEW_TABLE ORDER BY sequence ASC")
     fun getPreviews(): Flow<List<Preview>>
 
     @Query("SELECT * FROM $PREVIEW_TABLE WHERE previewId=:previewId")

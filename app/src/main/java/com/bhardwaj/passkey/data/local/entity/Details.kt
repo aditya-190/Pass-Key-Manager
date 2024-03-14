@@ -11,4 +11,5 @@ data class Details(
     val previewId: Long,
     val question: String,
     val answer: String,
+    val sequence: Long = 0
 )

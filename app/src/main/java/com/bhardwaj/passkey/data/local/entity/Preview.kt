@@ -11,4 +11,5 @@ data class Preview(
     val previewId: Long? = null,
     var heading: String,
     val categoryName: Categories,
+    val sequence: Long = 0
 )

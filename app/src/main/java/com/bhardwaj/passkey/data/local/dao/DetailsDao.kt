@@ -10,10 +10,10 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface DetailsDao {
-    @Query("SELECT * FROM $DETAILS_TABLE ORDER BY detailsId ASC")
+    @Query("SELECT * FROM $DETAILS_TABLE ORDER BY sequence ASC")
     fun getDetails(): Flow<List<Details>>
 
-    @Query("SELECT * FROM $DETAILS_TABLE WHERE previewId=:previewId ORDER BY detailsId ASC")
+    @Query("SELECT * FROM $DETAILS_TABLE WHERE previewId=:previewId ORDER BY sequence ASC")
     fun getDetailsByPreviewId(previewId: Long): Flow<List<Details>>
 
     @Query("SELECT * FROM $DETAILS_TABLE WHERE detailsId=:detailId")
