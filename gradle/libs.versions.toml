@@ -1,0 +1,98 @@
+[versions]
+# Plugin versions
+android_gradle_plugin = "8.5.1"
+kotlin_plugin = "2.0.0"
+hilt_plugin = "2.51.1"
+ksp_plugin = "2.0.0-1.0.23"
+
+# Dependency versions
+core_ktx = "1.13.1"
+activity_compose = "1.9.1"
+compose_bom = "2024.06.00"
+appcompat = "1.7.0"
+lifecycle_runtime_ktx = "2.8.4"
+lifecycle_viewmodel_compose = "2.8.4"
+navigation_compose = "2.7.7"
+
+coroutines_core = "1.8.1"
+coroutines_android = "1.8.1"
+
+hilt_android = "2.51.1"
+hilt_compiler = "1.2.0"
+
+splash_screen = "1.0.1"
+
+datastore_preferences = "1.1.1"
+
+biometric = "1.1.0"
+
+room = "2.6.1"
+
+sqlcipher = "4.5.4"
+
+opencsv = "5.9"
+
+junit = "4.13.2"
+test_ext_junit = "1.2.1"
+espresso_core = "3.6.1"
+
+[plugins]
+# Plugin definitions
+android_application = { id = "com.android.application", version.ref = "android_gradle_plugin" }
+kotlin_android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin_plugin" }
+kotlin-compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin_plugin" }
+hilt_android = { id = "com.google.dagger.hilt.android", version.ref = "hilt_plugin" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp_plugin" }
+
+[libraries]
+# Android Essentials
+androidx_core_ktx = { module = "androidx.core:core-ktx", version.ref = "core_ktx" }
+androidx_activity_compose = { module = "androidx.activity:activity-compose", version.ref = "activity_compose" }
+androidx_compose_bom = { module = "androidx.compose:compose-bom", version.ref = "compose_bom" }
+androidx_compose_ui = { module = "androidx.compose.ui:ui" }
+androidx_compose_ui_graphics = { module = "androidx.compose.ui:ui-graphics" }
+androidx_compose_ui_tooling_preview = { module = "androidx.compose.ui:ui-tooling-preview" }
+androidx_compose_material3 = { module = "androidx.compose.material3:material3" }
+androidx_compose_material_icons_extended = { module = "androidx.compose.material:material-icons-extended" }
+androidx_appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
+androidx_lifecycle_runtime_ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycle_runtime_ktx" }
+androidx_lifecycle_viewmodel_compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycle_viewmodel_compose" }
+androidx_navigation_compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigation_compose" }
+
+# Coroutines
+kotlinx_coroutines_core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines_core" }
+kotlinx_coroutines_android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines_android" }
+
+# Dagger - Hilt
+hilt_android = { module = "com.google.dagger:hilt-android", version.ref = "hilt_android" }
+hilt_android_compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hilt_android" }
+hilt_compiler = { module = "androidx.hilt:hilt-compiler", version.ref = "hilt_compiler" }
+hilt_navigation_compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hilt_compiler" }
+
+# Splash Screen
+androidx_core_splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "splash_screen" }
+
+# DataStore Preferences
+datastore_preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore_preferences" }
+
+# Biometric Authentication
+androidx_biometric = { module = "androidx.biometric:biometric", version.ref = "biometric" }
+
+# Room
+androidx_room_runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
+room_compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
+androidx_room_ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
+
+# SQL Cipher
+sqlcipher = { module = "net.zetetic:android-database-sqlcipher", version.ref = "sqlcipher" }
+
+# Open CSV - Import/ Export Data
+opencsv = { module = "com.opencsv:opencsv", version.ref = "opencsv" }
+
+# Testing & Debugging
+junit = { module = "junit:junit", version.ref = "junit" }
+test_ext_junit = { module = "androidx.test.ext:junit", version.ref = "test_ext_junit" }
+espresso_core = { module = "androidx.test.espresso:espresso-core", version.ref = "espresso_core" }
+compose_ui_test_junit4 = { module = "androidx.compose.ui:ui-test-junit4" }
+compose_ui_tooling = { module = "androidx.compose.ui:ui-tooling" }
+compose_ui_test_manifest = { module = "androidx.compose.ui:ui-test-manifest" }

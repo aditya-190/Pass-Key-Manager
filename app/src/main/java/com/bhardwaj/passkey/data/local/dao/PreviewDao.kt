@@ -17,7 +17,7 @@ interface PreviewDao {
     suspend fun getPreviewById(previewId: Long): Preview?
 
     @Upsert
-    suspend fun upsertPreview(previews: Preview)
+    suspend fun upsertPreview(previews: Preview): Long
 
     @Delete
     suspend fun deletePreview(previews: Preview)

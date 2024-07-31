@@ -66,15 +66,33 @@ fun LanguageBottomSheet(
 ) {
     val languageList = arrayListOf(
         Language(
+            languageId = "ar",
+            languageName = "عربي",
+            languageNameInEnglish = "Arabic",
+            comingSoon = false
+        ),
+        Language(
+            languageId = "bn",
+            languageName = "বাংলা",
+            languageNameInEnglish = "Bengali",
+            comingSoon = false
+        ),
+        Language(
+            languageId = "zh",
+            languageName = "中文",
+            languageNameInEnglish = "Chinese",
+            comingSoon = false
+        ),
+        Language(
             languageId = "en",
             languageName = "English",
             languageNameInEnglish = "English",
             comingSoon = false
         ),
         Language(
-            languageId = "hi",
-            languageName = "हिन्दी",
-            languageNameInEnglish = "Hindi",
+            languageId = "fr",
+            languageName = "Français",
+            languageNameInEnglish = "French",
             comingSoon = false
         ),
         Language(
@@ -84,82 +102,70 @@ fun LanguageBottomSheet(
             comingSoon = false
         ),
         Language(
-            languageId = "mr",
-            languageName = "मराठी",
-            languageNameInEnglish = "Marathi",
-            comingSoon = true
-        ),
-        Language(
-            languageId = "bn",
-            languageName = "বাংলা",
-            languageNameInEnglish = "Bengali",
-            comingSoon = true
-        ),
-        Language(
-            languageId = "te",
-            languageName = "తెలుగు",
-            languageNameInEnglish = "Telugu",
-            comingSoon = true
-        ),
-        Language(
-            languageId = "ta",
-            languageName = "தமிழ்",
-            languageNameInEnglish = "Tamil",
-            comingSoon = true
-        ),
-        Language(
             languageId = "gu",
             languageName = "ગુજરાતી",
             languageNameInEnglish = "Gujarati",
-            comingSoon = true
+            comingSoon = false
         ),
         Language(
-            languageId = "zh",
-            languageName = "中文",
-            languageNameInEnglish = "Chinese",
-            comingSoon = true
-        ),
-        Language(
-            languageId = "es",
-            languageName = "Español",
-            languageNameInEnglish = "Spanish",
-            comingSoon = true
-        ),
-        Language(
-            languageId = "pt",
-            languageName = "Português",
-            languageNameInEnglish = "Portuguese",
-            comingSoon = true
-        ),
-        Language(
-            languageId = "ru",
-            languageName = "Русский",
-            languageNameInEnglish = "Russian",
-            comingSoon = true
-        ),
-        Language(
-            languageId = "ja",
-            languageName = "日本語",
-            languageNameInEnglish = "Japanese",
-            comingSoon = true
-        ),
-        Language(
-            languageId = "ko",
-            languageName = "한국어",
-            languageNameInEnglish = "Korean",
-            comingSoon = true
-        ),
-        Language(
-            languageId = "fr",
-            languageName = "Français",
-            languageNameInEnglish = "French",
-            comingSoon = true
+            languageId = "hi",
+            languageName = "हिन्दी",
+            languageNameInEnglish = "Hindi",
+            comingSoon = false
         ),
         Language(
             languageId = "it",
             languageName = "Italiano",
             languageNameInEnglish = "Italian",
-            comingSoon = true
+            comingSoon = false
+        ),
+        Language(
+            languageId = "ja",
+            languageName = "日本語",
+            languageNameInEnglish = "Japanese",
+            comingSoon = false
+        ),
+        Language(
+            languageId = "ko",
+            languageName = "한국어",
+            languageNameInEnglish = "Korean",
+            comingSoon = false
+        ),
+        Language(
+            languageId = "mr",
+            languageName = "मराठी",
+            languageNameInEnglish = "Marathi",
+            comingSoon = false
+        ),
+        Language(
+            languageId = "pt",
+            languageName = "Português",
+            languageNameInEnglish = "Portuguese",
+            comingSoon = false
+        ),
+        Language(
+            languageId = "ru",
+            languageName = "Русский",
+            languageNameInEnglish = "Russian",
+            comingSoon = false
+        ),
+        Language(
+            languageId = "es",
+            languageName = "Español",
+            languageNameInEnglish = "Spanish",
+            comingSoon = false
+        ),
+        Language(
+            languageId = "ta",
+            languageName = "தமிழ்",
+            languageNameInEnglish = "Tamil",
+            comingSoon = false
+        ),
+        Language(
+            languageId = "te",
+            languageName = "తెలుగు",
+            languageNameInEnglish = "Telugu",
+            comingSoon = false
         ),
     )
 

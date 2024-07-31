@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Main Screens -->
+    <string name="banks">银行</string>
+    <string name="mails">邮件</string>
+    <string name="apps">应用</string>
+    <string name="others">其他</string>
+    <string name="details">详情</string>
+    <string name="more">更多</string>
+    <string name="search">搜索</string>
+    <string name="title">标题</string>
+    <string name="response">响应</string>
+    <string name="export_download">文件已导出到下载文件夹。</string>
+    <string name="rate_app">评价应用</string>
+    <string name="change_language">更改语言</string>
+    <string name="privacy">隐私</string>
+    <string name="terms_n_condition">条款和条件</string>
+    <string name="about">关于</string>
+    <string name="import_data">导入数据</string>
+    <string name="export_data">导出数据</string>
+
+    <!-- Edit Text Hints -->
+    <string name="type_here">在此输入…</string>
+    <string name="type_your_title_here">在此输入您的标题…</string>
+    <string name="type_your_response_here">在此输入您的响应…</string>
+    <string name="type_your_heading_here">在此输入您的标题…</string>
+    <string name="enter_valid_heading">请输入有效的标题。</string>
+    <string name="enter_valid_title_n_response">请输入有效的标题和响应。</string>
+
+    <!-- Buttons Text -->
+    <string name="add">添加</string>
+    <string name="edit">编辑</string>
+    <string name="save_changes">保存更改</string>
+    <string name="heading">标题</string>
+
+    <!-- Authentication Screen -->
+    <string name="welcome_to_pass_key">欢迎使用PassKey Manager</string>
+    <string name="authentication_failed">身份验证失败。</string>
+    <string name="something_went_wrong">出了点问题..</string>
+    <string name="set_password">请先为您的设备设置密码。</string>
+    <string name="permission_required">需要访问存储空间以导出数据库。</string>
+    <string name="permission_denied">权限被拒绝</string>
+    <string name="ok">确定</string>
+
+    <!-- Dialogs and Requests -->
+    <string name="change">更改</string>
+    <string name="language">语言</string>
+    <string name="import_success">数据导入成功。</string>
+    <string name="import_failed">导入数据失败。</string>
+    <string name="copied">已复制</string>
+    <string name="delete">删除</string>
+    <string name="cancel">取消</string>
+    <string name="security_heading">PassKey已锁定</string>
+    <string name="security_description">需要验证才能访问PassKey应用。</string>
+    <string name="security_button">立即解锁</string>
+    <string name="coming_soon">即将推出</string>
+    <string name="confirm_delete_title">确认删除</string>
+    <string name="confirm_delete_description_question">您确定要删除问题吗？</string>
+    <string name="confirm_delete_description_heading">您确定要删除标题吗？</string>
+</resources>

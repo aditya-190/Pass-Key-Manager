@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--    Main Screens    -->
+    <string name="banks">બેંકો</string>
+    <string name="mails">મેલ</string>
+    <string name="apps">એપ્લિકેશન્સ</string>
+    <string name="others">અન્ય</string>
+    <string name="details">વિગતો</string>
+    <string name="more">વધુ</string>
+    <string name="search">શોધો</string>
+    <string name="title">શીર્ષક</string>
+    <string name="response">જવાબ</string>
+    <string name="export_download">ફાઇલ ડાઉનલોડ કરી ગઈ છે.</string>
+    <string name="rate_app">એપ્લિકેશન રેટ કરો</string>
+    <string name="change_language">ભાષા બદલો</string>
+    <string name="privacy">ગોપનીયતા</string>
+    <string name="terms_n_condition">નિયમો અને શરતો</string>
+    <string name="about">વિશે</string>
+    <string name="import_data">ડેટા આયાત કરો</string>
+    <string name="export_data">ડેટા નિર્યાત કરો</string>
+
+    <!--    Edit Text Hints    -->
+    <string name="type_here">અહીં ટાઇપ કરો…</string>
+    <string name="type_your_title_here">તમારો શીર્ષક અહીં ટાઇપ કરો…</string>
+    <string name="type_your_response_here">તમારો જવાબ અહીં ટાઇપ કરો…</string>
+    <string name="type_your_heading_here">તમારો શીર્ષક અહીં ટાઇપ કરો…</string>
+    <string name="enter_valid_heading">માન્ય શીર્ષક દાખલ કરો.</string>
+    <string name="enter_valid_title_n_response">માન્ય શીર્ષક અને જવાબ દાખલ કરો.</string>
+
+    <!--    Buttons Text    -->
+    <string name="add">ઉમેરો</string>
+    <string name="edit">ફેરફાર કરો</string>
+    <string name="save_changes">બદલો સંગ્રહિત કરો</string>
+    <string name="heading">શીર્ષક</string>
+
+    <!--    Authentication Screen    -->
+    <string name="welcome_to_pass_key">PassKey મેનેજર માં આપનું સ્વાગત છે</string>
+    <string name="authentication_failed">પ્રમાણીકરણ નિષ્ફળ થયું.</string>
+    <string name="something_went_wrong">કંઈક ખોટું થયું છે..</string>
+    <string name="set_password">કૃપા કરીને પ્રથમ તમારા ડિવાઇસ માટે પાસવર્ડ સેટ કરો.</string>
+    <string name="permission_required">ડેટાબેઝ નિર્યાત કરવા માટે સ્ટોરેજ ઍક્સેસ જરૂરી છે.</string>
+    <string name="permission_denied">પરવાનગી નકારી</string>
+    <string name="ok">ઠીક છે</string>
+
+    <!--    Dialogs and Requests    -->
+    <string name="change">બદલવું</string>
+    <string name="language">ભાષા</string>
+    <string name="import_success">માહિતી સફળતાપૂર્વક આયાત કરવામાં આવી છે.</string>
+    <string name="import_failed">માહિતી આયાત નિષ્ફળ થઈ.</string>
+    <string name="copied">કોપી કરી છે</string>
+    <string name="delete">ડિલીટ</string>
+    <string name="cancel">રદ કરો</string>
+    <string name="security_heading">પાસકી લોકાંતિક છે</string>
+    <string name="security_description">પાસકી એપ્લિકેશન એક્સેસ માટે પ્રમાણીકરણ જરૂરી છે.</string>
+    <string name="security_button">હાલ ખોલો</string>
+    <string name="coming_soon">શીઘ્રવાર આવી રહ્યું છે</string>
+    <string name="confirm_delete_title">ડિલીટ કન્ફર્મ કરો</string>
+    <string name="confirm_delete_description_question">શું તમે ખાતરી છો કે તમે પ્રશ્ન ડિલીટ કરવા માંગો છો?</string>
+    <string name="confirm_delete_description_heading">શું તમે ખાતરી છો કે તમે શીર્ષક ડિલીટ કરવા માંગો છો?</string>
+</resources>

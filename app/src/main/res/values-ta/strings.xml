@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--    Main Screens    -->
+    <string name="banks">வங்கிகள்</string>
+    <string name="mails">மின்னஞ்சல்கள்</string>
+    <string name="apps">பயன்பாடுகள்</string>
+    <string name="others">மற்றவை</string>
+    <string name="details">விவரங்கள்</string>
+    <string name="more">மேலும்</string>
+    <string name="search">தேடு</string>
+    <string name="title">தலைப்பு</string>
+    <string name="response">பதில்</string>
+    <string name="export_download">கோப்பு பதிவிறக்கம் செய்யப்பட்டது.</string>
+    <string name="rate_app">விமர்சனம் அளியுங்கள்</string>
+    <string name="change_language">மொழியை மாற்று</string>
+    <string name="privacy">தனியுரிமை</string>
+    <string name="terms_n_condition">விதிமுறைகள் மற்றும் நிபந்தனைகள்</string>
+    <string name="about">பற்றி</string>
+    <string name="import_data">தரவு இறக்குமதி</string>
+    <string name="export_data">தரவு ஏற்றுமதி</string>
+
+    <!--    Edit Text Hints    -->
+    <string name="type_here">இங்கே தட்டச்சு செய்யவும்…</string>
+    <string name="type_your_title_here">உங்கள் தலைப்பு இங்கே தட்டச்சு செய்யவும்…</string>
+    <string name="type_your_response_here">உங்கள் பதில் இங்கே தட்டச்சு செய்யவும்…</string>
+    <string name="type_your_heading_here">உங்கள் தலைப்பு இங்கே தட்டச்சு செய்யவும்…</string>
+    <string name="enter_valid_heading">செல்லுபடியான தலைப்பு உள்ளிடுக.</string>
+    <string name="enter_valid_title_n_response">செல்லுபடியான தலைப்பு மற்றும் பதில் உள்ளிடுக.</string>
+
+    <!--    Buttons Text    -->
+    <string name="add">சேர்க்க</string>
+    <string name="edit">திருத்து</string>
+    <string name="save_changes">மாற்றங்களை சேமி</string>
+    <string name="heading">தலைப்பு</string>
+
+    <!--    Authentication Screen    -->
+    <string name="welcome_to_pass_key">பாஸ்கீ மேனேஜருக்கு வரவேற்கிறோம்</string>
+    <string name="authentication_failed">அங்கீகாரம் தோல்வியடைந்தது.</string>
+    <string name="something_went_wrong">எதாவது தவறு நடந்தது..</string>
+    <string name="set_password">தயவுசெய்து முதலில் உங்கள் சான்றுகளுக்கு கடவுச்சொல் அமைக்கவும்.</string>
+    <string name="permission_required">தரவுத்தள ஏற்றுமதி செய்யும் கடன் பெற சேமிக்கும் அணுகல் தேவைப்படுகிறது.</string>
+    <string name="permission_denied">அனுமதி நிராகரிக்கப்பட்டது</string>
+    <string name="ok">சரி</string>
+
+    <!--    Dialogs and Requests    -->
+    <string name="change">மாற்று</string>
+    <string name="language">மொழி</string>
+    <string name="import_success">தரவு வெற்றிகரமாக இறக்கப்பட்டது.</string>
+    <string name="import_failed">தரவு இறக்குமதி தோல்வி.</string>
+    <string name="copied">நகலெடுக்கப்பட்டது</string>
+    <string name="delete">நீக்கு</string>
+    <string name="cancel">ரத்து செய்</string>
+    <string name="security_heading">பாஸ்கீ பாதுகாப்பு முதல் செயல்</string>
+    <string name="security_description">பாஸ்கீ பயன்பாட்டில் அணுகுமுறை தேவைப்படுகின்றது.</string>
+    <string name="security_button">இப்போது விடுக</string>
+    <string name="coming_soon">விரைவில் வருகின்றது</string>
+    <string name="confirm_delete_title">நீக்குவதை உறுதிப்படுத்தவும்</string>
+    <string name="confirm_delete_description_question">நீங்கள் கேள்வியை நீக்க உறுதியாக உள்ளீர்களா?</string>
+    <string name="confirm_delete_description_heading">நீங்கள் தலைப்புயை நீக்க உறுதியாக உள்ளீர்களா?</string>
+</resources>

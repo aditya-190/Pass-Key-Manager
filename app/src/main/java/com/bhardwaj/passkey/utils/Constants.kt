@@ -8,7 +8,8 @@ class Constants {
         const val HEADING_NAME = "headingName"
         const val CATEGORY_NAME = "categoryName"
         const val FILE_NAME = "pass_key_manager"
-        const val FILE_TYPE = "csv"
+        const val FILE_TYPE = "passkey"
+        const val FILE_PICKER_TYPE = "application/passkey"
         const val FILE_HEADER = "category,heading,question,answer\n"
 
         // SaveState Constants.

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Main Screens -->
+    <string name="banks">బ్యాంకులు</string>
+    <string name="mails">మెయిల్‌లు</string>
+    <string name="apps">అనువర్తనాలు</string>
+    <string name="others">ఇతర</string>
+    <string name="details">వివరాలు</string>
+    <string name="more">మరిన్ని</string>
+    <string name="search">శోధన</string>
+    <string name="title">శీర్షిక</string>
+    <string name="response">సమాధానం</string>
+    <string name="export_download">ఫైల్‌ను డౌన్‌లోడ్లు ఫోల్డర్‌కు ఎగురుతున్నది.</string>
+    <string name="rate_app">అనువర్తనం రేట్ చేయండి</string>
+    <string name="change_language">భాషను మార్చు</string>
+    <string name="privacy">గౌప్యం</string>
+    <string name="terms_n_condition">షరతులు మరియు పారామెటర్లు</string>
+    <string name="about">గురించి</string>
+    <string name="import_data">డేటా దిగుమతి</string>
+    <string name="export_data">డేటా ఎగురుతున్నది</string>
+
+    <!-- Edit Text Hints -->
+    <string name="type_here">ఇక్కడ టైప్ చేయండి…</string>
+    <string name="type_your_title_here">మీ శీర్షికను ఇక్కడ టైప్ చేయండి…</string>
+    <string name="type_your_response_here">మీ సమాధానం ఇక్కడ టైప్ చేయండి…</string>
+    <string name="type_your_heading_here">మీ శీర్షికను ఇక్కడ టైప్ చేయండి…</string>
+    <string name="enter_valid_heading">చెల్లని శీర్షిక నమోదు చేయండి.</string>
+    <string name="enter_valid_title_n_response">చెల్లని శీర్షిక మరియు సమాధానాన్ని నమోదు చేయండి.</string>
+
+    <!-- Buttons Text -->
+    <string name="add">జోడించు</string>
+    <string name="edit">సవరించు</string>
+    <string name="save_changes">మార్పులను భద్రపరచు</string>
+    <string name="heading">శీర్షిక</string>
+
+    <!-- Authentication Screen -->
+    <string name="welcome_to_pass_key">పాస్‌కీ మేనేజర్‌కు స్వాగతం</string>
+    <string name="authentication_failed">ప్రమాణీకరణ విఫలమైంది.</string>
+    <string name="something_went_wrong">ఏదో తప్పు జరిగింది..</string>
+    <string name="set_password">దయచేసి మీ ఉపకరణానికి మొదటిసారిగా పాస్‌వర్డ్‌ను సెట్ చేయండి.</string>
+    <string name="permission_required">పరిమితితములు యిక్కడి ప్రవేశించి డేటాబేస్‌ను ఎగురుతున్నాయి.</string>
+    <string name="permission_denied">అనుమతి తప్పబడింది</string>
+    <string name="ok">సరే</string>
+
+    <!-- Dialogs and Requests -->
+    <string name="change">మార్చు</string>
+    <string name="language">భాష</string>
+    <string name="import_success">డేటా యాన్ని యాత్రికగా ఎంపిక చేసినవి.</string>
+    <string name="import_failed">డేటా దిగుమతి విఫలమైంది.</string>
+    <string name="copied">నకలు తీసివేయబడింది</string>
+    <string name="delete">తొలగించు</string>
+    <string name="cancel">రద్దు</string>
+    <string name="security_heading">పాస్‌కీ లాక్ చేయబడింది</string>
+    <string name="security_description">పాస్‌కీ అనువర్తనంకు ప్రవేశించడానికి ధృవీకరణ అవసరం.</string>
+    <string name="security_button">ఇప్పుడు అన్‌లాక్ చేయండి</string>
+    <string name="coming_soon">త్వరలో</string>
+    <string name="confirm_delete_title">తొలగించు నిర్ధారించండి</string>
+    <string name="confirm_delete_description_question">ఖచ్చితంగా మీరు ప్రశ్నను తొలగించాలా?</string>
+    <string name="confirm_delete_description_heading">ఖచ్చితంగా మీరు శీర్షికను తొలగించాలా?</string>
+</resources>
+

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--    Main Screens    -->
+    <string name="banks">Banche</string>
+    <string name="mails">Email</string>
+    <string name="apps">Applicazioni</string>
+    <string name="others">Altri</string>
+    <string name="details">Dettagli</string>
+    <string name="more">Di più</string>
+    <string name="search">Ricerca</string>
+    <string name="title">Titolo</string>
+    <string name="response">Risposta</string>
+    <string name="export_download">File esportato nella cartella Download.</string>
+    <string name="rate_app">Valuta App</string>
+    <string name="change_language">Cambia Lingua</string>
+    <string name="privacy">Privacy</string>
+    <string name="terms_n_condition">Termini e Condizioni</string>
+    <string name="about">Informazioni</string>
+    <string name="import_data">Importa Dati</string>
+    <string name="export_data">Esporta Dati</string>
+
+    <!--    Edit Text Hints    -->
+    <string name="type_here">Digita qui…</string>
+    <string name="type_your_title_here">Digita il tuo titolo qui…</string>
+    <string name="type_your_response_here">Digita qui la tua risposta…</string>
+    <string name="type_your_heading_here">Digita qui il tuo titolo…</string>
+    <string name="enter_valid_heading">Inserisci un titolo valido.</string>
+    <string name="enter_valid_title_n_response">Inserisci un titolo e una risposta validi.</string>
+
+    <!--    Buttons Text    -->
+    <string name="add">Aggiungi</string>
+    <string name="edit">Modifica</string>
+    <string name="save_changes">SALVA MODIFICHE</string>
+    <string name="heading">Titolo</string>
+
+    <!--    Authentication Screen    -->
+    <string name="welcome_to_pass_key">Benvenuti in PassKey Manager</string>
+    <string name="authentication_failed">Autenticazione Fallita.</string>
+    <string name="something_went_wrong">Qualcosa è andato storto..</string>
+    <string name="set_password">Si prega di impostare prima la password per il dispositivo.</string>
+    <string name="permission_required">È necessario l\'accesso alla memoria per esportare il database.</string>
+    <string name="permission_denied">Permesso Negato</string>
+    <string name="ok">OK</string>
+
+    <!--    Dialogs and Requests    -->
+    <string name="change">Cambia</string>
+    <string name="language">lingua</string>
+    <string name="import_success">Dati importati con successo.</string>
+    <string name="import_failed">Impossibile importare i dati.</string>
+    <string name="copied">Copiato</string>
+    <string name="delete">Elimina</string>
+    <string name="cancel">Annulla</string>
+    <string name="security_heading">PassKey è bloccato</string>
+    <string name="security_description">È necessaria un\'autenticazione per accedere all\'app PassKey.</string>
+    <string name="security_button">Sblocca ora</string>
+    <string name="coming_soon">Prossimamente</string>
+    <string name="confirm_delete_title">Conferma eliminazione</string>
+    <string name="confirm_delete_description_question">Sei sicuro di voler eliminare la domanda?</string>
+    <string name="confirm_delete_description_heading">Sei sicuro di voler eliminare l\'intestazione?</string>
+</resources>

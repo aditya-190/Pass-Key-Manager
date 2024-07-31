@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Main Screens -->
+    <string name="banks">Банки</string>
+    <string name="mails">Почта</string>
+    <string name="apps">Приложения</string>
+    <string name="others">Прочее</string>
+    <string name="details">Подробности</string>
+    <string name="more">Еще</string>
+    <string name="search">Поиск</string>
+    <string name="title">Заголовок</string>
+    <string name="response">Ответ</string>
+    <string name="export_download">Файл экспортирован в папку Загрузки.</string>
+    <string name="rate_app">Оценить приложение</string>
+    <string name="change_language">Изменить язык</string>
+    <string name="privacy">Конфиденциальность</string>
+    <string name="terms_n_condition">Условия использования</string>
+    <string name="about">О приложении</string>
+    <string name="import_data">Импортировать данные</string>
+    <string name="export_data">Экспортировать данные</string>
+
+    <!-- Edit Text Hints -->
+    <string name="type_here">Введите здесь…</string>
+    <string name="type_your_title_here">Введите ваш заголовок здесь…</string>
+    <string name="type_your_response_here">Введите ваш ответ здесь…</string>
+    <string name="type_your_heading_here">Введите ваш заголовок здесь…</string>
+    <string name="enter_valid_heading">Введите допустимый заголовок.</string>
+    <string name="enter_valid_title_n_response">Введите допустимый заголовок и ответ.</string>
+
+    <!-- Buttons Text -->
+    <string name="add">Добавить</string>
+    <string name="edit">Редактировать</string>
+    <string name="save_changes">СОХРАНИТЬ ИЗМЕНЕНИЯ</string>
+    <string name="heading">Заголовок</string>
+
+    <!-- Authentication Screen -->
+    <string name="welcome_to_pass_key">Добро пожаловать в Менеджер паролей</string>
+    <string name="authentication_failed">Ошибка аутентификации.</string>
+    <string name="something_went_wrong">Что-то пошло не так..</string>
+    <string name="set_password">Пожалуйста, сначала установите пароль для вашего устройства.</string>
+    <string name="permission_required">Требуется доступ к хранилищу для экспорта базы данных.</string>
+    <string name="permission_denied">Доступ запрещен</string>
+    <string name="ok">OK</string>
+
+    <!-- Dialogs and Requests -->
+    <string name="change">Изменить</string>
+    <string name="language">язык</string>
+    <string name="import_success">Данные успешно импортированы.</string>
+    <string name="import_failed">Не удалось импортировать данные.</string>
+    <string name="copied">Скопировано</string>
+    <string name="delete">Удалить</string>
+    <string name="cancel">Отмена</string>
+    <string name="security_heading">PassKey заблокирован</string>
+    <string name="security_description">Для доступа к приложению PassKey требуется аутентификация.</string>
+    <string name="security_button">Разблокировать сейчас</string>
+    <string name="coming_soon">Скоро</string>
+    <string name="confirm_delete_title">Подтвердите удаление</string>
+    <string name="confirm_delete_description_question">Вы уверены, что хотите удалить вопрос?</string>
+    <string name="confirm_delete_description_heading">Вы уверены, что хотите удалить заголовок?</string>
+</resources>

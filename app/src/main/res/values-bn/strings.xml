@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Main Screens -->
+    <string name="banks">ব্যাংক</string>
+    <string name="mails">মেইল</string>
+    <string name="apps">অ্যাপ</string>
+    <string name="others">অন্যান্য</string>
+    <string name="details">বিস্তারিত</string>
+    <string name="more">আরও</string>
+    <string name="search">অনুসন্ধান</string>
+    <string name="title">শিরোনাম</string>
+    <string name="response">প্রতিক্রিয়া</string>
+    <string name="export_download">ফাইলটি ডাউনলোড ফোল্ডারে রপ্ত হয়েছে।</string>
+    <string name="rate_app">অ্যাপ রেটিং</string>
+    <string name="change_language">ভাষা পরিবর্তন</string>
+    <string name="privacy">গোপনীয়তা</string>
+    <string name="terms_n_condition">শর্তাবলী এবং অবশ্যই</string>
+    <string name="about">সম্পর্কে</string>
+    <string name="import_data">তথ্য আমদানি</string>
+    <string name="export_data">তথ্য রপ্তানি</string>
+
+    <!-- Edit Text Hints -->
+    <string name="type_here">এখানে লিখুন…</string>
+    <string name="type_your_title_here">আপনার শিরোনাম এখানে লিখুন…</string>
+    <string name="type_your_response_here">আপনার প্রতিক্রিয়া এখানে লিখুন…</string>
+    <string name="type_your_heading_here">আপনার শিরোনাম এখানে লিখুন…</string>
+    <string name="enter_valid_heading">একটি বৈধ শিরোনাম লিখুন।</string>
+    <string name="enter_valid_title_n_response">একটি বৈধ শিরোনাম এবং প্রতিক্রিয়া লিখুন।</string>
+
+    <!-- Buttons Text -->
+    <string name="add">যোগ করুন</string>
+    <string name="edit">সম্পাদনা করুন</string>
+    <string name="save_changes">পরিবর্তন সংরক্ষণ করুন</string>
+    <string name="heading">শিরোনাম</string>
+
+    <!-- Authentication Screen -->
+    <string name="welcome_to_pass_key">PassKey ম্যানেজারে আপনাকে স্বাগতম</string>
+    <string name="authentication_failed">প্রাধিকারীকরণ ব্যর্থ হয়েছে।</string>
+    <string name="something_went_wrong">কিছু ভুল হয়েছে..</string>
+    <string name="set_password">দয়া করে আপনার ডিভাইসের জন্য পাসওয়ার্ড সেট করুন।</string>
+    <string name="permission_required">ডেটাবেস রপ্তানির জন্য সংগ্রহ অ্যাক্সেস প্রয়োজন।</string>
+    <string name="permission_denied">অনুমতি অস্বীকৃত</string>
+    <string name="ok">ঠিক আছে</string>
+
+    <!-- Dialogs and Requests -->
+    <string name="change">পরিবর্তন</string>
+    <string name="language">ভাষা</string>
+    <string name="import_success">তথ্য সফলভাবে আমদানি করা হয়েছে।</string>
+    <string name="import_failed">তথ্য আমদানি ব্যর্থ হয়েছে।</string>
+    <string name="copied">কপি হয়েছে</string>
+    <string name="delete">মুছে ফেলুন</string>
+    <string name="cancel">বাতিল করুন</string>
+    <string name="security_heading">PassKey লক হয়েছে</string>
+    <string name="security_description">PassKey অ্যাপ্লিকেশনে অ্যাক্সেস করতে প্রাধিকারীকরণ প্রয়োজন।</string>
+    <string name="security_button">এখন আনলক করুন</string>
+    <string name="coming_soon">শীঘ্রই আসছে</string>
+    <string name="confirm_delete_title">মুছে ফেলার নিশ্চিতকরণ</string>
+    <string name="confirm_delete_description_question">আপনি কি নিশ্চিত যে আপনি প্রশ্নটি মুছে ফেলতে চান?</string>
+    <string name="confirm_delete_description_heading">আপনি কি নিশ্চিত যে আপনি শিরোনামটি মুছে ফেলতে চান?</string>
+</resources>

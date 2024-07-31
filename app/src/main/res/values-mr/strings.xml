@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Main Screens -->
+    <string name="banks">बँक</string>
+    <string name="mails">पत्र</string>
+    <string name="apps">अ‍ॅप</string>
+    <string name="others">इतर</string>
+    <string name="details">तपशील</string>
+    <string name="more">अधिक</string>
+    <string name="search">शोध</string>
+    <string name="title">शीर्षक</string>
+    <string name="response">प्रतिसाद</string>
+    <string name="export_download">फाईल डाउनलोड्स फोल्डरमध्ये निर्यात केले गेले आहे.</string>
+    <string name="rate_app">अ‍ॅपची मूल्यांकन करा</string>
+    <string name="change_language">भाषा बदला</string>
+    <string name="privacy">गोपनीयता</string>
+    <string name="terms_n_condition">अटी व अटीचे अट</string>
+    <string name="about">बद्दल</string>
+    <string name="import_data">डेटा आयात करा</string>
+    <string name="export_data">डेटा निर्यात करा</string>
+
+    <!-- Edit Text Hints -->
+    <string name="type_here">येथे टाईप करा…</string>
+    <string name="type_your_title_here">आपले शीर्षक येथे टाईप करा…</string>
+    <string name="type_your_response_here">आपला प्रतिसाद येथे टाईप करा…</string>
+    <string name="type_your_heading_here">आपले शीर्षक येथे टाईप करा…</string>
+    <string name="enter_valid_heading">एक वैध शीर्षक प्रविष्ट करा.</string>
+    <string name="enter_valid_title_n_response">एक वैध शीर्षक आणि प्रतिसाद प्रविष्ट करा.</string>
+
+    <!-- Buttons Text -->
+    <string name="add">जोडा</string>
+    <string name="edit">संपादित करा</string>
+    <string name="save_changes">बदल साठवा</string>
+    <string name="heading">शीर्षक</string>
+
+    <!-- Authentication Screen -->
+    <string name="welcome_to_pass_key">पासकी मॅनेजरमध्ये आपले स्वागत आहे</string>
+    <string name="authentication_failed">प्रमाणीकरण अयशस्वी झाले.</string>
+    <string name="something_went_wrong">काहीतरी चुकलं आहे..</string>
+    <string name="set_password">कृपया प्रथम आपल्या डिव्हाइससाठी संकेतशब्द सेट करा.</string>
+    <string name="permission_required">डेटाबेस निर्यात करण्यासाठी स्टोरेज प्रवेश आवश्यक आहे.</string>
+    <string name="permission_denied">परवानगी नकारली</string>
+    <string name="ok">ठीक आहे</string>
+
+    <!-- Dialogs and Requests -->
+    <string name="change">बदला</string>
+    <string name="language">भाषा</string>
+    <string name="import_success">डेटा सफळतेने आयात केले.</string>
+    <string name="import_failed">डेटा आयात करण्यात अयशस्वी झाले.</string>
+    <string name="copied">कॉपी केली</string>
+    <string name="delete">हटवा</string>
+    <string name="cancel">रद्द करा</string>
+    <string name="security_heading">पासकी लॉक केला गेला आहे</string>
+    <string name="security_description">पासकी अ‍ॅपमध्ये प्रवेश करण्यासाठी प्रमाणीकरण आवश्यक आहे.</string>
+    <string name="security_button">आता अनलॉक करा</string>
+    <string name="coming_soon">शीघ्र येत आहे</string>
+    <string name="confirm_delete_title">हटवण्याची पुष्टी</string>
+    <string name="confirm_delete_description_question">तुम्ही का प्रश्न हटवू इच्छिता?</string>
+    <string name="confirm_delete_description_heading">तुम्ही का शीर्षक हटवू इच्छिता?</string>
+</resources>

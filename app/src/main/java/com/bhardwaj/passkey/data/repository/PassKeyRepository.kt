@@ -12,7 +12,7 @@ interface PasskeyRepository {
 
     suspend fun getDetailById(detailId: Long): Details?
 
-    suspend fun upsertDetails(details: Details)
+    suspend fun upsertDetails(details: Details): Long
 
     suspend fun deleteDetail(details: Details)
 
@@ -23,7 +23,7 @@ interface PasskeyRepository {
 
     suspend fun getPreviewById(previewId: Long): Preview?
 
-    suspend fun upsertPreview(previews: Preview)
+    suspend fun upsertPreview(previews: Preview): Long
 
     suspend fun deletePreview(previews: Preview)
 }

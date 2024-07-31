@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--    Main Screens    -->
+    <string name="banks">은행</string>
+    <string name="mails">메일</string>
+    <string name="apps">앱</string>
+    <string name="others">기타</string>
+    <string name="details">세부 정보</string>
+    <string name="more">더 보기</string>
+    <string name="search">검색</string>
+    <string name="title">제목</string>
+    <string name="response">응답</string>
+    <string name="export_download">파일이 다운로드 폴더에 내보내졌습니다.</string>
+    <string name="rate_app">앱 평가</string>
+    <string name="change_language">언어 변경</string>
+    <string name="privacy">개인 정보 보호</string>
+    <string name="terms_n_condition">이용 약관</string>
+    <string name="about">소개</string>
+    <string name="import_data">데이터 가져오기</string>
+    <string name="export_data">데이터 내보내기</string>
+
+    <!--    Edit Text Hints    -->
+    <string name="type_here">여기에 입력…</string>
+    <string name="type_your_title_here">여기에 제목 입력…</string>
+    <string name="type_your_response_here">여기에 응답 입력…</string>
+    <string name="type_your_heading_here">여기에 제목 입력…</string>
+    <string name="enter_valid_heading">유효한 제목을 입력하세요.</string>
+    <string name="enter_valid_title_n_response">유효한 제목과 응답을 입력하세요.</string>
+
+    <!--    Buttons Text    -->
+    <string name="add">추가</string>
+    <string name="edit">편집</string>
+    <string name="save_changes">변경 사항 저장</string>
+    <string name="heading">제목</string>
+
+    <!--    Authentication Screen    -->
+    <string name="welcome_to_pass_key">PassKey Manager에 오신 것을 환영합니다</string>
+    <string name="authentication_failed">인증 실패했습니다.</string>
+    <string name="something_went_wrong">문제가 발생했습니다..</string>
+    <string name="set_password">먼저 장치의 비밀번호를 설정하십시오.</string>
+    <string name="permission_required">데이터베이스를 내보내려면 저장소 액세스가 필요합니다.</string>
+    <string name="permission_denied">허가가 거부되었습니다</string>
+    <string name="ok">확인</string>
+
+    <!--    Dialogs and Requests    -->
+    <string name="change">변경</string>
+    <string name="language">언어</string>
+    <string name="import_success">데이터가 성공적으로 가져와졌습니다.</string>
+    <string name="import_failed">데이터 가져오기에 실패했습니다.</string>
+    <string name="copied">복사됨</string>
+    <string name="delete">삭제</string>
+    <string name="cancel">취소</string>
+    <string name="security_heading">PassKey가 잠겨 있습니다</string>
+    <string name="security_description">PassKey 앱에 액세스하려면 인증이 필요합니다.</string>
+    <string name="security_button">지금 잠금 해제</string>
+    <string name="coming_soon">곧 출시 예정</string>
+    <string name="confirm_delete_title">삭제 확인</string>
+    <string name="confirm_delete_description_question">질문을 삭제하시겠습니까?</string>
+    <string name="confirm_delete_description_heading">제목을 삭제하시겠습니까?</string>
+</resources>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--    Main Screens    -->
+    <string name="banks">Bancos</string>
+    <string name="mails">Correos</string>
+    <string name="apps">Aplicaciones</string>
+    <string name="others">Otros</string>
+    <string name="details">Detalles</string>
+    <string name="more">Más</string>
+    <string name="search">Buscar</string>
+    <string name="title">Título</string>
+    <string name="response">Respuesta</string>
+    <string name="export_download">Archivo exportado a la carpeta Descargas.</string>
+    <string name="rate_app">Calificar App</string>
+    <string name="change_language">Cambiar Idioma</string>
+    <string name="privacy">Privacidad</string>
+    <string name="terms_n_condition">Términos y Condiciones</string>
+    <string name="about">Acerca de</string>
+    <string name="import_data">Importar Datos</string>
+    <string name="export_data">Exportar Datos</string>
+
+    <!--    Edit Text Hints    -->
+    <string name="type_here">Escriba aquí…</string>
+    <string name="type_your_title_here">Escriba su título aquí…</string>
+    <string name="type_your_response_here">Escriba su respuesta aquí…</string>
+    <string name="type_your_heading_here">Escriba su encabezado aquí…</string>
+    <string name="enter_valid_heading">Ingrese un encabezado válido.</string>
+    <string name="enter_valid_title_n_response">Ingrese un título y una respuesta válidos.</string>
+
+    <!--    Buttons Text    -->
+    <string name="add">Agregar</string>
+    <string name="edit">Editar</string>
+    <string name="save_changes">GUARDAR CAMBIOS</string>
+    <string name="heading">Encabezado</string>
+
+    <!--    Authentication Screen    -->
+    <string name="welcome_to_pass_key">Bienvenido a PassKey Manager</string>
+    <string name="authentication_failed">Autenticación Fallida.</string>
+    <string name="something_went_wrong">Algo Salió Mal..</string>
+    <string name="set_password">Por favor establezca la contraseña de su dispositivo primero.</string>
+    <string name="permission_required">Se necesita acceso al almacenamiento para exportar la base de datos.</string>
+    <string name="permission_denied">Permiso Denegado</string>
+    <string name="ok">OK</string>
+
+    <!--    Dialogs and Requests    -->
+    <string name="change">Cambiar</string>
+    <string name="language">Idioma</string>
+    <string name="import_success">Datos importados exitosamente.</string>
+    <string name="import_failed">Falló la importación de datos.</string>
+    <string name="copied">Copiado</string>
+    <string name="delete">Eliminar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="security_heading">PassKey está bloqueado</string>
+    <string name="security_description">Se requiere autenticación para acceder a la aplicación PassKey.</string>
+    <string name="security_button">Desbloquear ahora</string>
+    <string name="coming_soon">Próximamente</string>
+    <string name="confirm_delete_title">Confirmar eliminación</string>
+    <string name="confirm_delete_description_question">¿Estás seguro de que quieres eliminar la pregunta?</string>
+    <string name="confirm_delete_description_heading">¿Estás seguro de que quieres eliminar el encabezado?</string>
+</resources>

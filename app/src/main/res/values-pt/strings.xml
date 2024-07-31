@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Main Screens -->
+    <string name="banks">Bancos</string>
+    <string name="mails">Correios</string>
+    <string name="apps">Aplicativos</string>
+    <string name="others">Outros</string>
+    <string name="details">Detalhes</string>
+    <string name="more">Mais</string>
+    <string name="search">Buscar</string>
+    <string name="title">Título</string>
+    <string name="response">Resposta</string>
+    <string name="export_download">Arquivo exportado para a pasta de downloads.</string>
+    <string name="rate_app">Avaliar Aplicativo</string>
+    <string name="change_language">Alterar Idioma</string>
+    <string name="privacy">Privacidade</string>
+    <string name="terms_n_condition">Termos e Condições</string>
+    <string name="about">Sobre</string>
+    <string name="import_data">Importar Dados</string>
+    <string name="export_data">Exportar Dados</string>
+
+    <!-- Edit Text Hints -->
+    <string name="type_here">Digite aqui…</string>
+    <string name="type_your_title_here">Digite seu título aqui…</string>
+    <string name="type_your_response_here">Digite sua resposta aqui…</string>
+    <string name="type_your_heading_here">Digite seu título aqui…</string>
+    <string name="enter_valid_heading">Digite um título válido.</string>
+    <string name="enter_valid_title_n_response">Digite um título e uma resposta válidos.</string>
+
+    <!-- Buttons Text -->
+    <string name="add">Adicionar</string>
+    <string name="edit">Editar</string>
+    <string name="save_changes">SALVAR ALTERAÇÕES</string>
+    <string name="heading">Título</string>
+
+    <!-- Authentication Screen -->
+    <string name="welcome_to_pass_key">Bem-vindo ao Gerenciador de Senhas</string>
+    <string name="authentication_failed">Autenticação Falhou.</string>
+    <string name="something_went_wrong">Algo deu errado..</string>
+    <string name="set_password">Por favor, defina uma senha para o seu dispositivo primeiro.</string>
+    <string name="permission_required">Acesso ao armazenamento é necessário para exportar o banco de dados.</string>
+    <string name="permission_denied">Permissão Negada</string>
+    <string name="ok">OK</string>
+
+    <!-- Dialogs and Requests -->
+    <string name="change">Alterar</string>
+    <string name="language">idioma</string>
+    <string name="import_success">Dados importados com sucesso.</string>
+    <string name="import_failed">Falha ao importar dados.</string>
+    <string name="copied">Copiado</string>
+    <string name="delete">Excluir</string>
+    <string name="cancel">Cancelar</string>
+    <string name="security_heading">PassKey está bloqueado</string>
+    <string name="security_description">A autenticação é necessária para acessar o aplicativo PassKey.</string>
+    <string name="security_button">Desbloquear agora</string>
+    <string name="coming_soon">Em breve</string>
+    <string name="confirm_delete_title">Confirmar exclusão</string>
+    <string name="confirm_delete_description_question">Tem certeza de que deseja excluir a pergunta?</string>
+    <string name="confirm_delete_description_heading">Tem certeza de que deseja excluir o cabeçalho?</string>
+</resources>

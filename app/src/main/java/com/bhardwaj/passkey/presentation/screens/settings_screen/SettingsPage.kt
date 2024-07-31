@@ -1,5 +1,15 @@
 package com.bhardwaj.passkey.presentation.screens.settings_screen
 
+import android.Manifest
+import android.app.Activity
+import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
+import android.provider.OpenableColumns
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -26,22 +36,27 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.bhardwaj.passkey.R
-import com.bhardwaj.passkey.domain.viewModels.SettingsViewModel
 import com.bhardwaj.passkey.domain.events.SettingsEvents
+import com.bhardwaj.passkey.domain.viewModels.SettingsViewModel
 import com.bhardwaj.passkey.presentation.screens.settings_screen.components.FaqItem
 import com.bhardwaj.passkey.presentation.screens.settings_screen.components.LanguageBottomSheet
 import com.bhardwaj.passkey.presentation.screens.settings_screen.components.SettingsText
 import com.bhardwaj.passkey.presentation.theme.BebasNeue
 import com.bhardwaj.passkey.presentation.theme.Poppins
+import com.bhardwaj.passkey.utils.Constants.Companion.FILE_PICKER_TYPE
 import com.bhardwaj.passkey.utils.UiEvents
 import kotlinx.coroutines.launch
+import java.io.BufferedReader
+import java.io.InputStreamReader
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -52,6 +67,42 @@ fun SettingsScreen(
     val snackBarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
     val scaffoldState = rememberBottomSheetScaffoldState()
+
+    val context = LocalContext.current
+    val importDataLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            try {
+                val uri: Uri? = result.data?.data
+                if(uri != null) {
+                    val fileName = getFileName(context, uri)
+                    if(fileName.endsWith(".passkey")) {
+                        val inputStream = context.contentResolver.openInputStream(uri)
+                            ?: return@rememberLauncherForActivityResult
+                        val reader = BufferedReader(InputStreamReader(inputStream))
+                        val content = reader.readText()
+                        viewModel.onEvent(SettingsEvents.OnImportDataClick(content))
+                        reader.close()
+                    } else {
+                        scope.launch {
+                            snackBarHostState.showSnackbar(message = "Invalid file selected.")
+                        }
+                    }
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
+
+    val exportPermissionLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestPermission()
+    ) { isGranted ->
+        if (isGranted) {
+            viewModel.onEvent(SettingsEvents.OnExportDataClick)
+        }
+    }
 
     LaunchedEffect(key1 = true) {
         viewModel.uiEvents.collect { event ->
@@ -65,7 +116,6 @@ fun SettingsScreen(
                         )
                     }
                 }
-
                 else -> Unit
             }
         }
@@ -152,10 +202,19 @@ fun SettingsScreen(
                                 viewModel.onEvent(SettingsEvents.OnRateAppClick)
                             }
                             SettingsText(text = stringResource(id = R.string.import_data)) {
-                                viewModel.onEvent(SettingsEvents.OnImportDataClick)
+                                val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
+                                    addCategory(Intent.CATEGORY_OPENABLE)
+                                    type = "text/*"
+                                    putExtra(Intent.EXTRA_MIME_TYPES, arrayOf(FILE_PICKER_TYPE))
+                                }
+                                importDataLauncher.launch(intent)
                             }
                             SettingsText(text = stringResource(id = R.string.export_data)) {
-                                viewModel.onEvent(SettingsEvents.OnExportDataClick)
+                                exportDataToStorage(
+                                    appContext = context,
+                                    viewModel = viewModel,
+                                    exportPermissionLauncher = exportPermissionLauncher
+                                )
                             }
                             SettingsText(text = stringResource(id = R.string.privacy)) {
                                 viewModel.onEvent(SettingsEvents.OnPrivacyClick)
@@ -183,4 +242,43 @@ fun SettingsScreen(
             }
         }
     }
+}
+
+private fun exportDataToStorage(
+    appContext: Context,
+    viewModel: SettingsViewModel,
+    exportPermissionLauncher: ActivityResultLauncher<String>
+) {
+    if (ContextCompat.checkSelfPermission(
+            appContext,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+        ) == PackageManager.PERMISSION_GRANTED
+    ) {
+        viewModel.onEvent(SettingsEvents.OnExportDataClick)
+    } else {
+        exportPermissionLauncher.launch(
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+        )
+    }
+}
+
+private fun getFileName(context: Context, uri: Uri):String {
+    var result: String? = null
+    if (uri.scheme == "content") {
+        val cursor = context.contentResolver.query(uri, null, null, null, null)
+        cursor?.use {
+            if (it.moveToFirst()) {
+                val nameIndex = it.getColumnIndex(OpenableColumns.DISPLAY_NAME)
+                result = it.getString(nameIndex)
+            }
+        }
+    }
+    if (result == null) {
+        result = uri.path
+        val cut = result?.lastIndexOf('/')
+        if (cut != -1) {
+            result = result?.substring(cut!! + 1)
+        }
+    }
+    return result ?: ""
 }

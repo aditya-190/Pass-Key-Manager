@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Main Screens -->
+    <string name="banks">البنوك</string>
+    <string name="mails">البريد</string>
+    <string name="apps">التطبيقات</string>
+    <string name="others">آخرى</string>
+    <string name="details">تفاصيل</string>
+    <string name="more">المزيد</string>
+    <string name="search">بحث</string>
+    <string name="title">العنوان</string>
+    <string name="response">الرد</string>
+    <string name="export_download">تم تصدير الملف إلى مجلد التنزيلات.</string>
+    <string name="rate_app">تقييم التطبيق</string>
+    <string name="change_language">تغيير اللغة</string>
+    <string name="privacy">الخصوصية</string>
+    <string name="terms_n_condition">الشروط والأحكام</string>
+    <string name="about">حول</string>
+    <string name="import_data">استيراد البيانات</string>
+    <string name="export_data">تصدير البيانات</string>
+
+    <!-- Edit Text Hints -->
+    <string name="type_here">اكتب هنا…</string>
+    <string name="type_your_title_here">اكتب عنوانك هنا…</string>
+    <string name="type_your_response_here">اكتب ردك هنا…</string>
+    <string name="type_your_heading_here">اكتب عنوانك هنا…</string>
+    <string name="enter_valid_heading">أدخل عنوانًا صالحًا.</string>
+    <string name="enter_valid_title_n_response">أدخل عنوانًا وردًا صالحًين.</string>
+
+    <!-- Buttons Text -->
+    <string name="add">إضافة</string>
+    <string name="edit">تعديل</string>
+    <string name="save_changes">حفظ التغييرات</string>
+    <string name="heading">العنوان</string>
+
+    <!-- Authentication Screen -->
+    <string name="welcome_to_pass_key">مرحبًا بك في مدير PassKey</string>
+    <string name="authentication_failed">فشل التوثيق.</string>
+    <string name="something_went_wrong">حدث خطأ ما..</string>
+    <string name="set_password">يرجى تعيين كلمة مرور لجهازك أولاً.</string>
+    <string name="permission_required">الوصول إلى التخزين مطلوب لتصدير قاعدة البيانات.</string>
+    <string name="permission_denied">تم رفض الإذن</string>
+    <string name="ok">حسنًا</string>
+
+    <!-- Dialogs and Requests -->
+    <string name="change">تغيير</string>
+    <string name="language">اللغة</string>
+    <string name="import_success">تم استيراد البيانات بنجاح.</string>
+    <string name="import_failed">فشل استيراد البيانات.</string>
+    <string name="copied">تم النسخ</string>
+    <string name="delete">حذف</string>
+    <string name="cancel">إلغاء</string>
+    <string name="security_heading">تم قفل PassKey</string>
+    <string name="security_description">المصادقة مطلوبة للوصول إلى تطبيق PassKey.</string>
+    <string name="security_button">فتح الآن</string>
+    <string name="coming_soon">قريبًا</string>
+    <string name="confirm_delete_title">تأكيد الحذف</string>
+    <string name="confirm_delete_description_question">هل أنت متأكد أنك تريد حذف السؤال؟</string>
+    <string name="confirm_delete_description_heading">هل أنت متأكد أنك تريد حذف العنوان؟</string>
+</resources>

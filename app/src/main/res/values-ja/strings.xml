@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--    Main Screens    -->
+    <string name="banks">銀行</string>
+    <string name="mails">メール</string>
+    <string name="apps">アプリ</string>
+    <string name="others">その他</string>
+    <string name="details">詳細</string>
+    <string name="more">もっと見る</string>
+    <string name="search">検索</string>
+    <string name="title">タイトル</string>
+    <string name="response">応答</string>
+    <string name="export_download">ファイルがダウンロードフォルダにエクスポートされました。</string>
+    <string name="rate_app">アプリを評価</string>
+    <string name="change_language">言語を変更</string>
+    <string name="privacy">プライバシー</string>
+    <string name="terms_n_condition">利用規約</string>
+    <string name="about">について</string>
+    <string name="import_data">データをインポート</string>
+    <string name="export_data">データをエクスポート</string>
+
+    <!--    Edit Text Hints    -->
+    <string name="type_here">ここに入力…</string>
+    <string name="type_your_title_here">ここにタイトルを入力…</string>
+    <string name="type_your_response_here">ここに応答を入力…</string>
+    <string name="type_your_heading_here">ここに見出しを入力…</string>
+    <string name="enter_valid_heading">有効な見出しを入力してください。</string>
+    <string name="enter_valid_title_n_response">有効なタイトルと応答を入力してください。</string>
+
+    <!--    Buttons Text    -->
+    <string name="add">追加</string>
+    <string name="edit">編集</string>
+    <string name="save_changes">変更を保存</string>
+    <string name="heading">見出し</string>
+
+    <!--    Authentication Screen    -->
+    <string name="welcome_to_pass_key">PassKey Managerへようこそ</string>
+    <string name="authentication_failed">認証に失敗しました。</string>
+    <string name="something_went_wrong">何かがうまくいかない..</string>
+    <string name="set_password">まずデバイスのパスワードを設定してください。</string>
+    <string name="permission_required">データベースをエクスポートするにはストレージアクセスが必要です。</string>
+    <string name="permission_denied">許可が拒否されました</string>
+    <string name="ok">OK</string>
+
+    <!--    Dialogs and Requests    -->
+    <string name="change">変更</string>
+    <string name="language">言語</string>
+    <string name="import_success">データが正常にインポートされました。</string>
+    <string name="import_failed">データのインポートに失敗しました。</string>
+    <string name="copied">コピーされました</string>
+    <string name="delete">削除</string>
+    <string name="cancel">キャンセル</string>
+    <string name="security_heading">PassKeyはロックされています</string>
+    <string name="security_description">PassKeyアプリにアクセスするには認証が必要です。</string>
+    <string name="security_button">今すぐアンロック</string>
+    <string name="coming_soon">近日公開</string>
+    <string name="confirm_delete_title">削除を確認</string>
+    <string name="confirm_delete_description_question">本当に質問を削除しますか？</string>
+    <string name="confirm_delete_description_heading">本当に見出しを削除しますか？</string>
+</resources>

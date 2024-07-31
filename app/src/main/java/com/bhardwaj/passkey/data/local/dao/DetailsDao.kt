@@ -20,7 +20,7 @@ interface DetailsDao {
     suspend fun getDetailById(detailId: Long): Details?
 
     @Upsert
-    suspend fun upsertDetails(details: Details)
+    suspend fun upsertDetails(details: Details): Long
 
     @Delete
     suspend fun deleteDetail(details: Details)

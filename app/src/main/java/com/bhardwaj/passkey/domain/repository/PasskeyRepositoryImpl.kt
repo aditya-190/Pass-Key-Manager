@@ -23,7 +23,7 @@ class PasskeyRepositoryImpl(
         return detailsDao.getDetailById(detailId)
     }
 
-    override suspend fun upsertDetails(details: Details) {
+    override suspend fun upsertDetails(details: Details): Long {
         return detailsDao.upsertDetails(details)
     }
 
@@ -43,7 +43,7 @@ class PasskeyRepositoryImpl(
         return previewDao.getPreviewById(previewId)
     }
 
-    override suspend fun upsertPreview(previews: Preview) {
+    override suspend fun upsertPreview(previews: Preview): Long {
         return previewDao.upsertPreview(previews)
     }
 

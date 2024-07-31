@@ -36,7 +36,7 @@ fun PassKeyTextField(
             onValueChange = onValueChanged,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(vertical = 6.dp)
+                .padding(vertical = 10.dp)
                 .border(
                     width = 1.dp,
                     color = MaterialTheme.colorScheme.outlineVariant,
