@@ -16,8 +16,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.bhardwaj.passkey.R
-import com.bhardwaj.passkey.domain.viewModels.OnBoardingViewModel
 import com.bhardwaj.passkey.domain.events.OnBoardingEvents
+import com.bhardwaj.passkey.domain.viewModels.OnBoardingViewModel
 import com.bhardwaj.passkey.presentation.screens.onboarding_screens.components.OnBoardingItem
 import com.bhardwaj.passkey.presentation.screens.onboarding_screens.components.OnBoardingPageIndicator
 import com.bhardwaj.passkey.utils.UiEvents

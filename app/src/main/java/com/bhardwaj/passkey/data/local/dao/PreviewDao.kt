@@ -16,6 +16,9 @@ interface PreviewDao {
     @Query("SELECT * FROM $PREVIEW_TABLE WHERE previewId=:previewId")
     suspend fun getPreviewById(previewId: Long): Preview?
 
+    @Query("SELECT * FROM $PREVIEW_TABLE WHERE heading=:previewHeading")
+    suspend fun getPreviewByHeading(previewHeading: String): Preview?
+
     @Upsert
     suspend fun upsertPreview(previews: Preview): Long
 

@@ -49,8 +49,8 @@ import androidx.fragment.app.FragmentActivity
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.bhardwaj.passkey.R
-import com.bhardwaj.passkey.domain.viewModels.SecurityViewModel
 import com.bhardwaj.passkey.domain.events.SecurityEvents
+import com.bhardwaj.passkey.domain.viewModels.SecurityViewModel
 import com.bhardwaj.passkey.presentation.theme.Poppins
 import com.bhardwaj.passkey.utils.UiEvents
 import kotlinx.coroutines.CoroutineScope

@@ -28,8 +28,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.bhardwaj.passkey.R
-import com.bhardwaj.passkey.domain.viewModels.SplashViewModel
 import com.bhardwaj.passkey.domain.events.SplashEvents
+import com.bhardwaj.passkey.domain.viewModels.SplashViewModel
 import com.bhardwaj.passkey.presentation.theme.Poppins
 import com.bhardwaj.passkey.utils.UiEvents
 import kotlinx.coroutines.delay

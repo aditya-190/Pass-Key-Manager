@@ -2,11 +2,14 @@ package com.bhardwaj.passkey.domain.viewModels
 
 import android.app.Application
 import android.app.LocaleManager
+import android.content.ContentValues
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Environment
 import android.os.LocaleList
+import android.provider.MediaStore
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -27,6 +30,7 @@ import com.bhardwaj.passkey.utils.AlertBy.TERMS_N_CONDITIONS
 import com.bhardwaj.passkey.utils.Categories
 import com.bhardwaj.passkey.utils.Constants.Companion.FILE_HEADER
 import com.bhardwaj.passkey.utils.Constants.Companion.FILE_NAME
+import com.bhardwaj.passkey.utils.Constants.Companion.FILE_PICKER_TYPE
 import com.bhardwaj.passkey.utils.Constants.Companion.FILE_TYPE
 import com.bhardwaj.passkey.utils.UiEvents
 import com.bhardwaj.passkey.utils.UiText
@@ -39,6 +43,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.BufferedReader
 import java.io.File
+import java.io.IOException
 import java.io.StringReader
 import javax.inject.Inject
 
@@ -132,8 +137,6 @@ class SettingsViewModel @Inject constructor(
                 viewModelScope.launch {
                     val fileName = "${FILE_NAME}_${System.currentTimeMillis()}.${FILE_TYPE}"
 
-                    println("TESTING NAME -> $fileName")
-
                     if (exportDataToStorage(fileName)) {
                         sendUiEvents(
                             UiEvents.ShowSnackBar(
@@ -184,11 +187,17 @@ class SettingsViewModel @Inject constructor(
         }
     }
 
+    private fun replaceCommasWithUnderscores(text: String): String {
+        return text.replace(",", "____")
+    }
+
+    private fun replaceUnderscoresWithCommas(text: String): String {
+        return text.replace("____", ",")
+    }
+
     private suspend fun exportDataToStorage(fileName: String): Boolean {
         return try {
             val allPreviews = repository.getPreviews().first()
-
-            println("TESTING -> $allPreviews")
 
             val csvBuilder = StringBuilder()
             csvBuilder.append(FILE_HEADER)
@@ -196,20 +205,56 @@ class SettingsViewModel @Inject constructor(
                 val previewId = preview.previewId!!
                 val details = repository.getDetailsByPreviewId(previewId).first()
                 details.forEach {
-                    csvBuilder.append("${preview.categoryName},${preview.heading},${it.question},${it.answer}\n")
+                    val categoryName = preview.categoryName
+                    val heading = replaceCommasWithUnderscores(preview.heading)
+                    val question = replaceCommasWithUnderscores(it.question)
+                    val answer = replaceCommasWithUnderscores(it.answer)
+
+                    csvBuilder.append("$categoryName,$heading,$question,$answer\n")
                 }
             }
 
-            val downloadsDirectory =
-                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                saveToDownloadsApi29AndAbove(csvBuilder.toString(), fileName)
+            } else {
+                saveToDownloadsLegacy(csvBuilder.toString(), fileName)
+            }
 
-            val file = File(downloadsDirectory, "${fileName}.${FILE_TYPE}")
-            file.writeText(csvBuilder.toString())
             true
         } catch (e: Exception) {
             e.printStackTrace()
             false
         }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.Q)
+    private suspend fun saveToDownloadsApi29AndAbove(data: String, filename: String) {
+        withContext(Dispatchers.IO) {
+            val contentResolver = appContext.contentResolver
+            val values = ContentValues().apply {
+                put(MediaStore.Downloads.DISPLAY_NAME, filename)
+                put(MediaStore.Downloads.MIME_TYPE, FILE_PICKER_TYPE)
+                put(MediaStore.Downloads.RELATIVE_PATH, Environment.DIRECTORY_DOWNLOADS)
+            }
+            val uri: Uri? =
+                contentResolver.insert(MediaStore.Downloads.EXTERNAL_CONTENT_URI, values)
+            uri?.let {
+                try {
+                    contentResolver.openOutputStream(it)?.use { outputStream ->
+                        outputStream.write(data.toByteArray())
+                    }
+                } catch (e: IOException) {
+                    e.printStackTrace()
+                }
+            } ?: throw IOException("Failed to create new MediaStore record.")
+        }
+    }
+
+    private fun saveToDownloadsLegacy(data: String, filename: String) {
+        val downloadsDir =
+            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+        val file = File(downloadsDir, filename)
+        file.writeText(data)
     }
 
     private suspend fun importDateFromStorage(content: String): Boolean {
@@ -225,25 +270,34 @@ class SettingsViewModel @Inject constructor(
                         continue
                     }
 
-                    val category = values[0].trim()
-                    val heading = values[1].trim()
-                    val question = values[2].trim()
-                    val answer = values[3].trim()
+                    val category = replaceUnderscoresWithCommas(values[0].trim())
+                    val heading = replaceUnderscoresWithCommas(values[1].trim())
+                    val question = replaceUnderscoresWithCommas(values[2].trim())
+                    val answer = replaceUnderscoresWithCommas(values[3].trim())
 
-                    val previewId = repository.upsertPreview(
-                        Preview(
-                            heading = heading,
-                            categoryName = Categories.valueOf(category)
-                        )
-                    )
+                    val existingPreview = repository.getPreviewByHeading(heading)
 
-                    repository.upsertDetails(
-                        Details(
-                            previewId = previewId,
-                            question = question,
-                            answer = answer
+                    val previewId: Long = if (existingPreview != null && existingPreview.categoryName == Categories.valueOf(category)) {
+                        existingPreview.previewId!!
+                    } else {
+                        repository.upsertPreview(
+                            Preview(
+                                heading = heading,
+                                categoryName = Categories.valueOf(category)
+                            )
                         )
-                    )
+                    }
+
+                    val existingDetail = repository.getDetailByContent(previewId, question, answer)
+                    if (existingDetail == null) {
+                        repository.upsertDetails(
+                            Details(
+                                previewId = previewId,
+                                question = question,
+                                answer = answer
+                            )
+                        )
+                    }
                 }
                 reader.close()
                 return@withContext true

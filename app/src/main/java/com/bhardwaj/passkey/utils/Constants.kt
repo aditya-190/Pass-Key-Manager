@@ -7,7 +7,7 @@ class Constants {
         const val PASS_KEY_DATABASE = "passkey_database"
         const val HEADING_NAME = "headingName"
         const val CATEGORY_NAME = "categoryName"
-        const val FILE_NAME = "pass_key_manager"
+        const val FILE_NAME = "passkey_backup"
         const val FILE_TYPE = "passkey"
         const val FILE_PICKER_TYPE = "application/passkey"
         const val FILE_HEADER = "category,heading,question,answer\n"

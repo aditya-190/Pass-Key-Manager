@@ -12,6 +12,8 @@ interface PasskeyRepository {
 
     suspend fun getDetailById(detailId: Long): Details?
 
+    suspend fun getDetailByContent(previewId: Long, question: String, answer: String): Details?
+
     suspend fun upsertDetails(details: Details): Long
 
     suspend fun deleteDetail(details: Details)
@@ -22,6 +24,8 @@ interface PasskeyRepository {
     fun getPreviews(): Flow<List<Preview>>
 
     suspend fun getPreviewById(previewId: Long): Preview?
+
+    suspend fun getPreviewByHeading(previewHeading: String): Preview?
 
     suspend fun upsertPreview(previews: Preview): Long
 

@@ -1,14 +1,10 @@
 package com.bhardwaj.passkey.presentation.screens.settings_screen
 
-import android.Manifest
-import android.app.Activity
+import android.content.ContentResolver
 import android.content.Context
-import android.content.Intent
-import android.content.pm.PackageManager
 import android.net.Uri
 import android.provider.OpenableColumns
 import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -42,7 +38,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.content.ContextCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.bhardwaj.passkey.R
 import com.bhardwaj.passkey.domain.events.SettingsEvents
@@ -52,11 +47,9 @@ import com.bhardwaj.passkey.presentation.screens.settings_screen.components.Lang
 import com.bhardwaj.passkey.presentation.screens.settings_screen.components.SettingsText
 import com.bhardwaj.passkey.presentation.theme.BebasNeue
 import com.bhardwaj.passkey.presentation.theme.Poppins
-import com.bhardwaj.passkey.utils.Constants.Companion.FILE_PICKER_TYPE
+import com.bhardwaj.passkey.utils.Constants.Companion.FILE_TYPE
 import com.bhardwaj.passkey.utils.UiEvents
 import kotlinx.coroutines.launch
-import java.io.BufferedReader
-import java.io.InputStreamReader
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -70,37 +63,19 @@ fun SettingsScreen(
 
     val context = LocalContext.current
     val importDataLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.StartActivityForResult()
-    ) { result ->
-        if (result.resultCode == Activity.RESULT_OK) {
-            try {
-                val uri: Uri? = result.data?.data
-                if(uri != null) {
-                    val fileName = getFileName(context, uri)
-                    if(fileName.endsWith(".passkey")) {
-                        val inputStream = context.contentResolver.openInputStream(uri)
-                            ?: return@rememberLauncherForActivityResult
-                        val reader = BufferedReader(InputStreamReader(inputStream))
-                        val content = reader.readText()
-                        viewModel.onEvent(SettingsEvents.OnImportDataClick(content))
-                        reader.close()
-                    } else {
-                        scope.launch {
-                            snackBarHostState.showSnackbar(message = "Invalid file selected.")
-                        }
-                    }
+        contract = ActivityResultContracts.OpenDocument()
+    ) { document ->
+        document?.let { uri ->
+            if (isPasskeyFile(uri, context)) {
+                context.contentResolver.openInputStream(uri)?.use { inputStream ->
+                    val content = inputStream.bufferedReader().use { text -> text.readText() }
+                    viewModel.onEvent(SettingsEvents.OnImportDataClick(content))
                 }
-            } catch (e: Exception) {
-                e.printStackTrace()
+            } else {
+                scope.launch {
+                    snackBarHostState.showSnackbar(message = "Invalid file selected.")
+                }
             }
-        }
-    }
-
-    val exportPermissionLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.RequestPermission()
-    ) { isGranted ->
-        if (isGranted) {
-            viewModel.onEvent(SettingsEvents.OnExportDataClick)
         }
     }
 
@@ -116,6 +91,7 @@ fun SettingsScreen(
                         )
                     }
                 }
+
                 else -> Unit
             }
         }
@@ -202,19 +178,10 @@ fun SettingsScreen(
                                 viewModel.onEvent(SettingsEvents.OnRateAppClick)
                             }
                             SettingsText(text = stringResource(id = R.string.import_data)) {
-                                val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
-                                    addCategory(Intent.CATEGORY_OPENABLE)
-                                    type = "text/*"
-                                    putExtra(Intent.EXTRA_MIME_TYPES, arrayOf(FILE_PICKER_TYPE))
-                                }
-                                importDataLauncher.launch(intent)
+                                importDataLauncher.launch(arrayOf("*/*"))
                             }
                             SettingsText(text = stringResource(id = R.string.export_data)) {
-                                exportDataToStorage(
-                                    appContext = context,
-                                    viewModel = viewModel,
-                                    exportPermissionLauncher = exportPermissionLauncher
-                                )
+                                viewModel.onEvent(SettingsEvents.OnExportDataClick)
                             }
                             SettingsText(text = stringResource(id = R.string.privacy)) {
                                 viewModel.onEvent(SettingsEvents.OnPrivacyClick)
@@ -244,41 +211,20 @@ fun SettingsScreen(
     }
 }
 
-private fun exportDataToStorage(
-    appContext: Context,
-    viewModel: SettingsViewModel,
-    exportPermissionLauncher: ActivityResultLauncher<String>
-) {
-    if (ContextCompat.checkSelfPermission(
-            appContext,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE
-        ) == PackageManager.PERMISSION_GRANTED
-    ) {
-        viewModel.onEvent(SettingsEvents.OnExportDataClick)
-    } else {
-        exportPermissionLauncher.launch(
-            Manifest.permission.WRITE_EXTERNAL_STORAGE
-        )
-    }
-}
-
-private fun getFileName(context: Context, uri: Uri):String {
-    var result: String? = null
-    if (uri.scheme == "content") {
-        val cursor = context.contentResolver.query(uri, null, null, null, null)
-        cursor?.use {
-            if (it.moveToFirst()) {
-                val nameIndex = it.getColumnIndex(OpenableColumns.DISPLAY_NAME)
-                result = it.getString(nameIndex)
+private fun isPasskeyFile(uri: Uri, context: Context): Boolean {
+    val contentResolver: ContentResolver = context.contentResolver
+    return try {
+        contentResolver.query(uri, null, null, null, null)?.use { cursor ->
+            val nameIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
+            if (nameIndex != -1 && cursor.moveToFirst()) {
+                val fileName = cursor.getString(nameIndex)
+                fileName.endsWith(FILE_TYPE)
+            } else {
+                false
             }
-        }
+        } ?: false
+    } catch (e: Exception) {
+        e.printStackTrace()
+        false
     }
-    if (result == null) {
-        result = uri.path
-        val cut = result?.lastIndexOf('/')
-        if (cut != -1) {
-            result = result?.substring(cut!! + 1)
-        }
-    }
-    return result ?: ""
 }

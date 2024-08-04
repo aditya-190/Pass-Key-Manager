@@ -137,8 +137,8 @@ class DetailViewModel @Inject constructor(
                     }
                     val newDetail = Details(
                         previewId = previewId,
-                        question = detailTitle.value,
-                        answer = detailResponse.value,
+                        question = detailTitle.value.trim(),
+                        answer = detailResponse.value.trim(),
                     )
 
                     detail?.let {

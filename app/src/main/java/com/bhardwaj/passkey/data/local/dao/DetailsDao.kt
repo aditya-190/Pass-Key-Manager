@@ -19,6 +19,9 @@ interface DetailsDao {
     @Query("SELECT * FROM $DETAILS_TABLE WHERE detailsId=:detailId")
     suspend fun getDetailById(detailId: Long): Details?
 
+    @Query("SELECT * FROM $DETAILS_TABLE WHERE previewId=:previewId AND question=:question AND answer=:answer")
+    suspend fun getDetailByContent(previewId: Long, question: String, answer: String): Details?
+
     @Upsert
     suspend fun upsertDetails(details: Details): Long
 

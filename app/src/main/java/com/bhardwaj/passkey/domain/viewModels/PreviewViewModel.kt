@@ -14,11 +14,11 @@ import com.bhardwaj.passkey.R
 import com.bhardwaj.passkey.data.local.entity.Preview
 import com.bhardwaj.passkey.data.repository.PasskeyRepository
 import com.bhardwaj.passkey.domain.events.PreviewEvents
+import com.bhardwaj.passkey.presentation.navigation.Routes
 import com.bhardwaj.passkey.utils.Categories
 import com.bhardwaj.passkey.utils.Constants.Companion.BOTTOM_SHEET_HEADING
 import com.bhardwaj.passkey.utils.Constants.Companion.PREVIEW_CATEGORY_NAME
 import com.bhardwaj.passkey.utils.Constants.Companion.PREVIEW_HEADING
-import com.bhardwaj.passkey.presentation.navigation.Routes
 import com.bhardwaj.passkey.utils.UiEvents
 import com.bhardwaj.passkey.utils.UiText
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -123,7 +123,7 @@ class PreviewViewModel @Inject constructor(
                         return@launch
                     }
                     val newPreview = Preview(
-                        heading = previewHeading.value,
+                        heading = previewHeading.value.trim(),
                         categoryName = Categories.valueOf(categoryName.value)
                     )
 
