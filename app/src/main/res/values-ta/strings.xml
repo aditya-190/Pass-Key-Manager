@@ -57,4 +57,5 @@
     <string name="confirm_delete_title">நீக்குவதை உறுதிப்படுத்தவும்</string>
     <string name="confirm_delete_description_question">நீங்கள் கேள்வியை நீக்க உறுதியாக உள்ளீர்களா?</string>
     <string name="confirm_delete_description_heading">நீங்கள் தலைப்புயை நீக்க உறுதியாக உள்ளீர்களா?</string>
+    <string name="heading_exists">அதே தலைப்பு ஏற்கனவே இருக்கிறது.</string>
 </resources>

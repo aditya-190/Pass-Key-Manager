@@ -275,9 +275,9 @@ class SettingsViewModel @Inject constructor(
                     val question = replaceUnderscoresWithCommas(values[2].trim())
                     val answer = replaceUnderscoresWithCommas(values[3].trim())
 
-                    val existingPreview = repository.getPreviewByHeading(heading)
+                    val existingPreview = repository.getPreviewByHeading(heading, category)
 
-                    val previewId: Long = if (existingPreview != null && existingPreview.categoryName == Categories.valueOf(category)) {
+                    val previewId: Long = if (existingPreview != null) {
                         existingPreview.previewId!!
                     } else {
                         repository.upsertPreview(

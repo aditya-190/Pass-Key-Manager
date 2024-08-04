@@ -121,6 +121,9 @@ dependencies {
     // Open CSV - Import/ Export Data
     implementation(libs.opencsv)
 
+    // Reordering Lazy Columns
+    implementation(libs.reorderable)
+
     // Testing & Debugging
     testImplementation(libs.junit)
     androidTestImplementation(libs.test.ext.junit)

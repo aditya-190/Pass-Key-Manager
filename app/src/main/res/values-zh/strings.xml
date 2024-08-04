@@ -57,4 +57,5 @@
     <string name="confirm_delete_title">确认删除</string>
     <string name="confirm_delete_description_question">您确定要删除问题吗？</string>
     <string name="confirm_delete_description_heading">您确定要删除标题吗？</string>
+    <string name="heading_exists">相似的标题已经存在。</string>
 </resources>

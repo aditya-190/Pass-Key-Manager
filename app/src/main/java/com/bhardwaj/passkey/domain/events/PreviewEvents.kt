@@ -1,5 +1,6 @@
 package com.bhardwaj.passkey.domain.events
 
+import androidx.compose.foundation.lazy.LazyListItemInfo
 import com.bhardwaj.passkey.data.local.entity.Preview
 
 sealed interface PreviewEvents {
@@ -14,7 +15,7 @@ sealed interface PreviewEvents {
     // Single Item.
     data class OnLongPress(val previewHeading: String) : PreviewEvents
     data class OnPreviewClick(val previewId: Long) : PreviewEvents
-    data class OnReorderPreview(val preview: Preview) : PreviewEvents
+    data class OnReorderPreview(val from: LazyListItemInfo, val to: LazyListItemInfo) : PreviewEvents
     data class OnChangeClick(val preview: Preview) : PreviewEvents
     data class OnSwipedLeft(val preview: Preview) : PreviewEvents
 

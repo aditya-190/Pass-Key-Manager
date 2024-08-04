@@ -57,4 +57,5 @@
     <string name="confirm_delete_title">Confirmer la suppression</string>
     <string name="confirm_delete_description_question">Êtes-vous sûr de vouloir supprimer la question ?</string>
     <string name="confirm_delete_description_heading">Êtes-vous sûr de vouloir supprimer l\'en-tête ?</string>
+    <string name="heading_exists">Un titre similaire existe déjà.</string>
 </resources>

@@ -1,5 +1,8 @@
 package com.bhardwaj.passkey.presentation.screens.detail_screen
 
+import android.os.Build
+import android.view.HapticFeedbackConstants
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -8,7 +11,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -35,6 +39,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -51,8 +56,10 @@ import com.bhardwaj.passkey.presentation.theme.BebasNeue
 import com.bhardwaj.passkey.utils.ButtonType
 import com.bhardwaj.passkey.utils.UiEvents
 import kotlinx.coroutines.launch
+import sh.calvin.reorderable.ReorderableItem
+import sh.calvin.reorderable.rememberReorderableLazyListState
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
 fun DetailScreen(
     onPopBackStack: () -> Unit,
@@ -66,6 +73,14 @@ fun DetailScreen(
 
     val snackBarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
+    val view = LocalView.current
+    val lazyListState = rememberLazyListState()
+    val reorderableLazyColumnState = rememberReorderableLazyListState(lazyListState) { from, to ->
+        viewModel.onEvent(DetailEvents.OnReorderDetails(from, to))
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+            view.performHapticFeedback(HapticFeedbackConstants.SEGMENT_FREQUENT_TICK)
+        }
+    }
 
     LaunchedEffect(key1 = true) {
         viewModel.uiEvents.collect { event ->
@@ -147,13 +162,13 @@ fun DetailScreen(
                         contentDescription = "No Previews Found"
                     )
                 } else {
-                    LazyColumn {
-                        itemsIndexed(
+                    LazyColumn(
+                        state = lazyListState,
+                    ) {
+                        items(
                             items = details,
-                            key = { _, item ->
-                                item.hashCode()
-                            }
-                        ) { _, detail ->
+                            key = { item -> "${item.detailsId}" }
+                        ) { detail ->
                             if (searchText.isNotBlank()) {
                                 DetailsItem(details = detail, onEvent = viewModel::onEvent)
                             } else {
@@ -168,32 +183,41 @@ fun DetailScreen(
                                         0.6F * density
                                     }
                                 )
-                                SwipeToDismissBox(
-                                    state = state,
-                                    backgroundContent = {
-                                        Box(
-                                            modifier = Modifier
-                                                .fillMaxSize()
-                                                .padding(vertical = 6.dp)
-                                                .padding(bottom = 24.dp)
-                                                .clip(RoundedCornerShape(10.dp))
-                                                .background(MaterialTheme.colorScheme.primary)
-                                                .padding(horizontal = 16.dp, vertical = 16.dp)
-                                        ) {
-                                            Icon(
-                                                imageVector = Icons.Default.Delete,
-                                                contentDescription = "Icon Delete",
-                                                modifier = Modifier.align(Alignment.CenterEnd),
-                                                tint = MaterialTheme.colorScheme.background
+                                ReorderableItem(
+                                    reorderableLazyColumnState,
+                                    "${detail.detailsId}"
+                                ) {
+                                    SwipeToDismissBox(
+                                        state = state,
+                                        backgroundContent = {
+                                            Box(
+                                                modifier = Modifier
+                                                    .fillMaxSize()
+                                                    .padding(vertical = 6.dp)
+                                                    .padding(bottom = 24.dp)
+                                                    .clip(RoundedCornerShape(10.dp))
+                                                    .background(MaterialTheme.colorScheme.primary)
+                                                    .padding(horizontal = 16.dp, vertical = 16.dp)
+                                            ) {
+                                                Icon(
+                                                    imageVector = Icons.Default.Delete,
+                                                    contentDescription = "Icon Delete",
+                                                    modifier = Modifier.align(Alignment.CenterEnd),
+                                                    tint = MaterialTheme.colorScheme.background
+                                                )
+                                            }
+                                        },
+                                        content = {
+                                            DetailsItem(
+                                                scope = this@ReorderableItem,
+                                                details = detail,
+                                                onEvent = viewModel::onEvent
                                             )
-                                        }
-                                    },
-                                    content = {
-                                        DetailsItem(details = detail, onEvent = viewModel::onEvent)
-                                    },
-                                    enableDismissFromEndToStart = true,
-                                    enableDismissFromStartToEnd = false
-                                )
+                                        },
+                                        enableDismissFromEndToStart = true,
+                                        enableDismissFromStartToEnd = false
+                                    )
+                                }
                             }
                         }
                     }

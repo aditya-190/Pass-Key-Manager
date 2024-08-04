@@ -57,4 +57,5 @@
     <string name="confirm_delete_title">削除を確認</string>
     <string name="confirm_delete_description_question">本当に質問を削除しますか？</string>
     <string name="confirm_delete_description_heading">本当に見出しを削除しますか？</string>
+    <string name="heading_exists">同じような見出しがすでに存在します。</string>
 </resources>

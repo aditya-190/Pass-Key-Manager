@@ -57,4 +57,5 @@
     <string name="confirm_delete_title">تأكيد الحذف</string>
     <string name="confirm_delete_description_question">هل أنت متأكد أنك تريد حذف السؤال؟</string>
     <string name="confirm_delete_description_heading">هل أنت متأكد أنك تريد حذف العنوان؟</string>
+    <string name="heading_exists">العنوان مشابه موجود بالفعل.</string>
 </resources>

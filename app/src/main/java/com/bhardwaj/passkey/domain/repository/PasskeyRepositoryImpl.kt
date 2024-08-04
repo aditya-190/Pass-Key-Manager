@@ -23,7 +23,11 @@ class PasskeyRepositoryImpl(
         return detailsDao.getDetailById(detailId)
     }
 
-    override suspend fun getDetailByContent(previewId: Long, question: String, answer: String): Details? {
+    override suspend fun getDetailByContent(
+        previewId: Long,
+        question: String,
+        answer: String
+    ): Details? {
         return detailsDao.getDetailByContent(previewId, question, answer)
     }
 
@@ -39,6 +43,10 @@ class PasskeyRepositoryImpl(
         return detailsDao.deleteDetailByPreviewId(previewId)
     }
 
+    override suspend fun updateDetailSequence(detailId: Long, sequence: Long) {
+        return detailsDao.updateDetailSequence(detailId, sequence)
+    }
+
     override fun getPreviews(): Flow<List<Preview>> {
         return previewDao.getPreviews()
     }
@@ -47,8 +55,11 @@ class PasskeyRepositoryImpl(
         return previewDao.getPreviewById(previewId)
     }
 
-    override suspend fun getPreviewByHeading(previewHeading: String): Preview? {
-        return previewDao.getPreviewByHeading(previewHeading)
+    override suspend fun getPreviewByHeading(
+        previewHeading: String,
+        categoryName: String
+    ): Preview? {
+        return previewDao.getPreviewByHeading(previewHeading, categoryName)
     }
 
     override suspend fun upsertPreview(previews: Preview): Long {
@@ -57,5 +68,9 @@ class PasskeyRepositoryImpl(
 
     override suspend fun deletePreview(previews: Preview) {
         return previewDao.deletePreview(previews)
+    }
+
+    override suspend fun updatePreviewSequence(previewId: Long, sequence: Long) {
+        return previewDao.updatePreviewSequence(previewId, sequence)
     }
 }

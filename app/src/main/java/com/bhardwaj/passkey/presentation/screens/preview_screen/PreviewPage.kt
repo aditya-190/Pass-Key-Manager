@@ -1,5 +1,8 @@
 package com.bhardwaj.passkey.presentation.screens.preview_screen
 
+import android.os.Build
+import android.view.HapticFeedbackConstants
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -12,7 +15,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
@@ -40,6 +44,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -58,8 +63,10 @@ import com.bhardwaj.passkey.utils.ButtonType
 import com.bhardwaj.passkey.utils.Categories
 import com.bhardwaj.passkey.utils.UiEvents
 import kotlinx.coroutines.launch
+import sh.calvin.reorderable.ReorderableItem
+import sh.calvin.reorderable.rememberReorderableLazyListState
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
 fun PreviewScreen(
     onNavigate: (UiEvents.Navigate) -> Unit,
@@ -82,6 +89,14 @@ fun PreviewScreen(
 
     val snackBarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
+    val view = LocalView.current
+    val lazyListState = rememberLazyListState()
+    val reorderableLazyColumnState = rememberReorderableLazyListState(lazyListState) { from, to ->
+        viewModel.onEvent(PreviewEvents.OnReorderPreview(from, to))
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+            view.performHapticFeedback(HapticFeedbackConstants.SEGMENT_FREQUENT_TICK)
+        }
+    }
 
     LaunchedEffect(key1 = true) {
         viewModel.uiEvents.collect { event ->
@@ -179,15 +194,18 @@ fun PreviewScreen(
                         contentDescription = "No Previews Found"
                     )
                 } else {
-                    LazyColumn {
-                        itemsIndexed(
+                    LazyColumn(
+                        state = lazyListState,
+                    ) {
+                        items(
                             items = previews,
-                            key = { _, item ->
-                                item.hashCode()
-                            }
-                        ) { _, preview ->
+                            key = { item -> "${item.previewId}" }
+                        ) { preview ->
                             if (searchText.isNotBlank()) {
-                                PreviewItem(preview = preview, onEvent = viewModel::onEvent)
+                                PreviewItem(
+                                    preview = preview,
+                                    onEvent = viewModel::onEvent
+                                )
                             } else {
                                 val state = rememberSwipeToDismissBoxState(
                                     confirmValueChange = {
@@ -200,31 +218,40 @@ fun PreviewScreen(
                                         0.6F * density
                                     }
                                 )
-                                SwipeToDismissBox(
-                                    state = state,
-                                    backgroundContent = {
-                                        Box(
-                                            modifier = Modifier
-                                                .fillMaxSize()
-                                                .padding(bottom = 24.dp)
-                                                .clip(RoundedCornerShape(10.dp))
-                                                .background(MaterialTheme.colorScheme.primary)
-                                                .padding(horizontal = 16.dp, vertical = 16.dp)
-                                        ) {
-                                            Icon(
-                                                imageVector = Icons.Default.Delete,
-                                                contentDescription = "Icon Delete",
-                                                modifier = Modifier.align(Alignment.CenterEnd),
-                                                tint = MaterialTheme.colorScheme.background
+                                ReorderableItem(
+                                    reorderableLazyColumnState,
+                                    "${preview.previewId}"
+                                ) {
+                                    SwipeToDismissBox(
+                                        state = state,
+                                        backgroundContent = {
+                                            Box(
+                                                modifier = Modifier
+                                                    .fillMaxSize()
+                                                    .padding(bottom = 24.dp)
+                                                    .clip(RoundedCornerShape(10.dp))
+                                                    .background(MaterialTheme.colorScheme.primary)
+                                                    .padding(horizontal = 16.dp, vertical = 16.dp)
+                                            ) {
+                                                Icon(
+                                                    imageVector = Icons.Default.Delete,
+                                                    contentDescription = "Icon Delete",
+                                                    modifier = Modifier.align(Alignment.CenterEnd),
+                                                    tint = MaterialTheme.colorScheme.background
+                                                )
+                                            }
+                                        },
+                                        content = {
+                                            PreviewItem(
+                                                scope = this@ReorderableItem,
+                                                preview = preview,
+                                                onEvent = viewModel::onEvent
                                             )
-                                        }
-                                    },
-                                    content = {
-                                        PreviewItem(preview = preview, onEvent = viewModel::onEvent)
-                                    },
-                                    enableDismissFromEndToStart = true,
-                                    enableDismissFromStartToEnd = false
-                                )
+                                        },
+                                        enableDismissFromEndToStart = true,
+                                        enableDismissFromStartToEnd = false
+                                    )
+                                }
                             }
                         }
                     }

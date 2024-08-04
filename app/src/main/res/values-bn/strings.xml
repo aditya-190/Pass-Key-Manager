@@ -57,4 +57,5 @@
     <string name="confirm_delete_title">মুছে ফেলার নিশ্চিতকরণ</string>
     <string name="confirm_delete_description_question">আপনি কি নিশ্চিত যে আপনি প্রশ্নটি মুছে ফেলতে চান?</string>
     <string name="confirm_delete_description_heading">আপনি কি নিশ্চিত যে আপনি শিরোনামটি মুছে ফেলতে চান?</string>
+    <string name="heading_exists">একই শিরোনাম ইতিমধ্যে বিদ্যমান।</string>
 </resources>

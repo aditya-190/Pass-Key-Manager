@@ -57,4 +57,5 @@
     <string name="confirm_delete_title">हटाने की पुष्टि करें</string>
     <string name="confirm_delete_description_question">क्या आप वाकई प्रश्न हटाना चाहते हैं?</string>
     <string name="confirm_delete_description_heading">क्या आप वाकई शीर्षक हटाना चाहते हैं?</string>
+    <string name="heading_exists">समान शीर्षक पहले से मौजूद है।</string>
 </resources>

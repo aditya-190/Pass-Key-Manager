@@ -57,5 +57,6 @@
     <string name="confirm_delete_title">తొలగించు నిర్ధారించండి</string>
     <string name="confirm_delete_description_question">ఖచ్చితంగా మీరు ప్రశ్నను తొలగించాలా?</string>
     <string name="confirm_delete_description_heading">ఖచ్చితంగా మీరు శీర్షికను తొలగించాలా?</string>
+    <string name="heading_exists">ఇలాంటిదైన హెడ్డింగ్ ఇప్పటికే ఉంది.</string>
 </resources>
 

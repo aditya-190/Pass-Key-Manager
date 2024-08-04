@@ -57,4 +57,5 @@
     <string name="confirm_delete_title">삭제 확인</string>
     <string name="confirm_delete_description_question">질문을 삭제하시겠습니까?</string>
     <string name="confirm_delete_description_heading">제목을 삭제하시겠습니까?</string>
+    <string name="heading_exists">유사한 제목이 이미 존재합니다.</string>
 </resources>

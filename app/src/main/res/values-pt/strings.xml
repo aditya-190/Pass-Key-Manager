@@ -57,4 +57,5 @@
     <string name="confirm_delete_title">Confirmar exclusão</string>
     <string name="confirm_delete_description_question">Tem certeza de que deseja excluir a pergunta?</string>
     <string name="confirm_delete_description_heading">Tem certeza de que deseja excluir o cabeçalho?</string>
+    <string name="heading_exists">Um título semelhante já existe.</string>
 </resources>

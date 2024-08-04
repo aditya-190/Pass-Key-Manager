@@ -3,6 +3,7 @@ package com.bhardwaj.passkey.data.local.dao
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Query
+import androidx.room.Update
 import androidx.room.Upsert
 import com.bhardwaj.passkey.data.local.entity.Details
 import com.bhardwaj.passkey.utils.Constants.Companion.DETAILS_TABLE
@@ -30,4 +31,7 @@ interface DetailsDao {
 
     @Query("DELETE FROM $DETAILS_TABLE WHERE previewId=:previewId")
     suspend fun deleteDetailByPreviewId(previewId: Long)
+
+    @Query("UPDATE $DETAILS_TABLE SET sequence=:sequence WHERE detailsId=:detailsId")
+    suspend fun updateDetailSequence(detailsId: Long, sequence: Long)
 }

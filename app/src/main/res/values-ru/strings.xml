@@ -57,4 +57,5 @@
     <string name="confirm_delete_title">Подтвердите удаление</string>
     <string name="confirm_delete_description_question">Вы уверены, что хотите удалить вопрос?</string>
     <string name="confirm_delete_description_heading">Вы уверены, что хотите удалить заголовок?</string>
+    <string name="heading_exists">Похожее заголовок уже существует.</string>
 </resources>

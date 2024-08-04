@@ -122,15 +122,32 @@ class PreviewViewModel @Inject constructor(
                         )
                         return@launch
                     }
+
                     val newPreview = Preview(
                         heading = previewHeading.value.trim(),
                         categoryName = Categories.valueOf(categoryName.value)
                     )
 
+                    val existingPreview = repository.getPreviewByHeading(
+                        newPreview.heading,
+                        newPreview.categoryName.toString()
+                    )
+                    if (existingPreview != null) {
+                        preview = null
+                        savedStateHandle[PREVIEW_HEADING] = ""
+                        isSheetOpen = false
+                        sendUiEvents(
+                            UiEvents.ShowSnackBar(
+                                message = UiText.StringResource(R.string.heading_exists)
+                                    .asString(context = appContext)
+                            )
+                        )
+                        return@launch
+                    }
+
                     preview?.let {
                         repository.upsertPreview(
                             it.copy(
-
                                 heading = newPreview.heading,
                                 categoryName = newPreview.categoryName
                             )
@@ -204,7 +221,22 @@ class PreviewViewModel @Inject constructor(
             }
 
             is PreviewEvents.OnReorderPreview -> {
-                println("ADITYA = OnReorderPreview")
+                viewModelScope.launch {
+                    val newList = previews.value.toMutableList().apply {
+                        add(event.to.index, removeAt(event.from.index))
+                    }
+
+                    val updatedList = newList.mapIndexed { index, preview ->
+                        preview.copy(sequence = index.toLong())
+                    }
+
+                    updatedList.forEach { preview ->
+                        repository.updatePreviewSequence(
+                            previewId = preview.previewId!!,
+                            sequence = preview.sequence
+                        )
+                    }
+                }
             }
         }
     }

@@ -20,14 +20,18 @@ interface PasskeyRepository {
 
     suspend fun deleteDetailByPreviewId(previewId: Long)
 
+    suspend fun updateDetailSequence(detailId: Long, sequence: Long)
+
     // Preview
     fun getPreviews(): Flow<List<Preview>>
 
     suspend fun getPreviewById(previewId: Long): Preview?
 
-    suspend fun getPreviewByHeading(previewHeading: String): Preview?
+    suspend fun getPreviewByHeading(previewHeading: String, categoryName: String): Preview?
 
     suspend fun upsertPreview(previews: Preview): Long
 
     suspend fun deletePreview(previews: Preview)
+
+    suspend fun updatePreviewSequence(previewId: Long, sequence: Long)
 }

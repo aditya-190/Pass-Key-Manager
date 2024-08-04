@@ -57,4 +57,5 @@
     <string name="confirm_delete_title">Bestätigen Sie die Löschung.</string>
     <string name="confirm_delete_description_question">Sind Sie sicher, dass Sie die Frage löschen möchten?</string>
     <string name="confirm_delete_description_heading">Sind Sie sicher, dass Sie die Überschrift löschen möchten?</string>
+    <string name="heading_exists">Ein ähnlicher Titel existiert bereits.</string>
 </resources>

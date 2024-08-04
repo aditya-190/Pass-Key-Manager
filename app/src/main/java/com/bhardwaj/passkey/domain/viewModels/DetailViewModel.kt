@@ -205,7 +205,24 @@ class DetailViewModel @Inject constructor(
                 _searchText.value = event.newText
             }
 
-            is DetailEvents.OnReorderDetails -> {}
+            is DetailEvents.OnReorderDetails -> {
+                viewModelScope.launch {
+                    val newList = details.value.toMutableList().apply {
+                        add(event.to.index, removeAt(event.from.index))
+                    }
+
+                    val updatedList = newList.mapIndexed { index, detail ->
+                        detail.copy(sequence = index.toLong())
+                    }
+
+                    updatedList.forEach { detail ->
+                        repository.updateDetailSequence(
+                            detailId = detail.detailsId!!,
+                            sequence = detail.sequence
+                        )
+                    }
+                }
+            }
         }
     }
 
