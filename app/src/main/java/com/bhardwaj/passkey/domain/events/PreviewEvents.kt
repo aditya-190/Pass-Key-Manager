@@ -15,7 +15,9 @@ sealed interface PreviewEvents {
     // Single Item.
     data class OnLongPress(val previewHeading: String) : PreviewEvents
     data class OnPreviewClick(val previewId: Long) : PreviewEvents
-    data class OnReorderPreview(val from: LazyListItemInfo, val to: LazyListItemInfo) : PreviewEvents
+    data class OnReorderPreview(val from: LazyListItemInfo, val to: LazyListItemInfo) :
+        PreviewEvents
+
     data class OnChangeClick(val preview: Preview) : PreviewEvents
     data class OnSwipedLeft(val preview: Preview) : PreviewEvents
 

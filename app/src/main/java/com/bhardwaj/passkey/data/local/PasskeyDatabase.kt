@@ -9,7 +9,7 @@ import com.bhardwaj.passkey.data.local.entity.Preview
 
 @Database(
     entities = [Preview::class, Details::class],
-    version = 1,
+    version = 2,
     exportSchema = false
 )
 abstract class PassKeyDatabase : RoomDatabase() {

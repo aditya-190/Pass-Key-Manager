@@ -4,9 +4,9 @@ class Constants {
     companion object {
         const val DETAILS_TABLE = "details_table"
         const val PREVIEW_TABLE = "preview_table"
+        const val TEMP_DETAILS_TABLE = "temp_details_table"
+        const val TEMP_PREVIEW_TABLE = "temp_preview_table"
         const val PASS_KEY_DATABASE = "passkey_database"
-        const val HEADING_NAME = "headingName"
-        const val CATEGORY_NAME = "categoryName"
         const val FILE_NAME = "passkey_backup"
         const val FILE_TYPE = "passkey"
         const val FILE_PICKER_TYPE = "application/passkey"

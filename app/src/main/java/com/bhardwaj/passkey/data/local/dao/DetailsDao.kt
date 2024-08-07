@@ -3,7 +3,6 @@ package com.bhardwaj.passkey.data.local.dao
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Query
-import androidx.room.Update
 import androidx.room.Upsert
 import com.bhardwaj.passkey.data.local.entity.Details
 import com.bhardwaj.passkey.utils.Constants.Companion.DETAILS_TABLE

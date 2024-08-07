@@ -53,10 +53,11 @@ I created this app being inspired by a design -> https://www.figma.com/community
 - [x] Handle Biometric authentication efficiently.
 - [x] KSP Support.
 - [x] Dark Mode + Dynamic
-- [ ] Drag & Drop to reorder list. **[In Progress]**
-- [ ] Import / Export data to and from storage.
-- [ ] Handle permissions needed to import/export data.
-- [ ] Handle Data migration for existing users to prevent data loss.
+- [x] Drag & Drop to reorder list.
+- [x] Import / Export data to and from storage.
+- [x] Handle permissions needed to import/export data.
+- [x] Handle Data migration for existing users to prevent data loss.
+- [ ] Ready to fire a launch 🚀
 
 
 ## 🌎 Released Android Application:

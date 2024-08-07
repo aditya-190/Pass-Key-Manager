@@ -9,6 +9,7 @@ import com.bhardwaj.passkey.data.repository.DataStoreRepository
 import com.bhardwaj.passkey.data.repository.PasskeyRepository
 import com.bhardwaj.passkey.domain.repository.PasskeyRepositoryImpl
 import com.bhardwaj.passkey.utils.Constants
+import com.bhardwaj.passkey.utils.MIGRATION_1_2
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -27,7 +28,7 @@ object AppModule {
             context = appContext,
             klass = PassKeyDatabase::class.java,
             name = Constants.PASS_KEY_DATABASE
-        )
+        ).addMigrations(MIGRATION_1_2)
             .openHelperFactory(SupportFactory(BuildConfig.PASS_PHRASE.toByteArray()))
             .build()
     }
