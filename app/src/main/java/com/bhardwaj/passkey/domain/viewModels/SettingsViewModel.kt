@@ -15,7 +15,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.core.os.LocaleListCompat
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bhardwaj.passkey.R
@@ -51,8 +50,7 @@ import javax.inject.Inject
 class SettingsViewModel @Inject constructor(
     private val repository: PasskeyRepository,
     private val dataStoreRepository: DataStoreRepository,
-    private val appContext: Application,
-    private val savedStateHandle: SavedStateHandle
+    private val appContext: Application
 ) : ViewModel() {
     private val _uiEvents = Channel<UiEvents>()
     val uiEvents = _uiEvents.receiveAsFlow()
@@ -61,7 +59,7 @@ class SettingsViewModel @Inject constructor(
         appContext.packageManager.getPackageInfo(
             appContext.packageName,
             0
-        ).versionName ?: "0.0.1"
+        ).versionName ?: "1.0.0"
     )
         private set
 

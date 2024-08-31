@@ -1,6 +1,6 @@
 [versions]
 # Plugin versions
-android_gradle_plugin = "8.5.1"
+android_gradle_plugin = "8.6.0"
 kotlin_plugin = "2.0.0"
 hilt_plugin = "2.51.1"
 ksp_plugin = "2.0.0-1.0.23"
@@ -8,7 +8,7 @@ ksp_plugin = "2.0.0-1.0.23"
 # Dependency versions
 core_ktx = "1.13.1"
 activity_compose = "1.9.1"
-compose_bom = "2024.06.00"
+compose_bom = "2024.08.00"
 appcompat = "1.7.0"
 lifecycle_runtime_ktx = "2.8.4"
 lifecycle_viewmodel_compose = "2.8.4"
