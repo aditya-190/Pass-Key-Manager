@@ -10,12 +10,12 @@ plugins {
 
 android {
     namespace = "com.bhardwaj.passkey"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.bhardwaj.passkey"
         minSdk = 26
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 20
         versionName = "5.0.0"
 
