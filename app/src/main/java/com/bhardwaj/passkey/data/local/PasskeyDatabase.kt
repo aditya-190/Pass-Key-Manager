@@ -10,7 +10,7 @@ import com.bhardwaj.passkey.data.local.entity.Preview
 @Database(
     entities = [Preview::class, Details::class],
     version = 2,
-    exportSchema = false
+    exportSchema = true
 )
 abstract class PassKeyDatabase : RoomDatabase() {
     abstract val previewDao: PreviewDao
