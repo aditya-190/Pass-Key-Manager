@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "550183271453",
+    "project_id": "passkey-1",
+    "storage_bucket": "passkey-1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:550183271453:android:c071fdf8431c1d77f15af4",
+        "android_client_info": {
+          "package_name": "com.bhardwaj.passkey"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAdgY8MUgS0eeGiAwb088mNyodCbEhbd40"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

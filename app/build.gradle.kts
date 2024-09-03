@@ -6,6 +6,9 @@ plugins {
     alias(libs.plugins.kotlin.compose.compiler)
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt.android)
+    alias(libs.plugins.google.services)
+    alias(libs.plugins.firebase.crashlytics.plugin)
+    alias(libs.plugins.firebase.perf.plugin)
 }
 
 android {
@@ -16,8 +19,8 @@ android {
         applicationId = "com.bhardwaj.passkey"
         minSdk = 26
         targetSdk = 35
-        versionCode = 20
-        versionName = "5.0.0"
+        versionCode = 23
+        versionName = "5.0.23"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
@@ -123,6 +126,12 @@ dependencies {
 
     // Reordering Lazy Columns
     implementation(libs.reorderable)
+
+    // Firebase
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.crashlytics)
+    implementation(libs.firebase.analytics)
+    implementation(libs.firebase.perf)
 
     // Testing & Debugging
     testImplementation(libs.junit)
