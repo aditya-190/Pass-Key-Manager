@@ -1,9 +1,9 @@
 [versions]
 # Plugin versions
 android_gradle_plugin = "8.6.0"
-kotlin_plugin = "2.0.0"
+kotlin_plugin = "2.0.20"
 hilt_plugin = "2.51.1"
-ksp_plugin = "2.0.0-1.0.23"
+ksp_plugin = "2.0.20-1.0.24"
 
 # Dependency versions
 core_ktx = "1.13.1"
