@@ -38,6 +38,7 @@ class MigrationTester {
 
         db.query("SELECT * FROM $PREVIEW_TABLE").apply {
             assertThat(moveToFirst()).isTrue()
+            assertThat(getLong(getColumnIndex("previewId"))).isNotNull()
             assertThat(getString(getColumnIndex("heading"))).isEqualTo("Sample Heading")
             assertThat(getString(getColumnIndex("categoryName"))).isEqualTo("BANKS")
             assertThat(getInt(getColumnIndex("sequence"))).isEqualTo(1)
@@ -45,10 +46,11 @@ class MigrationTester {
 
         db.query("SELECT * FROM $DETAILS_TABLE").apply {
             assertThat(moveToFirst()).isTrue()
+            assertThat(getLong(getColumnIndex("detailsId"))).isNotNull()
+            assertThat(getLong(getColumnIndex("previewId"))).isNotNull()
             assertThat(getString(getColumnIndex("question"))).isEqualTo("Sample Question")
             assertThat(getString(getColumnIndex("answer"))).isEqualTo("Sample Answer")
             assertThat(getInt(getColumnIndex("sequence"))).isEqualTo(1)
-            assertThat(getLong(getColumnIndex("previewId"))).isNotNull()
         }
     }
 
@@ -72,22 +74,42 @@ class MigrationTester {
     fun migration_with_multiple_rows() {
         var db = helper.createDatabase(DB_NAME, 1)
 
-        for (i in 1..5) {
-            db.execSQL("INSERT INTO $PREVIEW_TABLE (heading, categoryName, priority) VALUES ('Heading $i', 'Category $i', $i)")
-            db.execSQL("INSERT INTO $DETAILS_TABLE (question, answer, priority, headingName, categoryName) VALUES ('Question $i', 'Answer $i', $i, 'Heading $i', 'Category $i')")
+        val categories = listOf("BANKS", "MAILS", "APPS", "OTHERS")
+
+        categories.forEach { category ->
+            for (i in 1..10) {
+                db.execSQL("INSERT INTO $PREVIEW_TABLE (heading, categoryName, priority) VALUES ('TEST_$i', '$category', $i)")
+            }
+        }
+
+        // Insert entries into DETAILS_TABLE
+        categories.forEach { category ->
+            for (i in 1..10) {
+                for (j in 1..10) {
+                    db.execSQL("INSERT INTO $DETAILS_TABLE (question, answer, priority, headingName, categoryName) VALUES ('Question_$j', 'Answer_$j', $j, 'TEST_$i', '$category')")
+                }
+            }
         }
         db.close()
 
         db = helper.runMigrationsAndValidate(DB_NAME, 2, true, MIGRATION_1_2)
 
         db.query("SELECT * FROM $PREVIEW_TABLE").apply {
-            assertThat(count).isEqualTo(5)
+            assertThat(count).isEqualTo(40)
+            while (moveToNext()) {
+                assertThat(getLong(getColumnIndex("previewId"))).isNotNull()
+                assertThat(getString(getColumnIndex("heading"))).startsWith("TEST_")
+                assertThat(getString(getColumnIndex("categoryName"))).isIn(categories)
+            }
         }
 
         db.query("SELECT * FROM $DETAILS_TABLE").apply {
-            assertThat(count).isEqualTo(5)
+            assertThat(count).isEqualTo(400)
             while (moveToNext()) {
+                assertThat(getLong(getColumnIndex("detailsId"))).isNotNull()
                 assertThat(getLong(getColumnIndex("previewId"))).isNotNull()
+                assertThat(getString(getColumnIndex("question"))).startsWith("Question_")
+                assertThat(getString(getColumnIndex("answer"))).startsWith("Answer_")
             }
         }
     }
