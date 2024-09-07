@@ -38,13 +38,57 @@ class MigrationTester {
 
         db.query("SELECT * FROM $PREVIEW_TABLE").apply {
             assertThat(moveToFirst()).isTrue()
-            assertThat(getLong(getColumnIndex("sequence"))).isEqualTo(0)
+            assertThat(getString(getColumnIndex("heading"))).isEqualTo("Sample Heading")
+            assertThat(getString(getColumnIndex("categoryName"))).isEqualTo("BANKS")
+            assertThat(getInt(getColumnIndex("sequence"))).isEqualTo(1)
         }
 
         db.query("SELECT * FROM $DETAILS_TABLE").apply {
             assertThat(moveToFirst()).isTrue()
-            assertThat(getLong(getColumnIndex("sequence"))).isEqualTo(0)
-            assertThat(getLong(getColumnIndex("previewId"))).isEqualTo(null)
+            assertThat(getString(getColumnIndex("question"))).isEqualTo("Sample Question")
+            assertThat(getString(getColumnIndex("answer"))).isEqualTo("Sample Answer")
+            assertThat(getInt(getColumnIndex("sequence"))).isEqualTo(1)
+            assertThat(getLong(getColumnIndex("previewId"))).isNotNull()
+        }
+    }
+
+    @Test
+    fun migration_with_empty_tables() {
+        var db = helper.createDatabase(DB_NAME, 1)
+        db.close()
+
+        db = helper.runMigrationsAndValidate(DB_NAME, 2, true, MIGRATION_1_2)
+
+        db.query("SELECT * FROM $PREVIEW_TABLE").apply {
+            assertThat(moveToFirst()).isFalse()
+        }
+
+        db.query("SELECT * FROM $DETAILS_TABLE").apply {
+            assertThat(moveToFirst()).isFalse()
+        }
+    }
+
+    @Test
+    fun migration_with_multiple_rows() {
+        var db = helper.createDatabase(DB_NAME, 1)
+
+        for (i in 1..5) {
+            db.execSQL("INSERT INTO $PREVIEW_TABLE (heading, categoryName, priority) VALUES ('Heading $i', 'Category $i', $i)")
+            db.execSQL("INSERT INTO $DETAILS_TABLE (question, answer, priority, headingName, categoryName) VALUES ('Question $i', 'Answer $i', $i, 'Heading $i', 'Category $i')")
+        }
+        db.close()
+
+        db = helper.runMigrationsAndValidate(DB_NAME, 2, true, MIGRATION_1_2)
+
+        db.query("SELECT * FROM $PREVIEW_TABLE").apply {
+            assertThat(count).isEqualTo(5)
+        }
+
+        db.query("SELECT * FROM $DETAILS_TABLE").apply {
+            assertThat(count).isEqualTo(5)
+            while (moveToNext()) {
+                assertThat(getLong(getColumnIndex("previewId"))).isNotNull()
+            }
         }
     }
 }

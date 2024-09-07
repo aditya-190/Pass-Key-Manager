@@ -9,10 +9,11 @@ import com.bhardwaj.passkey.utils.Constants.Companion.TEMP_PREVIEW_TABLE
 
 val MIGRATION_1_2 = object : Migration(1, 2) {
     override fun migrate(db: SupportSQLiteDatabase) {
-        // 1. Rename the existing table to a temporary name
+        // 1. Rename the existing table to a temporary name.
         db.execSQL("ALTER TABLE $PREVIEW_TABLE RENAME TO $TEMP_PREVIEW_TABLE")
         db.execSQL("ALTER TABLE $DETAILS_TABLE RENAME TO $TEMP_DETAILS_TABLE")
 
+        // 2. Create the new tables with the updated schema.
         db.execSQL(
             """
             CREATE TABLE $PREVIEW_TABLE (
@@ -35,6 +36,7 @@ val MIGRATION_1_2 = object : Migration(1, 2) {
         """
         )
 
+        // 3. Insert data from the temporary tables into the new tables.
         db.execSQL(
             """
             INSERT INTO $PREVIEW_TABLE (previewId, heading, categoryName, sequence)
@@ -44,10 +46,14 @@ val MIGRATION_1_2 = object : Migration(1, 2) {
         db.execSQL(
             """
             INSERT INTO $DETAILS_TABLE (detailsId, previewId, question, answer, sequence)
-            SELECT detailsId, previewId, question, answer, priority FROM $TEMP_DETAILS_TABLE
+            SELECT detailsId, 
+                   (SELECT previewId FROM $PREVIEW_TABLE WHERE heading = temp.headingName AND categoryName = temp.categoryName),
+                   question, answer, priority 
+            FROM $TEMP_DETAILS_TABLE temp
         """
         )
 
+        // 4. Drop the temporary tables.
         db.execSQL("DROP TABLE $TEMP_PREVIEW_TABLE")
         db.execSQL("DROP TABLE $TEMP_DETAILS_TABLE")
     }
