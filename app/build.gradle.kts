@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.kotlin.compose.compiler)
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt.android)
+    alias(libs.plugins.room)
     alias(libs.plugins.google.services)
     alias(libs.plugins.firebase.crashlytics.plugin)
     alias(libs.plugins.firebase.perf.plugin)
@@ -77,6 +78,12 @@ android {
             enableSplit = false
         }
     }
+    room {
+        schemaDirectory("$projectDir/schemas")
+    }
+    sourceSets {
+        getByName("androidTest").assets.srcDir("$projectDir/schemas")
+    }
 }
 
 dependencies {
@@ -117,6 +124,7 @@ dependencies {
     implementation(libs.androidx.room.runtime)
     ksp(libs.room.compiler)
     implementation(libs.androidx.room.ktx)
+    androidTestImplementation(libs.androidx.room.testing)
 
     // SQL Cipher
     implementation(libs.sqlcipher)
@@ -139,6 +147,7 @@ dependencies {
     androidTestImplementation(libs.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.compose.ui.test.junit4)
+    androidTestImplementation(libs.google.truth)
     debugImplementation(libs.compose.ui.tooling)
     debugImplementation(libs.compose.ui.test.manifest)
 }

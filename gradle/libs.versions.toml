@@ -10,12 +10,12 @@ firebase_perf_plugin = "1.4.2"
 
 # Dependency versions
 core_ktx = "1.13.1"
-activity_compose = "1.9.1"
-compose_bom = "2024.08.00"
+activity_compose = "1.9.2"
+compose_bom = "2024.09.00"
 appcompat = "1.7.0"
-lifecycle_runtime_ktx = "2.8.4"
-lifecycle_viewmodel_compose = "2.8.4"
-navigation_compose = "2.7.7"
+lifecycle_runtime_ktx = "2.8.5"
+lifecycle_viewmodel_compose = "2.8.5"
+navigation_compose = "2.8.0"
 
 # Coroutines
 coroutines_core = "1.8.1"
@@ -53,7 +53,8 @@ firebase_bom = "33.2.0"
 junit = "4.13.2"
 test_ext_junit = "1.2.1"
 espresso_core = "3.6.1"
-compose_ui_test = "1.6.8"
+compose_ui_test = "1.7.0"
+truth = "1.4.4"
 
 [plugins]
 # Plugin definitions
@@ -62,6 +63,7 @@ kotlin_android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin_pl
 kotlin-compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin_plugin" }
 hilt_android = { id = "com.google.dagger.hilt.android", version.ref = "hilt_plugin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp_plugin" }
+room = { id = "androidx.room", version.ref = "room" }
 google_services = { id = "com.google.gms.google-services", version.ref = "google_services_plugin" }
 firebase_crashlytics_plugin = { id = "com.google.firebase.crashlytics", version.ref = "firebase_crashlytics_plugin" }
 firebase_perf_plugin = { id = "com.google.firebase.firebase-perf", version.ref = "firebase_perf_plugin" }
@@ -104,6 +106,7 @@ androidx_biometric = { module = "androidx.biometric:biometric", version.ref = "b
 androidx_room_runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
 room_compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
 androidx_room_ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
+androidx_room_testing = { module = "androidx.room:room-testing", version.ref = "room" }
 
 # SQL Cipher
 sqlcipher = { module = "net.zetetic:android-database-sqlcipher", version.ref = "sqlcipher" }
@@ -125,5 +128,6 @@ junit = { module = "junit:junit", version.ref = "junit" }
 test_ext_junit = { module = "androidx.test.ext:junit", version.ref = "test_ext_junit" }
 espresso_core = { module = "androidx.test.espresso:espresso-core", version.ref = "espresso_core" }
 compose_ui_test_junit4 = { module = "androidx.compose.ui:ui-test-junit4" }
+google_truth = { module = "com.google.truth:truth", version.ref = "truth" }
 compose_ui_tooling = { module = "androidx.compose.ui:ui-tooling" }
 compose_ui_test_manifest = { module = "androidx.compose.ui:ui-test-manifest", version.ref = "compose_ui_test" }

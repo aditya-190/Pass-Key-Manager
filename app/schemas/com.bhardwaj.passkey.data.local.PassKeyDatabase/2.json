@@ -1,0 +1,96 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 2,
+    "identityHash": "6fb6d41af7fd7a5db7ea098bddb9bb08",
+    "entities": [
+      {
+        "tableName": "preview_table",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`previewId` INTEGER PRIMARY KEY AUTOINCREMENT, `heading` TEXT NOT NULL, `categoryName` TEXT NOT NULL, `sequence` INTEGER NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "previewId",
+            "columnName": "previewId",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "heading",
+            "columnName": "heading",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "categoryName",
+            "columnName": "categoryName",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "sequence",
+            "columnName": "sequence",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "previewId"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "details_table",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`detailsId` INTEGER PRIMARY KEY AUTOINCREMENT, `previewId` INTEGER NOT NULL, `question` TEXT NOT NULL, `answer` TEXT NOT NULL, `sequence` INTEGER NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "detailsId",
+            "columnName": "detailsId",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "previewId",
+            "columnName": "previewId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "question",
+            "columnName": "question",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "answer",
+            "columnName": "answer",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "sequence",
+            "columnName": "sequence",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "detailsId"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '6fb6d41af7fd7a5db7ea098bddb9bb08')"
+    ]
+  }
+}
