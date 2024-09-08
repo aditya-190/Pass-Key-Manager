@@ -44,7 +44,7 @@ sqlcipher = "4.5.4"
 opencsv = "5.9"
 
 # Reordering Lazy Columns
-reorderable = "2.3.0"
+reorderable = "2.3.2"
 
 # Firebase
 firebase_bom = "33.2.0"
