@@ -1,9 +1,11 @@
 package com.bhardwaj.passkey.data.local.entity
 
+import androidx.annotation.Keep
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.bhardwaj.passkey.utils.Constants.Companion.DETAILS_TABLE
 
+@Keep
 @Entity(tableName = DETAILS_TABLE)
 data class Details(
     @PrimaryKey(autoGenerate = true)
