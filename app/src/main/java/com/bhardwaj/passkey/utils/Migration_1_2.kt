@@ -46,10 +46,9 @@ val MIGRATION_1_2 = object : Migration(1, 2) {
         db.execSQL(
             """
             INSERT INTO $DETAILS_TABLE (detailsId, previewId, question, answer, sequence)
-            SELECT detailsId, 
-                   (SELECT previewId FROM $PREVIEW_TABLE WHERE heading = temp.headingName AND categoryName = temp.categoryName),
-                   question, answer, priority 
+            SELECT temp.detailsId, new.previewId, temp.question, temp.answer, temp.priority
             FROM $TEMP_DETAILS_TABLE temp
+            JOIN $PREVIEW_TABLE new ON temp.headingName = new.heading AND temp.categoryName = new.categoryName
         """
         )
 
