@@ -207,10 +207,12 @@ fun biometricPrompt(
 ) {
     val executor = ContextCompat.getMainExecutor(activity)
     val biometricManager by lazy { BiometricManager.from(context) }
+    val allowedAuthenticators = BIOMETRIC_STRONG or BIOMETRIC_WEAK or DEVICE_CREDENTIAL
+
     val promptInfo = BiometricPrompt.PromptInfo.Builder()
         .setTitle(title)
         .setSubtitle(subTitle)
-        .setAllowedAuthenticators(DEVICE_CREDENTIAL or BIOMETRIC_STRONG or DEVICE_CREDENTIAL)
+        .setAllowedAuthenticators(allowedAuthenticators)
         .build()
 
     val biometricPrompt = BiometricPrompt(activity, executor,
@@ -226,7 +228,7 @@ fun biometricPrompt(
             }
         }
     )
-    when (biometricManager.canAuthenticate(DEVICE_CREDENTIAL or BIOMETRIC_WEAK or BIOMETRIC_STRONG)) {
+    when (biometricManager.canAuthenticate(allowedAuthenticators)) {
         BiometricManager.BIOMETRIC_SUCCESS -> {
             biometricPrompt.authenticate(promptInfo)
         }
@@ -238,7 +240,7 @@ fun biometricPrompt(
                 val intent = Intent(Settings.ACTION_BIOMETRIC_ENROLL).apply {
                     putExtra(
                         Settings.EXTRA_BIOMETRIC_AUTHENTICATORS_ALLOWED,
-                        BIOMETRIC_STRONG or BIOMETRIC_WEAK or DEVICE_CREDENTIAL
+                        allowedAuthenticators
                     )
                 }
                 scope.launch {

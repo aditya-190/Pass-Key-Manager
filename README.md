@@ -59,7 +59,7 @@ design -> https://www.figma.com/community/file/1116675775484733517
 - [x] Import / Export data to and from storage.
 - [x] Handle permissions needed to import/export data.
 - [x] Handle Data migration for existing users to prevent data loss.
-- [ ] Ready to fire a launch 🚀
+- [x] Ready to fire a launch 🚀
 
 ## 🌎 Released Android Application:
 
