@@ -18,10 +18,10 @@ android {
 
     defaultConfig {
         applicationId = "com.bhardwaj.passkey"
-        minSdk = 26
+        minSdk = 28
         targetSdk = 35
-        versionCode = 35
-        versionName = "5.0.35"
+        versionCode = 36
+        versionName = "5.0.36"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 

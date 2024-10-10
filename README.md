@@ -47,20 +47,6 @@ design -> https://www.figma.com/community/file/1116675775484733517
 - SQL Cipher (For Room DB Encryption and Decryption).
 - Fully Offline : No internet permission required.
 
-## Checklist Before New Release
-
-- [x] Use Jetpack Compose
-- [x] Use Clean Architecture
-- [x] Add Search functionality.
-- [x] Handle Biometric authentication efficiently.
-- [x] KSP Support.
-- [x] Dark Mode + Dynamic
-- [x] Drag & Drop to reorder list.
-- [x] Import / Export data to and from storage.
-- [x] Handle permissions needed to import/export data.
-- [x] Handle Data migration for existing users to prevent data loss.
-- [x] Ready to fire a launch 🚀
-
 ## 🌎 Released Android Application:
 
 https://play.google.com/store/apps/details?id=com.bhardwaj.passkey
