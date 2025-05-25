@@ -2,7 +2,6 @@ package com.bhardwaj.passkey.presentation.screens.preview_screen.components
 
 import android.os.Build
 import android.view.HapticFeedbackConstants
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -35,7 +34,6 @@ import com.bhardwaj.passkey.presentation.theme.Poppins
 import sh.calvin.reorderable.ReorderableCollectionItemScope
 import com.bhardwaj.passkey.data.local.entity.Preview as PreviewEntity
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun PreviewItem(
     modifier: Modifier = Modifier,

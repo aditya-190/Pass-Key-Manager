@@ -1,6 +1,5 @@
 package com.bhardwaj.passkey.presentation.screens.settings_screen.components
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -19,7 +18,6 @@ import androidx.compose.ui.unit.sp
 import com.bhardwaj.passkey.R
 import com.bhardwaj.passkey.utils.AlertBy
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun FaqItem(openedBy: AlertBy) {
     val bottomSheetContent = mapOf(

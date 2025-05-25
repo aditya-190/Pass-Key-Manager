@@ -1,14 +1,15 @@
 package com.bhardwaj.passkey.presentation.screens.onboarding_screens
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
@@ -29,7 +30,6 @@ data class OnBoardingScreen(
     val highlightedText: List<String>
 )
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun OnBoardingScreen(
     onNavigate: (UiEvents.Navigate) -> Unit,
@@ -61,37 +61,41 @@ fun OnBoardingScreen(
             }
         }
     }
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background),
-        verticalArrangement = Arrangement.SpaceBetween
-    ) {
-        val scope = rememberCoroutineScope()
-        val pagerState = rememberPagerState(initialPage = 0) { pages.size }
-        HorizontalPager(
-            modifier = Modifier.fillMaxWidth(),
-            state = pagerState
-        ) { index ->
-            OnBoardingItem(
-                screen = pages[index]
-            )
-        }
-        OnBoardingPageIndicator(
-            currentPage = pagerState.currentPage,
-            totalPages = pages.size,
-            onSkipClick = {
-                viewModel.onEvent(OnBoardingEvents.OnBoardingComplete)
-            },
-            onNextClick = { index ->
-                if (index == pagerState.pageCount) {
+
+    Scaffold { paddingValues ->
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+                .background(MaterialTheme.colorScheme.background),
+            verticalArrangement = Arrangement.SpaceBetween
+        ) {
+            val scope = rememberCoroutineScope()
+            val pagerState = rememberPagerState(initialPage = 0) { pages.size }
+            HorizontalPager(
+                modifier = Modifier.fillMaxWidth(),
+                state = pagerState
+            ) { index ->
+                OnBoardingItem(
+                    screen = pages[index]
+                )
+            }
+            OnBoardingPageIndicator(
+                currentPage = pagerState.currentPage,
+                totalPages = pages.size,
+                onSkipClick = {
                     viewModel.onEvent(OnBoardingEvents.OnBoardingComplete)
-                } else {
-                    scope.launch {
-                        pagerState.animateScrollToPage(index)
+                },
+                onNextClick = { index ->
+                    if (index == pagerState.pageCount) {
+                        viewModel.onEvent(OnBoardingEvents.OnBoardingComplete)
+                    } else {
+                        scope.launch {
+                            pagerState.animateScrollToPage(index)
+                        }
                     }
                 }
-            }
-        )
+            )
+        }
     }
 }

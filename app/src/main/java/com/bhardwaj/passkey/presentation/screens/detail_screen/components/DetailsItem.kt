@@ -2,7 +2,6 @@ package com.bhardwaj.passkey.presentation.screens.detail_screen.components
 
 import android.os.Build
 import android.view.HapticFeedbackConstants
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -38,7 +37,6 @@ import com.bhardwaj.passkey.presentation.theme.BebasNeue
 import com.bhardwaj.passkey.presentation.theme.Poppins
 import sh.calvin.reorderable.ReorderableCollectionItemScope
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun DetailsItem(
     modifier: Modifier = Modifier,

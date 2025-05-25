@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.core.net.toUri
 import androidx.core.os.LocaleListCompat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -84,7 +85,7 @@ class SettingsViewModel @Inject constructor(
                 val intent =
                     Intent(
                         Intent.ACTION_VIEW,
-                        Uri.parse("https://play.google.com/store/apps/details?id=$appPackageName")
+                        "https://play.google.com/store/apps/details?id=$appPackageName".toUri()
                     )
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 appContext.startActivity(intent)
@@ -300,7 +301,7 @@ class SettingsViewModel @Inject constructor(
                 reader.close()
                 return@withContext true
             }
-        } catch (e: Exception) {
+        } catch (_: Exception) {
             return false
         }
     }

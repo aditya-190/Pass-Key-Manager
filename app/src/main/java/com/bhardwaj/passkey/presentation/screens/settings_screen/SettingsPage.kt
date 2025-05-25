@@ -222,7 +222,7 @@ private fun isPasskeyFile(uri: Uri, context: Context): Boolean {
             } else {
                 false
             }
-        } ?: false
+        } == true
     } catch (e: Exception) {
         e.printStackTrace()
         false

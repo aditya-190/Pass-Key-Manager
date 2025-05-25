@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -66,31 +67,34 @@ fun SplashPage(
         viewModel.onEvent(SplashEvents.OnLoadingComplete)
     }
 
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background),
-        contentAlignment = Alignment.BottomCenter
-    ) {
-        Image(
-            painter = painterResource(id = R.drawable.splash_logo),
-            contentDescription = "App Logo",
+    Scaffold { innerPadding ->
+        Box(
             modifier = Modifier
                 .fillMaxSize()
-                .scale(scale.value)
-                .clip(CircleShape)
-        )
-        Text(
-            text = stringResource(id = R.string.app_description),
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 16.dp),
-            textAlign = TextAlign.Center,
-            fontFamily = Poppins,
-            fontSize = 12.sp,
-            fontStyle = FontStyle.Normal,
-            fontWeight = FontWeight.Normal,
-            color = MaterialTheme.colorScheme.onSurface
-        )
+                .padding(innerPadding)
+                .background(MaterialTheme.colorScheme.background),
+            contentAlignment = Alignment.BottomCenter
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.splash_logo),
+                contentDescription = "App Logo",
+                modifier = Modifier
+                    .fillMaxSize()
+                    .scale(scale.value)
+                    .clip(CircleShape)
+            )
+            Text(
+                text = stringResource(id = R.string.app_description),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 16.dp),
+                textAlign = TextAlign.Center,
+                fontFamily = Poppins,
+                fontSize = 12.sp,
+                fontStyle = FontStyle.Normal,
+                fontWeight = FontWeight.Normal,
+                color = MaterialTheme.colorScheme.onSurface
+            )
+        }
     }
 }

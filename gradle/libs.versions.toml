@@ -1,59 +1,63 @@
 [versions]
 # Plugin versions
-android_gradle_plugin = "8.7.0"
-kotlin_plugin = "2.0.20"
-hilt_plugin = "2.52"
-ksp_plugin = "2.0.20-1.0.24"
+android_gradle_plugin = "8.10.0"
+kotlin_plugin = "2.1.21"
+hilt_plugin = "2.56.2"
+ksp_plugin = "2.1.21-2.0.1"
 google_services_plugin = "4.4.2"
-firebase_crashlytics_plugin = "3.0.2"
+firebase_crashlytics_plugin = "3.0.3"
 firebase_perf_plugin = "1.4.2"
 
 # Dependency versions
-core_ktx = "1.13.1"
-activity_compose = "1.9.2"
-compose_bom = "2024.09.03"
+core_ktx = "1.16.0"
+activity_compose = "1.10.1"
+compose_bom = "2025.05.01"
 appcompat = "1.7.0"
-lifecycle_runtime_ktx = "2.8.6"
-lifecycle_viewmodel_compose = "2.8.6"
-navigation_compose = "2.8.2"
+lifecycle_runtime_ktx = "2.9.0"
+lifecycle_viewmodel_compose = "2.9.0"
+navigation_compose = "2.9.0"
 
 # Coroutines
 coroutines_core = "1.9.0"
 coroutines_android = "1.9.0"
 
 # Dagger - Hilt
-hilt_android = "2.52"
+hilt_android = "2.56.2"
 hilt_compiler = "1.2.0"
 
 # Splash Screen
 splash_screen = "1.0.1"
 
 # DataStore Preferences
-datastore_preferences = "1.1.1"
+datastore_preferences = "1.1.7"
 
 # Biometric Authentication
 biometric = "1.1.0"
 
 # Room
-room = "2.6.1"
+room = "2.7.1"
 
 # SQL Cipher
-sqlcipher = "4.5.4"
+sqlcipherAndroid = "4.9.0"
+sqlcipherSqlite = "2.5.1"
 
 # Open CSV - Import/ Export Data
-opencsv = "5.9"
+opencsv = "5.11"
 
 # Reordering Lazy Columns
-reorderable = "2.3.3"
+reorderable = "2.4.3"
 
 # Firebase
-firebase_bom = "33.4.0"
+firebase_bom = "33.14.0"
+
+# In App Updates
+inAppUpdate = "2.1.0"
 
 # Testing & Debugging
 junit = "4.13.2"
 test_ext_junit = "1.2.1"
 espresso_core = "3.6.1"
-compose_ui_test = "1.7.3"
+compose_ui_test = "1.8.2"
 truth = "1.4.4"
 
 [plugins]
@@ -109,7 +113,8 @@ androidx_room_ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
 androidx_room_testing = { module = "androidx.room:room-testing", version.ref = "room" }
 
 # SQL Cipher
-sqlcipher = { module = "net.zetetic:android-database-sqlcipher", version.ref = "sqlcipher" }
+sqlcipher-android = { module = "net.zetetic:sqlcipher-android", version.ref = "sqlcipherAndroid" }
+sqlcipher-sqlite = { module = "androidx.sqlite:sqlite", version.ref = "sqlcipherSqlite" }
 
 # Open CSV - Import/ Export Data
 opencsv = { module = "com.opencsv:opencsv", version.ref = "opencsv" }
@@ -122,6 +127,10 @@ firebase_bom = { module = "com.google.firebase:firebase-bom", version.ref = "fir
 firebase_crashlytics = { module = "com.google.firebase:firebase-crashlytics" }
 firebase_analytics = { module = "com.google.firebase:firebase-analytics" }
 firebase_perf = { module = "com.google.firebase:firebase-perf" }
+
+# In App Updates
+app-update = { module = "com.google.android.play:app-update", version.ref = "inAppUpdate" }
+app-update-ktx = { module = "com.google.android.play:app-update-ktx", version.ref = "inAppUpdate" }
 
 # Testing & Debugging
 junit = { module = "junit:junit", version.ref = "junit" }

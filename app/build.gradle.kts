@@ -20,8 +20,8 @@ android {
         applicationId = "com.bhardwaj.passkey"
         minSdk = 28
         targetSdk = 35
-        versionCode = 36
-        versionName = "5.0.36"
+        versionCode = 38
+        versionName = "5.0.38"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
@@ -127,7 +127,8 @@ dependencies {
     androidTestImplementation(libs.androidx.room.testing)
 
     // SQL Cipher
-    implementation(libs.sqlcipher)
+    implementation(libs.sqlcipher.android)
+    implementation(libs.sqlcipher.sqlite)
 
     // Open CSV - Import/ Export Data
     implementation(libs.opencsv)
@@ -140,6 +141,10 @@ dependencies {
     implementation(libs.firebase.crashlytics)
     implementation(libs.firebase.analytics)
     implementation(libs.firebase.perf)
+
+    // In App Updates
+    implementation(libs.app.update)
+    implementation(libs.app.update.ktx)
 
     // Testing & Debugging
     testImplementation(libs.junit)
