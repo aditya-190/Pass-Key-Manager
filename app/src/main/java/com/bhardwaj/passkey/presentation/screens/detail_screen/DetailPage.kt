@@ -103,7 +103,6 @@ fun DetailScreen(
         snackbarHost = { SnackbarHost(snackBarHostState) },
         floatingActionButton = {
             FloatingActionButton(
-                modifier = Modifier.padding(bottom = 42.dp),
                 onClick = {
                     viewModel.onEvent(DetailEvents.OnAddDetailClick)
                 },

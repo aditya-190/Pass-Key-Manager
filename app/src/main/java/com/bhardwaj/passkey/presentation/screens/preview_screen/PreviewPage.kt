@@ -13,15 +13,21 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.BottomAppBar
+import androidx.compose.material3.FabPosition
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -118,14 +124,30 @@ fun PreviewScreen(
     Scaffold(
         snackbarHost = { SnackbarHost(snackBarHostState) },
         bottomBar = {
-            MainBottomNavigation(
-                selectedIndex = selectedIndex,
-                onItemClick = { newIndex, newTitle ->
-                    viewModel.onEvent(PreviewEvents.OnBottomNavigationClick(newTitle))
-                    selectedIndex = newIndex
-                },
-                onFabClick = {
-                    viewModel.onEvent(PreviewEvents.OnAddPreviewClick)
+            BottomAppBar(
+                containerColor = MaterialTheme.colorScheme.background
+            ) {
+                MainBottomNavigation(
+                    selectedIndex = selectedIndex,
+                    onItemClick = { newIndex, newTitle ->
+                        viewModel.onEvent(PreviewEvents.OnBottomNavigationClick(newTitle))
+                        selectedIndex = newIndex
+                    }
+                )
+            }
+        },
+        floatingActionButtonPosition = FabPosition.Center,
+        floatingActionButton = {
+            FloatingActionButton(
+                modifier = Modifier.offset(y = 64.dp),
+                onClick = { viewModel.onEvent(PreviewEvents.OnAddPreviewClick) },
+                shape = CircleShape,
+                containerColor = MaterialTheme.colorScheme.primary,
+                content = {
+                    Icon(
+                        imageVector = Icons.Default.Add,
+                        contentDescription = "Add Preview",
+                    )
                 }
             )
         },

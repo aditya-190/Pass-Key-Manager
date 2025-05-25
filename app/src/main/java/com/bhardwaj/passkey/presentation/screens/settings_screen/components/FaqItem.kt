@@ -43,7 +43,8 @@ fun FaqItem(openedBy: AlertBy) {
                 Text(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(16.dp),
+                        .padding(16.dp)
+                        .padding(top = 16.dp),
                     text = stringResource(id = bottomSheetContent[openedBy]!!.first),
                     fontWeight = FontWeight.Bold,
                     fontSize = 24.sp,
@@ -57,7 +58,8 @@ fun FaqItem(openedBy: AlertBy) {
             Text(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(16.dp),
+                    .padding(16.dp)
+                    .padding(bottom = 72.dp),
                 text = stringResource(id = bottomSheetContent[openedBy]!!.second),
                 fontWeight = FontWeight.Normal,
                 fontSize = 16.sp,

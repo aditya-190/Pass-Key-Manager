@@ -173,6 +173,7 @@ fun LanguageBottomSheet(
         Icon(
             modifier = Modifier
                 .padding(16.dp)
+                .padding(top = 16.dp)
                 .clickable(
                     interactionSource = remember {
                         MutableInteractionSource()
