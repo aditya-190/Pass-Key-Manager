@@ -9,12 +9,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.bhardwaj.passkey.R
 import com.bhardwaj.passkey.domain.events.OnBoardingEvents
@@ -61,41 +61,38 @@ fun OnBoardingScreen(
             }
         }
     }
-
-    Scaffold { paddingValues ->
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues)
-                .background(MaterialTheme.colorScheme.background),
-            verticalArrangement = Arrangement.SpaceBetween
-        ) {
-            val scope = rememberCoroutineScope()
-            val pagerState = rememberPagerState(initialPage = 0) { pages.size }
-            HorizontalPager(
-                modifier = Modifier.fillMaxWidth(),
-                state = pagerState
-            ) { index ->
-                OnBoardingItem(
-                    screen = pages[index]
-                )
-            }
-            OnBoardingPageIndicator(
-                currentPage = pagerState.currentPage,
-                totalPages = pages.size,
-                onSkipClick = {
-                    viewModel.onEvent(OnBoardingEvents.OnBoardingComplete)
-                },
-                onNextClick = { index ->
-                    if (index == pagerState.pageCount) {
-                        viewModel.onEvent(OnBoardingEvents.OnBoardingComplete)
-                    } else {
-                        scope.launch {
-                            pagerState.animateScrollToPage(index)
-                        }
-                    }
-                }
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(top = 24.dp)
+            .background(MaterialTheme.colorScheme.background),
+        verticalArrangement = Arrangement.SpaceBetween
+    ) {
+        val scope = rememberCoroutineScope()
+        val pagerState = rememberPagerState(initialPage = 0) { pages.size }
+        HorizontalPager(
+            modifier = Modifier.fillMaxWidth(),
+            state = pagerState
+        ) { index ->
+            OnBoardingItem(
+                screen = pages[index]
             )
         }
+        OnBoardingPageIndicator(
+            currentPage = pagerState.currentPage,
+            totalPages = pages.size,
+            onSkipClick = {
+                viewModel.onEvent(OnBoardingEvents.OnBoardingComplete)
+            },
+            onNextClick = { index ->
+                if (index == pagerState.pageCount) {
+                    viewModel.onEvent(OnBoardingEvents.OnBoardingComplete)
+                } else {
+                    scope.launch {
+                        pagerState.animateScrollToPage(index)
+                    }
+                }
+            }
+        )
     }
 }

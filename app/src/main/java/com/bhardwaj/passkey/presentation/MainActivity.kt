@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.WindowManager
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
@@ -16,6 +17,7 @@ import com.bhardwaj.passkey.presentation.navigation.NavGraph
 import com.bhardwaj.passkey.presentation.theme.PassKeyTheme
 import com.google.android.play.core.appupdate.AppUpdateManager
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
+import com.google.android.play.core.appupdate.AppUpdateOptions
 import com.google.android.play.core.install.model.AppUpdateType
 import com.google.android.play.core.install.model.UpdateAvailability
 import com.google.android.play.core.ktx.isFlexibleUpdateAllowed
@@ -28,6 +30,10 @@ class MainActivity : FragmentActivity() {
     private lateinit var appUpdateManager: AppUpdateManager
     private val updateType = AppUpdateType.IMMEDIATE
 
+    private val activityResultLauncher =
+        registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) { result ->
+        }
+
     private fun checkForAppUpdates() {
         appUpdateManager.appUpdateInfo.addOnSuccessListener { info ->
             val isUpdateAvailable = info.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
@@ -38,7 +44,7 @@ class MainActivity : FragmentActivity() {
             }
             if (isUpdateAvailable && isUpdateAllowed) {
                 appUpdateManager.startUpdateFlowForResult(
-                    info, updateType, this@MainActivity, 123
+                    info, activityResultLauncher, AppUpdateOptions.newBuilder(updateType).build()
                 )
             }
         }
@@ -50,7 +56,9 @@ class MainActivity : FragmentActivity() {
             appUpdateManager.appUpdateInfo.addOnSuccessListener { info ->
                 if (info.updateAvailability() == UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS) {
                     appUpdateManager.startUpdateFlowForResult(
-                        info, updateType, this@MainActivity, 123
+                        info,
+                        activityResultLauncher,
+                        AppUpdateOptions.newBuilder(updateType).build()
                     )
                 }
             }
@@ -59,9 +67,9 @@ class MainActivity : FragmentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
         appUpdateManager = AppUpdateManagerFactory.create(this@MainActivity)
         checkForAppUpdates()
-        enableEdgeToEdge()
         window?.setFlags(
             WindowManager.LayoutParams.FLAG_SECURE,
             WindowManager.LayoutParams.FLAG_SECURE
