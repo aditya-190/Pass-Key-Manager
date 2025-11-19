@@ -129,8 +129,9 @@ fun PreviewScreen(
             ) {
                 MainBottomNavigation(
                     selectedIndex = selectedIndex,
-                    onItemClick = { _, newTitle ->
+                    onItemClick = { newIndex, newTitle ->
                         viewModel.onEvent(PreviewEvents.OnBottomNavigationClick(newTitle))
+                        selectedIndex = newIndex
                     }
                 )
             }
