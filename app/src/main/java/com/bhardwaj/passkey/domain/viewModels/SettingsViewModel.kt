@@ -24,6 +24,7 @@ import com.bhardwaj.passkey.data.local.entity.Preview
 import com.bhardwaj.passkey.data.repository.DataStoreRepository
 import com.bhardwaj.passkey.data.repository.PasskeyRepository
 import com.bhardwaj.passkey.domain.events.SettingsEvents
+import com.bhardwaj.passkey.presentation.navigation.Routes
 import com.bhardwaj.passkey.utils.AlertBy.ABOUT
 import com.bhardwaj.passkey.utils.AlertBy.PRIVACY
 import com.bhardwaj.passkey.utils.AlertBy.TERMS_N_CONDITIONS
@@ -32,6 +33,8 @@ import com.bhardwaj.passkey.utils.Constants.Companion.FILE_HEADER
 import com.bhardwaj.passkey.utils.Constants.Companion.FILE_NAME
 import com.bhardwaj.passkey.utils.Constants.Companion.FILE_PICKER_TYPE
 import com.bhardwaj.passkey.utils.Constants.Companion.FILE_TYPE
+import com.bhardwaj.passkey.utils.PasswordAnalysisResult
+import com.bhardwaj.passkey.utils.PasswordAnalyzer
 import com.bhardwaj.passkey.utils.UiEvents
 import com.bhardwaj.passkey.utils.UiText
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -68,6 +71,12 @@ class SettingsViewModel @Inject constructor(
         private set
 
     var isSheetOpen by mutableStateOf(false)
+        private set
+
+    var isAnalysisSheetOpen by mutableStateOf(false)
+        private set
+
+    var analysisResult by mutableStateOf(PasswordAnalysisResult())
         private set
 
     fun onEvent(event: SettingsEvents) {
@@ -176,6 +185,30 @@ class SettingsViewModel @Inject constructor(
                         )
                     }
                 }
+            }
+
+            SettingsEvents.OnAnalyzePasswordsClick -> {
+                viewModelScope.launch {
+                    val allDetails = repository.getDetails().first()
+                    val result = withContext(Dispatchers.IO) {
+                        PasswordAnalyzer.analyze(allDetails)
+                    }
+                    analysisResult = result
+                    isAnalysisSheetOpen = true
+                }
+            }
+
+            SettingsEvents.OnDismissAnalysisSheet -> {
+                isAnalysisSheetOpen = false
+            }
+
+            is SettingsEvents.OnAnalysisItemClick -> {
+                isAnalysisSheetOpen = false
+                sendUiEvents(
+                    UiEvents.Navigate(
+                        Routes.DETAILS_PAGE + "?previewId=${event.detail.previewId}"
+                    )
+                )
             }
         }
     }

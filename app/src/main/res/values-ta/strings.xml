@@ -58,4 +58,19 @@
     <string name="confirm_delete_description_question">நீங்கள் கேள்வியை நீக்க உறுதியாக உள்ளீர்களா?</string>
     <string name="confirm_delete_description_heading">நீங்கள் தலைப்புயை நீக்க உறுதியாக உள்ளீர்களா?</string>
     <string name="heading_exists">அதே தலைப்பு ஏற்கனவே இருக்கிறது.</string>
+
+    <!-- Password Health Report -->
+    <string name="analyze_passwords">பாதுகாப்பு நிலை</string>
+    <string name="security_analysis">பாதுகாப்பு பகுப்பாய்வு</string>
+    <string name="security_score">பாதுகாப்பு மதிப்பெண்</string>
+    <string name="weak_passwords">பலவீனமான கடவுச்சொற்கள்</string>
+    <string name="reused_passwords">மீண்டும் பயன்படுத்தப்பட்ட கடவுச்சொற்கள்</string>
+    <string name="safe_passwords">பாதுகாப்பான கடவுச்சொற்கள்</string>
+    <string name="excellent">சிறந்தது</string>
+    <string name="needs_attention">கவனம் தேவை</string>
+    <string name="critical">மிக முக்கியம்</string>
+    <string name="found_weak">%1$d பலவீனமான கடவுச்சொற்கள் கண்டறியப்பட்டன</string>
+    <string name="found_reused">%1$d மீண்டும் பயன்படுத்தப்பட்ட கடவுச்சொற்கள் கண்டறியப்பட்டன</string>
+    <string name="used_times">%1$d முறை பயன்படுத்தப்பட்டது</string>
+    <string name="no_issues">எந்த பிரச்சனையும் இல்லை. நன்று!</string>
 </resources>

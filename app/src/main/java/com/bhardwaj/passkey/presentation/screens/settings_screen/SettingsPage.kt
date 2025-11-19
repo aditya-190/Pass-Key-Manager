@@ -42,6 +42,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.bhardwaj.passkey.R
 import com.bhardwaj.passkey.domain.events.SettingsEvents
 import com.bhardwaj.passkey.domain.viewModels.SettingsViewModel
+import com.bhardwaj.passkey.presentation.screens.settings_screen.components.AnalysisBottomSheet
 import com.bhardwaj.passkey.presentation.screens.settings_screen.components.FaqItem
 import com.bhardwaj.passkey.presentation.screens.settings_screen.components.LanguageBottomSheet
 import com.bhardwaj.passkey.presentation.screens.settings_screen.components.SettingsText
@@ -55,6 +56,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun SettingsScreen(
     onPopBackStack: () -> Unit,
+    onNavigate: (String) -> Unit,
     viewModel: SettingsViewModel = hiltViewModel()
 ) {
     val snackBarHostState = remember { SnackbarHostState() }
@@ -79,10 +81,14 @@ fun SettingsScreen(
         }
     }
 
+    val isAnalysisSheetOpen = viewModel.isAnalysisSheetOpen
+    val analysisResult = viewModel.analysisResult
+
     LaunchedEffect(key1 = true) {
         viewModel.uiEvents.collect { event ->
             when (event) {
                 is UiEvents.PopBackStack -> onPopBackStack()
+                is UiEvents.Navigate -> onNavigate(event.route)
                 is UiEvents.ShowSnackBar -> {
                     scope.launch {
                         snackBarHostState.showSnackbar(
@@ -91,8 +97,6 @@ fun SettingsScreen(
                         )
                     }
                 }
-
-                else -> Unit
             }
         }
     }
@@ -170,6 +174,9 @@ fun SettingsScreen(
                                 )
                                 .padding(top = 16.dp, start = 16.dp, end = 16.dp),
                         ) {
+                            SettingsText(text = stringResource(id = R.string.analyze_passwords)) {
+                                viewModel.onEvent(SettingsEvents.OnAnalyzePasswordsClick)
+                            }
                             SettingsText(text = stringResource(id = R.string.change_language)) {
                                 viewModel.onEvent(SettingsEvents.OnLanguageClick)
                                 scope.launch { scaffoldState.bottomSheetState.expand() }
@@ -208,6 +215,15 @@ fun SettingsScreen(
                 }
             }
         }
+    }
+    if (isAnalysisSheetOpen) {
+        AnalysisBottomSheet(
+            result = analysisResult,
+            onDismiss = { viewModel.onEvent(SettingsEvents.OnDismissAnalysisSheet) },
+            onDetailClick = { detail ->
+                viewModel.onEvent(SettingsEvents.OnAnalysisItemClick(detail))
+            }
+        )
     }
 }
 

@@ -58,4 +58,19 @@
     <string name="confirm_delete_description_question">શું તમે ખાતરી છો કે તમે પ્રશ્ન ડિલીટ કરવા માંગો છો?</string>
     <string name="confirm_delete_description_heading">શું તમે ખાતરી છો કે તમે શીર્ષક ડિલીટ કરવા માંગો છો?</string>
     <string name="heading_exists">સરખો શીર્ષક પહેલેથી જ અસ્તિત્વમાં છે.</string>
+
+    <!-- Password Health Report -->
+    <string name="analyze_passwords">સુરક્ષા સ્થિતિ</string>
+    <string name="security_analysis">સુરક્ષા વિશ્લેષણ</string>
+    <string name="security_score">સુરક્ષા સ્કોર</string>
+    <string name="weak_passwords">નબળા પાસવર્ડ્સ</string>
+    <string name="reused_passwords">પુનઃઉપયોગમાં લેવાયેલા પાસવર્ડ્સ</string>
+    <string name="safe_passwords">સુરક્ષિત પાસવર્ડ્સ</string>
+    <string name="excellent">ઉત્તમ</string>
+    <string name="needs_attention">ધ્યાન આપવાની જરૂર છે</string>
+    <string name="critical">ગંભીર</string>
+    <string name="found_weak">%1$d નબળા પાસવર્ડ્સ મળ્યા</string>
+    <string name="found_reused">%1$d પુનઃઉપયોગમાં લેવાયેલા પાસવર્ડ્સ મળ્યા</string>
+    <string name="used_times">%1$d વખત ઉપયોગ થયો</string>
+    <string name="no_issues">કોઈ સમસ્યા મળી નથી. સરસ!</string>
 </resources>

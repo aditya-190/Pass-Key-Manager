@@ -58,4 +58,19 @@
     <string name="confirm_delete_description_question">Вы уверены, что хотите удалить вопрос?</string>
     <string name="confirm_delete_description_heading">Вы уверены, что хотите удалить заголовок?</string>
     <string name="heading_exists">Похожее заголовок уже существует.</string>
+
+    <!-- Password Health Report -->
+    <string name="analyze_passwords">Состояние безопасности</string>
+    <string name="security_analysis">Анализ безопасности</string>
+    <string name="security_score">Оценка безопасности</string>
+    <string name="weak_passwords">Слабые пароли</string>
+    <string name="reused_passwords">Повторяющиеся пароли</string>
+    <string name="safe_passwords">Надежные пароли</string>
+    <string name="excellent">Отлично</string>
+    <string name="needs_attention">Требует внимания</string>
+    <string name="critical">Критично</string>
+    <string name="found_weak">Найдено %1$d слабых паролей</string>
+    <string name="found_reused">Найдено %1$d повторяющихся паролей</string>
+    <string name="used_times">Использовано %1$d раз</string>
+    <string name="no_issues">Проблем не обнаружено. Отличная работа!</string>
 </resources>

@@ -58,4 +58,19 @@
     <string name="confirm_delete_description_question">¿Estás seguro de que quieres eliminar la pregunta?</string>
     <string name="confirm_delete_description_heading">¿Estás seguro de que quieres eliminar el encabezado?</string>
     <string name="heading_exists">Ya existe un encabezado similar.</string>
+
+    <!-- Password Health Report -->
+    <string name="analyze_passwords">Estado de seguridad</string>
+    <string name="security_analysis">Análisis de seguridad</string>
+    <string name="security_score">Puntuación de seguridad</string>
+    <string name="weak_passwords">Contraseñas débiles</string>
+    <string name="reused_passwords">Contraseñas reutilizadas</string>
+    <string name="safe_passwords">Contraseñas seguras</string>
+    <string name="excellent">Excelente</string>
+    <string name="needs_attention">Necesita atención</string>
+    <string name="critical">Crítico</string>
+    <string name="found_weak">Se encontraron %1$d contraseñas débiles</string>
+    <string name="found_reused">Se encontraron %1$d contraseñas reutilizadas</string>
+    <string name="used_times">Usado %1$d veces</string>
+    <string name="no_issues">No se encontraron problemas. ¡Bien hecho!</string>
 </resources>

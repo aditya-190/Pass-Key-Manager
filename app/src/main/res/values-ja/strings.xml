@@ -58,4 +58,19 @@
     <string name="confirm_delete_description_question">本当に質問を削除しますか？</string>
     <string name="confirm_delete_description_heading">本当に見出しを削除しますか？</string>
     <string name="heading_exists">同じような見出しがすでに存在します。</string>
+
+    <!-- Password Health Report -->
+    <string name="analyze_passwords">安全性ステータス</string>
+    <string name="security_analysis">セキュリティ分析</string>
+    <string name="security_score">セキュリティスコア</string>
+    <string name="weak_passwords">脆弱なパスワード</string>
+    <string name="reused_passwords">使い回しのパスワード</string>
+    <string name="safe_passwords">安全なパスワード</string>
+    <string name="excellent">優秀</string>
+    <string name="needs_attention">注意が必要</string>
+    <string name="critical">危険</string>
+    <string name="found_weak">%1$d 個の脆弱なパスワードが見つかりました</string>
+    <string name="found_reused">%1$d 個の使い回しパスワードが見つかりました</string>
+    <string name="used_times">%1$d 回使用</string>
+    <string name="no_issues">問題は見つかりませんでした。素晴らしい！</string>
 </resources>

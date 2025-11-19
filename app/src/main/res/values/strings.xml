@@ -81,4 +81,20 @@
     <string name="confirm_delete_description_question">Are you sure you want to delete question?</string>
     <string name="confirm_delete_description_heading">Are you sure you want to delete heading?</string>
     <string name="heading_exists">Similar heading already exists.</string>
+
+    <!-- Password Health Report -->
+    <string name="analyze_passwords">Safety Status</string>
+    <string name="security_analysis">Security Analysis</string>
+    <string name="security_score">Security Score</string>
+    <string name="weak_passwords">Weak Passwords</string>
+    <string name="reused_passwords">Reused Passwords</string>
+    <string name="safe_passwords">Safe Passwords</string>
+    <string name="excellent">Excellent</string>
+    <string name="needs_attention">Needs Attention</string>
+    <string name="critical">Critical</string>
+    <string name="found_weak">Found %1$d weak passwords</string>
+    <string name="found_reused">Found %1$d reused passwords</string>
+    <string name="used_times">Used %1$d times</string>
+    <string name="no_issues">No issues found. Good job!</string>
+
 </resources>

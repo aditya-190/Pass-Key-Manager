@@ -55,7 +55,9 @@ fun NavGraph(
             DetailScreen(onPopBackStack = { navController.popBackStack() })
         }
         composable(route = NavScreens.SettingPage.route) {
-            SettingsScreen(onPopBackStack = { navController.popBackStack() })
+            SettingsScreen(
+                onPopBackStack = { navController.popBackStack() },
+                onNavigate = { route -> navController.navigate(route) })
         }
         composable(route = NavScreens.SecurityPage.route) {
             SecurityScreen(navController = navController)

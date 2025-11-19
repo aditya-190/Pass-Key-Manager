@@ -58,4 +58,19 @@
     <string name="confirm_delete_description_question">您确定要删除问题吗？</string>
     <string name="confirm_delete_description_heading">您确定要删除标题吗？</string>
     <string name="heading_exists">相似的标题已经存在。</string>
+
+    <!-- Password Health Report -->
+    <string name="analyze_passwords">安全状态</string>
+    <string name="security_analysis">安全分析</string>
+    <string name="security_score">安全评分</string>
+    <string name="weak_passwords">弱密码</string>
+    <string name="reused_passwords">重复使用的密码</string>
+    <string name="safe_passwords">安全密码</string>
+    <string name="excellent">优秀</string>
+    <string name="needs_attention">需要注意</string>
+    <string name="critical">严重</string>
+    <string name="found_weak">发现 %1$d 个弱密码</string>
+    <string name="found_reused">发现 %1$d 个重复使用的密码</string>
+    <string name="used_times">已使用 %1$d 次</string>
+    <string name="no_issues">未发现问题。干得好！</string>
 </resources>

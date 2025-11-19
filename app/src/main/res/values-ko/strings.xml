@@ -58,4 +58,19 @@
     <string name="confirm_delete_description_question">질문을 삭제하시겠습니까?</string>
     <string name="confirm_delete_description_heading">제목을 삭제하시겠습니까?</string>
     <string name="heading_exists">유사한 제목이 이미 존재합니다.</string>
+
+    <!-- Password Health Report -->
+    <string name="analyze_passwords">안전 상태</string>
+    <string name="security_analysis">보안 분석</string>
+    <string name="security_score">보안 점수</string>
+    <string name="weak_passwords">취약한 비밀번호</string>
+    <string name="reused_passwords">재사용된 비밀번호</string>
+    <string name="safe_passwords">안전한 비밀번호</string>
+    <string name="excellent">훌륭함</string>
+    <string name="needs_attention">주의 필요</string>
+    <string name="critical">심각함</string>
+    <string name="found_weak">%1$d개의 취약한 비밀번호 발견</string>
+    <string name="found_reused">%1$d개의 재사용된 비밀번호 발견</string>
+    <string name="used_times">%1$d회 사용됨</string>
+    <string name="no_issues">문제가 발견되지 않았습니다. 잘하셨습니다!</string>
 </resources>

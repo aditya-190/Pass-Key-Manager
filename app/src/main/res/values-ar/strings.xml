@@ -58,4 +58,19 @@
     <string name="confirm_delete_description_question">هل أنت متأكد أنك تريد حذف السؤال؟</string>
     <string name="confirm_delete_description_heading">هل أنت متأكد أنك تريد حذف العنوان؟</string>
     <string name="heading_exists">العنوان مشابه موجود بالفعل.</string>
+
+    <!-- Password Health Report -->
+    <string name="analyze_passwords">حالة الأمان</string>
+    <string name="security_analysis">تحليل الأمان</string>
+    <string name="security_score">درجة الأمان</string>
+    <string name="weak_passwords">كلمات مرور ضعيفة</string>
+    <string name="reused_passwords">كلمات مرور مكررة</string>
+    <string name="safe_passwords">كلمات مرور آمنة</string>
+    <string name="excellent">ممتاز</string>
+    <string name="needs_attention">يحتاج إلى انتباه</string>
+    <string name="critical">حرج</string>
+    <string name="found_weak">تم العثور على %1$d كلمات مرور ضعيفة</string>
+    <string name="found_reused">تم العثور على %1$d كلمات مرور مكررة</string>
+    <string name="used_times">مستخدمة %1$d مرات</string>
+    <string name="no_issues">لم يتم العثور على مشاكل. أحسنت!</string>
 </resources>
