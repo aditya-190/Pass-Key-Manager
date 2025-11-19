@@ -51,6 +51,7 @@ import com.bhardwaj.passkey.presentation.screens.common.PassKeyButton
 import com.bhardwaj.passkey.presentation.screens.common.PasskeySearchBar
 import com.bhardwaj.passkey.presentation.screens.detail_screen.components.DetailsBottomSheet
 import com.bhardwaj.passkey.presentation.screens.detail_screen.components.DetailsItem
+import com.bhardwaj.passkey.presentation.screens.detail_screen.components.PasswordSettingsSheet
 import com.bhardwaj.passkey.presentation.theme.BebasNeue
 import com.bhardwaj.passkey.utils.ButtonType
 import com.bhardwaj.passkey.utils.UiEvents
@@ -80,6 +81,7 @@ fun DetailScreen(
             view.performHapticFeedback(HapticFeedbackConstants.SEGMENT_FREQUENT_TICK)
         }
     }
+    val isPasswordSettingsOpen = viewModel.isPasswordSettingsOpen
 
     LaunchedEffect(key1 = true) {
         viewModel.uiEvents.collect { event ->
@@ -238,9 +240,33 @@ fun DetailScreen(
                     },
                     onSave = {
                         viewModel.onEvent(DetailEvents.OnSaveClick)
+                    },
+                    onGeneratePasswordClicked = {
+                        viewModel.onEvent(DetailEvents.OnGeneratePasswordClick)
+                    },
+                    onPasswordSettingsClicked = {
+                        viewModel.onEvent(DetailEvents.OnPasswordSettingsClick)
                     }
                 )
             }
+        }
+        if (isPasswordSettingsOpen) {
+            PasswordSettingsSheet(
+                length = viewModel.passwordLength,
+                includeUpper = viewModel.includeUpper,
+                includeLower = viewModel.includeLower,
+                includeNumbers = viewModel.includeNumbers,
+                includeSpecial = viewModel.includeSpecial,
+                onPasswordLengthChange = {
+                    viewModel.onEvent(DetailEvents.OnPasswordLengthChange(it))
+                },
+                onDismissPasswordSettings = {
+                    viewModel.onEvent(DetailEvents.OnDismissPasswordSettings)
+                },
+                onTogglePasswordOption = { type, checked ->
+                    viewModel.onEvent(DetailEvents.OnTogglePasswordOption(type, checked))
+                }
+            )
         }
         if (viewModel.isAlertOpen) {
             AlertDialog(

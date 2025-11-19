@@ -14,14 +14,14 @@ plugins {
 
 android {
     namespace = "com.bhardwaj.passkey"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.bhardwaj.passkey"
         minSdk = 28
-        targetSdk = 35
-        versionCode = 41
-        versionName = "5.3.0"
+        targetSdk = 36
+        versionCode = 42
+        versionName = "5.5.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 

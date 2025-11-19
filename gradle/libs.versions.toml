@@ -1,32 +1,32 @@
 [versions]
 # Plugin versions
-android_gradle_plugin = "8.10.0"
-kotlin_plugin = "2.1.21"
-hilt_plugin = "2.56.2"
-ksp_plugin = "2.1.21-2.0.1"
-google_services_plugin = "4.4.2"
-firebase_crashlytics_plugin = "3.0.3"
-firebase_perf_plugin = "1.4.2"
+android_gradle_plugin = "8.13.1"
+kotlin_plugin = "2.2.21"
+hilt_plugin = "2.57.2"
+ksp_plugin = "2.2.21-2.0.4"
+google_services_plugin = "4.4.4"
+firebase_crashlytics_plugin = "3.0.6"
+firebase_perf_plugin = "2.0.2"
 
 # Dependency versions
-core_ktx = "1.16.0"
-activity_compose = "1.10.1"
-compose_bom = "2025.05.01"
-appcompat = "1.7.0"
-lifecycle_runtime_ktx = "2.9.0"
-lifecycle_viewmodel_compose = "2.9.0"
-navigation_compose = "2.9.0"
+core_ktx = "1.17.0"
+activity_compose = "1.11.0"
+compose_bom = "2025.11.00"
+appcompat = "1.7.1"
+lifecycle_runtime_ktx = "2.9.4"
+lifecycle_viewmodel_compose = "2.9.4"
+navigation_compose = "2.9.6"
 
 # Coroutines
-coroutines_core = "1.9.0"
-coroutines_android = "1.9.0"
+coroutines_core = "1.10.2"
+coroutines_android = "1.10.2"
 
 # Dagger - Hilt
-hilt_android = "2.56.2"
-hilt_compiler = "1.2.0"
+hilt_android = "2.57.2"
+hilt_compiler = "1.3.0"
 
 # Splash Screen
-splash_screen = "1.0.1"
+splash_screen = "1.2.0"
 
 # DataStore Preferences
 datastore_preferences = "1.1.7"
@@ -35,30 +35,30 @@ datastore_preferences = "1.1.7"
 biometric = "1.1.0"
 
 # Room
-room = "2.7.1"
+room = "2.8.3"
 
 # SQL Cipher
-sqlcipherAndroid = "4.9.0"
-sqlcipherSqlite = "2.5.1"
+sqlcipherAndroid = "4.11.0"
+sqlcipherSqlite = "2.6.1"
 
 # Open CSV - Import/ Export Data
-opencsv = "5.11"
+opencsv = "5.12.0"
 
 # Reordering Lazy Columns
-reorderable = "2.4.3"
+reorderable = "3.0.0"
 
 # Firebase
-firebase_bom = "33.14.0"
+firebase_bom = "34.6.0"
 
 # In App Updates
 inAppUpdate = "2.1.0"
 
 # Testing & Debugging
 junit = "4.13.2"
-test_ext_junit = "1.2.1"
-espresso_core = "3.6.1"
-compose_ui_test = "1.8.2"
-truth = "1.4.4"
+test_ext_junit = "1.3.0"
+espresso_core = "3.7.0"
+compose_ui_test = "1.9.4"
+truth = "1.4.5"
 
 [plugins]
 # Plugin definitions

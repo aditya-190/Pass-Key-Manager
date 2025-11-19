@@ -24,4 +24,9 @@ sealed interface DetailEvents {
 
     // Search
     data class OnSearchTextUpdate(val newText: String) : DetailEvents
+    data object OnGeneratePasswordClick : DetailEvents
+    data object OnPasswordSettingsClick : DetailEvents
+    data object OnDismissPasswordSettings : DetailEvents
+    data class OnPasswordLengthChange(val length: Float) : DetailEvents
+    data class OnTogglePasswordOption(val option: String, val value: Boolean) : DetailEvents
 }

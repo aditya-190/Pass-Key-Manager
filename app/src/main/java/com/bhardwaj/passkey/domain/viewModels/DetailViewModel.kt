@@ -5,6 +5,7 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
@@ -17,6 +18,7 @@ import com.bhardwaj.passkey.domain.events.DetailEvents
 import com.bhardwaj.passkey.utils.Constants.Companion.BOTTOM_SHEET_HEADING
 import com.bhardwaj.passkey.utils.Constants.Companion.DETAIL_RESPONSE
 import com.bhardwaj.passkey.utils.Constants.Companion.DETAIL_TITLE
+import com.bhardwaj.passkey.utils.PasswordGenerator
 import com.bhardwaj.passkey.utils.UiEvents
 import com.bhardwaj.passkey.utils.UiText
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -70,6 +72,20 @@ class DetailViewModel @Inject constructor(
         private set
 
     var detail by mutableStateOf<Details?>(null)
+        private set
+
+    var isPasswordSettingsOpen by mutableStateOf(false)
+        private set
+
+    var passwordLength by mutableFloatStateOf(12f)
+        private set
+    var includeUpper by mutableStateOf(true)
+        private set
+    var includeLower by mutableStateOf(true)
+        private set
+    var includeNumbers by mutableStateOf(true)
+        private set
+    var includeSpecial by mutableStateOf(false)
         private set
 
     private var deletedDetail: Details? = null
@@ -221,6 +237,41 @@ class DetailViewModel @Inject constructor(
                             sequence = detail.sequence
                         )
                     }
+                }
+            }
+
+            DetailEvents.OnGeneratePasswordClick -> {
+                val newPassword = PasswordGenerator.generate(
+                    length = passwordLength.toInt(),
+                    includeUpper = includeUpper,
+                    includeLower = includeLower,
+                    includeNumbers = includeNumbers,
+                    includeSpecial = includeSpecial
+                )
+                savedStateHandle[DETAIL_RESPONSE] = newPassword
+            }
+
+            DetailEvents.OnPasswordSettingsClick -> {
+                isPasswordSettingsOpen = true
+            }
+
+            DetailEvents.OnDismissPasswordSettings -> {
+                isPasswordSettingsOpen = false
+            }
+
+            is DetailEvents.OnPasswordLengthChange -> {
+                passwordLength = event.length
+            }
+
+            is DetailEvents.OnTogglePasswordOption -> {
+                when (event.option) {
+                    "Upper" -> includeUpper = event.value
+                    "Lower" -> includeLower = event.value
+                    "Number" -> includeNumbers = event.value
+                    "Special" -> includeSpecial = event.value
+                }
+                if (!includeUpper && !includeLower && !includeNumbers && !includeSpecial) {
+                    includeLower = true
                 }
             }
         }
