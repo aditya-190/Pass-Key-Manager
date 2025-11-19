@@ -31,7 +31,7 @@ class MainActivity : FragmentActivity() {
     private val updateType = AppUpdateType.IMMEDIATE
 
     private val activityResultLauncher =
-        registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) { result ->
+        registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) { _ ->
         }
 
     private fun checkForAppUpdates() {

@@ -43,7 +43,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.bhardwaj.passkey.R
 import com.bhardwaj.passkey.domain.events.DetailEvents
 import com.bhardwaj.passkey.domain.viewModels.DetailViewModel
@@ -173,16 +173,16 @@ fun DetailScreen(
                                 DetailsItem(details = detail, onEvent = viewModel::onEvent)
                             } else {
                                 val state = rememberSwipeToDismissBoxState(
-                                    confirmValueChange = {
-                                        if (it == SwipeToDismissBoxValue.EndToStart) {
-                                            viewModel.onEvent(DetailEvents.OnSwipedLeft(detail))
-                                        }
-                                        true
-                                    },
-                                    positionalThreshold = { density ->
-                                        0.6F * density
-                                    }
+                                    initialValue = SwipeToDismissBoxValue.Settled,
+                                    positionalThreshold = { totalDistance -> totalDistance * 0.6f }
                                 )
+
+                                LaunchedEffect(state.currentValue) {
+                                    if (state.currentValue == SwipeToDismissBoxValue.EndToStart) {
+                                        viewModel.onEvent(DetailEvents.OnSwipedLeft(detail))
+                                        state.snapTo(SwipeToDismissBoxValue.Settled)
+                                    }
+                                }
                                 ReorderableItem(
                                     reorderableLazyColumnState,
                                     "${detail.detailsId}"

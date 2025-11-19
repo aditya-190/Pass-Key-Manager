@@ -61,8 +61,10 @@ android {
         sourceCompatibility = JavaVersion.VERSION_22
         targetCompatibility = JavaVersion.VERSION_22
     }
-    kotlinOptions {
-        jvmTarget = "22"
+    kotlin {
+        compilerOptions {
+            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_22)
+        }
     }
     buildFeatures {
         compose = true
@@ -75,6 +77,7 @@ android {
     }
     bundle {
         language {
+            @Suppress("UnstableApiUsage")
             enableSplit = false
         }
     }
