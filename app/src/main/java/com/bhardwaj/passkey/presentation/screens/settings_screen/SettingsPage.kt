@@ -174,12 +174,12 @@ fun SettingsScreen(
                                 )
                                 .padding(top = 16.dp, start = 16.dp, end = 16.dp),
                         ) {
-                            SettingsText(text = stringResource(id = R.string.analyze_passwords)) {
-                                viewModel.onEvent(SettingsEvents.OnAnalyzePasswordsClick)
-                            }
                             SettingsText(text = stringResource(id = R.string.change_language)) {
                                 viewModel.onEvent(SettingsEvents.OnLanguageClick)
                                 scope.launch { scaffoldState.bottomSheetState.expand() }
+                            }
+                            SettingsText(text = stringResource(id = R.string.analyze_passwords)) {
+                                viewModel.onEvent(SettingsEvents.OnAnalyzePasswordsClick)
                             }
                             SettingsText(text = stringResource(id = R.string.rate_app)) {
                                 viewModel.onEvent(SettingsEvents.OnRateAppClick)
