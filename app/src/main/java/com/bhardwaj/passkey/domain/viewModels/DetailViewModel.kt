@@ -1,9 +1,5 @@
 package com.bhardwaj.passkey.domain.viewModels
 
-import android.app.Application
-import android.content.ClipData
-import android.content.ClipboardManager
-import android.content.Context
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -16,8 +12,6 @@ import com.bhardwaj.passkey.data.local.entity.Details
 import com.bhardwaj.passkey.data.repository.PasskeyRepository
 import com.bhardwaj.passkey.domain.events.DetailEvents
 import com.bhardwaj.passkey.utils.Constants.Companion.BOTTOM_SHEET_HEADING
-import com.bhardwaj.passkey.utils.Constants.Companion.DETAIL_RESPONSE
-import com.bhardwaj.passkey.utils.Constants.Companion.DETAIL_TITLE
 import com.bhardwaj.passkey.utils.PasswordGenerator
 import com.bhardwaj.passkey.utils.UiEvents
 import com.bhardwaj.passkey.utils.UiText
@@ -36,15 +30,26 @@ import javax.inject.Inject
 @HiltViewModel
 class DetailViewModel @Inject constructor(
     private val repository: PasskeyRepository,
-    private val appContext: Application,
     private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
     private val _uiEvents = Channel<UiEvents>()
     val uiEvents = _uiEvents.receiveAsFlow()
 
-    val detailTitle = savedStateHandle.getStateFlow(DETAIL_TITLE, "")
-    val detailResponse = savedStateHandle.getStateFlow(DETAIL_RESPONSE, "")
-    val bottomSheetHeading = savedStateHandle.getStateFlow(BOTTOM_SHEET_HEADING, "")
+    // Deliberately NOT in SavedStateHandle. That is serialized into the saved-instance-state
+    // bundle, which the system writes to disk under /data/system_ce/<user>/ for task
+    // persistence - so the in-progress secret, including a freshly generated password, would be
+    // stored in cleartext outside the encrypted database. Losing a half-typed entry to process
+    // death is the correct trade here.
+    private val _detailTitle = MutableStateFlow("")
+    val detailTitle = _detailTitle.asStateFlow()
+
+    /** Set when the current draft value came from the password generator. */
+    private var wasGenerated = false
+
+    private val _detailResponse = MutableStateFlow("")
+    val detailResponse = _detailResponse.asStateFlow()
+    /** true = editing an existing row, false = adding. Resolved to text by the UI. */
+    val isEditingSheet = savedStateHandle.getStateFlow(BOTTOM_SHEET_HEADING, false)
     val previewId = savedStateHandle.get<Long>("previewId") ?: -1
 
     private val _searchText = MutableStateFlow("")
@@ -93,15 +98,14 @@ class DetailViewModel @Inject constructor(
     fun onEvent(event: DetailEvents) {
         when (event) {
             DetailEvents.OnAddDetailClick -> {
-                savedStateHandle[BOTTOM_SHEET_HEADING] =
-                    UiText.StringResource(R.string.add).asString(context = appContext)
+                savedStateHandle[BOTTOM_SHEET_HEADING] = false
                 isSheetOpen = true
                 _searchText.value = ""
             }
 
             DetailEvents.OnDismissBottomSheet -> {
-                savedStateHandle[DETAIL_TITLE] = ""
-                savedStateHandle[DETAIL_RESPONSE] = ""
+                _detailTitle.value = ""
+                _detailResponse.value = ""
                 isSheetOpen = false
             }
 
@@ -110,33 +114,31 @@ class DetailViewModel @Inject constructor(
                     _searchText.value = ""
                     repository.getDetailById(event.details.detailsId!!)?.let { detail ->
                         isSheetOpen = true
-                        savedStateHandle[BOTTOM_SHEET_HEADING] =
-                            UiText.StringResource(R.string.edit).asString(context = appContext)
-                        savedStateHandle[DETAIL_TITLE] = event.details.question
-                        savedStateHandle[DETAIL_RESPONSE] = event.details.answer
+                        savedStateHandle[BOTTOM_SHEET_HEADING] = true
+                        _detailTitle.value = event.details.question
+                        _detailResponse.value = event.details.answer
                         this@DetailViewModel.detail = detail
                     }
                 }
             }
 
             is DetailEvents.OnTitleChange -> {
-                savedStateHandle[DETAIL_TITLE] = event.newTitle
+                _detailTitle.value = event.newTitle
             }
 
             is DetailEvents.OnDescriptionChange -> {
-                savedStateHandle[DETAIL_RESPONSE] = event.newDescription
+                _detailResponse.value = event.newDescription
             }
 
             DetailEvents.OnSaveClick -> {
                 viewModelScope.launch {
                     if (detailTitle.value.isBlank() or detailResponse.value.isBlank()) {
                         isSheetOpen = false
-                        savedStateHandle[DETAIL_TITLE] = ""
-                        savedStateHandle[DETAIL_RESPONSE] = ""
+                        _detailTitle.value = ""
+                        _detailResponse.value = ""
                         sendUiEvents(
                             UiEvents.ShowSnackBar(
                                 message = UiText.StringResource(R.string.enter_valid_title_n_response)
-                                    .asString(context = appContext)
                             )
                         )
                         return@launch
@@ -146,7 +148,6 @@ class DetailViewModel @Inject constructor(
                         sendUiEvents(
                             UiEvents.ShowSnackBar(
                                 message = UiText.StringResource(R.string.something_went_wrong)
-                                    .asString(context = appContext)
                             )
                         )
                         return@launch
@@ -155,37 +156,33 @@ class DetailViewModel @Inject constructor(
                         previewId = previewId,
                         question = detailTitle.value.trim(),
                         answer = detailResponse.value.trim(),
+                        // A value that came out of the generator is unambiguously a secret, so
+                        // the analyser never has to guess for it.
+                        isSecret = wasGenerated
                     )
 
                     detail?.let {
                         repository.upsertDetails(
                             it.copy(
                                 previewId = previewId,
-                                question = detailTitle.value,
-                                answer = detailResponse.value,
+                                // Trimmed to match the create path above. A trailing space in a
+                                // stored password fails silently wherever it is pasted.
+                                question = newDetail.question,
+                                answer = newDetail.answer,
+                                isSecret = it.isSecret || wasGenerated,
                             )
                         )
                     } ?: repository.upsertDetails(newDetail)
 
                     detail = null
-                    savedStateHandle[DETAIL_TITLE] = ""
-                    savedStateHandle[DETAIL_RESPONSE] = ""
+                    _detailTitle.value = ""
+                    _detailResponse.value = ""
                     isSheetOpen = false
                 }
             }
 
             is DetailEvents.OnLongPress -> {
-                val clipboardManager =
-                    appContext.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-                val clipData =
-                    ClipData.newPlainText("Text Copied Successfully.", event.detailsDescription)
-                clipboardManager.setPrimaryClip(clipData)
-                sendUiEvents(
-                    UiEvents.ShowSnackBar(
-                        message = UiText.StringResource(R.string.copied)
-                            .asString(context = appContext)
-                    )
-                )
+                sendUiEvents(UiEvents.CopyToClipboard(value = event.detailsDescription, isSensitive = true))
             }
 
             is DetailEvents.OnSwipedLeft -> {
@@ -231,16 +228,19 @@ class DetailViewModel @Inject constructor(
                         detail.copy(sequence = index.toLong())
                     }
 
-                    updatedList.forEach { detail ->
-                        repository.updateDetailSequence(
-                            detailId = detail.detailsId!!,
-                            sequence = detail.sequence
-                        )
+                    repository.runInTransaction {
+                        updatedList.forEach { detail ->
+                            repository.updateDetailSequence(
+                                detailId = detail.detailsId!!,
+                                sequence = detail.sequence
+                            )
+                        }
                     }
                 }
             }
 
             DetailEvents.OnGeneratePasswordClick -> {
+                wasGenerated = true
                 val newPassword = PasswordGenerator.generate(
                     length = passwordLength.toInt(),
                     includeUpper = includeUpper,
@@ -248,7 +248,7 @@ class DetailViewModel @Inject constructor(
                     includeNumbers = includeNumbers,
                     includeSpecial = includeSpecial
                 )
-                savedStateHandle[DETAIL_RESPONSE] = newPassword
+                _detailResponse.value = newPassword
             }
 
             DetailEvents.OnPasswordSettingsClick -> {

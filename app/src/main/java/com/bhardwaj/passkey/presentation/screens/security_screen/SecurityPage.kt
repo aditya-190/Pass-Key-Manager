@@ -45,6 +45,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import androidx.compose.ui.window.SecureFlagPolicy
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
@@ -53,6 +54,7 @@ import com.bhardwaj.passkey.R
 import com.bhardwaj.passkey.domain.events.SecurityEvents
 import com.bhardwaj.passkey.domain.viewModels.SecurityViewModel
 import com.bhardwaj.passkey.presentation.theme.Poppins
+import com.bhardwaj.passkey.utils.asString
 import com.bhardwaj.passkey.utils.UiEvents
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -65,6 +67,8 @@ fun SecurityScreen(
     val snackBarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
 
+    val context = LocalContext.current
+
     LaunchedEffect(key1 = true) {
         viewModel.uiEvents.collect { event ->
             when (event) {
@@ -76,8 +80,8 @@ fun SecurityScreen(
                 is UiEvents.ShowSnackBar -> {
                     scope.launch {
                         snackBarHostState.showSnackbar(
-                            message = event.message,
-                            actionLabel = event.action
+                            message = event.message.asString(context),
+                            actionLabel = event.action?.asString(context)
                         )
                     }
                 }
@@ -88,7 +92,6 @@ fun SecurityScreen(
     }
 
     val activity = LocalActivity.current as FragmentActivity
-    val context = LocalContext.current
     val startForResult =
         rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == FragmentActivity.RESULT_CANCELED) {
@@ -124,6 +127,7 @@ fun SecurityScreen(
             if (viewModel.needToOpenAlertDialog) {
                 Dialog(
                     onDismissRequest = {}, properties = DialogProperties(
+                        securePolicy = SecureFlagPolicy.SecureOn,
                         dismissOnBackPress = false,
                         dismissOnClickOutside = false
                     )

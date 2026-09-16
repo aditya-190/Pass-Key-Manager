@@ -29,6 +29,8 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.ui.window.SecureFlagPolicy
+import androidx.compose.material3.ModalBottomSheetProperties
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
@@ -42,6 +44,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
@@ -63,6 +66,9 @@ fun AnalysisBottomSheet(
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
 
     ModalBottomSheet(
+        properties = ModalBottomSheetProperties(
+            securePolicy = SecureFlagPolicy.SecureOn
+        ),
         sheetState = sheetState,
         onDismissRequest = { onDismiss() },
         containerColor = MaterialTheme.colorScheme.background
@@ -202,7 +208,7 @@ fun ScoreCircularIndicator(
         }
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Text(
-                text = "$score%",
+                text = stringResource(R.string.security_score_percent, score),
                 fontSize = 28.sp,
                 fontWeight = FontWeight.Bold,
                 fontFamily = Poppins,
@@ -281,7 +287,7 @@ fun SimpleAnalysisItem(detail: Details, onClick: () -> Unit) {
             }
             Icon(
                 imageVector = Icons.AutoMirrored.Rounded.OpenInNew,
-                contentDescription = "Open",
+                contentDescription = stringResource(R.string.cd_open),
                 tint = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.size(20.dp)
             )
@@ -307,7 +313,7 @@ fun ReusedAnalysisItem(
                 modifier = Modifier.padding(bottom = 8.dp)
             ) {
                 Text(
-                    text = stringResource(R.string.used_times, count),
+                    text = pluralStringResource(R.plurals.password_used_times, count, count),
                     fontFamily = Poppins,
                     fontWeight = FontWeight.Bold,
                     fontSize = 14.sp,

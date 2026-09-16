@@ -1,5 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="no_previews_found">Nessuna voce per ora</string>
+    <string name="no_details_found">Nessun dettaglio per ora</string>
+    <!--    Splash Screen    -->
+    <string name="app_version">Versione app <xliff:g id="version" example="5.5.1">%1$s</xliff:g></string>
+    <string name="app_description">L\'unico gestore di password di cui avrai bisogno</string>
+
+    <!--    OnBoarding Screens    -->
+    <!--    Keep the 
+ line breaks and the [[ ]] highlight markers.    -->
+    <string name="skip">Salta</string>
+    <string name="next">Avanti</string>
+    <string name="first_heading">Genera\npassword\n[[sicure]].</string>
+    <string name="second_heading">Tutte le tue\n[[password]]\nsono qui.</string>
+    <string name="third_heading">Non digitare,\n[[compila]]\nle credenziali.</string>
+    <string name="first_description">Smetti di usare password poco sicure per i tuoi account online, fai il salto con PassKey. Ottieni password sicurissime e difficili da violare.</string>
+    <string name="second_description">Salva e gestisci tutte le tue password da un unico posto. Non ricordare centinaia di password, ricordane una sola.</string>
+    <string name="third_description">Non mettere a rischio le tue password digitandole in pubblico: lascia che PassKey le compili automaticamente e protegga le tue credenziali.</string>
+
     <!--    Main Screens    -->
     <string name="banks">Banche</string>
     <string name="mails">Email</string>
@@ -10,7 +28,6 @@
     <string name="search">Ricerca</string>
     <string name="title">Titolo</string>
     <string name="response">Risposta</string>
-    <string name="export_download">File esportato nella cartella Download.</string>
     <string name="rate_app">Valuta App</string>
     <string name="change_language">Cambia Lingua</string>
     <string name="privacy">Privacy</string>
@@ -20,7 +37,6 @@
     <string name="export_data">Esporta Dati</string>
 
     <!--    Edit Text Hints    -->
-    <string name="type_here">Digita qui…</string>
     <string name="type_your_title_here">Digita il tuo titolo qui…</string>
     <string name="type_your_response_here">Digita qui la tua risposta…</string>
     <string name="type_your_heading_here">Digita qui il tuo titolo…</string>
@@ -35,12 +51,7 @@
 
     <!--    Authentication Screen    -->
     <string name="welcome_to_pass_key">Benvenuti in PassKey Manager</string>
-    <string name="authentication_failed">Autenticazione Fallita.</string>
     <string name="something_went_wrong">Qualcosa è andato storto..</string>
-    <string name="set_password">Si prega di impostare prima la password per il dispositivo.</string>
-    <string name="permission_required">È necessario l\'accesso alla memoria per esportare il database.</string>
-    <string name="permission_denied">Permesso Negato</string>
-    <string name="ok">OK</string>
 
     <!--    Dialogs and Requests    -->
     <string name="change">Cambia</string>
@@ -62,15 +73,70 @@
     <!-- Password Health Report -->
     <string name="analyze_passwords">Stato di Sicurezza</string>
     <string name="security_analysis">Analisi di Sicurezza</string>
-    <string name="security_score">Punteggio di Sicurezza</string>
     <string name="weak_passwords">Password Deboli</string>
     <string name="reused_passwords">Password Riutilizzate</string>
-    <string name="safe_passwords">Password Sicure</string>
     <string name="excellent">Eccellente</string>
     <string name="needs_attention">Richiede Attenzione</string>
     <string name="critical">Critico</string>
-    <string name="found_weak">Trovate %1$d password deboli</string>
-    <string name="found_reused">Trovate %1$d password riutilizzate</string>
-    <string name="used_times">Usata %1$d volte</string>
     <string name="no_issues">Nessun problema trovato. Ottimo lavoro!</string>
+    <string name="cd_drag_handle">Riordina</string>
+    <string name="cd_edit">Modifica</string>
+    <string name="cd_delete">Elimina</string>
+    <string name="cd_add_detail">Aggiungi dettaglio</string>
+    <string name="cd_add_entry">Aggiungi voce</string>
+    <string name="cd_settings">Impostazioni</string>
+    <string name="cd_generate_password">Genera password</string>
+    <string name="cd_password_options">Opzioni password</string>
+    <string name="cd_clear_search">Cancella ricerca</string>
+    <string name="cd_open">Apri</string>
+    <string name="cd_back">Indietro</string>
+    <string name="password_settings">Impostazioni password</string>
+    <string name="password_length">Lunghezza: %1$d</string>
+    <string name="security_score_percent">%1$d%%</string>
+    <string name="invalid_file_selected">File selezionato non valido.</string>
+    <plurals name="password_used_times">
+        <item quantity="one">Usata %1$d volta</item>
+        <item quantity="many">Usata %1$d volte</item>
+        <item quantity="other">Usata %1$d volte</item>
+    </plurals>
+    <string name="export_success">Backup cifrato salvato.</string>
+    <string name="export_failed">Impossibile salvare il backup.</string>
+    <string name="import_summary">Importate %1$d voci e %2$d dettagli.</string>
+    <string name="import_wrong_password">Password errata o file danneggiato.</string>
+    <string name="import_file_too_large">Questo file è troppo grande per essere un backup PassKey.</string>
+    <string name="import_unsupported_version">Questo backup è stato creato con una versione più recente di PassKey.</string>
+    <string name="backup_password_title">Proteggi il tuo backup</string>
+    <string name="backup_password_message">Scegli una password per questo file di backup. È l\'unico modo per ripristinarlo e non può essere recuperata.</string>
+    <string name="backup_password_hint">Password del backup</string>
+    <string name="backup_password_confirm_hint">Conferma password</string>
+    <string name="backup_password_mismatch">Le password non coincidono.</string>
+    <string name="backup_password_too_short">Usa almeno 8 caratteri.</string>
+    <string name="restore_password_title">Ripristina backup</string>
+    <string name="restore_password_message">Inserisci la password scelta quando hai creato questo file di backup.</string>
+    <string name="backup_confirm">Continua</string>
+    <string name="update_required_title">Aggiornamento necessario</string>
+    <string name="update_required_message">Questa versione di PassKey non è più supportata. Aggiorna per continuare a usare la tua cassaforte.</string>
+    <string name="update_now">Aggiorna ora</string>
+    <string name="update_ready_message">Un aggiornamento è pronto per l\'installazione.</string>
+    <string name="update_restart">Riavvia</string>
+    <string name="auto_lock">Blocco automatico</string>
+    <string name="auto_lock_immediately">Immediatamente</string>
+    <string name="auto_lock_15_seconds">Dopo 15 secondi</string>
+    <string name="auto_lock_30_seconds">Dopo 30 secondi</string>
+    <string name="auto_lock_1_minute">Dopo 1 minuto</string>
+    <string name="auto_lock_5_minutes">Dopo 5 minuti</string>
+    <string name="auto_lock_never">Mai</string>
+    <string name="auto_lock_never_warning">La cassaforte resterà aperta finché non chiudi l\'app. Chi ha il tuo telefono sbloccato potrà leggere le tue password.</string>
+    <string-array name="secret_field_keywords">
+        <item>password</item>
+        <item>parola d\'ordine</item>
+        <item>pin</item>
+        <item>codice</item>
+        <item>segreto</item>
+        <item>chiave</item>
+        <item>accesso</item>
+    </string-array>
+    <string name="about_message">PassKey salva credenziali, password e altre note private in un database cifrato sul tuo dispositivo.\n\nLa tua cassaforte non lascia mai il telefono. Non c\'è alcun account, nessuna sincronizzazione e nessun server PassKey: l\'app non effettua richieste di rete proprie e le tue voci non vengono trasmesse da nessuna parte.\n\nIl database è cifrato con SQLCipher e si sblocca con la biometria o il blocco schermo del dispositivo. La cassaforte si riblocca automaticamente quando esci dall\'app, gli screenshot sono bloccati e le password copiate vengono contrassegnate come sensibili ed eliminate dagli appunti poco dopo.\n\nPuoi organizzare le voci in categorie, riordinarle trascinando, generare password robuste e controllare la cassaforte alla ricerca di password deboli o riutilizzate. I backup vengono esportati come un unico file cifrato con una password scelta da te e si possono ripristinare su qualsiasi dispositivo.\n\nPassKey è gratuita e open source, sviluppata da Aditya Bhardwaj. Il codice sorgente completo è disponibile su GitHub.</string>
+    <string name="privacy_message">La tua cassaforte resta sul tuo dispositivo.\n\nCosa non raccogliamo mai: PassKey non raccoglie, trasmette né memorizza le password, i nomi utente, le note o qualsiasi altra voce che salvi. Esistono soltanto in un database cifrato sul tuo telefono. Non possiamo leggerle né recuperarle per te.\n\nCosa invia l\'app: PassKey include Google Firebase Crashlytics, Analytics e Performance Monitoring e gli aggiornamenti in-app di Google Play. Questi servizi inviano a Google diagnostiche di arresto anomalo, eventi di utilizzo, tracce prestazionali e identificatori di dispositivo e installazione, compreso un ID pubblicitario. Non hanno mai accesso al contenuto della cassaforte. A causa di questi servizi l\'app richiede l\'autorizzazione a Internet, e il loro trattamento dei dati è regolato dall\'informativa privacy di Google.\n\nBackup: quando esporti un backup, il file viene cifrato con una password scelta da te e salvato dove indichi al sistema. Quel file è poi sotto la tua responsabilità; chiunque ottenga sia il file sia la password può leggerlo. Non ne conserviamo copia.\n\nBackup del dispositivo: PassKey è esclusa dal backup cloud di Android e dal trasferimento tra dispositivi, quindi la cassaforte non viene caricata sul tuo account Google.\n\nModifiche: questa informativa può essere aggiornata; le modifiche rilevanti saranno indicate nelle note di versione.\n\nDomande: scrivi a <xliff:g id="email" example="name@example.com">yrkkh.cclub@gmail.com</xliff:g>.</string>
+    <string name="terms_n_condition_message">Usando PassKey accetti quanto segue.\n\n1. PassKey è software gratuito e open source sviluppato da Aditya Bhardwaj.\n\n2. La tua cassaforte è archiviata solo sul tuo dispositivo. Non esiste copia lato server e quindi non c\'è modo di recuperare i dati se perdi il dispositivo, disinstalli l\'app o dimentichi una password di backup.\n\n3. Conservare i backup è una tua responsabilità. Esportali regolarmente e custodisci la password del backup in un luogo sicuro e separato.\n\n4. L\'app si appoggia alla sicurezza biometrica o al blocco schermo del dispositivo. Se tale blocco è debole, rimosso o compromesso, la protezione offerta da PassKey si riduce di conseguenza.\n\n5. PassKey include i servizi Google Firebase e Google Play descritti nell\'Informativa sulla privacy.\n\n6. L\'applicazione è fornita \"così com\'è\", senza garanzie di alcun tipo, esplicite o implicite, comprese quelle di commerciabilità e idoneità a uno scopo particolare.\n\n7. Nei limiti consentiti dalla legge, lo sviluppatore non è responsabile per danni derivanti dall\'uso dell\'applicazione, inclusa la perdita di dati.\n\n8. L\'applicazione può essere modificata o dismessa in qualsiasi momento.</string>
 </resources>
