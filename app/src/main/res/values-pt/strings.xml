@@ -237,4 +237,11 @@
         <item quantity="many">Use pelo menos %1$d caracteres.</item>
         <item quantity="other">Use pelo menos %1$d caracteres.</item>
     </plurals>
+    <string name="store_unavailable">O Google Play não está disponível neste dispositivo.</string>
+    <string name="autofill">Preenchimento automático</string>
+    <string name="autofill_unlock">Desbloqueie para preencher</string>
+    <string name="autofill_open_app">Abra o PassKey para concluir a configuração do cofre e tente novamente.</string>
+    <string name="autofill_save_failed">Não foi possível salvar este login.</string>
+    <string name="autofill_save_locked">Desbloqueie o PassKey para salvar este login.</string>
+    <string name="autofill_unsupported">O preenchimento automático não está disponível neste dispositivo.</string>
 </resources>

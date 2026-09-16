@@ -70,6 +70,7 @@ class SettingsViewModel @Inject constructor(
             }
 
             SettingsIntent.RateClicked -> send(SettingsEffect.OpenUrl(PLAY_STORE_URL + BuildConfig.APPLICATION_ID))
+            SettingsIntent.AutofillClicked -> send(SettingsEffect.OpenAutofillSettings)
             SettingsIntent.ChangeRecoveryClicked -> showDialog(SettingsDialog.RecoveryCurrent)
             is SettingsIntent.CurrentRecoveryEntered -> {
                 wipePendingRecovery()

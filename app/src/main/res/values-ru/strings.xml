@@ -238,4 +238,11 @@
         <item quantity="many">Используйте не менее %1$d символов.</item>
         <item quantity="other">Используйте не менее %1$d символов.</item>
     </plurals>
+    <string name="store_unavailable">Google Play недоступен на этом устройстве.</string>
+    <string name="autofill">Автозаполнение</string>
+    <string name="autofill_unlock">Разблокируйте для заполнения</string>
+    <string name="autofill_open_app">Откройте PassKey, чтобы завершить настройку хранилища, и повторите попытку.</string>
+    <string name="autofill_save_failed">Не удалось сохранить эти данные для входа.</string>
+    <string name="autofill_save_locked">Разблокируйте PassKey, чтобы сохранить эти данные для входа.</string>
+    <string name="autofill_unsupported">Автозаполнение недоступно на этом устройстве.</string>
 </resources>

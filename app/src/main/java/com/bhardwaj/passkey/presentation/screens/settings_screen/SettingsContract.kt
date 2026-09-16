@@ -40,6 +40,7 @@ sealed interface SettingsIntent {
     data object AnalyzeClicked : SettingsIntent
     data class AnalysisItemClicked(val detail: Detail) : SettingsIntent
     data object RateClicked : SettingsIntent
+    data object AutofillClicked : SettingsIntent
     data object ChangeRecoveryClicked : SettingsIntent
     class CurrentRecoveryEntered(val password: CharArray) : SettingsIntent
     class NewRecoveryEntered(val password: CharArray) : SettingsIntent
@@ -56,6 +57,9 @@ sealed interface SettingsEffect {
     data class ShowSnackbar(val message: UiText) : SettingsEffect
     data class Navigate(val route: NavRoute) : SettingsEffect
     data class OpenUrl(val url: String) : SettingsEffect
+
+    /** Android owns the autofill-service picker; the app can only ask for it to be shown. */
+    data object OpenAutofillSettings : SettingsEffect
 
     /** Applying a locale needs a Context, so the screen does it. */
     data class ApplyLanguage(val languageTag: String) : SettingsEffect

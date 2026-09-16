@@ -233,4 +233,11 @@
     <plurals name="password_min_length">
         <item quantity="other">请至少使用 %1$d 个字符。</item>
     </plurals>
+    <string name="store_unavailable">此设备上无法使用 Google Play。</string>
+    <string name="autofill">自动填充</string>
+    <string name="autofill_unlock">解锁以填充</string>
+    <string name="autofill_open_app">请打开 PassKey 完成保险库设置，然后重试。</string>
+    <string name="autofill_save_failed">无法保存此登录信息。</string>
+    <string name="autofill_save_locked">请解锁 PassKey 以保存此登录信息。</string>
+    <string name="autofill_unsupported">此设备不支持自动填充。</string>
 </resources>

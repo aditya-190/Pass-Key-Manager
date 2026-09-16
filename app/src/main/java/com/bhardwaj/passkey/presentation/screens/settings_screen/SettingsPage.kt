@@ -2,9 +2,12 @@ package com.bhardwaj.passkey.presentation.screens.settings_screen
 
 import android.app.LocaleManager
 import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.LocaleList
+import android.provider.Settings
+import android.view.autofill.AutofillManager
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatDelegate
@@ -47,6 +50,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.SecureFlagPolicy
+import androidx.core.net.toUri
 import androidx.core.os.LocaleListCompat
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -158,10 +162,32 @@ fun SettingsScreen(
         )
     }
 
+    val storeUnavailable = stringResource(R.string.store_unavailable)
+    val autofillUnsupported = stringResource(R.string.autofill_unsupported)
     ObserveAsEvents(viewModel.effects) { event ->
         when (event) {
             is SettingsEffect.Navigate -> onNavigate(event.route)
-            is SettingsEffect.OpenUrl -> ExternalLinks.openUrl(context, event.url)
+            is SettingsEffect.OpenUrl -> if (!ExternalLinks.openUrl(context, event.url)) {
+                // No browser or Play Store (some Android TV, kiosk and de-Googled devices).
+                scope.launch { snackBarHostState.showSnackbar(storeUnavailable) }
+            }
+
+            // The system's autofill picker. There is no API to switch a service on directly, which is the right
+            // restriction for something that can read other apps' forms.
+            SettingsEffect.OpenAutofillSettings -> {
+                val manager = context.getSystemService(AutofillManager::class.java)
+                val opened = manager?.isAutofillSupported == true &&
+                    runCatching {
+                        context.startActivity(
+                            Intent(
+                                Settings.ACTION_REQUEST_SET_AUTOFILL_SERVICE
+                            ).setData("package:${context.packageName}".toUri())
+                        )
+                    }.isSuccess
+                if (!opened) {
+                    scope.launch { snackBarHostState.showSnackbar(autofillUnsupported) }
+                }
+            }
             is SettingsEffect.ApplyLanguage -> applyAppLanguage(context, event.languageTag)
             is SettingsEffect.ShowSnackbar -> {
                 scope.launch { snackBarHostState.showSnackbar(message = event.message.asString(context)) }
@@ -223,6 +249,9 @@ fun SettingsScreen(
                             }
                             SettingsText(text = stringResource(id = R.string.rate_app)) {
                                 onIntent(SettingsIntent.RateClicked)
+                            }
+                            SettingsText(text = stringResource(id = R.string.autofill)) {
+                                onIntent(SettingsIntent.AutofillClicked)
                             }
                             SettingsText(text = stringResource(id = R.string.auto_lock)) {
                                 onIntent(SettingsIntent.AutoLockClicked)
