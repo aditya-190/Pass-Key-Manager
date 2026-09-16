@@ -1,7 +1,11 @@
 package com.bhardwaj.passkey.data.backup
 
 import com.bhardwaj.passkey.domain.model.Category
+import com.bhardwaj.passkey.domain.model.TotpEntry
 import com.bhardwaj.passkey.domain.repository.PasskeyRepository
+import com.bhardwaj.passkey.domain.totp.Base32
+import com.bhardwaj.passkey.domain.totp.TotpAlgorithm
+import com.bhardwaj.passkey.domain.totp.TotpConfig
 import java.io.ByteArrayOutputStream
 import java.util.Arrays
 import java.util.zip.GZIPInputStream
@@ -31,7 +35,8 @@ internal class BackupCodec(
                     heading = preview.heading,
                     categoryName = preview.category.name,
                     sequence = preview.sequence,
-                    details = details.map { BackupDetail(it.question, it.answer, it.sequence, it.isSecret) }
+                    details = details.map { BackupDetail(it.question, it.answer, it.sequence, it.isSecret) },
+                    totp = repository.getTotpByPreviewId(preview.id).first().map { it.toBackup() }
                 )
             },
             password = password,
@@ -142,7 +147,46 @@ internal class BackupCodec(
                 }
             }
         }
+        restoreTotp(previewId, backupPreview.totp, counts)
     }
+
+    /** A secret that will not decode produces codes that never verify, with nothing to say why: skip and count it. */
+    private suspend fun restoreTotp(previewId: Long, rows: List<BackupTotp>, counts: Counts) {
+        if (rows.isEmpty()) return
+        val existing = repository.getTotpByPreviewId(previewId).first()
+        rows.forEach { totp ->
+            val secret = totp.secret.takeIf { it.length <= BackupPayload.MAX_SECRET_CHARS }?.let { Base32.decode(it) }
+            val label = totp.label.trim()
+            when {
+                secret == null || label.isEmpty() || label.length > BackupPayload.MAX_HEADING_CHARS -> counts.skipped++
+                // Restoring the same file twice must not list the same code twice.
+                existing.any { it.label == label && it.config.secret.contentEquals(secret) } -> Unit
+                else -> repository.createTotp(
+                    previewId = previewId,
+                    label = label,
+                    config = TotpConfig(
+                        secret = secret,
+                        issuer = totp.issuer,
+                        account = totp.account?.take(BackupPayload.MAX_HEADING_CHARS) ?: label,
+                        algorithm = TotpAlgorithm.fromNameOrDefault(totp.algorithm),
+                        digits = totp.digits.takeIf { it in TotpConfig.DIGIT_RANGE } ?: TotpConfig.DEFAULT_DIGITS,
+                        periodSeconds = totp.periodSeconds.takeIf { it in TotpConfig.PERIOD_RANGE }
+                            ?: TotpConfig.DEFAULT_PERIOD_SECONDS
+                    )
+                )
+            }
+        }
+    }
+
+    private fun TotpEntry.toBackup() = BackupTotp(
+        label = label,
+        secret = Base32.encode(config.secret),
+        issuer = config.issuer,
+        account = config.account,
+        algorithm = config.algorithm.name,
+        digits = config.digits,
+        periodSeconds = config.periodSeconds
+    )
 
     private fun failure(error: BackupError): Result<ParsedBackup> = Result.failure(BackupException(error))
 

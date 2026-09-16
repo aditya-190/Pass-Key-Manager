@@ -8,8 +8,11 @@ import com.bhardwaj.passkey.analytics.AnalyticsTracker
 import com.bhardwaj.passkey.crash.CrashReporter
 import com.bhardwaj.passkey.domain.model.Category
 import com.bhardwaj.passkey.domain.model.Detail
+import com.bhardwaj.passkey.domain.model.PasswordHistoryEntry
 import com.bhardwaj.passkey.domain.model.Preview
+import com.bhardwaj.passkey.domain.model.TotpEntry
 import com.bhardwaj.passkey.domain.repository.PasskeyRepository
+import com.bhardwaj.passkey.domain.totp.TotpConfig
 import java.io.File
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -181,6 +184,28 @@ class FakePasskeyRepository : PasskeyRepository {
         details.value = details.value.map { if (it.id == detailId) it.copy(sequence = sequence) else it }
     }
 
+    private val totp = MutableStateFlow<List<TotpEntry>>(emptyList())
+    val allTotp: List<TotpEntry> get() = totp.value
+
+    override fun getTotpByPreviewId(previewId: Long): Flow<List<TotpEntry>> =
+        totp.map { list -> list.filter { it.previewId == previewId } }
+
+    override suspend fun createTotp(previewId: Long, label: String, config: TotpConfig): Long {
+        writeGate()
+        val id = nextId++
+        totp.value = totp.value + TotpEntry(id = id, previewId = previewId, label = label, config = config)
+        return id
+    }
+
+    override suspend fun deleteTotp(entry: TotpEntry) {
+        totp.value = totp.value.filterNot { it.id == entry.id }
+    }
+
+    override fun getHistoryForDetail(detailId: Long): Flow<List<PasswordHistoryEntry>> =
+        kotlinx.coroutines.flow.flowOf(emptyList())
+
+    override suspend fun lastChangedAt(detailId: Long): Long? = null
+
     override suspend fun <R> runInTransaction(block: suspend () -> R): R {
         transactions++
         writeGate()
@@ -190,6 +215,7 @@ class FakePasskeyRepository : PasskeyRepository {
     override suspend fun deleteAll() {
         previews.value = emptyList()
         details.value = emptyList()
+        totp.value = emptyList()
     }
 }
 

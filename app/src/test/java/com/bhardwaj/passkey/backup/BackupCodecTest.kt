@@ -3,8 +3,12 @@ package com.bhardwaj.passkey.backup
 import com.bhardwaj.passkey.data.backup.BackupCodec
 import com.bhardwaj.passkey.data.backup.BackupError
 import com.bhardwaj.passkey.data.backup.BackupException
+import com.bhardwaj.passkey.data.backup.BackupTotp
 import com.bhardwaj.passkey.data.backup.ImportMode
 import com.bhardwaj.passkey.domain.model.Category
+import com.bhardwaj.passkey.domain.totp.Base32
+import com.bhardwaj.passkey.domain.totp.TotpConfig
+import com.bhardwaj.passkey.domain.totp.TotpGenerator
 import com.bhardwaj.passkey.testing.FakePasskeyRepository
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
@@ -132,5 +136,41 @@ class BackupCodecTest {
         val restoredNothing = result.isFailure || result.getOrThrow().previews.isEmpty()
         assertTrue(restoredNothing)
         assertEquals(before, vault.snapshot())
+    }
+
+    @Test
+    fun `authenticator codes survive a backup and a second import does not list them twice`() = runTest {
+        val source = FakePasskeyRepository()
+        val id = source.createPreview("GitHub", Category.APPS)
+        val config = TotpConfig(secret = Base32.decode("JBSWY3DPEHPK3PXP")!!, issuer = "GitHub", account = "me")
+        source.createTotp(id, "me@github", config)
+        val bytes = BackupCodec(source).encode(password.copyOf(), 1L, "test")
+
+        val target = FakePasskeyRepository()
+        val codec = BackupCodec(target)
+        repeat(2) { codec.restore(codec.decode(bytes, password.copyOf()).getOrThrow(), ImportMode.MERGE) }
+
+        val restored = target.allTotp.single()
+        assertEquals("me@github", restored.label)
+        assertEquals(config, restored.config)
+        assertEquals(TotpGenerator.generate(config, 59), TotpGenerator.generate(restored.config, 59))
+    }
+
+    @Test
+    fun `an undecodable authenticator secret is skipped and counted, not stored`() = runTest {
+        val source = FakePasskeyRepository()
+        val id = source.createPreview("Bank", Category.BANKS)
+        source.createDetail(id, "PIN", "1234")
+        val bytes = BackupCodec(source).encode(password.copyOf(), 1L, "test")
+        val payload = BackupCodec(source).decode(bytes, password.copyOf()).getOrThrow()
+        val tampered = payload.copy(
+            previews = payload.previews.map {
+                it.copy(totp = listOf(BackupTotp(label = "x", secret = "!!not base32!!")))
+            }
+        )
+        val target = FakePasskeyRepository()
+        val summary = BackupCodec(target).restore(tampered, ImportMode.MERGE)
+        assertTrue(target.allTotp.isEmpty())
+        assertEquals(1, summary.skipped)
     }
 }
