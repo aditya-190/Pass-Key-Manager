@@ -44,6 +44,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.SecureFlagPolicy
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.bhardwaj.passkey.R
 import com.bhardwaj.passkey.data.backup.BackupFormat
 import com.bhardwaj.passkey.data.backup.ImportMode
@@ -51,6 +52,7 @@ import com.bhardwaj.passkey.domain.events.SettingsEvents
 import com.bhardwaj.passkey.domain.viewModels.SettingsViewModel
 import com.bhardwaj.passkey.presentation.navigation.Routes
 import com.bhardwaj.passkey.presentation.screens.settings_screen.components.AnalysisBottomSheet
+import com.bhardwaj.passkey.presentation.screens.settings_screen.components.AutoLockDialog
 import com.bhardwaj.passkey.presentation.screens.settings_screen.components.BackupPasswordDialog
 import com.bhardwaj.passkey.presentation.screens.settings_screen.components.FaqItem
 import com.bhardwaj.passkey.presentation.screens.settings_screen.components.LanguageBottomSheet
@@ -102,6 +104,15 @@ fun SettingsScreen(
                 )
             }
         }
+    }
+
+    val autoLockTimeout by viewModel.autoLockTimeout.collectAsStateWithLifecycle()
+    if (viewModel.isAutoLockDialogOpen) {
+        AutoLockDialog(
+            current = autoLockTimeout,
+            onDismiss = { viewModel.onEvent(SettingsEvents.OnDismissAutoLockDialog) },
+            onSelect = { viewModel.onEvent(SettingsEvents.OnAutoLockTimeoutChange(it)) }
+        )
     }
 
     pendingExportUri?.let { uri ->
@@ -214,6 +225,9 @@ fun SettingsScreen(
                             }
                             SettingsText(text = stringResource(id = R.string.rate_app)) {
                                 viewModel.onEvent(SettingsEvents.OnRateAppClick)
+                            }
+                            SettingsText(text = stringResource(id = R.string.auto_lock)) {
+                                viewModel.onEvent(SettingsEvents.OnAutoLockClick)
                             }
                             SettingsText(text = stringResource(id = R.string.import_data)) {
                                 importLauncher.launch(arrayOf("*/*"))

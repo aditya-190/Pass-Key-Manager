@@ -19,6 +19,7 @@ import com.bhardwaj.passkey.data.backup.BackupException
 import com.bhardwaj.passkey.data.backup.BackupRepository
 import com.bhardwaj.passkey.data.repository.DataStoreRepository
 import com.bhardwaj.passkey.data.repository.PasskeyRepository
+import com.bhardwaj.passkey.data.security.AutoLockTimeout
 import com.bhardwaj.passkey.domain.events.SettingsEvents
 import com.bhardwaj.passkey.presentation.navigation.Routes
 import com.bhardwaj.passkey.utils.AlertBy.ABOUT
@@ -32,8 +33,14 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -66,6 +73,19 @@ class SettingsViewModel @Inject constructor(
 
     var analysisResult by mutableStateOf(PasswordAnalysisResult())
         private set
+
+    var isAutoLockDialogOpen by mutableStateOf(false)
+        private set
+
+    val autoLockTimeout: StateFlow<AutoLockTimeout> = flow {
+        emitAll(
+            dataStoreRepository.readPreference(
+                key = DataStoreRepository.autoLockTimeoutKey,
+                defaultValue = AutoLockTimeout.DEFAULT.millis
+            )
+        )
+    }.map { AutoLockTimeout.fromMillis(it) }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), AutoLockTimeout.DEFAULT)
 
     fun onEvent(event: SettingsEvents) {
         when (event) {
@@ -182,6 +202,24 @@ class SettingsViewModel @Inject constructor(
                     }
                     analysisResult = result
                     isAnalysisSheetOpen = true
+                }
+            }
+
+            SettingsEvents.OnAutoLockClick -> {
+                isAutoLockDialogOpen = true
+            }
+
+            SettingsEvents.OnDismissAutoLockDialog -> {
+                isAutoLockDialogOpen = false
+            }
+
+            is SettingsEvents.OnAutoLockTimeoutChange -> {
+                isAutoLockDialogOpen = false
+                viewModelScope.launch {
+                    dataStoreRepository.savePreference(
+                        key = DataStoreRepository.autoLockTimeoutKey,
+                        value = event.timeout.millis
+                    )
                 }
             }
 

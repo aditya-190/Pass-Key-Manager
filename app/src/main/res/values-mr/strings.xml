@@ -127,4 +127,17 @@
     <string name="restore_password_title">बॅकअप पुनर्संचयित करा</string>
     <string name="restore_password_message">ही बॅकअप फाइल तयार करताना निवडलेला पासवर्ड टाका.</string>
     <string name="backup_confirm">सुरू ठेवा</string>
+    <string name="update_required_title">अपडेट आवश्यक</string>
+    <string name="update_required_message">PassKey ची ही आवृत्ती आता समर्थित नाही. तुमची व्हॉल्ट वापरत राहण्यासाठी अपडेट करा.</string>
+    <string name="update_now">आता अपडेट करा</string>
+    <string name="update_ready_message">एक अपडेट इंस्टॉलसाठी तयार आहे.</string>
+    <string name="update_restart">पुन्हा सुरू करा</string>
+    <string name="auto_lock">स्वयं-लॉक</string>
+    <string name="auto_lock_immediately">लगेच</string>
+    <string name="auto_lock_15_seconds">15 सेकंदांनी</string>
+    <string name="auto_lock_30_seconds">30 सेकंदांनी</string>
+    <string name="auto_lock_1_minute">1 मिनिटाने</string>
+    <string name="auto_lock_5_minutes">5 मिनिटांनी</string>
+    <string name="auto_lock_never">कधीही नाही</string>
+    <string name="auto_lock_never_warning">ॲप बंद करेपर्यंत व्हॉल्ट उघडी राहील. तुमचा अनलॉक केलेला फोन ज्याच्याकडे असेल तो तुमचे पासवर्ड वाचू शकतो.</string>
 </resources>

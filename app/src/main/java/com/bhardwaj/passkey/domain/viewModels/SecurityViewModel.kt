@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bhardwaj.passkey.analytics.AnalyticsTracker
 import com.bhardwaj.passkey.analytics.AppEvents
+import com.bhardwaj.passkey.data.security.VaultSession
 import com.bhardwaj.passkey.domain.events.SecurityEvents
 import com.bhardwaj.passkey.presentation.navigation.Routes
 import com.bhardwaj.passkey.utils.UiEvents
@@ -17,7 +18,10 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 
 @HiltViewModel
-class SecurityViewModel @Inject constructor(private val analytics: AnalyticsTracker) : ViewModel() {
+class SecurityViewModel @Inject constructor(
+    private val vaultSession: VaultSession,
+    private val analytics: AnalyticsTracker
+) : ViewModel() {
     private val _uiEvents = Channel<UiEvents>()
     val uiEvents = _uiEvents.receiveAsFlow()
 
@@ -41,6 +45,9 @@ class SecurityViewModel @Inject constructor(private val analytics: AnalyticsTrac
 
             SecurityEvents.OnAuthenticationSucceeded -> {
                 analytics.log(AppEvents.vaultUnlocked())
+                // Previously isAuthenticated was written and never read, so navigation was the
+                // only gate. The session is now the thing the rest of the app observes.
+                vaultSession.onUnlocked()
                 isAuthenticated = true
                 needToOpenAlertDialog = false
                 sendUiEvents(UiEvents.Navigate(Routes.PREVIEW_PAGE))

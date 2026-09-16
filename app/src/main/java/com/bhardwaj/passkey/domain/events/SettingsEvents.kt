@@ -3,6 +3,7 @@ package com.bhardwaj.passkey.domain.events
 import android.net.Uri
 import com.bhardwaj.passkey.data.backup.ImportMode
 import com.bhardwaj.passkey.data.local.entity.Details
+import com.bhardwaj.passkey.data.security.AutoLockTimeout
 import com.bhardwaj.passkey.domain.models.Language
 
 sealed interface SettingsEvents {
@@ -47,4 +48,7 @@ sealed interface SettingsEvents {
     data object OnAboutClick : SettingsEvents
     data object OnAnalyzePasswordsClick : SettingsEvents
     data object OnDismissAnalysisSheet : SettingsEvents
+    data object OnAutoLockClick : SettingsEvents
+    data object OnDismissAutoLockDialog : SettingsEvents
+    data class OnAutoLockTimeoutChange(val timeout: AutoLockTimeout) : SettingsEvents
 }
