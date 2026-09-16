@@ -1,5 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="no_previews_found">এখনও কোনো এন্ট্রি নেই</string>
+    <string name="no_details_found">এখনও কোনো বিবরণ নেই</string>
+    <!--    Splash Screen    -->
+    <string name="app_version">অ্যাপ সংস্করণ <xliff:g id="version" example="5.5.1">%1$s</xliff:g></string>
+    <string name="app_description">আপনার প্রয়োজনীয় একমাত্র পাসওয়ার্ড ম্যানেজার</string>
+
+    <!--    OnBoarding Screens    -->
+    <!--    Keep the 
+ line breaks and the [[ ]] highlight markers.    -->
+    <string name="skip">এড়িয়ে যান</string>
+    <string name="next">পরবর্তী</string>
+    <string name="first_heading">তৈরি করুন\n[[সুরক্ষিত]]\nপাসওয়ার্ড।</string>
+    <string name="second_heading">আপনার সব\n[[পাসওয়ার্ড]]\nএখানেই।</string>
+    <string name="third_heading">টাইপ নয়,\nতথ্য [[স্বয়ংক্রিয়ভাবে]]\nপূরণ করুন।</string>
+    <string name="first_description">আপনার অনলাইন অ্যাকাউন্টে দুর্বল পাসওয়ার্ড ব্যবহার করা বন্ধ করুন, PassKey দিয়ে এক ধাপ এগিয়ে যান। সবচেয়ে সুরক্ষিত ও ভাঙা কঠিন পাসওয়ার্ড পান।</string>
+    <string name="second_description">এক জায়গা থেকেই আপনার সব পাসওয়ার্ড সংরক্ষণ ও পরিচালনা করুন। শত শত পাসওয়ার্ড নয়, শুধু একটি মনে রাখুন।</string>
+    <string name="third_description">প্রকাশ্যে টাইপ করে আপনার পাসওয়ার্ড ঝুঁকিতে ফেলবেন না, PassKey-কে সেগুলি স্বয়ংক্রিয়ভাবে পূরণ করতে দিন এবং আপনার তথ্য সুরক্ষিত রাখুন।</string>
+
     <!-- Main Screens -->
     <string name="banks">ব্যাংক</string>
     <string name="mails">মেইল</string>
@@ -10,7 +28,6 @@
     <string name="search">অনুসন্ধান</string>
     <string name="title">শিরোনাম</string>
     <string name="response">প্রতিক্রিয়া</string>
-    <string name="export_download">ফাইলটি ডাউনলোড ফোল্ডারে রপ্ত হয়েছে।</string>
     <string name="rate_app">অ্যাপ রেটিং</string>
     <string name="change_language">ভাষা পরিবর্তন</string>
     <string name="privacy">গোপনীয়তা</string>
@@ -20,7 +37,6 @@
     <string name="export_data">তথ্য রপ্তানি</string>
 
     <!-- Edit Text Hints -->
-    <string name="type_here">এখানে লিখুন…</string>
     <string name="type_your_title_here">আপনার শিরোনাম এখানে লিখুন…</string>
     <string name="type_your_response_here">আপনার প্রতিক্রিয়া এখানে লিখুন…</string>
     <string name="type_your_heading_here">আপনার শিরোনাম এখানে লিখুন…</string>
@@ -35,12 +51,7 @@
 
     <!-- Authentication Screen -->
     <string name="welcome_to_pass_key">PassKey ম্যানেজারে আপনাকে স্বাগতম</string>
-    <string name="authentication_failed">প্রাধিকারীকরণ ব্যর্থ হয়েছে।</string>
     <string name="something_went_wrong">কিছু ভুল হয়েছে..</string>
-    <string name="set_password">দয়া করে আপনার ডিভাইসের জন্য পাসওয়ার্ড সেট করুন।</string>
-    <string name="permission_required">ডেটাবেস রপ্তানির জন্য সংগ্রহ অ্যাক্সেস প্রয়োজন।</string>
-    <string name="permission_denied">অনুমতি অস্বীকৃত</string>
-    <string name="ok">ঠিক আছে</string>
 
     <!-- Dialogs and Requests -->
     <string name="change">পরিবর্তন</string>
@@ -62,15 +73,93 @@
     <!-- Password Health Report -->
     <string name="analyze_passwords">নিরাপত্তা স্থিতি</string>
     <string name="security_analysis">নিরাপত্তা বিশ্লেষণ</string>
-    <string name="security_score">নিরাপত্তা স্কোর</string>
     <string name="weak_passwords">দুর্বল পাসওয়ার্ড</string>
     <string name="reused_passwords">পুনঃব্যবহৃত পাসওয়ার্ড</string>
-    <string name="safe_passwords">নিরাপদ পাসওয়ার্ড</string>
     <string name="excellent">চমৎকার</string>
     <string name="needs_attention">মনোযোগ প্রয়োজন</string>
     <string name="critical">জটিল</string>
-    <string name="found_weak">%1$d টি দুর্বল পাসওয়ার্ড পাওয়া গেছে</string>
-    <string name="found_reused">%1$d টি পুনঃব্যবহৃত পাসওয়ার্ড পাওয়া গেছে</string>
-    <string name="used_times">%1$d বার ব্যবহৃত হয়েছে</string>
     <string name="no_issues">কোনো সমস্যা পাওয়া যায়নি। দারুণ!</string>
+    <string name="cd_drag_handle">পুনরায় সাজান</string>
+    <string name="cd_edit">সম্পাদনা</string>
+    <string name="cd_delete">মুছুন</string>
+    <string name="cd_add_detail">বিবরণ যোগ করুন</string>
+    <string name="cd_add_entry">এন্ট্রি যোগ করুন</string>
+    <string name="cd_settings">সেটিংস</string>
+    <string name="cd_generate_password">পাসওয়ার্ড তৈরি করুন</string>
+    <string name="cd_password_options">পাসওয়ার্ড বিকল্প</string>
+    <string name="cd_clear_search">অনুসন্ধান মুছুন</string>
+    <string name="cd_open">খুলুন</string>
+    <string name="cd_back">ফিরে যান</string>
+    <string name="password_settings">পাসওয়ার্ড সেটিংস</string>
+    <string name="password_length">দৈর্ঘ্য: %1$d</string>
+    <string name="security_score_percent">%1$d%%</string>
+    <string name="invalid_file_selected">অবৈধ ফাইল নির্বাচিত হয়েছে।</string>
+    <plurals name="password_used_times">
+        <item quantity="one">%1$d বার ব্যবহৃত</item>
+        <item quantity="other">%1$d বার ব্যবহৃত</item>
+    </plurals>
+    <string name="export_success">এনক্রিপ্ট করা ব্যাকআপ সংরক্ষিত হয়েছে।</string>
+    <string name="export_failed">ব্যাকআপ সংরক্ষণ করা যায়নি।</string>
+    <string name="import_summary">%1$d এন্ট্রি ও %2$d বিবরণ আমদানি হয়েছে।</string>
+    <string name="import_wrong_password">ভুল পাসওয়ার্ড, অথবা ফাইলটি ক্ষতিগ্রস্ত।</string>
+    <string name="import_file_too_large">PassKey ব্যাকআপ হিসেবে ফাইলটি অনেক বড়।</string>
+    <string name="import_unsupported_version">এই ব্যাকআপ PassKey-এর নতুন সংস্করণে তৈরি।</string>
+    <string name="backup_password_title">আপনার ব্যাকআপ সুরক্ষিত করুন</string>
+    <string name="backup_password_message">এই ব্যাকআপ ফাইলের জন্য একটি পাসওয়ার্ড বেছে নিন। এটিই পুনরুদ্ধারের একমাত্র উপায়, এবং এটি ফিরে পাওয়া যায় না।</string>
+    <string name="backup_password_hint">ব্যাকআপ পাসওয়ার্ড</string>
+    <string name="backup_password_confirm_hint">পাসওয়ার্ড নিশ্চিত করুন</string>
+    <string name="backup_password_mismatch">পাসওয়ার্ড মিলছে না।</string>
+    <string name="backup_password_too_short">অন্তত ৮টি অক্ষর ব্যবহার করুন।</string>
+    <string name="restore_password_title">ব্যাকআপ পুনরুদ্ধার</string>
+    <string name="restore_password_message">ব্যাকআপ ফাইল তৈরির সময় যে পাসওয়ার্ড বেছেছিলেন তা লিখুন।</string>
+    <string name="backup_confirm">চালিয়ে যান</string>
+    <string name="update_required_title">আপডেট প্রয়োজন</string>
+    <string name="update_required_message">PassKey-এর এই সংস্করণ আর সমর্থিত নয়। আপনার ভল্ট ব্যবহার চালিয়ে যেতে আপডেট করুন।</string>
+    <string name="update_now">এখনই আপডেট করুন</string>
+    <string name="update_ready_message">একটি আপডেট ইনস্টলের জন্য প্রস্তুত।</string>
+    <string name="update_restart">পুনরায় চালু করুন</string>
+    <string name="auto_lock">স্বয়ংক্রিয় লক</string>
+    <string name="auto_lock_immediately">সঙ্গে সঙ্গে</string>
+    <string name="auto_lock_15_seconds">১৫ সেকেন্ড পরে</string>
+    <string name="auto_lock_30_seconds">৩০ সেকেন্ড পরে</string>
+    <string name="auto_lock_1_minute">১ মিনিট পরে</string>
+    <string name="auto_lock_5_minutes">৫ মিনিট পরে</string>
+    <string name="auto_lock_never">কখনও নয়</string>
+    <string name="auto_lock_never_warning">অ্যাপ বন্ধ না করা পর্যন্ত ভল্ট আনলক থাকবে। আপনার আনলক করা ফোন যার হাতে থাকবে সে পাসওয়ার্ড দেখতে পারবে।</string>
+    <string-array name="secret_field_keywords">
+        <item>পাসওয়ার্ড</item>
+        <item>পিন</item>
+        <item>কোড</item>
+        <item>গোপন</item>
+        <item>গুপ্ত</item>
+        <item>চাবি</item>
+        <item>লগইন</item>
+    </string-array>
+    <string name="about_message">PassKey আপনার লগইন, পাসওয়ার্ড এবং অন্যান্য ব্যক্তিগত নোট আপনার ডিভাইসের একটি এনক্রিপ্ট করা ডেটাবেসে সংরক্ষণ করে।\n\nআপনার ভল্ট কখনও ফোন ছেড়ে যায় না। কোনো অ্যাকাউন্ট নেই, সিঙ্ক নেই, PassKey-এর কোনো সার্ভারও নেই: অ্যাপটি নিজে থেকে কোনো নেটওয়ার্ক অনুরোধ করে না এবং আপনার এন্ট্রি কোথাও পাঠানো হয় না।\n\nডেটাবেসটি SQLCipher দিয়ে এনক্রিপ্ট করা এবং আপনার ডিভাইসের বায়োমেট্রিক বা স্ক্রিন লক দিয়ে খোলে। অ্যাপ ছাড়লেই ভল্ট স্বয়ংক্রিয়ভাবে আবার লক হয়, স্ক্রিনশট বন্ধ, এবং কপি করা পাসওয়ার্ড সংবেদনশীল হিসেবে চিহ্নিত হয়ে অল্প পরেই ক্লিপবোর্ড থেকে মুছে যায়।\n\nআপনি এন্ট্রি বিভাগে সাজাতে, টেনে ক্রম বদলাতে, শক্তিশালী পাসওয়ার্ড তৈরি করতে এবং দুর্বল বা পুনরায় ব্যবহৃত পাসওয়ার্ড পরীক্ষা করতে পারেন। ব্যাকআপ একটি ফাইল হিসেবে রপ্তানি হয়, আপনার বাছাই করা পাসওয়ার্ড দিয়ে এনক্রিপ্ট করা, এবং যেকোনো ডিভাইসে পুনরুদ্ধার করা যায়।\n\nPassKey বিনামূল্যে ও ওপেন সোর্স, তৈরি করেছেন Aditya Bhardwaj। সম্পূর্ণ সোর্স কোড GitHub-এ পাওয়া যায়।</string>
+    <string name="privacy_message">আপনার ভল্ট আপনার ডিভাইসেই থাকে।\n\nআমরা যা কখনও সংগ্রহ করি না: PassKey আপনার সংরক্ষিত পাসওয়ার্ড, ব্যবহারকারীর নাম, নোট বা অন্য কোনো এন্ট্রি সংগ্রহ, প্রেরণ বা সঞ্চয় করে না। সেগুলি কেবল আপনার ফোনের এনক্রিপ্ট করা ডেটাবেসে থাকে। আমরা সেগুলি পড়তেও পারি না, আপনার জন্য ফিরিয়ে আনতেও পারি না।\n\nঅ্যাপ যা পাঠায়: PassKey-তে Google Firebase Crashlytics, Analytics ও Performance Monitoring এবং Google Play ইন-অ্যাপ আপডেট অন্তর্ভুক্ত। এগুলি ক্র্যাশ ডায়াগনস্টিক, ব্যবহারের ঘটনা, কর্মক্ষমতার তথ্য এবং বিজ্ঞাপন আইডিসহ ডিভাইস ও ইনস্টলেশন শনাক্তকারী Google-কে পাঠায়। আপনার ভল্টের বিষয়বস্তুতে এদের কখনও প্রবেশাধিকার নেই। এই পরিষেবাগুলির কারণে অ্যাপটির ইন্টারনেট অনুমতি প্রয়োজন, এবং তাদের তথ্য ব্যবস্থাপনা Google-এর গোপনীয়তা নীতি দ্বারা পরিচালিত।\n\nব্যাকআপ: রপ্তানির সময় ফাইলটি আপনার বাছাই করা পাসওয়ার্ড দিয়ে এনক্রিপ্ট হয় এবং আপনি সিস্টেমকে যেখানে বলবেন সেখানে সংরক্ষিত হয়। এরপর সেই ফাইলের দায়িত্ব আপনার; যার কাছে ফাইল ও পাসওয়ার্ড দুটোই থাকবে সে পড়তে পারবে। আমরা কোনো অনুলিপি রাখি না।\n\nডিভাইস ব্যাকআপ: PassKey Android ক্লাউড ব্যাকআপ ও ডিভাইস-টু-ডিভাইস স্থানান্তর থেকে বাদ, তাই আপনার ভল্ট আপনার Google অ্যাকাউন্টে আপলোড হয় না।\n\nপরিবর্তন: এই নীতি হালনাগাদ হতে পারে; গুরুত্বপূর্ণ পরিবর্তন অ্যাপের রিলিজ নোটে জানানো হবে।\n\nপ্রশ্ন: যোগাযোগ করুন <xliff:g id="email" example="name@example.com">yrkkh.cclub@gmail.com</xliff:g>।</string>
+    <string name="terms_n_condition_message">PassKey ব্যবহার করে আপনি নিম্নলিখিত বিষয়ে সম্মত হচ্ছেন।\n\n১. PassKey একটি বিনামূল্যের, ওপেন-সোর্স সফটওয়্যার যা Aditya Bhardwaj তৈরি করেছেন।\n\n২. আপনার ভল্ট কেবল আপনার ডিভাইসে সংরক্ষিত। সার্ভারে কোনো অনুলিপি নেই, তাই ডিভাইস হারালে, অ্যাপ আনইনস্টল করলে বা ব্যাকআপ পাসওয়ার্ড ভুলে গেলে ডেটা ফেরানোর কোনো উপায় নেই।\n\n৩. ব্যাকআপ রাখা আপনার দায়িত্ব। নিয়মিত রপ্তানি করুন এবং ব্যাকআপ পাসওয়ার্ড নিরাপদ ও আলাদা জায়গায় রাখুন।\n\n৪. অ্যাপটি আপনার ডিভাইসের বায়োমেট্রিক বা স্ক্রিন-লক নিরাপত্তার উপর নির্ভরশীল। সেই লক দুর্বল, সরানো বা আপসকৃত হলে PassKey-এর সুরক্ষাও সেই অনুপাতে কমে যায়।\n\n৫. PassKey-তে গোপনীয়তা নীতিতে বর্ণিত Google Firebase ও Google Play পরিষেবা অন্তর্ভুক্ত।\n\n৬. অ্যাপ্লিকেশনটি \"যেমন আছে\" সরবরাহ করা হয়, কোনো প্রকার প্রকাশ্য বা অন্তর্নিহিত ওয়ারেন্টি ছাড়াই, যার মধ্যে বাণিজ্যিক উপযোগিতা ও নির্দিষ্ট উদ্দেশ্যের উপযুক্ততা অন্তর্ভুক্ত।\n\n৭. আইন অনুমোদিত সীমা পর্যন্ত, ডেভেলপার অ্যাপ্লিকেশন ব্যবহারের ফলে উদ্ভূত কোনো ক্ষতির জন্য, তথ্য হারানো সহ, দায়ী নন।\n\n৮. অ্যাপ্লিকেশনটি যেকোনো সময় পরিবর্তন বা বন্ধ করা হতে পারে।</string>
+    <string name="recovery_setup_title">পুনরুদ্ধার পাসওয়ার্ড সেট করুন</string>
+    <string name="recovery_setup_message_new">PassKey আপনার আঙুলের ছাপ বা স্ক্রিন লক দিয়ে খোলে। এই পুনরুদ্ধার পাসওয়ার্ড হলো বিকল্প পথ — আঙুলের ছাপ বদলালে বা ডিভাইস লক সরালে এটি লাগবে। এটি রিসেট করা যায় না, তাই নিরাপদ জায়গায় রাখুন।</string>
+    <string name="recovery_setup_message_upgrade">এই আপডেট আপনার ভল্টকে এই ডিভাইসের জন্য অনন্য একটি কী দিয়ে পুনরায় এনক্রিপ্ট করে। আগে একটি পুনরুদ্ধার পাসওয়ার্ড সেট করুন: আঙুলের ছাপ বদলালে বা ডিভাইস লক সরালে এটিই একমাত্র উপায়। এটি রিসেট করা যায় না, তাই নিরাপদে রাখুন।</string>
+    <string name="recovery_unlock_title">আপনার পুনরুদ্ধার পাসওয়ার্ড দিন</string>
+    <string name="recovery_unlock_message">আপনার ডিভাইসের বায়োমেট্রিক বা স্ক্রিন লক বদলে গেছে, তাই ভল্ট খুলতে PassKey-এর পুনরুদ্ধার পাসওয়ার্ড দরকার।</string>
+    <string name="recovery_unlock_wrong">এই পাসওয়ার্ড কাজ করেনি। আবার চেষ্টা করুন।</string>
+    <string name="migration_title">আপনার ভল্ট সুরক্ষিত করা হচ্ছে</string>
+    <string name="migration_message">আপনার এন্ট্রিগুলি এই ডিভাইসের অনন্য কী দিয়ে পুনরায় এনক্রিপ্ট করা হচ্ছে। অ্যাপটি খোলা রাখুন।</string>
+    <string name="migration_failed_title">ভল্ট সুরক্ষিত করা শেষ করা যায়নি</string>
+    <string name="migration_failed_message">কিছুই হারায়নি এবং আপনার এন্ট্রি অক্ষত আছে। আবার চেষ্টা করুন, বা পরে অ্যাপ খুলুন।</string>
+    <string name="migration_failed_message_can_export">কিছুই হারায়নি — আপনার ভল্ট অক্ষত ও পঠনযোগ্য। আবার চেষ্টা করুন, বা আগে সেটিংস থেকে ব্যাকআপ নিন।</string>
+    <string name="migration_retry">আবার চেষ্টা করুন</string>
+    <string name="device_lock_required_title">ডিভাইস লক প্রয়োজন</string>
+    <string name="device_lock_required_message">PassKey আপনার ভল্ট ডিভাইসের স্ক্রিন লক দিয়ে সুরক্ষিত রাখে। চালিয়ে যেতে পিন, প্যাটার্ন, পাসওয়ার্ড বা বায়োমেট্রিক সেট করুন।</string>
+    <string name="device_lock_open_settings">সেটিংস খুলুন</string>
+    <string name="change_recovery_password">পুনরুদ্ধার পাসওয়ার্ড বদলান</string>
+    <string name="recovery_change_current_title">বর্তমান পাসওয়ার্ড নিশ্চিত করুন</string>
+    <string name="recovery_change_current_message">আপনিই যে তা প্রমাণ করতে বর্তমান পুনরুদ্ধার পাসওয়ার্ড দিন।</string>
+    <string name="recovery_change_new_title">নতুন পুনরুদ্ধার পাসওয়ার্ড বাছুন</string>
+    <string name="recovery_change_new_message">এটি আপনার পুরনো পুনরুদ্ধার পাসওয়ার্ড প্রতিস্থাপন করে। এটি রিসেট করা যায় না, তাই নিরাপদে রাখুন।</string>
+    <string name="recovery_change_done">পুনরুদ্ধার পাসওয়ার্ড বদলানো হয়েছে।</string>
+    <string name="recovery_change_failed">পাসওয়ার্ডটি সঠিক ছিল না।</string>
+    <string name="migration_export_first">আগে ব্যাকআপ নিন</string>
+    <string name="migration_export_now">এখনই আমার ভল্ট রপ্তানি করুন</string>
 </resources>

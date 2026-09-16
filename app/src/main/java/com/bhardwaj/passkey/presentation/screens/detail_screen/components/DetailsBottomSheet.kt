@@ -22,6 +22,8 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.ui.window.SecureFlagPolicy
+import androidx.compose.material3.ModalBottomSheetProperties
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
@@ -57,6 +59,9 @@ fun DetailsBottomSheet(
 ) {
     val sheetState = rememberModalBottomSheetState()
     ModalBottomSheet(
+        properties = ModalBottomSheetProperties(
+            securePolicy = SecureFlagPolicy.SecureOn
+        ),
         sheetState = sheetState,
         onDismissRequest = { onDismiss() },
         dragHandle = {},
@@ -131,7 +136,7 @@ fun DetailsBottomSheet(
                     ) {
                         Icon(
                             imageVector = Icons.Default.Key,
-                            contentDescription = "Refresh",
+                            contentDescription = stringResource(R.string.cd_generate_password),
                             tint = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                     }
@@ -148,7 +153,7 @@ fun DetailsBottomSheet(
                     ) {
                         Icon(
                             imageVector = Icons.Default.Settings,
-                            contentDescription = "Settings",
+                            contentDescription = stringResource(R.string.cd_password_options),
                             tint = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                     }

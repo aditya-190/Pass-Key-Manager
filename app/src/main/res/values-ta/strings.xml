@@ -1,5 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="no_previews_found">இன்னும் உள்ளீடுகள் இல்லை</string>
+    <string name="no_details_found">இன்னும் விவரங்கள் இல்லை</string>
+    <!--    Splash Screen    -->
+    <string name="app_version">ஆப் பதிப்பு <xliff:g id="version" example="5.5.1">%1$s</xliff:g></string>
+    <string name="app_description">உங்களுக்குத் தேவையான ஒரே கடவுச்சொல் மேலாளர்</string>
+
+    <!--    OnBoarding Screens    -->
+    <!--    Keep the 
+ line breaks and the [[ ]] highlight markers.    -->
+    <string name="skip">தவிர்</string>
+    <string name="next">அடுத்து</string>
+    <string name="first_heading">[[பாதுகாப்பான]]\nகடவுச்சொற்களை\nஉருவாக்கு.</string>
+    <string name="second_heading">உங்கள் அனைத்து\n[[கடவுச்சொற்களும்]]\nஇங்கே.</string>
+    <string name="third_heading">தட்டச்சு வேண்டாம்,\nதகவலை\n[[தானாக நிரப்பு]].</string>
+    <string name="first_description">உங்கள் ஆன்லைன் கணக்குகளுக்குப் பாதுகாப்பற்ற கடவுச்சொற்களைப் பயன்படுத்துவதை நிறுத்துங்கள், PassKey உடன் முன்னேறுங்கள். மிகவும் பாதுகாப்பான, உடைக்கக் கடினமான கடவுச்சொற்களைப் பெறுங்கள்.</string>
+    <string name="second_description">உங்கள் அனைத்துக் கடவுச்சொற்களையும் ஒரே இடத்தில் சேமித்து நிர்வகியுங்கள். நூற்றுக்கணக்கானவை அல்ல, ஒன்றை மட்டும் நினைவில் வையுங்கள்.</string>
+    <string name="third_description">பொது இடத்தில் தட்டச்சு செய்து உங்கள் கடவுச்சொற்களை ஆபத்தில் ஆழ்த்த வேண்டாம், PassKey அவற்றைத் தானாக நிரப்பி உங்கள் தகவலைப் பாதுகாக்கட்டும்.</string>
+
     <!--    Main Screens    -->
     <string name="banks">வங்கிகள்</string>
     <string name="mails">மின்னஞ்சல்கள்</string>
@@ -10,7 +28,6 @@
     <string name="search">தேடு</string>
     <string name="title">தலைப்பு</string>
     <string name="response">பதில்</string>
-    <string name="export_download">கோப்பு பதிவிறக்கம் செய்யப்பட்டது.</string>
     <string name="rate_app">விமர்சனம் அளியுங்கள்</string>
     <string name="change_language">மொழியை மாற்று</string>
     <string name="privacy">தனியுரிமை</string>
@@ -20,7 +37,6 @@
     <string name="export_data">தரவு ஏற்றுமதி</string>
 
     <!--    Edit Text Hints    -->
-    <string name="type_here">இங்கே தட்டச்சு செய்யவும்…</string>
     <string name="type_your_title_here">உங்கள் தலைப்பு இங்கே தட்டச்சு செய்யவும்…</string>
     <string name="type_your_response_here">உங்கள் பதில் இங்கே தட்டச்சு செய்யவும்…</string>
     <string name="type_your_heading_here">உங்கள் தலைப்பு இங்கே தட்டச்சு செய்யவும்…</string>
@@ -35,12 +51,7 @@
 
     <!--    Authentication Screen    -->
     <string name="welcome_to_pass_key">பாஸ்கீ மேனேஜருக்கு வரவேற்கிறோம்</string>
-    <string name="authentication_failed">அங்கீகாரம் தோல்வியடைந்தது.</string>
     <string name="something_went_wrong">எதாவது தவறு நடந்தது..</string>
-    <string name="set_password">தயவுசெய்து முதலில் உங்கள் சான்றுகளுக்கு கடவுச்சொல் அமைக்கவும்.</string>
-    <string name="permission_required">தரவுத்தள ஏற்றுமதி செய்யும் கடன் பெற சேமிக்கும் அணுகல் தேவைப்படுகிறது.</string>
-    <string name="permission_denied">அனுமதி நிராகரிக்கப்பட்டது</string>
-    <string name="ok">சரி</string>
 
     <!--    Dialogs and Requests    -->
     <string name="change">மாற்று</string>
@@ -62,15 +73,92 @@
     <!-- Password Health Report -->
     <string name="analyze_passwords">பாதுகாப்பு நிலை</string>
     <string name="security_analysis">பாதுகாப்பு பகுப்பாய்வு</string>
-    <string name="security_score">பாதுகாப்பு மதிப்பெண்</string>
     <string name="weak_passwords">பலவீனமான கடவுச்சொற்கள்</string>
     <string name="reused_passwords">மீண்டும் பயன்படுத்தப்பட்ட கடவுச்சொற்கள்</string>
-    <string name="safe_passwords">பாதுகாப்பான கடவுச்சொற்கள்</string>
     <string name="excellent">சிறந்தது</string>
     <string name="needs_attention">கவனம் தேவை</string>
     <string name="critical">மிக முக்கியம்</string>
-    <string name="found_weak">%1$d பலவீனமான கடவுச்சொற்கள் கண்டறியப்பட்டன</string>
-    <string name="found_reused">%1$d மீண்டும் பயன்படுத்தப்பட்ட கடவுச்சொற்கள் கண்டறியப்பட்டன</string>
-    <string name="used_times">%1$d முறை பயன்படுத்தப்பட்டது</string>
     <string name="no_issues">எந்த பிரச்சனையும் இல்லை. நன்று!</string>
+    <string name="cd_drag_handle">மறுவரிசைப்படுத்து</string>
+    <string name="cd_edit">திருத்து</string>
+    <string name="cd_delete">நீக்கு</string>
+    <string name="cd_add_detail">விவரம் சேர்</string>
+    <string name="cd_add_entry">உள்ளீடு சேர்</string>
+    <string name="cd_settings">அமைப்புகள்</string>
+    <string name="cd_generate_password">கடவுச்சொல் உருவாக்கு</string>
+    <string name="cd_password_options">கடவுச்சொல் விருப்பங்கள்</string>
+    <string name="cd_clear_search">தேடலை அழி</string>
+    <string name="cd_open">திற</string>
+    <string name="cd_back">பின்செல்</string>
+    <string name="password_settings">கடவுச்சொல் அமைப்புகள்</string>
+    <string name="password_length">நீளம்: %1$d</string>
+    <string name="security_score_percent">%1$d%%</string>
+    <string name="invalid_file_selected">தவறான கோப்பு தேர்ந்தெடுக்கப்பட்டது.</string>
+    <plurals name="password_used_times">
+        <item quantity="one">%1$d முறை பயன்படுத்தப்பட்டது</item>
+        <item quantity="other">%1$d முறை பயன்படுத்தப்பட்டது</item>
+    </plurals>
+    <string name="export_success">மறையாக்கப்பட்ட காப்புப்பிரதி சேமிக்கப்பட்டது.</string>
+    <string name="export_failed">காப்புப்பிரதியைச் சேமிக்க முடியவில்லை.</string>
+    <string name="import_summary">%1$d உள்ளீடுகளும் %2$d விவரங்களும் இறக்குமதி ஆனது.</string>
+    <string name="import_wrong_password">தவறான கடவுச்சொல், அல்லது கோப்பு சேதமடைந்துள்ளது.</string>
+    <string name="import_file_too_large">இந்தக் கோப்பு PassKey காப்புப்பிரதிக்கு மிகப் பெரியது.</string>
+    <string name="import_unsupported_version">இந்தக் காப்புப்பிரதி PassKey இன் புதிய பதிப்பில் உருவாக்கப்பட்டது.</string>
+    <string name="backup_password_title">உங்கள் காப்புப்பிரதியைப் பாதுகாக்கவும்</string>
+    <string name="backup_password_message">இந்தக் கோப்பிற்கு ஒரு கடவுச்சொல்லைத் தேர்வுசெய்யுங்கள். மீட்டெடுக்க இதுவே ஒரே வழி, இதை மீண்டும் பெற முடியாது.</string>
+    <string name="backup_password_hint">காப்புப்பிரதி கடவுச்சொல்</string>
+    <string name="backup_password_confirm_hint">கடவுச்சொல்லை உறுதிப்படுத்து</string>
+    <string name="backup_password_mismatch">கடவுச்சொற்கள் பொருந்தவில்லை.</string>
+    <string name="backup_password_too_short">குறைந்தது 8 எழுத்துகளைப் பயன்படுத்தவும்.</string>
+    <string name="restore_password_title">காப்புப்பிரதியை மீட்டெடு</string>
+    <string name="restore_password_message">இந்தக் கோப்பை உருவாக்கியபோது தேர்ந்தெடுத்த கடவுச்சொல்லை உள்ளிடவும்.</string>
+    <string name="backup_confirm">தொடர்க</string>
+    <string name="update_required_title">புதுப்பிப்பு தேவை</string>
+    <string name="update_required_message">PassKey இன் இந்தப் பதிப்பு இனி ஆதரிக்கப்படாது. உங்கள் பெட்டகத்தைத் தொடர்ந்து பயன்படுத்த புதுப்பிக்கவும்.</string>
+    <string name="update_now">இப்போது புதுப்பி</string>
+    <string name="update_ready_message">ஒரு புதுப்பிப்பு நிறுவத் தயாராக உள்ளது.</string>
+    <string name="update_restart">மீண்டும் தொடங்கு</string>
+    <string name="auto_lock">தானியங்கு பூட்டு</string>
+    <string name="auto_lock_immediately">உடனடியாக</string>
+    <string name="auto_lock_15_seconds">15 வினாடிகளுக்குப் பிறகு</string>
+    <string name="auto_lock_30_seconds">30 வினாடிகளுக்குப் பிறகு</string>
+    <string name="auto_lock_1_minute">1 நிமிடத்திற்குப் பிறகு</string>
+    <string name="auto_lock_5_minutes">5 நிமிடங்களுக்குப் பிறகு</string>
+    <string name="auto_lock_never">ஒருபோதும் இல்லை</string>
+    <string name="auto_lock_never_warning">ஆப்ஸை மூடும் வரை பெட்டகம் திறந்தே இருக்கும். உங்கள் திறந்த ஃபோன் யாரிடம் இருந்தாலும் கடவுச்சொற்களைப் படிக்க முடியும்.</string>
+    <string-array name="secret_field_keywords">
+        <item>கடவுச்சொல்</item>
+        <item>பின்</item>
+        <item>குறியீடு</item>
+        <item>ரகசியம்</item>
+        <item>சாவி</item>
+        <item>உள்நுழைவு</item>
+    </string-array>
+    <string name="about_message">PassKey உங்கள் உள்நுழைவுத் தகவல்கள், கடவுச்சொற்கள் மற்றும் பிற தனிப்பட்ட குறிப்புகளை உங்கள் சாதனத்தில் உள்ள மறையாக்கப்பட்ட தரவுத்தளத்தில் சேமிக்கிறது.\n\nஉங்கள் பெட்டகம் ஒருபோதும் தொலைபேசியை விட்டு வெளியே செல்வதில்லை. கணக்கு இல்லை, ஒத்திசைவு இல்லை, PassKey சேவையகமும் இல்லை: ஆப்ஸ் தானாக எந்த நெட்வொர்க் கோரிக்கையும் செய்வதில்லை, உங்கள் பதிவுகள் எங்கும் அனுப்பப்படுவதில்லை.\n\nதரவுத்தளம் SQLCipher மூலம் மறையாக்கப்பட்டு, உங்கள் சாதனத்தின் உயிரியல் அல்லது திரைப் பூட்டால் திறக்கப்படுகிறது. ஆப்ஸை விட்டு வெளியேறியதும் பெட்டகம் தானாகவே மீண்டும் பூட்டப்படும், திரைப்பிடிப்புகள் தடுக்கப்படுகின்றன, நகலெடுத்த கடவுச்சொற்கள் முக்கியமானவை எனக் குறிக்கப்பட்டு சிறிது நேரத்தில் இடைநிலைப் பலகையிலிருந்து அழிக்கப்படுகின்றன.\n\nபதிவுகளை வகைகளாக ஒழுங்குபடுத்தலாம், இழுத்து வரிசை மாற்றலாம், வலுவான கடவுச்சொற்களை உருவாக்கலாம், பலவீனமான அல்லது மீண்டும் பயன்படுத்திய கடவுச்சொற்களைச் சரிபார்க்கலாம். காப்புப்பிரதிகள் நீங்கள் தேர்ந்தெடுத்த கடவுச்சொல்லால் மறையாக்கப்பட்ட ஒற்றைக் கோப்பாக ஏற்றுமதி செய்யப்பட்டு எந்தச் சாதனத்திலும் மீட்டெடுக்கப்படலாம்.\n\nPassKey இலவசமானது, திறந்த மூலமானது, Aditya Bhardwaj உருவாக்கியது. முழு மூலக் குறியீடும் GitHub இல் கிடைக்கிறது.</string>
+    <string name="privacy_message">உங்கள் பெட்டகம் உங்கள் சாதனத்திலேயே இருக்கும்.\n\nநாங்கள் ஒருபோதும் சேகரிக்காதவை: நீங்கள் சேமிக்கும் கடவுச்சொற்கள், பயனர்பெயர்கள், குறிப்புகள் அல்லது பிற எந்தப் பதிவையும் PassKey சேகரிக்கவோ, அனுப்பவோ, சேமிக்கவோ இல்லை. அவை உங்கள் தொலைபேசியில் உள்ள மறையாக்கப்பட்ட தரவுத்தளத்தில் மட்டுமே இருக்கும். அவற்றை எங்களால் படிக்கவும் முடியாது, உங்களுக்காக மீட்டெடுக்கவும் முடியாது.\n\nஆப்ஸ் அனுப்புபவை: PassKey இல் Google Firebase Crashlytics, Analytics, Performance Monitoring மற்றும் Google Play ஆப்ஸ்-உள் புதுப்பிப்புகள் உள்ளன. இவை செயலிழப்பு நோயறிதல், பயன்பாட்டு நிகழ்வுகள், செயல்திறன் தரவு, விளம்பர ID உள்ளிட்ட சாதன மற்றும் நிறுவல் அடையாளங்காட்டிகளை Google க்கு அனுப்புகின்றன. உங்கள் பெட்டக உள்ளடக்கத்திற்கு இவற்றுக்கு ஒருபோதும் அணுகல் இல்லை. இச்சேவைகளால் ஆப்ஸுக்கு இணைய அனுமதி தேவை, அவற்றின் தரவு கையாளுதல் Google இன் தனியுரிமைக் கொள்கையின் கீழ் வருகிறது.\n\nகாப்புப்பிரதிகள்: ஏற்றுமதி செய்யும்போது கோப்பு நீங்கள் தேர்ந்தெடுத்த கடவுச்சொல்லால் மறையாக்கப்பட்டு, நீங்கள் கணினியிடம் குறிப்பிட்ட இடத்தில் சேமிக்கப்படும். அதன் பிறகு அக்கோப்பு உங்கள் பொறுப்பு; கோப்பையும் கடவுச்சொல்லையும் பெறுபவர் அதைப் படிக்க முடியும். நாங்கள் நகல் வைத்திருப்பதில்லை.\n\nசாதனக் காப்புப்பிரதி: PassKey Android கிளவுட் காப்புப்பிரதி மற்றும் சாதனங்களுக்கிடையேயான இடமாற்றத்திலிருந்து விலக்கப்பட்டுள்ளது, எனவே உங்கள் பெட்டகம் உங்கள் Google கணக்கிற்குப் பதிவேற்றப்படுவதில்லை.\n\nமாற்றங்கள்: இக்கொள்கை புதுப்பிக்கப்படலாம்; முக்கிய மாற்றங்கள் ஆப்ஸின் வெளியீட்டுக் குறிப்புகளில் தெரிவிக்கப்படும்.\n\nகேள்விகள்: தொடர்பு <xliff:g id="email" example="name@example.com">yrkkh.cclub@gmail.com</xliff:g>.</string>
+    <string name="terms_n_condition_message">PassKey ஐப் பயன்படுத்துவதன் மூலம் பின்வருவனவற்றை ஏற்கிறீர்கள்.\n\n1. PassKey என்பது Aditya Bhardwaj உருவாக்கிய இலவச, திறந்த மூல மென்பொருள்.\n\n2. உங்கள் பெட்டகம் உங்கள் சாதனத்தில் மட்டுமே சேமிக்கப்படுகிறது. சேவையகத்தில் நகல் இல்லை, எனவே சாதனத்தை இழந்தால், ஆப்ஸை நீக்கினால் அல்லது காப்புப்பிரதி கடவுச்சொல்லை மறந்தால் தரவை மீட்க வழி இல்லை.\n\n3. காப்புப்பிரதிகளை வைத்திருப்பது உங்கள் பொறுப்பு. அவற்றை வழக்கமாக ஏற்றுமதி செய்து, காப்புப்பிரதி கடவுச்சொல்லைப் பாதுகாப்பான, தனித்த இடத்தில் வைக்கவும்.\n\n4. ஆப்ஸ் உங்கள் சாதனத்தின் உயிரியல் அல்லது திரைப் பூட்டுப் பாதுகாப்பை நம்பியுள்ளது. அப்பூட்டு பலவீனமாக, அகற்றப்பட்டதாக அல்லது சமரசம் செய்யப்பட்டதாக இருந்தால், PassKey அளிக்கும் பாதுகாப்பும் அதற்கேற்ப குறையும்.\n\n5. PassKey இல் தனியுரிமைக் கொள்கையில் விவரிக்கப்பட்ட Google Firebase மற்றும் Google Play சேவைகள் உள்ளன.\n\n6. இப்பயன்பாடு \"உள்ளபடி\" வழங்கப்படுகிறது, வணிகத்தகுதி மற்றும் குறிப்பிட்ட நோக்கத்திற்கான உகந்ததன்மை உட்பட, வெளிப்படையான அல்லது மறைமுகமான எந்த உத்தரவாதமும் இன்றி.\n\n7. சட்டம் அனுமதிக்கும் அளவில், பயன்பாட்டின் பயன்பாட்டால் ஏற்படும் எந்த சேதத்திற்கும், தரவு இழப்பு உட்பட, உருவாக்குநர் பொறுப்பல்ல.\n\n8. பயன்பாடு எந்த நேரத்திலும் மாற்றப்படலாம் அல்லது நிறுத்தப்படலாம்.</string>
+    <string name="recovery_setup_title">மீட்பு கடவுச்சொல்லை அமைக்கவும்</string>
+    <string name="recovery_setup_message_new">PassKey உங்கள் கைரேகை அல்லது திரைப் பூட்டால் திறக்கிறது. இந்த மீட்பு கடவுச்சொல் மாற்று வழி — கைரேகைகளை மாற்றினாலோ சாதனப் பூட்டை நீக்கினாலோ இது தேவைப்படும். இதை மீட்டமைக்க முடியாது, பாதுகாப்பான இடத்தில் வைக்கவும்.</string>
+    <string name="recovery_setup_message_upgrade">இந்தப் புதுப்பிப்பு உங்கள் பெட்டகத்தை இந்தச் சாதனத்திற்கே உரிய சாவியால் மீண்டும் மறையாக்குகிறது. முதலில் மீட்பு கடவுச்சொல்லை அமைக்கவும்: கைரேகைகளை மாற்றினால் அல்லது பூட்டை நீக்கினால் இதுவே ஒரே வழி. இதை மீட்டமைக்க முடியாது.</string>
+    <string name="recovery_unlock_title">உங்கள் மீட்பு கடவுச்சொல்லை உள்ளிடவும்</string>
+    <string name="recovery_unlock_message">உங்கள் சாதனத்தின் உயிரியல் அல்லது திரைப் பூட்டு மாறியுள்ளது, எனவே பெட்டகத்தைத் திறக்க PassKey க்கு மீட்பு கடவுச்சொல் தேவை.</string>
+    <string name="recovery_unlock_wrong">அந்தக் கடவுச்சொல் வேலை செய்யவில்லை. மீண்டும் முயலவும்.</string>
+    <string name="migration_title">உங்கள் பெட்டகம் பாதுகாக்கப்படுகிறது</string>
+    <string name="migration_message">உங்கள் பதிவுகள் இந்தச் சாதனத்திற்கே உரிய சாவியால் மீண்டும் மறையாக்கப்படுகின்றன. ஆப்ஸைத் திறந்தே வைக்கவும்.</string>
+    <string name="migration_failed_title">பெட்டகப் பாதுகாப்பை முடிக்க முடியவில்லை</string>
+    <string name="migration_failed_message">எதுவும் இழக்கப்படவில்லை, உங்கள் பதிவுகள் அப்படியே உள்ளன. மீண்டும் முயலவும், அல்லது பின்னர் ஆப்ஸைத் திறக்கவும்.</string>
+    <string name="migration_failed_message_can_export">எதுவும் இழக்கப்படவில்லை — உங்கள் பெட்டகம் பாதுகாப்பாகவும் படிக்கக்கூடியதாகவும் உள்ளது. மீண்டும் முயலவும், அல்லது அமைப்புகளிலிருந்து முதலில் காப்புப்பிரதி எடுக்கவும்.</string>
+    <string name="migration_retry">மீண்டும் முயலவும்</string>
+    <string name="device_lock_required_title">சாதனப் பூட்டு தேவை</string>
+    <string name="device_lock_required_message">PassKey உங்கள் பெட்டகத்தை சாதனத்தின் திரைப் பூட்டால் பாதுகாக்கிறது. தொடர பின், வடிவம், கடவுச்சொல் அல்லது உயிரியல் அடையாளத்தை அமைக்கவும்.</string>
+    <string name="device_lock_open_settings">அமைப்புகளைத் திற</string>
+    <string name="change_recovery_password">மீட்பு கடவுச்சொல்லை மாற்று</string>
+    <string name="recovery_change_current_title">தற்போதைய கடவுச்சொல்லை உறுதிப்படுத்து</string>
+    <string name="recovery_change_current_message">நீங்கள்தான் என்பதை நிரூபிக்க தற்போதைய மீட்பு கடவுச்சொல்லை உள்ளிடவும்.</string>
+    <string name="recovery_change_new_title">புதிய மீட்பு கடவுச்சொல்லைத் தேர்ந்தெடு</string>
+    <string name="recovery_change_new_message">இது உங்கள் பழைய மீட்பு கடவுச்சொல்லை மாற்றும். இதை மீட்டமைக்க முடியாது, பாதுகாப்பாக வைக்கவும்.</string>
+    <string name="recovery_change_done">மீட்பு கடவுச்சொல் மாற்றப்பட்டது.</string>
+    <string name="recovery_change_failed">அந்தக் கடவுச்சொல் சரியில்லை.</string>
+    <string name="migration_export_first">முதலில் காப்புப்பிரதி எடு</string>
+    <string name="migration_export_now">என் பெட்டகத்தை இப்போது ஏற்றுமதி செய்</string>
 </resources>

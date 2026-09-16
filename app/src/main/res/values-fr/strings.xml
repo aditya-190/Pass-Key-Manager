@@ -1,5 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="no_previews_found">Aucune entrée pour l\'instant</string>
+    <string name="no_details_found">Aucun détail pour l\'instant</string>
+    <!--    Splash Screen    -->
+    <string name="app_version">Version de l\'application <xliff:g id="version" example="5.5.1">%1$s</xliff:g></string>
+    <string name="app_description">Le seul gestionnaire de mots de passe dont vous aurez besoin</string>
+
+    <!--    OnBoarding Screens    -->
+    <!--    Keep the 
+ line breaks and the [[ ]] highlight markers.    -->
+    <string name="skip">Passer</string>
+    <string name="next">Suivant</string>
+    <string name="first_heading">Créez des\nmots de passe\n[[sécurisés]].</string>
+    <string name="second_heading">Tous vos\n[[mots de passe]]\nsont ici.</string>
+    <string name="third_heading">Ne tapez plus,\n[[remplissez]]\nautomatiquement.</string>
+    <string name="first_description">Arrêtez d\'utiliser des mots de passe peu sûrs pour vos comptes en ligne, passez à PassKey. Obtenez des mots de passe très sécurisés et difficiles à craquer.</string>
+    <string name="second_description">Stockez et gérez tous vos mots de passe au même endroit. Ne retenez pas des centaines de mots de passe, un seul suffit.</string>
+    <string name="third_description">Ne compromettez pas vos mots de passe en les saisissant en public : laissez PassKey les remplir automatiquement et garder vos identifiants en sécurité.</string>
+
     <!--    Main Screens    -->
     <string name="banks">Banques</string>
     <string name="mails">Courriels</string>
@@ -10,7 +28,6 @@
     <string name="search">Rechercher</string>
     <string name="title">Titre</string>
     <string name="response">Réponse</string>
-    <string name="export_download">Fichier exporté dans le dossier Téléchargements.</string>
     <string name="rate_app">Noter l\'application</string>
     <string name="change_language">Changer de langue</string>
     <string name="privacy">Confidentialité</string>
@@ -20,7 +37,6 @@
     <string name="export_data">Exporter les données</string>
 
     <!--    Edit Text Hints    -->
-    <string name="type_here">Tapez ici…</string>
     <string name="type_your_title_here">Tapez votre titre ici…</string>
     <string name="type_your_response_here">Tapez votre réponse ici…</string>
     <string name="type_your_heading_here">Tapez votre en-tête ici…</string>
@@ -35,12 +51,7 @@
 
     <!--    Authentication Screen    -->
     <string name="welcome_to_pass_key">Bienvenue dans PassKey Manager</string>
-    <string name="authentication_failed">Échec de l\'authentification.</string>
     <string name="something_went_wrong">Quelque chose s\'est mal passé..</string>
-    <string name="set_password">Veuillez définir un mot de passe pour votre appareil d\'abord.</string>
-    <string name="permission_required">L\'accès au stockage est requis pour exporter la base de données.</string>
-    <string name="permission_denied">Autorisation refusée</string>
-    <string name="ok">OK</string>
 
     <!--    Dialogs and Requests    -->
     <string name="change">Changer</string>
@@ -62,15 +73,94 @@
     <!-- Password Health Report -->
     <string name="analyze_passwords">État de sécurité</string>
     <string name="security_analysis">Analyse de sécurité</string>
-    <string name="security_score">Score de sécurité</string>
     <string name="weak_passwords">Mots de passe faibles</string>
     <string name="reused_passwords">Mots de passe réutilisés</string>
-    <string name="safe_passwords">Mots de passe sûrs</string>
     <string name="excellent">Excellent</string>
     <string name="needs_attention">Nécessite une attention</string>
     <string name="critical">Critique</string>
-    <string name="found_weak">%1$d mots de passe faibles trouvés</string>
-    <string name="found_reused">%1$d mots de passe réutilisés trouvés</string>
-    <string name="used_times">Utilisé %1$d fois</string>
     <string name="no_issues">Aucun problème trouvé. Bien joué !</string>
+    <string name="cd_drag_handle">Réorganiser</string>
+    <string name="cd_edit">Modifier</string>
+    <string name="cd_delete">Supprimer</string>
+    <string name="cd_add_detail">Ajouter un détail</string>
+    <string name="cd_add_entry">Ajouter une entrée</string>
+    <string name="cd_settings">Paramètres</string>
+    <string name="cd_generate_password">Générer un mot de passe</string>
+    <string name="cd_password_options">Options du mot de passe</string>
+    <string name="cd_clear_search">Effacer la recherche</string>
+    <string name="cd_open">Ouvrir</string>
+    <string name="cd_back">Retour</string>
+    <string name="password_settings">Paramètres du mot de passe</string>
+    <string name="password_length">Longueur : %1$d</string>
+    <string name="security_score_percent">%1$d %%</string>
+    <string name="invalid_file_selected">Fichier sélectionné non valide.</string>
+    <plurals name="password_used_times">
+        <item quantity="one">Utilisé %1$d fois</item>
+        <item quantity="many">Utilisé %1$d fois</item>
+        <item quantity="other">Utilisé %1$d fois</item>
+    </plurals>
+    <string name="export_success">Sauvegarde chiffrée enregistrée.</string>
+    <string name="export_failed">Impossible d\'enregistrer la sauvegarde.</string>
+    <string name="import_summary">%1$d entrées et %2$d détails importés.</string>
+    <string name="import_wrong_password">Mot de passe incorrect ou fichier endommagé.</string>
+    <string name="import_file_too_large">Ce fichier est trop volumineux pour une sauvegarde PassKey.</string>
+    <string name="import_unsupported_version">Cette sauvegarde provient d\'une version plus récente de PassKey.</string>
+    <string name="backup_password_title">Protégez votre sauvegarde</string>
+    <string name="backup_password_message">Choisissez un mot de passe pour ce fichier. C\'est le seul moyen de le restaurer et il ne peut pas être récupéré.</string>
+    <string name="backup_password_hint">Mot de passe de sauvegarde</string>
+    <string name="backup_password_confirm_hint">Confirmer le mot de passe</string>
+    <string name="backup_password_mismatch">Les mots de passe ne correspondent pas.</string>
+    <string name="backup_password_too_short">Utilisez au moins 8 caractères.</string>
+    <string name="restore_password_title">Restaurer la sauvegarde</string>
+    <string name="restore_password_message">Saisissez le mot de passe choisi lors de la création de ce fichier.</string>
+    <string name="backup_confirm">Continuer</string>
+    <string name="update_required_title">Mise à jour requise</string>
+    <string name="update_required_message">Cette version de PassKey n\'est plus prise en charge. Mettez à jour pour continuer à utiliser votre coffre.</string>
+    <string name="update_now">Mettre à jour</string>
+    <string name="update_ready_message">Une mise à jour est prête à être installée.</string>
+    <string name="update_restart">Redémarrer</string>
+    <string name="auto_lock">Verrouillage auto</string>
+    <string name="auto_lock_immediately">Immédiatement</string>
+    <string name="auto_lock_15_seconds">Après 15 secondes</string>
+    <string name="auto_lock_30_seconds">Après 30 secondes</string>
+    <string name="auto_lock_1_minute">Après 1 minute</string>
+    <string name="auto_lock_5_minutes">Après 5 minutes</string>
+    <string name="auto_lock_never">Jamais</string>
+    <string name="auto_lock_never_warning">Le coffre restera déverrouillé jusqu\'à la fermeture de l\'application. Toute personne ayant votre téléphone déverrouillé pourra lire vos mots de passe.</string>
+    <string-array name="secret_field_keywords">
+        <item>mot de passe</item>
+        <item>code</item>
+        <item>pin</item>
+        <item>secret</item>
+        <item>clé</item>
+        <item>identifiant</item>
+        <item>connexion</item>
+    </string-array>
+    <string name="about_message">PassKey enregistre vos identifiants, mots de passe et autres notes privées dans une base de données chiffrée sur votre appareil.\n\nVotre coffre ne quitte jamais votre téléphone. Il n\'y a ni compte, ni synchronisation, ni serveur PassKey : l\'application n\'effectue aucune requête réseau de son propre fait et vos entrées ne sont transmises nulle part.\n\nLa base de données est chiffrée avec SQLCipher et déverrouillée par la biométrie ou le verrouillage d\'écran de votre appareil. Le coffre se reverrouille automatiquement lorsque vous quittez l\'application, les captures d\'écran sont bloquées, et les mots de passe copiés sont marqués comme sensibles puis effacés du presse-papiers peu après.\n\nVous pouvez classer vos entrées par catégories, les réorganiser par glissement, générer des mots de passe robustes et vérifier votre coffre à la recherche de mots de passe faibles ou réutilisés. Les sauvegardes sont exportées sous forme d\'un fichier unique chiffré avec un mot de passe de votre choix, restaurable sur n\'importe quel appareil.\n\nPassKey est gratuite et open source, développée par Aditya Bhardwaj. Le code source complet est disponible sur GitHub.</string>
+    <string name="privacy_message">Votre coffre reste sur votre appareil.\n\nCe que nous ne collectons jamais : PassKey ne collecte, ne transmet et ne stocke aucun des mots de passe, identifiants, notes ou autres entrées que vous enregistrez. Ils n\'existent que dans une base de données chiffrée sur votre téléphone. Nous ne pouvons ni les lire, ni les récupérer pour vous.\n\nCe que l\'application envoie : PassKey intègre Google Firebase Crashlytics, Analytics et Performance Monitoring, ainsi que les mises à jour intégrées de Google Play. Ces services envoient à Google des diagnostics de plantage, des événements d\'utilisation, des traces de performance et des identifiants d\'appareil et d\'installation, dont un identifiant publicitaire. Ils n\'ont jamais accès au contenu de votre coffre. En raison de ces services, l\'application requiert l\'autorisation d\'accès à Internet, et leur traitement des données relève de la politique de confidentialité de Google.\n\nSauvegardes : lorsque vous exportez une sauvegarde, le fichier est chiffré avec un mot de passe de votre choix et enregistré à l\'emplacement que vous indiquez au système. Ce fichier relève ensuite de votre responsabilité ; quiconque obtient à la fois le fichier et son mot de passe peut le lire. Nous n\'en conservons aucune copie.\n\nSauvegarde de l\'appareil : PassKey est exclue de la sauvegarde cloud Android et du transfert entre appareils, votre coffre n\'est donc pas envoyé vers votre compte Google.\n\nModifications : cette politique peut évoluer ; les changements importants seront signalés dans les notes de version.\n\nQuestions : contactez <xliff:g id="email" example="name@example.com">yrkkh.cclub@gmail.com</xliff:g>.</string>
+    <string name="terms_n_condition_message">En utilisant PassKey, vous acceptez ce qui suit.\n\n1. PassKey est un logiciel gratuit et open source développé par Aditya Bhardwaj.\n\n2. Votre coffre est stocké uniquement sur votre appareil. Il n\'existe aucune copie côté serveur, et donc aucun moyen de récupérer vos données si vous perdez votre appareil, désinstallez l\'application ou oubliez un mot de passe de sauvegarde.\n\n3. La conservation des sauvegardes vous incombe. Exportez-les régulièrement et conservez le mot de passe de sauvegarde en lieu sûr et séparé.\n\n4. L\'application repose sur la sécurité biométrique ou le verrouillage d\'écran de votre appareil. Si ce verrouillage est faible, supprimé ou compromis, la protection offerte par PassKey est réduite d\'autant.\n\n5. PassKey intègre les services Google Firebase et Google Play décrits dans la politique de confidentialité.\n\n6. L\'application est fournie \"en l\'état\", sans garantie d\'aucune sorte, expresse ou implicite, y compris de qualité marchande et d\'adéquation à un usage particulier.\n\n7. Dans la mesure permise par la loi, le développeur n\'est pas responsable des dommages résultant de l\'utilisation de l\'application, y compris la perte de données.\n\n8. L\'application peut être modifiée ou abandonnée à tout moment.</string>
+    <string name="recovery_setup_title">Définir un mot de passe de secours</string>
+    <string name="recovery_setup_message_new">PassKey se déverrouille avec votre empreinte ou le verrouillage d\'écran. Ce mot de passe de secours est la voie de repli : il vous servira si vous changez vos empreintes ou supprimez le verrouillage. Il ne peut pas être réinitialisé, conservez-le en lieu sûr.</string>
+    <string name="recovery_setup_message_upgrade">Cette mise à jour rechiffre votre coffre avec une clé propre à cet appareil. Définissez d\'abord un mot de passe de secours : c\'est le seul moyen de revenir si vous changez vos empreintes ou supprimez le verrouillage. Il ne peut pas être réinitialisé.</string>
+    <string name="recovery_unlock_title">Saisissez votre mot de passe de secours</string>
+    <string name="recovery_unlock_message">La biométrie ou le verrouillage d\'écran de votre appareil a changé, PassKey a besoin de votre mot de passe de secours.</string>
+    <string name="recovery_unlock_wrong">Ce mot de passe n\'a pas fonctionné. Réessayez.</string>
+    <string name="migration_title">Sécurisation de votre coffre</string>
+    <string name="migration_message">Vos entrées sont rechiffrées avec une clé propre à cet appareil. Gardez l\'application ouverte.</string>
+    <string name="migration_failed_title">Impossible de terminer la sécurisation</string>
+    <string name="migration_failed_message">Rien n\'a été perdu et vos entrées sont intactes. Réessayez ou rouvrez l\'application plus tard.</string>
+    <string name="migration_failed_message_can_export">Rien n\'a été perdu : votre coffre est intact et lisible. Réessayez, ou exportez d\'abord une sauvegarde depuis les paramètres.</string>
+    <string name="migration_retry">Réessayer</string>
+    <string name="device_lock_required_title">Verrouillage de l\'appareil requis</string>
+    <string name="device_lock_required_message">PassKey protège votre coffre avec le verrouillage d\'écran. Configurez un code, un schéma, un mot de passe ou la biométrie pour continuer.</string>
+    <string name="device_lock_open_settings">Ouvrir les paramètres</string>
+    <string name="change_recovery_password">Changer le mot de passe de secours</string>
+    <string name="recovery_change_current_title">Confirmez le mot de passe actuel</string>
+    <string name="recovery_change_current_message">Saisissez votre mot de passe de secours actuel pour prouver que c\'est bien vous.</string>
+    <string name="recovery_change_new_title">Choisissez un nouveau mot de passe de secours</string>
+    <string name="recovery_change_new_message">Il remplace votre ancien mot de passe de secours. Il ne peut pas être réinitialisé, conservez-le en lieu sûr.</string>
+    <string name="recovery_change_done">Mot de passe de secours modifié.</string>
+    <string name="recovery_change_failed">Ce mot de passe n\'était pas correct.</string>
+    <string name="migration_export_first">Exporter une sauvegarde d\'abord</string>
+    <string name="migration_export_now">Exporter mon coffre maintenant</string>
 </resources>
