@@ -17,9 +17,10 @@ import com.bhardwaj.passkey.R
 import com.bhardwaj.passkey.data.backup.BackupError
 import com.bhardwaj.passkey.data.backup.BackupException
 import com.bhardwaj.passkey.data.backup.BackupRepository
+import com.bhardwaj.passkey.data.security.AutoLockTimeout
+import com.bhardwaj.passkey.data.security.DatabaseKeyManager
 import com.bhardwaj.passkey.data.repository.DataStoreRepository
 import com.bhardwaj.passkey.data.repository.PasskeyRepository
-import com.bhardwaj.passkey.data.security.AutoLockTimeout
 import com.bhardwaj.passkey.domain.events.SettingsEvents
 import com.bhardwaj.passkey.presentation.navigation.Routes
 import com.bhardwaj.passkey.utils.PasswordAnalysisResult
@@ -48,6 +49,7 @@ class SettingsViewModel @Inject constructor(
     private val dataStoreRepository: DataStoreRepository,
     private val backupRepository: BackupRepository,
     private val secretKeywords: SecretKeywords,
+    private val keyManager: DatabaseKeyManager,
     private val appContext: Application
 ) : ViewModel() {
     private val _uiEvents = Channel<UiEvents>()
@@ -72,6 +74,13 @@ class SettingsViewModel @Inject constructor(
 
     var isAutoLockDialogOpen by mutableStateOf(false)
         private set
+
+    /** null = closed, false = asking for the current password, true = asking for the new one. */
+    var recoveryChangeStep by mutableStateOf<Boolean?>(null)
+        private set
+
+    /** Held only between the two dialog steps, then zeroed. */
+    private var pendingCurrentRecoveryPassword: CharArray? = null
 
     val autoLockTimeout: StateFlow<AutoLockTimeout> = flow {
         emitAll(
@@ -187,6 +196,41 @@ class SettingsViewModel @Inject constructor(
                     }
                     analysisResult = result
                     isAnalysisSheetOpen = true
+                }
+            }
+
+            SettingsEvents.OnChangeRecoveryPasswordClick -> {
+                recoveryChangeStep = false
+            }
+
+            SettingsEvents.OnDismissRecoveryChange -> {
+                pendingCurrentRecoveryPassword?.let { java.util.Arrays.fill(it, Char(0)) }
+                pendingCurrentRecoveryPassword = null
+                recoveryChangeStep = null
+            }
+
+            is SettingsEvents.OnCurrentRecoveryPasswordEntered -> {
+                pendingCurrentRecoveryPassword = event.password
+                recoveryChangeStep = true
+            }
+
+            is SettingsEvents.OnNewRecoveryPasswordEntered -> {
+                val current = pendingCurrentRecoveryPassword
+                pendingCurrentRecoveryPassword = null
+                recoveryChangeStep = null
+                viewModelScope.launch {
+                    val changed = current != null &&
+                        keyManager.changeRecoveryPassword(current, event.password)
+                    current?.let { java.util.Arrays.fill(it, Char(0)) }
+                    java.util.Arrays.fill(event.password, Char(0))
+                    sendUiEvents(
+                        UiEvents.ShowSnackBar(
+                            UiText.StringResource(
+                                if (changed) R.string.recovery_change_done
+                                else R.string.recovery_change_failed
+                            )
+                        )
+                    )
                 }
             }
 

@@ -45,6 +45,29 @@ class BackupRepository @Inject constructor(
         }
     }
 
+    /**
+     * Writes a backup assembled outside the normal repository path: the migration failure screen reads the
+     * un-migrated vault through the legacy key, so a user whose re-key could not complete still gets their
+     * data out.
+     */
+    internal suspend fun exportPreviews(uri: Uri, password: CharArray, previews: List<BackupPreview>): Result<Unit> =
+        withContext(Dispatchers.IO) {
+            try {
+                val encrypted =
+                    codec.encodePreviews(previews, password, System.currentTimeMillis(), BuildConfig.VERSION_NAME)
+                context.contentResolver.openOutputStream(uri, "wt")?.use { it.write(encrypted) }
+                    ?: return@withContext Result.failure(BackupException(BackupError.WriteFailed))
+                Result.success(Unit)
+            } catch (_: Exception) {
+                Result.failure(BackupException(BackupError.WriteFailed))
+        }
+        context.contentResolver.openOutputStream(uri, "wt")?.use { it.write(encrypted) }
+            ?: return Result.failure(BackupException(BackupError.WriteFailed))
+        Result.success(Unit)
+    } catch (_: Exception) {
+        Result.failure(BackupException(BackupError.WriteFailed))
+    }
+
     suspend fun import(uri: Uri, password: CharArray?, mode: ImportMode): Result<ImportSummary> =
         withContext(Dispatchers.IO) {
             val bytes = readLimited(uri)
