@@ -13,6 +13,7 @@ import com.bhardwaj.passkey.data.repository.passkeyDataStore
 import com.bhardwaj.passkey.domain.repository.PasskeyRepositoryImpl
 import com.bhardwaj.passkey.utils.Constants
 import com.bhardwaj.passkey.utils.MIGRATION_1_2
+import com.bhardwaj.passkey.utils.MIGRATION_2_3
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -31,7 +32,7 @@ object AppModule {
         klass = PassKeyDatabase::class.java,
         name = Constants.PASS_KEY_DATABASE
     )
-        .addMigrations(MIGRATION_1_2)
+        .addMigrations(MIGRATION_1_2, MIGRATION_2_3)
         // FIXME(5.7.0): a single build-time constant, identical for every install and recoverable from the APK,
         //  so the database is encrypted against a filesystem thief and nothing else. 5.7.0 replaces it with a
         //  per-install random key wrapped by AndroidKeyStore; this value then only opens and re-keys old vaults.

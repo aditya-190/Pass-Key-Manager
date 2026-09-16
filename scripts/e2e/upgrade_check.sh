@@ -3,6 +3,8 @@
 # Usage: scripts/e2e/upgrade_check.sh <serial> <previous-version.apk> <new-version.apk> <androidTest.apk>
 # Needs: a test emulator with screen-lock PIN 1234 (adb -s <serial> shell locksettings set-pin 1234).
 # Never point this at a phone with real data: it adds one test entry to the vault.
+# The downgrade leg only works while both versions share a Room schema. Once the device's vault has been
+# migrated forward, verify upgrades on a fresh emulator instead (install OLD first, seed, then upgrade).
 set -euo pipefail
 DIR="$(cd "$(dirname "$0")" && pwd)"
 SERIAL=$1; OLD=$2; NEW=$3; TEST=$4

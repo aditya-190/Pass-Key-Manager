@@ -46,6 +46,9 @@ class DetailViewModel @Inject constructor(
     private val _detailTitle = MutableStateFlow("")
     val detailTitle = _detailTitle.asStateFlow()
 
+    /** Set when the current draft value came from the password generator. */
+    private var wasGenerated = false
+
     private val _detailResponse = MutableStateFlow("")
     val detailResponse = _detailResponse.asStateFlow()
 
@@ -156,7 +159,10 @@ class DetailViewModel @Inject constructor(
                     val newDetail = Details(
                         previewId = previewId,
                         question = detailTitle.value.trim(),
-                        answer = detailResponse.value.trim()
+                        answer = detailResponse.value.trim(),
+                        // A value that came out of the generator is unambiguously a secret, so
+                        // the analyser never has to guess for it.
+                        isSecret = wasGenerated
                     )
 
                     detail?.let {
@@ -166,7 +172,8 @@ class DetailViewModel @Inject constructor(
                                 // Trimmed to match the create path above. A trailing space in a
                                 // stored password fails silently wherever it is pasted.
                                 question = newDetail.question,
-                                answer = newDetail.answer
+                                answer = newDetail.answer,
+                                isSecret = it.isSecret || wasGenerated
                             )
                         )
                     } ?: repository.upsertDetails(newDetail)
@@ -239,6 +246,7 @@ class DetailViewModel @Inject constructor(
             }
 
             DetailEvents.OnGeneratePasswordClick -> {
+                wasGenerated = true
                 val newPassword = PasswordGenerator.generate(
                     length = passwordLength.toInt(),
                     includeUpper = includeUpper,
