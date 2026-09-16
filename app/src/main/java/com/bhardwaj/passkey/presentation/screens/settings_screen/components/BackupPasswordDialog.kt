@@ -1,5 +1,6 @@
 package com.bhardwaj.passkey.presentation.screens.settings_screen.components
 
+import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
@@ -32,7 +33,15 @@ private const val MIN_BACKUP_PASSWORD_LENGTH = 8
  * the file is useless without it. On restore a single field is shown.
  */
 @Composable
-fun BackupPasswordDialog(confirmMode: Boolean, onDismiss: () -> Unit, onConfirm: (CharArray) -> Unit) {
+fun BackupPasswordDialog(
+    confirmMode: Boolean,
+    onDismiss: () -> Unit,
+    onConfirm: (CharArray) -> Unit,
+    @StringRes titleRes: Int? = null,
+    @StringRes messageRes: Int? = null,
+    /** False for gate dialogs that the user must not be able to escape. */
+    dismissible: Boolean = true
+) {
     var password by remember { mutableStateOf("") }
     var confirmation by remember { mutableStateOf("") }
     var showValidation by remember { mutableStateOf(false) }
@@ -48,16 +57,17 @@ fun BackupPasswordDialog(confirmMode: Boolean, onDismiss: () -> Unit, onConfirm:
 
     AlertDialog(
         // The dialog is its own window, so it needs FLAG_SECURE in its own right.
-        properties = DialogProperties(securePolicy = SecureFlagPolicy.SecureOn),
-        onDismissRequest = onDismiss,
+        properties = DialogProperties(
+            securePolicy = SecureFlagPolicy.SecureOn,
+            dismissOnBackPress = dismissible,
+            dismissOnClickOutside = dismissible
+        ),
+        onDismissRequest = { if (dismissible) onDismiss() },
         title = {
             Text(
                 text = stringResource(
-                    if (confirmMode) {
-                        R.string.backup_password_title
-                    } else {
-                        R.string.restore_password_title
-                    }
+                    titleRes ?: if (confirmMode) R.string.backup_password_title
+                    else R.string.restore_password_title
                 )
             )
         },
@@ -65,11 +75,8 @@ fun BackupPasswordDialog(confirmMode: Boolean, onDismiss: () -> Unit, onConfirm:
             Column {
                 Text(
                     text = stringResource(
-                        if (confirmMode) {
-                            R.string.backup_password_message
-                        } else {
-                            R.string.restore_password_message
-                        }
+                        messageRes ?: if (confirmMode) R.string.backup_password_message
+                        else R.string.restore_password_message
                     ),
                     style = MaterialTheme.typography.bodyMedium
                 )
@@ -119,7 +126,9 @@ fun BackupPasswordDialog(confirmMode: Boolean, onDismiss: () -> Unit, onConfirm:
             }) { Text(stringResource(R.string.backup_confirm)) }
         },
         dismissButton = {
-            TextButton(onClick = onDismiss) { Text(stringResource(R.string.cancel)) }
+            if (dismissible) {
+                TextButton(onClick = onDismiss) { Text(stringResource(R.string.cancel)) }
+            }
         }
     )
 }
