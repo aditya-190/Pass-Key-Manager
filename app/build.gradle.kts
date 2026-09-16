@@ -3,6 +3,7 @@ import java.util.Properties
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose.compiler)
+    alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt.android)
     alias(libs.plugins.room)
@@ -122,12 +123,6 @@ android {
 }
 
 dependencies {
-    constraints {
-        // room-testing is compiled against kotlinx-serialization 1.8; navigation can pull in an older one, which
-        // made every on-device migration test fail with AbstractMethodError. Test APKs share the app's version.
-        implementation(libs.kotlinx.serialization.json)
-    }
-
     // Android Essentials
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.activity.compose)
@@ -169,8 +164,11 @@ dependencies {
     implementation(libs.sqlcipher.android)
     implementation(libs.sqlcipher.sqlite)
 
-    // Open CSV - Import/ Export Data
+    // Open CSV - used by the read-only legacy .passkey CSV importer
     implementation(libs.opencsv)
+
+    // Backup payload serialization
+    implementation(libs.kotlinx.serialization.json)
 
     // Reordering Lazy Columns
     implementation(libs.reorderable)

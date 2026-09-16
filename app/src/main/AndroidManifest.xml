@@ -17,16 +17,16 @@
     <uses-permission
         android:name="android.permission.ACCESS_ADSERVICES_ATTRIBUTION"
         tools:node="remove" />
-    <uses-permission
-        android:name="android.permission.READ_EXTERNAL_STORAGE"
-        android:maxSdkVersion="28" />
-    <uses-permission
-        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
-        android:maxSdkVersion="28" />
+
+    <!--
+        INTERNET is declared explicitly rather than merged in silently. The app itself makes no
+        network calls; Firebase (only with consent) and Play in-app update require it.
+    -->
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:name=".PasskeyApplication"
-        android:allowBackup="true"
+        android:allowBackup="false"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
@@ -34,11 +34,11 @@
         android:localeConfig="@xml/locales_config"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.PassKey"
-        tools:targetApi="34">
+        android:theme="@style/Theme.PassKey">
         <activity
             android:name=".presentation.MainActivity"
             android:exported="true"
+            android:launchMode="singleTask"
             android:theme="@style/Theme.PassKey">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

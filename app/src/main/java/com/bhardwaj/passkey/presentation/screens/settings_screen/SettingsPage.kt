@@ -1,9 +1,7 @@
 package com.bhardwaj.passkey.presentation.screens.settings_screen
 
-import android.content.ContentResolver
 import android.content.Context
 import android.net.Uri
-import android.provider.OpenableColumns
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
@@ -31,8 +29,11 @@ import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.platform.LocalContext
@@ -44,18 +45,23 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.SecureFlagPolicy
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.bhardwaj.passkey.R
+import com.bhardwaj.passkey.data.backup.BackupFormat
+import com.bhardwaj.passkey.data.backup.ImportMode
 import com.bhardwaj.passkey.domain.events.SettingsEvents
 import com.bhardwaj.passkey.domain.viewModels.SettingsViewModel
 import com.bhardwaj.passkey.presentation.navigation.Routes
 import com.bhardwaj.passkey.presentation.screens.settings_screen.components.AnalysisBottomSheet
+import com.bhardwaj.passkey.presentation.screens.settings_screen.components.BackupPasswordDialog
 import com.bhardwaj.passkey.presentation.screens.settings_screen.components.FaqItem
 import com.bhardwaj.passkey.presentation.screens.settings_screen.components.LanguageBottomSheet
 import com.bhardwaj.passkey.presentation.screens.settings_screen.components.SettingsText
 import com.bhardwaj.passkey.presentation.theme.BebasNeue
 import com.bhardwaj.passkey.presentation.theme.Poppins
-import com.bhardwaj.passkey.utils.Constants.Companion.FILE_TYPE
 import com.bhardwaj.passkey.utils.UiEvents
 import com.bhardwaj.passkey.utils.asString
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -70,25 +76,56 @@ fun SettingsScreen(
     val scaffoldState = rememberBottomSheetScaffoldState()
 
     val context = LocalContext.current
-    val invalidFileMessage = stringResource(R.string.invalid_file_selected)
+    // Backup file selection. The password is collected only after a destination or source is
+    // chosen, so the user is never asked for one and then cancels out of the picker.
+    var pendingExportUri by remember { mutableStateOf<Uri?>(null) }
+    var pendingImportUri by remember { mutableStateOf<Uri?>(null) }
 
-    val importDataLauncher = rememberLauncherForActivityResult(
+    val exportLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.CreateDocument("application/octet-stream")
+    ) { uri -> pendingExportUri = uri }
+
+    val importLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.OpenDocument()
-    ) { document ->
-        document?.let { uri ->
-            if (isPasskeyFile(uri, context)) {
-                context.contentResolver.openInputStream(uri)?.use { inputStream ->
-                    val content = inputStream.bufferedReader().use { text -> text.readText() }
-                    viewModel.onEvent(SettingsEvents.OnImportDataClick(content))
-                }
+    ) { uri ->
+        uri?.let {
+            if (isEncryptedBackup(it, context)) {
+                pendingImportUri = it
             } else {
-                scope.launch {
-                    snackBarHostState.showSnackbar(
-                        message = invalidFileMessage
+                // A legacy plaintext .passkey CSV needs no password; restore it directly.
+                viewModel.onEvent(
+                    SettingsEvents.OnImportFileChosen(
+                        uri = it,
+                        password = null,
+                        mode = ImportMode.MERGE
                     )
-                }
+                )
             }
         }
+    }
+
+    pendingExportUri?.let { uri ->
+        BackupPasswordDialog(
+            confirmMode = true,
+            onDismiss = { pendingExportUri = null },
+            onConfirm = { password ->
+                pendingExportUri = null
+                viewModel.onEvent(SettingsEvents.OnExportFileChosen(uri, password))
+            }
+        )
+    }
+
+    pendingImportUri?.let { uri ->
+        BackupPasswordDialog(
+            confirmMode = false,
+            onDismiss = { pendingImportUri = null },
+            onConfirm = { password ->
+                pendingImportUri = null
+                viewModel.onEvent(
+                    SettingsEvents.OnImportFileChosen(uri, password, ImportMode.MERGE)
+                )
+            }
+        )
     }
 
     val isAnalysisSheetOpen = viewModel.isAnalysisSheetOpen
@@ -179,10 +216,10 @@ fun SettingsScreen(
                                 viewModel.onEvent(SettingsEvents.OnRateAppClick)
                             }
                             SettingsText(text = stringResource(id = R.string.import_data)) {
-                                importDataLauncher.launch(arrayOf("*/*"))
+                                importLauncher.launch(arrayOf("*/*"))
                             }
                             SettingsText(text = stringResource(id = R.string.export_data)) {
-                                viewModel.onEvent(SettingsEvents.OnExportDataClick)
+                                exportLauncher.launch(defaultBackupFileName())
                             }
                             SettingsText(text = stringResource(id = R.string.privacy)) {
                                 viewModel.onEvent(SettingsEvents.OnPrivacyClick)
@@ -250,20 +287,23 @@ fun SettingsScreen(
     }
 }
 
-private fun isPasskeyFile(uri: Uri, context: Context): Boolean {
-    val contentResolver: ContentResolver = context.contentResolver
-    return try {
-        contentResolver.query(uri, null, null, null, null)?.use { cursor ->
-            val nameIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
-            if (nameIndex != -1 && cursor.moveToFirst()) {
-                val fileName = cursor.getString(nameIndex)
-                fileName.endsWith(FILE_TYPE)
-            } else {
-                false
-            }
-        } == true
-    } catch (e: Exception) {
-        e.printStackTrace()
-        false
-    }
+/**
+ * Detects the encrypted `.pkbak` format by its magic bytes rather than by filename.
+ *
+ * The previous check matched a display name ending in "passkey", which would have rejected
+ * every new backup, and trusted a user-supplied filename to decide how to parse the contents.
+ */
+private fun isEncryptedBackup(uri: Uri, context: Context): Boolean = try {
+    context.contentResolver.openInputStream(uri)?.use { input ->
+        val magic = ByteArray(8)
+        val read = input.read(magic)
+        read == magic.size && BackupFormat.hasMagic(magic)
+    } == true
+} catch (_: Exception) {
+    false
+}
+
+private fun defaultBackupFileName(): String {
+    val stamp = SimpleDateFormat("yyyyMMdd_HHmm", Locale.US).format(Date())
+    return "passkey_backup_$stamp.pkbak"
 }

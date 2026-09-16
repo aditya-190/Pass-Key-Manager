@@ -62,7 +62,7 @@ material_icons = "1.7.8"
 truth = "1.4.5"
 mockk = "1.14.11"
 turbine = "1.2.1"
-kotlinx_serialization = "1.8.1"
+kotlinx_serialization = "1.11.0"
 detekt_cli = "1.23.8"
 
 [plugins]
@@ -70,6 +70,7 @@ detekt_cli = "1.23.8"
 android_application = { id = "com.android.application", version.ref = "android_gradle_plugin" }
 kotlin_android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin_plugin" }
 kotlin-compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin_plugin" }
+kotlin_serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin_plugin" }
 hilt_android = { id = "com.google.dagger.hilt.android", version.ref = "hilt_plugin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp_plugin" }
 room = { id = "androidx.room", version.ref = "room" }
@@ -123,6 +124,7 @@ sqlcipher-sqlite = { module = "androidx.sqlite:sqlite", version.ref = "sqlcipher
 
 # Open CSV - Import/ Export Data
 opencsv = { module = "com.opencsv:opencsv", version.ref = "opencsv" }
+kotlinx_serialization_json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx_serialization" }
 
 # Reordering Lazy Columns
 reorderable = { module = "sh.calvin.reorderable:reorderable", version.ref = "reorderable" }
@@ -146,7 +148,6 @@ google_truth = { module = "com.google.truth:truth", version.ref = "truth" }
 kotlinx_coroutines_test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines_core" }
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
-kotlinx_serialization_json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx_serialization" }
 detekt_cli = { module = "io.gitlab.arturbosch.detekt:detekt-cli", version.ref = "detekt_cli" }
 compose_ui_tooling = { module = "androidx.compose.ui:ui-tooling" }
 compose_ui_test_manifest = { module = "androidx.compose.ui:ui-test-manifest", version.ref = "compose_ui_test" }
