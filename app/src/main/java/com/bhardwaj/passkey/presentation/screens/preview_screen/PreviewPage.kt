@@ -41,7 +41,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.rememberSwipeToDismissBoxState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
@@ -60,9 +59,11 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.DialogProperties
 import androidx.compose.ui.window.SecureFlagPolicy
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.bhardwaj.passkey.R
 import com.bhardwaj.passkey.domain.model.Category
 import com.bhardwaj.passkey.presentation.navigation.HomeAnnouncement
+import com.bhardwaj.passkey.presentation.screens.common.ObserveAsEvents
 import com.bhardwaj.passkey.presentation.screens.common.PassKeyButton
 import com.bhardwaj.passkey.presentation.screens.common.PasskeySearchBar
 import com.bhardwaj.passkey.presentation.screens.common.labelRes
@@ -84,18 +85,18 @@ import sh.calvin.reorderable.rememberReorderableLazyListState
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun PreviewScreen(onNavigate: (UiEvents.Navigate) -> Unit, viewModel: PreviewViewModel = hiltViewModel()) {
-    val categoryName by viewModel.categoryName.collectAsState()
+    val categoryName by viewModel.categoryName.collectAsStateWithLifecycle()
     // Localized display names come from Category.labelRes, which the bottom navigation
     // also uses, so the two can no longer drift apart.
     val categoryNameMap = Category.entries.associate { it.name to stringResource(it.labelRes()) }
 
-    val previewHeading by viewModel.previewHeading.collectAsState()
-    val isEditingSheet by viewModel.isEditingSheet.collectAsState()
+    val previewHeading by viewModel.previewHeading.collectAsStateWithLifecycle()
+    val isEditingSheet by viewModel.isEditingSheet.collectAsStateWithLifecycle()
     // Resolved here rather than in the ViewModel so it follows the app locale.
     val bottomSheetHeading =
         stringResource(if (isEditingSheet) R.string.edit else R.string.add)
-    val searchText by viewModel.searchText.collectAsState()
-    val previews by viewModel.previews.collectAsState()
+    val searchText by viewModel.searchText.collectAsStateWithLifecycle()
+    val previews by viewModel.previews.collectAsStateWithLifecycle()
 
     var selectedIndex by rememberSaveable { mutableIntStateOf(0) }
 
@@ -113,47 +114,45 @@ fun PreviewScreen(onNavigate: (UiEvents.Navigate) -> Unit, viewModel: PreviewVie
     val context = LocalContext.current
     val undoLabel = stringResource(R.string.undo)
 
-    LaunchedEffect(key1 = true) {
-        viewModel.uiEvents.collect { event ->
-            when (event) {
-                is UiEvents.Navigate -> onNavigate(event)
-                is UiEvents.ShowUndo -> {
-                    scope.launch {
-                        val result = snackBarHostState.showSnackbar(
-                            message = event.message.asString(context),
-                            actionLabel = undoLabel,
-                            duration = SnackbarDuration.Long
-                        )
-                        if (result == SnackbarResult.ActionPerformed) viewModel.onEvent(PreviewEvents.OnUndoDelete)
-                    }
+    ObserveAsEvents(viewModel.uiEvents) { event ->
+        when (event) {
+            is UiEvents.Navigate -> onNavigate(event)
+            is UiEvents.ShowUndo -> {
+                scope.launch {
+                    val result = snackBarHostState.showSnackbar(
+                        message = event.message.asString(context),
+                        actionLabel = undoLabel,
+                        duration = SnackbarDuration.Long
+                    )
+                    if (result == SnackbarResult.ActionPerformed) viewModel.onEvent(PreviewEvents.OnUndoDelete)
                 }
+            }
 
-                is UiEvents.ShowSnackBar -> {
+            is UiEvents.ShowSnackBar -> {
+                scope.launch {
+                    snackBarHostState.showSnackbar(
+                        message = event.message.asString(context),
+                        actionLabel = event.action?.asString(context)
+                    )
+                }
+            }
+            is UiEvents.CopyToClipboard -> {
+                SecureClipboard.copy(
+                    context = context,
+                    text = event.value,
+                    isSensitive = event.isSensitive
+                )
+                // Android 13+ shows its own copy confirmation, so a second one is noise.
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
                     scope.launch {
                         snackBarHostState.showSnackbar(
-                            message = event.message.asString(context),
-                            actionLabel = event.action?.asString(context)
+                            message = UiText.StringResource(R.string.copied).asString(context)
                         )
                     }
                 }
-                is UiEvents.CopyToClipboard -> {
-                    SecureClipboard.copy(
-                        context = context,
-                        text = event.value,
-                        isSensitive = event.isSensitive
-                    )
-                    // Android 13+ shows its own copy confirmation, so a second one is noise.
-                    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
-                        scope.launch {
-                            snackBarHostState.showSnackbar(
-                                message = UiText.StringResource(R.string.copied).asString(context)
-                            )
-                        }
-                    }
-                }
-
-                else -> Unit
             }
+
+            else -> Unit
         }
     }
 

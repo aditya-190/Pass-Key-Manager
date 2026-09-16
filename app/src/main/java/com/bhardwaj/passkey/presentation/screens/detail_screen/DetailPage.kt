@@ -37,7 +37,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.rememberSwipeToDismissBoxState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -53,7 +52,9 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.DialogProperties
 import androidx.compose.ui.window.SecureFlagPolicy
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.bhardwaj.passkey.R
+import com.bhardwaj.passkey.presentation.screens.common.ObserveAsEvents
 import com.bhardwaj.passkey.presentation.screens.common.PassKeyButton
 import com.bhardwaj.passkey.presentation.screens.common.PasskeySearchBar
 import com.bhardwaj.passkey.presentation.screens.detail_screen.DetailEvents
@@ -74,15 +75,15 @@ import sh.calvin.reorderable.rememberReorderableLazyListState
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun DetailScreen(onPopBackStack: () -> Unit, viewModel: DetailViewModel = hiltViewModel()) {
-    val detailTitle by viewModel.detailTitle.collectAsState()
-    val detailResponse by viewModel.detailResponse.collectAsState()
-    val isSecretField by viewModel.isSecretField.collectAsState()
-    val isEditingSheet by viewModel.isEditingSheet.collectAsState()
+    val detailTitle by viewModel.detailTitle.collectAsStateWithLifecycle()
+    val detailResponse by viewModel.detailResponse.collectAsStateWithLifecycle()
+    val isSecretField by viewModel.isSecretField.collectAsStateWithLifecycle()
+    val isEditingSheet by viewModel.isEditingSheet.collectAsStateWithLifecycle()
     // Resolved here rather than in the ViewModel so it follows the app locale.
     val bottomSheetHeading =
         stringResource(if (isEditingSheet) R.string.edit else R.string.add)
-    val searchText by viewModel.searchText.collectAsState()
-    val details by viewModel.details.collectAsState(initial = emptyList())
+    val searchText by viewModel.searchText.collectAsStateWithLifecycle()
+    val details by viewModel.details.collectAsStateWithLifecycle()
 
     val snackBarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
@@ -99,47 +100,45 @@ fun DetailScreen(onPopBackStack: () -> Unit, viewModel: DetailViewModel = hiltVi
     val context = LocalContext.current
     val undoLabel = stringResource(R.string.undo)
 
-    LaunchedEffect(key1 = true) {
-        viewModel.uiEvents.collect { event ->
-            when (event) {
-                is UiEvents.PopBackStack -> onPopBackStack()
-                is UiEvents.ShowUndo -> {
-                    scope.launch {
-                        val result = snackBarHostState.showSnackbar(
-                            message = event.message.asString(context),
-                            actionLabel = undoLabel,
-                            duration = SnackbarDuration.Long
-                        )
-                        if (result == SnackbarResult.ActionPerformed) viewModel.onEvent(DetailEvents.OnUndoDelete)
-                    }
+    ObserveAsEvents(viewModel.uiEvents) { event ->
+        when (event) {
+            is UiEvents.PopBackStack -> onPopBackStack()
+            is UiEvents.ShowUndo -> {
+                scope.launch {
+                    val result = snackBarHostState.showSnackbar(
+                        message = event.message.asString(context),
+                        actionLabel = undoLabel,
+                        duration = SnackbarDuration.Long
+                    )
+                    if (result == SnackbarResult.ActionPerformed) viewModel.onEvent(DetailEvents.OnUndoDelete)
                 }
+            }
 
-                is UiEvents.ShowSnackBar -> {
+            is UiEvents.ShowSnackBar -> {
+                scope.launch {
+                    snackBarHostState.showSnackbar(
+                        message = event.message.asString(context),
+                        actionLabel = event.action?.asString(context)
+                    )
+                }
+            }
+            is UiEvents.CopyToClipboard -> {
+                SecureClipboard.copy(
+                    context = context,
+                    text = event.value,
+                    isSensitive = event.isSensitive
+                )
+                // Android 13+ shows its own copy confirmation, so a second one is noise.
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
                     scope.launch {
                         snackBarHostState.showSnackbar(
-                            message = event.message.asString(context),
-                            actionLabel = event.action?.asString(context)
+                            message = UiText.StringResource(R.string.copied).asString(context)
                         )
                     }
                 }
-                is UiEvents.CopyToClipboard -> {
-                    SecureClipboard.copy(
-                        context = context,
-                        text = event.value,
-                        isSensitive = event.isSensitive
-                    )
-                    // Android 13+ shows its own copy confirmation, so a second one is noise.
-                    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
-                        scope.launch {
-                            snackBarHostState.showSnackbar(
-                                message = UiText.StringResource(R.string.copied).asString(context)
-                            )
-                        }
-                    }
-                }
-
-                else -> Unit
             }
+
+            else -> Unit
         }
     }
 

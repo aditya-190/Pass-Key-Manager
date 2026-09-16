@@ -29,6 +29,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.bhardwaj.passkey.R
+import com.bhardwaj.passkey.presentation.screens.common.ObserveAsEvents
 import com.bhardwaj.passkey.presentation.screens.splash_screen.SplashEvents
 import com.bhardwaj.passkey.presentation.screens.splash_screen.SplashViewModel
 import com.bhardwaj.passkey.presentation.theme.Poppins
@@ -41,12 +42,10 @@ fun SplashPage(onNavigate: (UiEvents.Navigate) -> Unit, viewModel: SplashViewMod
         Animatable(0.3F)
     }
 
-    LaunchedEffect(key1 = true) {
-        viewModel.uiEvents.collect { event ->
-            when (event) {
-                is UiEvents.Navigate -> onNavigate(event)
-                else -> Unit
-            }
+    ObserveAsEvents(viewModel.uiEvents) { event ->
+        when (event) {
+            is UiEvents.Navigate -> onNavigate(event)
+            else -> Unit
         }
     }
 

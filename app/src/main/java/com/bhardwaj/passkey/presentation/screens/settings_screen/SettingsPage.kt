@@ -30,7 +30,6 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -50,6 +49,7 @@ import com.bhardwaj.passkey.R
 import com.bhardwaj.passkey.data.backup.BackupFormat
 import com.bhardwaj.passkey.data.backup.ImportMode
 import com.bhardwaj.passkey.presentation.navigation.Routes
+import com.bhardwaj.passkey.presentation.screens.common.ObserveAsEvents
 import com.bhardwaj.passkey.presentation.screens.settings_screen.SettingsEvents
 import com.bhardwaj.passkey.presentation.screens.settings_screen.SettingsViewModel
 import com.bhardwaj.passkey.presentation.screens.settings_screen.components.AnalysisBottomSheet
@@ -165,22 +165,20 @@ fun SettingsScreen(
     val isAnalysisSheetOpen = viewModel.isAnalysisSheetOpen
     val analysisResult = viewModel.analysisResult
 
-    LaunchedEffect(key1 = true) {
-        viewModel.uiEvents.collect { event ->
-            when (event) {
-                is UiEvents.PopBackStack -> onPopBackStack()
-                is UiEvents.Navigate -> onNavigate(event.route)
-                is UiEvents.ShowSnackBar -> {
-                    scope.launch {
-                        snackBarHostState.showSnackbar(
-                            message = event.message.asString(context),
-                            actionLabel = event.action?.asString(context)
-                        )
-                    }
+    ObserveAsEvents(viewModel.uiEvents) { event ->
+        when (event) {
+            is UiEvents.PopBackStack -> onPopBackStack()
+            is UiEvents.Navigate -> onNavigate(event.route)
+            is UiEvents.ShowSnackBar -> {
+                scope.launch {
+                    snackBarHostState.showSnackbar(
+                        message = event.message.asString(context),
+                        actionLabel = event.action?.asString(context)
+                    )
                 }
-
-                else -> Unit
             }
+
+            else -> Unit
         }
     }
 

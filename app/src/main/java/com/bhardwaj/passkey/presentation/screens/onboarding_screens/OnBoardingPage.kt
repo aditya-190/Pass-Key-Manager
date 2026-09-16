@@ -18,6 +18,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.bhardwaj.passkey.R
+import com.bhardwaj.passkey.presentation.screens.common.ObserveAsEvents
 import com.bhardwaj.passkey.presentation.screens.onboarding_screens.OnBoardingEvents
 import com.bhardwaj.passkey.presentation.screens.onboarding_screens.OnBoardingViewModel
 import com.bhardwaj.passkey.presentation.screens.onboarding_screens.components.OnBoardingItem
@@ -46,12 +47,10 @@ fun OnBoardingScreen(onNavigate: (UiEvents.Navigate) -> Unit, viewModel: OnBoard
         )
     )
 
-    LaunchedEffect(key1 = true) {
-        viewModel.uiEvents.collect { event ->
-            when (event) {
-                is UiEvents.Navigate -> onNavigate(event)
-                else -> Unit
-            }
+    ObserveAsEvents(viewModel.uiEvents) { event ->
+        when (event) {
+            is UiEvents.Navigate -> onNavigate(event)
+            else -> Unit
         }
     }
     Column(
