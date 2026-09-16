@@ -2,7 +2,6 @@ import java.util.Properties
 
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose.compiler)
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt.android)
@@ -15,7 +14,7 @@ plugins {
 
 android {
     namespace = "com.bhardwaj.passkey"
-    compileSdk = 36
+    compileSdk = 37
 
     defaultConfig {
         applicationId = "com.bhardwaj.passkey"
@@ -26,9 +25,28 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
-        val properties = Properties()
-        properties.load(project.rootProject.file("local.properties").inputStream())
-        buildConfigField("String", "PASS_PHRASE", "\"${properties.getProperty("PASS_PHRASE")}\"")
+        // local.properties is gitignored, so a fresh clone or CI checkout will not have it.
+        // Loading it unconditionally threw FileNotFoundException and broke configuration.
+        val localProperties = Properties().apply {
+            val file = project.rootProject.file("local.properties")
+            if (file.exists()) file.inputStream().use { load(it) }
+        }
+        // Renamed from PASS_PHRASE: this value only exists to open pre-5.7 databases that were
+        // encrypted with the old build-time constant, so they can be re-keyed. Never use it for
+        // new vaults. Note that when the key is absent the historical builds embedded the literal
+        // string "null", which the migration also has to treat as a candidate.
+        val legacyPassPhrase: String? = localProperties.getProperty("PASS_PHRASE")
+        buildConfigField("String", "LEGACY_PASS_PHRASE", "\"$legacyPassPhrase\"")
+        // A release built without the key would embed "null" and could not open any existing user's
+        // vault, so release packaging fails fast instead. Debug builds still work for contributors.
+        tasks.matching { it.name.matches(Regex("(assemble|bundle|package)Release")) }.configureEach {
+            val missing = legacyPassPhrase.isNullOrBlank()
+            doFirst {
+                if (missing) {
+                    throw GradleException("PASS_PHRASE is missing from local.properties; refusing to build a release.")
+                }
+            }
+        }
 
         vectorDrawables {
             useSupportLibrary = true
@@ -59,12 +77,12 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_22
-        targetCompatibility = JavaVersion.VERSION_22
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
     }
     kotlin {
         compilerOptions {
-            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_22)
+            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_21)
         }
     }
     buildFeatures {
@@ -105,8 +123,8 @@ android {
 
 dependencies {
     constraints {
-        // room-testing 2.8.3 is compiled against kotlinx-serialization 1.8; navigation pulls in 1.7.3, which made
-        // every on-device migration test fail with AbstractMethodError. Test APKs must share the app's version.
+        // room-testing is compiled against kotlinx-serialization 1.8; navigation can pull in an older one, which
+        // made every on-device migration test fail with AbstractMethodError. Test APKs share the app's version.
         implementation(libs.kotlinx.serialization.json)
     }
 
@@ -122,6 +140,7 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
+    implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.androidx.navigation.compose)
 
     // Coroutines
@@ -133,9 +152,6 @@ dependencies {
     ksp(libs.hilt.android.compiler)
     ksp(libs.hilt.compiler)
     implementation(libs.hilt.navigation.compose)
-
-    // Splash Screen
-    implementation(libs.androidx.core.splashscreen)
 
     // DataStore Preferences
     implementation(libs.datastore.preferences)
@@ -171,7 +187,10 @@ dependencies {
 
     // Testing & Debugging
     testImplementation(libs.junit)
+    testImplementation(libs.google.truth)
     testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.mockk)
+    testImplementation(libs.turbine)
     androidTestImplementation(libs.test.ext.junit)
     androidTestImplementation(libs.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
