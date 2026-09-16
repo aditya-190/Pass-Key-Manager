@@ -28,28 +28,25 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import com.bhardwaj.passkey.presentation.screens.common.ObserveAsEvents
 import com.bhardwaj.passkey.R
-import com.bhardwaj.passkey.domain.events.SplashEvents
-import com.bhardwaj.passkey.domain.viewModels.SplashViewModel
+import com.bhardwaj.passkey.presentation.screens.splash_screen.SplashViewModel
 import com.bhardwaj.passkey.presentation.theme.Poppins
-import com.bhardwaj.passkey.utils.UiEvents
+import com.bhardwaj.passkey.presentation.navigation.NavRoute
 import kotlinx.coroutines.delay
 
 @Composable
 fun SplashPage(
-    onNavigate: (UiEvents.Navigate) -> Unit,
+    onNavigate: (NavRoute) -> Unit,
     viewModel: SplashViewModel = hiltViewModel()
 ) {
     val scale = remember {
         Animatable(0.3F)
     }
 
-    LaunchedEffect(key1 = true) {
-        viewModel.uiEvents.collect { event ->
-            when (event) {
-                is UiEvents.Navigate -> onNavigate(event)
-                else -> Unit
-            }
+    ObserveAsEvents(viewModel.effects) { effect ->
+        when (effect) {
+            is SplashEffect.Navigate -> onNavigate(effect.route)
         }
     }
 
@@ -64,7 +61,7 @@ fun SplashPage(
             )
         )
         delay(700)
-        viewModel.onEvent(SplashEvents.OnLoadingComplete)
+        viewModel.onIntent(SplashIntent.LoadingFinished)
     }
 
     Scaffold { innerPadding ->
@@ -77,7 +74,7 @@ fun SplashPage(
         ) {
             Image(
                 painter = painterResource(id = R.drawable.splash_logo),
-                contentDescription = "App Logo",
+                contentDescription = null,
                 modifier = Modifier
                     .fillMaxSize()
                     .scale(scale.value)

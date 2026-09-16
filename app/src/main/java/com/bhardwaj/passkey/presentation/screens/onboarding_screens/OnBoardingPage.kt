@@ -16,49 +16,44 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import com.bhardwaj.passkey.presentation.screens.common.ObserveAsEvents
 import com.bhardwaj.passkey.R
-import com.bhardwaj.passkey.domain.events.OnBoardingEvents
-import com.bhardwaj.passkey.domain.viewModels.OnBoardingViewModel
+import com.bhardwaj.passkey.presentation.screens.onboarding_screens.OnBoardingViewModel
 import com.bhardwaj.passkey.presentation.screens.onboarding_screens.components.OnBoardingItem
 import com.bhardwaj.passkey.presentation.screens.onboarding_screens.components.OnBoardingPageIndicator
-import com.bhardwaj.passkey.utils.UiEvents
+import com.bhardwaj.passkey.presentation.navigation.NavRoute
 import kotlinx.coroutines.launch
 
 data class OnBoardingScreen(
     val title: String,
-    val description: String,
-    val highlightedText: List<String>
+    val description: String
 )
 
 @Composable
 fun OnBoardingScreen(
-    onNavigate: (UiEvents.Navigate) -> Unit,
+    onNavigate: (NavRoute) -> Unit,
     viewModel: OnBoardingViewModel = hiltViewModel()
 ) {
+    // The emphasised word is marked with [[ ]] inside each heading string resource, so each
+    // translation controls which of its own words is highlighted.
     val pages = listOf(
         OnBoardingScreen(
             title = stringResource(id = R.string.first_heading),
-            description = stringResource(id = R.string.first_description),
-            highlightedText = listOf("Secure")
+            description = stringResource(id = R.string.first_description)
         ),
         OnBoardingScreen(
             title = stringResource(id = R.string.second_heading),
-            description = stringResource(id = R.string.second_description),
-            highlightedText = listOf("Passwords")
+            description = stringResource(id = R.string.second_description)
         ),
         OnBoardingScreen(
             title = stringResource(id = R.string.third_heading),
-            description = stringResource(id = R.string.third_description),
-            highlightedText = listOf("Autofill")
+            description = stringResource(id = R.string.third_description)
         )
     )
 
-    LaunchedEffect(key1 = true) {
-        viewModel.uiEvents.collect { event ->
-            when (event) {
-                is UiEvents.Navigate -> onNavigate(event)
-                else -> Unit
-            }
+    ObserveAsEvents(viewModel.effects) { effect ->
+        when (effect) {
+            is OnBoardingEffect.Navigate -> onNavigate(effect.route)
         }
     }
     Column(
@@ -82,11 +77,11 @@ fun OnBoardingScreen(
             currentPage = pagerState.currentPage,
             totalPages = pages.size,
             onSkipClick = {
-                viewModel.onEvent(OnBoardingEvents.OnBoardingComplete)
+                viewModel.onIntent(OnBoardingIntent.Finished)
             },
             onNextClick = { index ->
                 if (index == pagerState.pageCount) {
-                    viewModel.onEvent(OnBoardingEvents.OnBoardingComplete)
+                    viewModel.onIntent(OnBoardingIntent.Finished)
                 } else {
                     scope.launch {
                         pagerState.animateScrollToPage(index)

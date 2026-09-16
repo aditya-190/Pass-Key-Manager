@@ -1,5 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="no_previews_found">अद्याप कोणतीही नोंद नाही</string>
+    <string name="no_details_found">अद्याप कोणताही तपशील नाही</string>
+    <!--    Splash Screen    -->
+    <string name="app_version">ॲप आवृत्ती <xliff:g id="version" example="5.5.1">%1$s</xliff:g></string>
+    <string name="app_description">तुम्हाला लागणारा एकमेव पासवर्ड व्यवस्थापक</string>
+
+    <!--    OnBoarding Screens    -->
+    <!--    Keep the 
+ line breaks and the [[ ]] highlight markers.    -->
+    <string name="skip">वगळा</string>
+    <string name="next">पुढे</string>
+    <string name="first_heading">तयार करा\n[[सुरक्षित]]\nपासवर्ड.</string>
+    <string name="second_heading">तुमचे सर्व\n[[पासवर्ड]]\nइथेच आहेत.</string>
+    <string name="third_heading">टाइप नको,\nमाहिती\n[[ऑटोफिल]] करा.</string>
+    <string name="first_description">तुमच्या ऑनलाइन खात्यांसाठी असुरक्षित पासवर्ड वापरणे थांबवा, PassKey सोबत पुढे जा. सर्वात सुरक्षित आणि तोडायला कठीण पासवर्ड मिळवा.</string>
+    <string name="second_description">तुमचे सर्व पासवर्ड एकाच ठिकाणी साठवा आणि व्यवस्थापित करा. शेकडो पासवर्ड नको, फक्त एकच लक्षात ठेवा.</string>
+    <string name="third_description">सार्वजनिक ठिकाणी टाइप करून तुमचे पासवर्ड धोक्यात आणू नका, PassKey ला ते ऑटोफिल करू द्या आणि तुमची माहिती सुरक्षित ठेवा.</string>
+
     <!-- Main Screens -->
     <string name="banks">बँक</string>
     <string name="mails">पत्र</string>
@@ -10,7 +28,6 @@
     <string name="search">शोध</string>
     <string name="title">शीर्षक</string>
     <string name="response">प्रतिसाद</string>
-    <string name="export_download">फाईल डाउनलोड्स फोल्डरमध्ये निर्यात केले गेले आहे.</string>
     <string name="rate_app">अ‍ॅपची मूल्यांकन करा</string>
     <string name="change_language">भाषा बदला</string>
     <string name="privacy">गोपनीयता</string>
@@ -20,7 +37,6 @@
     <string name="export_data">डेटा निर्यात करा</string>
 
     <!-- Edit Text Hints -->
-    <string name="type_here">येथे टाईप करा…</string>
     <string name="type_your_title_here">आपले शीर्षक येथे टाईप करा…</string>
     <string name="type_your_response_here">आपला प्रतिसाद येथे टाईप करा…</string>
     <string name="type_your_heading_here">आपले शीर्षक येथे टाईप करा…</string>
@@ -35,12 +51,7 @@
 
     <!-- Authentication Screen -->
     <string name="welcome_to_pass_key">पासकी मॅनेजरमध्ये आपले स्वागत आहे</string>
-    <string name="authentication_failed">प्रमाणीकरण अयशस्वी झाले.</string>
     <string name="something_went_wrong">काहीतरी चुकलं आहे..</string>
-    <string name="set_password">कृपया प्रथम आपल्या डिव्हाइससाठी संकेतशब्द सेट करा.</string>
-    <string name="permission_required">डेटाबेस निर्यात करण्यासाठी स्टोरेज प्रवेश आवश्यक आहे.</string>
-    <string name="permission_denied">परवानगी नकारली</string>
-    <string name="ok">ठीक आहे</string>
 
     <!-- Dialogs and Requests -->
     <string name="change">बदला</string>
@@ -53,7 +64,6 @@
     <string name="security_heading">पासकी लॉक केला गेला आहे</string>
     <string name="security_description">पासकी अ‍ॅपमध्ये प्रवेश करण्यासाठी प्रमाणीकरण आवश्यक आहे.</string>
     <string name="security_button">आता अनलॉक करा</string>
-    <string name="coming_soon">शीघ्र येत आहे</string>
     <string name="confirm_delete_title">हटवण्याची पुष्टी</string>
     <string name="confirm_delete_description_question">तुम्ही का प्रश्न हटवू इच्छिता?</string>
     <string name="confirm_delete_description_heading">तुम्ही का शीर्षक हटवू इच्छिता?</string>
@@ -62,15 +72,107 @@
     <!-- Password Health Report -->
     <string name="analyze_passwords">सुरक्षा स्थिती</string>
     <string name="security_analysis">सुरक्षा विश्लेषण</string>
-    <string name="security_score">सुरक्षा स्कोअर</string>
     <string name="weak_passwords">कमकुवत पासवर्ड</string>
     <string name="reused_passwords">पुन्हा वापरलेले पासवर्ड</string>
-    <string name="safe_passwords">सुरक्षित पासवर्ड</string>
     <string name="excellent">उत्कृष्ट</string>
     <string name="needs_attention">लक्ष देणे आवश्यक आहे</string>
     <string name="critical">गंभीर</string>
-    <string name="found_weak">%1$d कमकुवत पासवर्ड आढळले</string>
-    <string name="found_reused">%1$d पुन्हा वापरलेले पासवर्ड आढळले</string>
-    <string name="used_times">%1$d वेळा वापरले</string>
     <string name="no_issues">कोणतीही समस्या आढळली नाही. छान!</string>
+    <string name="cd_drag_handle">क्रम बदला</string>
+    <string name="cd_edit">संपादित करा</string>
+    <string name="cd_delete">हटवा</string>
+    <string name="cd_add_detail">तपशील जोडा</string>
+    <string name="cd_add_entry">नोंद जोडा</string>
+    <string name="cd_settings">सेटिंग्ज</string>
+    <string name="cd_generate_password">पासवर्ड तयार करा</string>
+    <string name="cd_password_options">पासवर्ड पर्याय</string>
+    <string name="cd_clear_search">शोध साफ करा</string>
+    <string name="cd_open">उघडा</string>
+    <string name="cd_back">मागे</string>
+    <string name="password_settings">पासवर्ड सेटिंग्ज</string>
+    <string name="password_length">लांबी: %1$d</string>
+    <string name="security_score_percent">%1$d%%</string>
+    <string name="invalid_file_selected">अवैध फाइल निवडली.</string>
+    <plurals name="password_used_times">
+        <item quantity="one">%1$d वेळा वापरले</item>
+        <item quantity="other">%1$d वेळा वापरले</item>
+    </plurals>
+    <string name="export_success">एन्क्रिप्टेड बॅकअप जतन केले.</string>
+    <string name="export_failed">बॅकअप जतन करता आले नाही.</string>
+    <string name="import_summary">%1$d नोंदी आणि %2$d तपशील आयात केले.</string>
+    <string name="import_wrong_password">चुकीचा पासवर्ड, किंवा फाइल खराब आहे.</string>
+    <string name="import_file_too_large">ही फाइल PassKey बॅकअपसाठी खूप मोठी आहे.</string>
+    <string name="import_unsupported_version">हा बॅकअप PassKey च्या नव्या आवृत्तीने तयार केला आहे.</string>
+    <string name="backup_password_title">तुमचा बॅकअप सुरक्षित करा</string>
+    <string name="backup_password_message">या बॅकअप फाइलसाठी पासवर्ड निवडा. पुनर्संचयित करण्याचा हाच एकमेव मार्ग आहे, आणि तो परत मिळवता येत नाही.</string>
+    <string name="backup_password_hint">बॅकअप पासवर्ड</string>
+    <string name="backup_password_confirm_hint">पासवर्डची पुष्टी करा</string>
+    <string name="backup_password_mismatch">पासवर्ड जुळत नाहीत.</string>
+    <string name="backup_password_too_short">किमान 8 अक्षरे वापरा.</string>
+    <string name="restore_password_title">बॅकअप पुनर्संचयित करा</string>
+    <string name="restore_password_message">ही बॅकअप फाइल तयार करताना निवडलेला पासवर्ड टाका.</string>
+    <string name="backup_confirm">सुरू ठेवा</string>
+    <string name="update_required_title">अपडेट आवश्यक</string>
+    <string name="update_required_message">PassKey ची ही आवृत्ती आता समर्थित नाही. तुमची व्हॉल्ट वापरत राहण्यासाठी अपडेट करा.</string>
+    <string name="update_now">आता अपडेट करा</string>
+    <string name="update_ready_message">एक अपडेट इंस्टॉलसाठी तयार आहे.</string>
+    <string name="update_restart">पुन्हा सुरू करा</string>
+    <string name="auto_lock">स्वयं-लॉक</string>
+    <string name="auto_lock_immediately">लगेच</string>
+    <string name="auto_lock_15_seconds">15 सेकंदांनी</string>
+    <string name="auto_lock_30_seconds">30 सेकंदांनी</string>
+    <string name="auto_lock_1_minute">1 मिनिटाने</string>
+    <string name="auto_lock_5_minutes">5 मिनिटांनी</string>
+    <string name="auto_lock_never">कधीही नाही</string>
+    <string name="auto_lock_never_warning">ॲप बंद करेपर्यंत व्हॉल्ट उघडी राहील. तुमचा अनलॉक केलेला फोन ज्याच्याकडे असेल तो तुमचे पासवर्ड वाचू शकतो.</string>
+    <string-array name="secret_field_keywords">
+        <item>पासवर्ड</item>
+        <item>पिन</item>
+        <item>कोड</item>
+        <item>गुप्त</item>
+        <item>गोपनीय</item>
+        <item>किल्ली</item>
+        <item>लॉगिन</item>
+    </string-array>
+    <string name="about_message">PassKey तुमचे लॉगिन, पासवर्ड आणि इतर खाजगी नोंदी तुमच्या उपकरणावरील एन्क्रिप्टेड डेटाबेसमध्ये साठवते.\n\nतुमची व्हॉल्ट कधीही फोनबाहेर जात नाही. खाते नाही, सिंक नाही, PassKey चा सर्व्हरही नाही: ॲप स्वतःहून कोणतीही नेटवर्क विनंती करत नाही आणि तुमच्या नोंदी कुठेही पाठवल्या जात नाहीत.\n\nडेटाबेस SQLCipher ने एन्क्रिप्ट केलेला असून तुमच्या उपकरणाच्या बायोमेट्रिक किंवा स्क्रीन लॉकने उघडतो. ॲप सोडताच व्हॉल्ट आपोआप पुन्हा लॉक होते, स्क्रीनशॉट रोखलेले आहेत, आणि कॉपी केलेले पासवर्ड संवेदनशील म्हणून चिन्हांकित होऊन थोड्याच वेळात क्लिपबोर्डमधून हटवले जातात.\n\nनोंदी श्रेणींमध्ये मांडता येतात, ओढून क्रम बदलता येतो, मजबूत पासवर्ड तयार करता येतात आणि कमकुवत किंवा पुन्हा वापरलेले पासवर्ड तपासता येतात. बॅकअप एकाच फाइलमध्ये निर्यात होतो, तुम्ही निवडलेल्या पासवर्डने एन्क्रिप्ट केलेला, आणि कोणत्याही उपकरणावर पुनर्संचयित करता येतो. PassKey तुमचे लॉगिन इतर अ‍ॅप्स आणि वेबसाइटवर भरू शकते, तुमचे दोन-घटक कोड ठेवू शकते आणि तुम्ही बदललेल्या प्रत्येक पासवर्डचा इतिहास ठेवू शकते.\n\nPassKey विनामूल्य आणि मुक्तस्रोत आहे, Aditya Bhardwaj यांनी विकसित केलेले. संपूर्ण स्रोत कोड GitHub वर उपलब्ध आहे.</string>
+    <string name="privacy_message">तुमची व्हॉल्ट तुमच्या उपकरणावरच राहते.\n\nआम्ही कधीही काय गोळा करत नाही: PassKey तुम्ही जतन केलेले पासवर्ड, वापरकर्तानावे, नोंदी किंवा इतर कोणतीही माहिती गोळा, प्रसारित किंवा साठवत नाही. ती फक्त तुमच्या फोनवरील एन्क्रिप्टेड डेटाबेसमध्ये असते. आम्ही ती वाचू शकत नाही आणि तुमच्यासाठी परत मिळवूही शकत नाही.\n\nॲप काय पाठवते: PassKey मध्ये Google Firebase Crashlytics, Analytics आणि Performance Monitoring, तसेच Google Play इन-ॲप अपडेट समाविष्ट आहेत. हे क्रॅश निदान, वापर घटना, कार्यक्षमता माहिती आणि जाहिरात आयडीसह उपकरण व स्थापना ओळखचिन्हे Google ला पाठवतात. त्यांना तुमच्या व्हॉल्टच्या मजकुरापर्यंत कधीही प्रवेश नसतो. या सेवांमुळे ॲपला इंटरनेट परवानगी लागते आणि त्यांची माहिती हाताळणी Google च्या गोपनीयता धोरणानुसार होते.\n\nबॅकअप: निर्यात करताना फाइल तुम्ही निवडलेल्या पासवर्डने एन्क्रिप्ट होते आणि तुम्ही सिस्टमला सांगाल तिथे साठवली जाते. त्यानंतर ती फाइल तुमची जबाबदारी आहे; ज्याच्याकडे फाइल आणि पासवर्ड दोन्ही असेल तो ती वाचू शकतो. आम्ही प्रत ठेवत नाही.\n\nउपकरण बॅकअप: PassKey ला Android क्लाउड बॅकअप आणि उपकरण-ते-उपकरण हस्तांतरणातून वगळले आहे, त्यामुळे तुमची व्हॉल्ट तुमच्या Google खात्यावर अपलोड होत नाही.\n\nबदल: हे धोरण अद्ययावत होऊ शकते; महत्त्वाचे बदल ॲपच्या रिलीज नोट्समध्ये नमूद केले जातील.\n\nप्रश्न: संपर्क <xliff:g id="email" example="name@example.com">yrkkh.cclub@gmail.com</xliff:g>.</string>
+    <string name="terms_n_condition_message">PassKey वापरून तुम्ही पुढील बाबींना सहमती देता.\n\n1. PassKey हे Aditya Bhardwaj यांनी विकसित केलेले विनामूल्य, मुक्तस्रोत सॉफ्टवेअर आहे.\n\n2. तुमची व्हॉल्ट फक्त तुमच्या उपकरणावर साठवली जाते. सर्व्हरवर प्रत नाही, त्यामुळे उपकरण हरवल्यास, ॲप काढून टाकल्यास किंवा बॅकअप पासवर्ड विसरल्यास डेटा परत मिळवण्याचा मार्ग नाही.\n\n3. बॅकअप ठेवणे ही तुमची जबाबदारी आहे. ते नियमितपणे निर्यात करा आणि बॅकअप पासवर्ड सुरक्षित, वेगळ्या ठिकाणी ठेवा.\n\n4. ॲप तुमच्या उपकरणाच्या बायोमेट्रिक किंवा स्क्रीन-लॉक सुरक्षेवर अवलंबून आहे. ते लॉक कमकुवत, काढलेले किंवा तडजोड झालेले असल्यास PassKey देत असलेले संरक्षण त्या प्रमाणात कमी होते.\n\n5. PassKey मध्ये गोपनीयता धोरणात वर्णन केलेल्या Google Firebase आणि Google Play सेवा समाविष्ट आहेत.\n\n6. हे ॲप्लिकेशन \"जसे आहे तसे\" पुरवले जाते, कोणत्याही स्पष्ट किंवा गर्भित हमीशिवाय, ज्यात व्यापारयोग्यता आणि विशिष्ट हेतूसाठी उपयुक्तता समाविष्ट आहे.\n\n7. कायद्याने परवानगी दिलेल्या मर्यादेत, ॲप्लिकेशनच्या वापरामुळे होणाऱ्या कोणत्याही नुकसानीस, डेटा हानीसह, विकसक जबाबदार नाही.\n\n8. ॲप्लिकेशन कधीही सुधारले किंवा बंद केले जाऊ शकते.</string>
+    <string name="recovery_setup_title">पुनर्प्राप्ती पासवर्ड सेट करा</string>
+    <string name="recovery_setup_message_new">PassKey तुमच्या बोटांचा ठसा किंवा स्क्रीन लॉकने उघडते. हा पुनर्प्राप्ती पासवर्ड पर्यायी मार्ग आहे — ठसे बदलल्यास किंवा उपकरण लॉक काढल्यास तो लागेल. तो रीसेट करता येत नाही, म्हणून सुरक्षित ठिकाणी ठेवा.</string>
+    <string name="recovery_setup_message_upgrade">हे अपडेट तुमची व्हॉल्ट या उपकरणासाठी खास किल्लीने पुन्हा एन्क्रिप्ट करते. आधी पुनर्प्राप्ती पासवर्ड सेट करा: ठसे बदलल्यास किंवा लॉक काढल्यास तोच एकमेव मार्ग असेल. तो रीसेट करता येत नाही.</string>
+    <string name="recovery_unlock_title">तुमचा पुनर्प्राप्ती पासवर्ड टाका</string>
+    <string name="recovery_unlock_message">तुमच्या उपकरणाचे बायोमेट्रिक किंवा स्क्रीन लॉक बदलले आहे, त्यामुळे व्हॉल्ट उघडण्यासाठी PassKey ला पुनर्प्राप्ती पासवर्ड हवा.</string>
+    <string name="recovery_unlock_wrong">तो पासवर्ड चालला नाही. पुन्हा प्रयत्न करा.</string>
+    <string name="migration_title">तुमची व्हॉल्ट सुरक्षित करत आहोत</string>
+    <string name="migration_message">तुमच्या नोंदी या उपकरणाच्या खास किल्लीने पुन्हा एन्क्रिप्ट होत आहेत. कृपया ॲप उघडे ठेवा.</string>
+    <string name="migration_failed_title">व्हॉल्ट सुरक्षित करणे पूर्ण झाले नाही</string>
+    <string name="migration_failed_message">काहीही हरवले नाही आणि तुमच्या नोंदी जशाच्या तशा आहेत. पुन्हा प्रयत्न करा, किंवा नंतर ॲप उघडा.</string>
+    <string name="migration_failed_message_can_export">काहीही हरवले नाही — तुमची व्हॉल्ट सुरक्षित आणि वाचनीय आहे. पुन्हा प्रयत्न करा, किंवा आधी सेटिंग्जमधून बॅकअप घ्या.</string>
+    <string name="migration_retry">पुन्हा प्रयत्न करा</string>
+    <string name="device_lock_required_title">उपकरण लॉक आवश्यक</string>
+    <string name="device_lock_required_message">PassKey तुमची व्हॉल्ट उपकरणाच्या स्क्रीन लॉकने सुरक्षित ठेवते. पुढे जाण्यासाठी पिन, पॅटर्न, पासवर्ड किंवा बायोमेट्रिक सेट करा.</string>
+    <string name="device_lock_open_settings">सेटिंग्ज उघडा</string>
+    <string name="change_recovery_password">पुनर्प्राप्ती पासवर्ड बदला</string>
+    <string name="recovery_change_current_title">सध्याच्या पासवर्डची पुष्टी करा</string>
+    <string name="recovery_change_current_message">तुम्हीच आहात हे सिद्ध करण्यासाठी सध्याचा पुनर्प्राप्ती पासवर्ड टाका.</string>
+    <string name="recovery_change_new_title">नवीन पुनर्प्राप्ती पासवर्ड निवडा</string>
+    <string name="recovery_change_new_message">हा तुमच्या जुन्या पुनर्प्राप्ती पासवर्डची जागा घेतो. तो रीसेट करता येत नाही, सुरक्षित ठिकाणी ठेवा.</string>
+    <string name="recovery_change_done">पुनर्प्राप्ती पासवर्ड बदलला.</string>
+    <string name="recovery_change_failed">तो पासवर्ड बरोबर नव्हता.</string>
+    <string name="migration_export_first">आधी बॅकअप घ्या</string>
+    <string name="migration_export_now">माझी व्हॉल्ट आता निर्यात करा</string>
+    <string name="store_unavailable">या डिव्हाइसवर Google Play उपलब्ध नाही.</string>
+    <string name="autofill">ऑटोफिल</string>
+    <string name="autofill_unlock">भरण्यासाठी अनलॉक करा</string>
+    <string name="autofill_open_app">तुमचे व्हॉल्ट सेटअप पूर्ण करण्यासाठी PassKey उघडा, नंतर पुन्हा प्रयत्न करा.</string>
+    <string name="autofill_save_failed">हे लॉगिन जतन करता आले नाही.</string>
+    <string name="autofill_save_locked">हे लॉगिन जतन करण्यासाठी PassKey अनलॉक करा.</string>
+    <string name="autofill_unsupported">या डिव्हाइसवर ऑटोफिल उपलब्ध नाही.</string>
+    <string name="authenticator">ऑथेंटिकेटर</string>
+    <string name="add_authenticator">ऑथेंटिकेटर जोडा</string>
+    <string name="authenticator_input_hint">otpauth:// दुवा पेस्ट करा किंवा गुप्त की टाइप करा</string>
+    <string name="authenticator_invalid">ही वैध ऑथेंटिकेटर की नाही.</string>
+    <string name="password_history">पासवर्ड इतिहास</string>
+    <string name="password_history_empty">हा पासवर्ड अद्याप बदललेला नाही.</string>
+    <string name="cd_remove_authenticator">ऑथेंटिकेटर काढा</string>
 </resources>

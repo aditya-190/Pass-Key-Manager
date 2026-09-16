@@ -1,5 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="no_previews_found">Nenhum item ainda</string>
+    <string name="no_details_found">Nenhum detalhe ainda</string>
+    <!--    Splash Screen    -->
+    <string name="app_version">Versão do app <xliff:g id="version" example="5.5.1">%1$s</xliff:g></string>
+    <string name="app_description">O único gerenciador de senhas que você vai precisar</string>
+
+    <!--    OnBoarding Screens    -->
+    <!--    Keep the 
+ line breaks and the [[ ]] highlight markers.    -->
+    <string name="skip">Pular</string>
+    <string name="next">Avançar</string>
+    <string name="first_heading">Crie\nsenhas\n[[seguras]].</string>
+    <string name="second_heading">Todas as suas\n[[senhas]]\nestão aqui.</string>
+    <string name="third_heading">Não digite,\n[[preencha]]\nsuas credenciais.</string>
+    <string name="first_description">Pare de usar senhas inseguras nas suas contas online e avance com o PassKey. Tenha senhas muito seguras e difíceis de quebrar.</string>
+    <string name="second_description">Guarde e gerencie todas as suas senhas em um só lugar. Não decore centenas de senhas, memorize apenas uma.</string>
+    <string name="third_description">Não comprometa suas senhas digitando-as em público; deixe o PassKey preencher tudo automaticamente e manter suas credenciais seguras.</string>
+
     <!-- Main Screens -->
     <string name="banks">Bancos</string>
     <string name="mails">Correios</string>
@@ -10,7 +28,6 @@
     <string name="search">Buscar</string>
     <string name="title">Título</string>
     <string name="response">Resposta</string>
-    <string name="export_download">Arquivo exportado para a pasta de downloads.</string>
     <string name="rate_app">Avaliar Aplicativo</string>
     <string name="change_language">Alterar Idioma</string>
     <string name="privacy">Privacidade</string>
@@ -20,7 +37,6 @@
     <string name="export_data">Exportar Dados</string>
 
     <!-- Edit Text Hints -->
-    <string name="type_here">Digite aqui…</string>
     <string name="type_your_title_here">Digite seu título aqui…</string>
     <string name="type_your_response_here">Digite sua resposta aqui…</string>
     <string name="type_your_heading_here">Digite seu título aqui…</string>
@@ -35,12 +51,7 @@
 
     <!-- Authentication Screen -->
     <string name="welcome_to_pass_key">Bem-vindo ao Gerenciador de Senhas</string>
-    <string name="authentication_failed">Autenticação Falhou.</string>
     <string name="something_went_wrong">Algo deu errado..</string>
-    <string name="set_password">Por favor, defina uma senha para o seu dispositivo primeiro.</string>
-    <string name="permission_required">Acesso ao armazenamento é necessário para exportar o banco de dados.</string>
-    <string name="permission_denied">Permissão Negada</string>
-    <string name="ok">OK</string>
 
     <!-- Dialogs and Requests -->
     <string name="change">Alterar</string>
@@ -53,7 +64,6 @@
     <string name="security_heading">PassKey está bloqueado</string>
     <string name="security_description">A autenticação é necessária para acessar o aplicativo PassKey.</string>
     <string name="security_button">Desbloquear agora</string>
-    <string name="coming_soon">Em breve</string>
     <string name="confirm_delete_title">Confirmar exclusão</string>
     <string name="confirm_delete_description_question">Tem certeza de que deseja excluir a pergunta?</string>
     <string name="confirm_delete_description_heading">Tem certeza de que deseja excluir o cabeçalho?</string>
@@ -62,15 +72,108 @@
     <!-- Password Health Report -->
     <string name="analyze_passwords">Status de Segurança</string>
     <string name="security_analysis">Análise de Segurança</string>
-    <string name="security_score">Pontuação de Segurança</string>
     <string name="weak_passwords">Senhas Fracas</string>
     <string name="reused_passwords">Senhas Reutilizadas</string>
-    <string name="safe_passwords">Senhas Seguras</string>
     <string name="excellent">Excelente</string>
     <string name="needs_attention">Requer Atenção</string>
     <string name="critical">Crítico</string>
-    <string name="found_weak">%1$d senhas fracas encontradas</string>
-    <string name="found_reused">%1$d senhas reutilizadas encontradas</string>
-    <string name="used_times">Usado %1$d vezes</string>
     <string name="no_issues">Nenhum problema encontrado. Bom trabalho!</string>
+    <string name="cd_drag_handle">Reordenar</string>
+    <string name="cd_edit">Editar</string>
+    <string name="cd_delete">Excluir</string>
+    <string name="cd_add_detail">Adicionar detalhe</string>
+    <string name="cd_add_entry">Adicionar item</string>
+    <string name="cd_settings">Configurações</string>
+    <string name="cd_generate_password">Gerar senha</string>
+    <string name="cd_password_options">Opções de senha</string>
+    <string name="cd_clear_search">Limpar busca</string>
+    <string name="cd_open">Abrir</string>
+    <string name="cd_back">Voltar</string>
+    <string name="password_settings">Configurações de senha</string>
+    <string name="password_length">Comprimento: %1$d</string>
+    <string name="security_score_percent">%1$d%%</string>
+    <string name="invalid_file_selected">Arquivo selecionado inválido.</string>
+    <plurals name="password_used_times">
+        <item quantity="one">Usada %1$d vez</item>
+        <item quantity="many">Usada %1$d vezes</item>
+        <item quantity="other">Usada %1$d vezes</item>
+    </plurals>
+    <string name="export_success">Backup criptografado salvo.</string>
+    <string name="export_failed">Não foi possível salvar o backup.</string>
+    <string name="import_summary">Importados %1$d itens e %2$d detalhes.</string>
+    <string name="import_wrong_password">Senha incorreta ou arquivo danificado.</string>
+    <string name="import_file_too_large">Esse arquivo é grande demais para ser um backup do PassKey.</string>
+    <string name="import_unsupported_version">Este backup foi criado por uma versão mais recente do PassKey.</string>
+    <string name="backup_password_title">Proteja seu backup</string>
+    <string name="backup_password_message">Escolha uma senha para este arquivo de backup. É a única forma de restaurá-lo e ela não pode ser recuperada.</string>
+    <string name="backup_password_hint">Senha do backup</string>
+    <string name="backup_password_confirm_hint">Confirmar senha</string>
+    <string name="backup_password_mismatch">As senhas não coincidem.</string>
+    <string name="backup_password_too_short">Use pelo menos 8 caracteres.</string>
+    <string name="restore_password_title">Restaurar backup</string>
+    <string name="restore_password_message">Digite a senha escolhida ao criar este arquivo de backup.</string>
+    <string name="backup_confirm">Continuar</string>
+    <string name="update_required_title">Atualização necessária</string>
+    <string name="update_required_message">Esta versão do PassKey não é mais compatível. Atualize para continuar usando seu cofre.</string>
+    <string name="update_now">Atualizar agora</string>
+    <string name="update_ready_message">Uma atualização está pronta para instalar.</string>
+    <string name="update_restart">Reiniciar</string>
+    <string name="auto_lock">Bloqueio automático</string>
+    <string name="auto_lock_immediately">Imediatamente</string>
+    <string name="auto_lock_15_seconds">Após 15 segundos</string>
+    <string name="auto_lock_30_seconds">Após 30 segundos</string>
+    <string name="auto_lock_1_minute">Após 1 minuto</string>
+    <string name="auto_lock_5_minutes">Após 5 minutos</string>
+    <string name="auto_lock_never">Nunca</string>
+    <string name="auto_lock_never_warning">O cofre ficará aberto até você fechar o app. Quem tiver seu celular desbloqueado poderá ler suas senhas.</string>
+    <string-array name="secret_field_keywords">
+        <item>senha</item>
+        <item>palavra-passe</item>
+        <item>pin</item>
+        <item>código</item>
+        <item>segredo</item>
+        <item>chave</item>
+        <item>acesso</item>
+    </string-array>
+    <string name="about_message">O PassKey guarda seus logins, senhas e outras notas privadas em um banco de dados criptografado no seu dispositivo.\n\nSeu cofre nunca sai do celular. Não há conta, sincronização nem servidor do PassKey: o aplicativo não faz requisições de rede próprias e suas entradas nunca são transmitidas para lugar algum.\n\nO banco de dados é criptografado com SQLCipher e desbloqueado com a biometria ou o bloqueio de tela do aparelho. O cofre volta a bloquear automaticamente quando você sai do app, capturas de tela são bloqueadas e senhas copiadas são marcadas como sensíveis e apagadas da área de transferência logo depois.\n\nVocê pode organizar entradas em categorias, reordená-las arrastando, gerar senhas fortes e verificar o cofre em busca de senhas fracas ou repetidas. Os backups são exportados como um único arquivo criptografado com uma senha escolhida por você e podem ser restaurados em qualquer dispositivo. O PassKey pode preencher seus logins em outros aplicativos e sites, guardar seus códigos de dois fatores e manter um histórico de cada senha que você alterar.\n\nO PassKey é gratuito e de código aberto, desenvolvido por Aditya Bhardwaj. O código-fonte completo está disponível no GitHub.</string>
+    <string name="privacy_message">Seu cofre permanece no seu dispositivo.\n\nO que nunca coletamos: o PassKey não coleta, transmite nem armazena as senhas, nomes de usuário, notas ou quaisquer outras entradas que você salva. Elas existem apenas em um banco de dados criptografado no seu celular. Não podemos lê-las nem recuperá-las para você.\n\nO que o aplicativo envia: o PassKey inclui Google Firebase Crashlytics, Analytics e Performance Monitoring, além das atualizações no app do Google Play. Esses serviços enviam ao Google diagnósticos de falhas, eventos de uso, rastros de desempenho e identificadores de dispositivo e instalação, incluindo um identificador de publicidade. Eles nunca têm acesso ao conteúdo do seu cofre. Por causa desses serviços o app exige a permissão de internet, e o tratamento desses dados segue a política de privacidade do Google.\n\nBackups: ao exportar um backup, o arquivo é criptografado com uma senha escolhida por você e gravado onde você indicar ao sistema. Esse arquivo passa a ser responsabilidade sua; quem obtiver o arquivo e a senha poderá lê-lo. Não guardamos cópia.\n\nBackup do dispositivo: o PassKey está excluído do backup na nuvem do Android e da transferência entre dispositivos, então seu cofre não é enviado para sua conta Google.\n\nAlterações: esta política pode ser atualizada; mudanças relevantes serão indicadas nas notas de versão.\n\nDúvidas: escreva para <xliff:g id="email" example="name@example.com">yrkkh.cclub@gmail.com</xliff:g>.</string>
+    <string name="terms_n_condition_message">Ao usar o PassKey você concorda com o seguinte.\n\n1. O PassKey é software gratuito e de código aberto desenvolvido por Aditya Bhardwaj.\n\n2. Seu cofre é armazenado apenas no seu dispositivo. Não existe cópia em servidor e, portanto, não há como recuperar seus dados se você perder o aparelho, desinstalar o app ou esquecer uma senha de backup.\n\n3. Manter backups é responsabilidade sua. Exporte-os regularmente e guarde a senha do backup em local seguro e separado.\n\n4. O app depende da segurança biométrica ou do bloqueio de tela do seu aparelho. Se esse bloqueio for fraco, removido ou comprometido, a proteção oferecida pelo PassKey diminui na mesma medida.\n\n5. O PassKey inclui serviços do Google Firebase e do Google Play conforme descrito na Política de Privacidade.\n\n6. O aplicativo é fornecido \"no estado em que se encontra\", sem garantia de qualquer tipo, expressa ou implícita, incluindo comercialização e adequação a uma finalidade específica.\n\n7. Na medida permitida por lei, o desenvolvedor não se responsabiliza por danos decorrentes do uso do aplicativo, incluindo perda de dados.\n\n8. O aplicativo pode ser modificado ou descontinuado a qualquer momento.</string>
+    <string name="recovery_setup_title">Defina uma senha de recuperação</string>
+    <string name="recovery_setup_message_new">O PassKey desbloqueia com sua digital ou o bloqueio de tela. Esta senha de recuperação é o caminho alternativo: você vai precisar dela se trocar suas digitais ou remover o bloqueio do aparelho. Não pode ser redefinida, guarde-a em local seguro.</string>
+    <string name="recovery_setup_message_upgrade">Esta atualização recriptografa seu cofre com uma chave exclusiva deste aparelho. Defina antes uma senha de recuperação: é a única forma de voltar se você trocar as digitais ou remover o bloqueio. Não pode ser redefinida.</string>
+    <string name="recovery_unlock_title">Digite sua senha de recuperação</string>
+    <string name="recovery_unlock_message">A biometria ou o bloqueio de tela do aparelho mudaram, então o PassKey precisa da sua senha de recuperação.</string>
+    <string name="recovery_unlock_wrong">Essa senha não funcionou. Tente de novo.</string>
+    <string name="migration_title">Protegendo seu cofre</string>
+    <string name="migration_message">Recriptografando suas entradas com uma chave exclusiva deste aparelho. Mantenha o app aberto.</string>
+    <string name="migration_failed_title">Não foi possível concluir a proteção do cofre</string>
+    <string name="migration_failed_message">Nada foi perdido e suas entradas estão intactas. Tente de novo ou reabra o app mais tarde.</string>
+    <string name="migration_failed_message_can_export">Nada foi perdido — seu cofre está intacto e legível. Tente de novo, ou exporte antes um backup nas configurações.</string>
+    <string name="migration_retry">Tentar de novo</string>
+    <string name="device_lock_required_title">Bloqueio de tela necessário</string>
+    <string name="device_lock_required_message">O PassKey protege seu cofre com o bloqueio de tela do aparelho. Configure PIN, padrão, senha ou biometria para continuar.</string>
+    <string name="device_lock_open_settings">Abrir configurações</string>
+    <string name="change_recovery_password">Alterar senha de recuperação</string>
+    <string name="recovery_change_current_title">Confirme a senha atual</string>
+    <string name="recovery_change_current_message">Digite sua senha de recuperação atual para provar que é você.</string>
+    <string name="recovery_change_new_title">Escolha uma nova senha de recuperação</string>
+    <string name="recovery_change_new_message">Ela substitui sua senha de recuperação antiga. Não pode ser redefinida, guarde-a em local seguro.</string>
+    <string name="recovery_change_done">Senha de recuperação alterada.</string>
+    <string name="recovery_change_failed">Essa senha não estava correta.</string>
+    <string name="migration_export_first">Exportar um backup antes</string>
+    <string name="migration_export_now">Exportar meu cofre agora</string>
+    <string name="store_unavailable">O Google Play não está disponível neste dispositivo.</string>
+    <string name="autofill">Preenchimento automático</string>
+    <string name="autofill_unlock">Desbloqueie para preencher</string>
+    <string name="autofill_open_app">Abra o PassKey para concluir a configuração do cofre e tente novamente.</string>
+    <string name="autofill_save_failed">Não foi possível salvar este login.</string>
+    <string name="autofill_save_locked">Desbloqueie o PassKey para salvar este login.</string>
+    <string name="autofill_unsupported">O preenchimento automático não está disponível neste dispositivo.</string>
+    <string name="authenticator">Autenticador</string>
+    <string name="add_authenticator">Adicionar autenticador</string>
+    <string name="authenticator_input_hint">Cole um link otpauth:// ou digite a chave secreta</string>
+    <string name="authenticator_invalid">Essa não é uma chave de autenticador válida.</string>
+    <string name="password_history">Histórico de senhas</string>
+    <string name="password_history_empty">Esta senha ainda não foi alterada.</string>
+    <string name="cd_remove_authenticator">Remover autenticador</string>
 </resources>

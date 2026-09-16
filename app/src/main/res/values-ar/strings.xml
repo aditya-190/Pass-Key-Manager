@@ -1,5 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="no_previews_found">لا توجد إدخالات بعد</string>
+    <string name="no_details_found">لا توجد تفاصيل بعد</string>
+    <!--    Splash Screen    -->
+    <string name="app_version">إصدار التطبيق <xliff:g id="version" example="5.5.1">%1$s</xliff:g></string>
+    <string name="app_description">مدير كلمات المرور الوحيد الذي ستحتاج إليه</string>
+
+    <!--    OnBoarding Screens    -->
+    <!--    Keep the 
+ line breaks and the [[ ]] highlight markers.    -->
+    <string name="skip">تخطٍّ</string>
+    <string name="next">التالي</string>
+    <string name="first_heading">أنشئ\nكلمات مرور\n[[آمنة]].</string>
+    <string name="second_heading">كل\n[[كلمات مرورك]]\nهنا.</string>
+    <string name="third_heading">لا تكتبها،\n[[املأ]] بياناتك\nتلقائيًا.</string>
+    <string name="first_description">توقّف عن استخدام كلمات مرور ضعيفة لحساباتك على الإنترنت، وارتقِ بها مع PassKey. احصل على كلمات مرور آمنة يصعب اختراقها.</string>
+    <string name="second_description">احفظ كل كلمات مرورك وأدرها من مكان واحد. لا تحفظ مئات كلمات المرور، بل واحدة فقط.</string>
+    <string name="third_description">لا تُعرّض كلمات مرورك للخطر بكتابتها أمام الآخرين، دع PassKey يملأها تلقائيًا ويحافظ على أمان بياناتك.</string>
+
     <!-- Main Screens -->
     <string name="banks">البنوك</string>
     <string name="mails">البريد</string>
@@ -10,7 +28,6 @@
     <string name="search">بحث</string>
     <string name="title">العنوان</string>
     <string name="response">الرد</string>
-    <string name="export_download">تم تصدير الملف إلى مجلد التنزيلات.</string>
     <string name="rate_app">تقييم التطبيق</string>
     <string name="change_language">تغيير اللغة</string>
     <string name="privacy">الخصوصية</string>
@@ -20,7 +37,6 @@
     <string name="export_data">تصدير البيانات</string>
 
     <!-- Edit Text Hints -->
-    <string name="type_here">اكتب هنا…</string>
     <string name="type_your_title_here">اكتب عنوانك هنا…</string>
     <string name="type_your_response_here">اكتب ردك هنا…</string>
     <string name="type_your_heading_here">اكتب عنوانك هنا…</string>
@@ -35,12 +51,7 @@
 
     <!-- Authentication Screen -->
     <string name="welcome_to_pass_key">مرحبًا بك في مدير PassKey</string>
-    <string name="authentication_failed">فشل التوثيق.</string>
     <string name="something_went_wrong">حدث خطأ ما..</string>
-    <string name="set_password">يرجى تعيين كلمة مرور لجهازك أولاً.</string>
-    <string name="permission_required">الوصول إلى التخزين مطلوب لتصدير قاعدة البيانات.</string>
-    <string name="permission_denied">تم رفض الإذن</string>
-    <string name="ok">حسنًا</string>
 
     <!-- Dialogs and Requests -->
     <string name="change">تغيير</string>
@@ -53,7 +64,6 @@
     <string name="security_heading">تم قفل PassKey</string>
     <string name="security_description">المصادقة مطلوبة للوصول إلى تطبيق PassKey.</string>
     <string name="security_button">فتح الآن</string>
-    <string name="coming_soon">قريبًا</string>
     <string name="confirm_delete_title">تأكيد الحذف</string>
     <string name="confirm_delete_description_question">هل أنت متأكد أنك تريد حذف السؤال؟</string>
     <string name="confirm_delete_description_heading">هل أنت متأكد أنك تريد حذف العنوان؟</string>
@@ -62,15 +72,111 @@
     <!-- Password Health Report -->
     <string name="analyze_passwords">حالة الأمان</string>
     <string name="security_analysis">تحليل الأمان</string>
-    <string name="security_score">درجة الأمان</string>
     <string name="weak_passwords">كلمات مرور ضعيفة</string>
     <string name="reused_passwords">كلمات مرور مكررة</string>
-    <string name="safe_passwords">كلمات مرور آمنة</string>
     <string name="excellent">ممتاز</string>
     <string name="needs_attention">يحتاج إلى انتباه</string>
     <string name="critical">حرج</string>
-    <string name="found_weak">تم العثور على %1$d كلمات مرور ضعيفة</string>
-    <string name="found_reused">تم العثور على %1$d كلمات مرور مكررة</string>
-    <string name="used_times">مستخدمة %1$d مرات</string>
     <string name="no_issues">لم يتم العثور على مشاكل. أحسنت!</string>
+    <string name="cd_drag_handle">إعادة ترتيب</string>
+    <string name="cd_edit">تعديل</string>
+    <string name="cd_delete">حذف</string>
+    <string name="cd_add_detail">إضافة تفصيل</string>
+    <string name="cd_add_entry">إضافة إدخال</string>
+    <string name="cd_settings">الإعدادات</string>
+    <string name="cd_generate_password">إنشاء كلمة مرور</string>
+    <string name="cd_password_options">خيارات كلمة المرور</string>
+    <string name="cd_clear_search">مسح البحث</string>
+    <string name="cd_open">فتح</string>
+    <string name="cd_back">رجوع</string>
+    <string name="password_settings">إعدادات كلمة المرور</string>
+    <string name="password_length">الطول: %1$d</string>
+    <string name="security_score_percent">%1$d%%</string>
+    <string name="invalid_file_selected">الملف المحدد غير صالح.</string>
+    <plurals name="password_used_times">
+        <item quantity="zero">لم تُستخدم</item>
+        <item quantity="one">استُخدمت مرة واحدة</item>
+        <item quantity="two">استُخدمت مرتين</item>
+        <item quantity="few">استُخدمت %1$d مرات</item>
+        <item quantity="many">استُخدمت %1$d مرة</item>
+        <item quantity="other">استُخدمت %1$d مرة</item>
+    </plurals>
+    <string name="export_success">تم حفظ النسخة الاحتياطية المشفّرة.</string>
+    <string name="export_failed">تعذّر حفظ النسخة الاحتياطية.</string>
+    <string name="import_summary">تم استيراد %1$d إدخالًا و%2$d تفصيلًا.</string>
+    <string name="import_wrong_password">كلمة المرور خاطئة، أو الملف تالف.</string>
+    <string name="import_file_too_large">هذا الملف أكبر من أن يكون نسخة احتياطية لـ PassKey.</string>
+    <string name="import_unsupported_version">أُنشئت هذه النسخة بإصدار أحدث من PassKey.</string>
+    <string name="backup_password_title">احمِ نسختك الاحتياطية</string>
+    <string name="backup_password_message">اختر كلمة مرور لملف النسخة الاحتياطية. إنها الطريقة الوحيدة لاستعادته، ولا يمكن استرجاعها.</string>
+    <string name="backup_password_hint">كلمة مرور النسخة الاحتياطية</string>
+    <string name="backup_password_confirm_hint">تأكيد كلمة المرور</string>
+    <string name="backup_password_mismatch">كلمتا المرور غير متطابقتين.</string>
+    <string name="backup_password_too_short">استخدم 8 أحرف على الأقل.</string>
+    <string name="restore_password_title">استعادة النسخة الاحتياطية</string>
+    <string name="restore_password_message">أدخل كلمة المرور التي اخترتها عند إنشاء ملف النسخة الاحتياطية.</string>
+    <string name="backup_confirm">متابعة</string>
+    <string name="update_required_title">التحديث مطلوب</string>
+    <string name="update_required_message">لم يعد هذا الإصدار من PassKey مدعومًا. حدّث التطبيق لمتابعة استخدام خزنتك.</string>
+    <string name="update_now">حدّث الآن</string>
+    <string name="update_ready_message">التحديث جاهز للتثبيت.</string>
+    <string name="update_restart">إعادة التشغيل</string>
+    <string name="auto_lock">القفل التلقائي</string>
+    <string name="auto_lock_immediately">فورًا</string>
+    <string name="auto_lock_15_seconds">بعد 15 ثانية</string>
+    <string name="auto_lock_30_seconds">بعد 30 ثانية</string>
+    <string name="auto_lock_1_minute">بعد دقيقة</string>
+    <string name="auto_lock_5_minutes">بعد 5 دقائق</string>
+    <string name="auto_lock_never">أبدًا</string>
+    <string name="auto_lock_never_warning">ستبقى الخزنة مفتوحة حتى تغلق التطبيق. يمكن لأي شخص يحمل هاتفك المفتوح قراءة كلمات مرورك.</string>
+    <string-array name="secret_field_keywords">
+        <item>كلمة المرور</item>
+        <item>كلمة السر</item>
+        <item>رمز</item>
+        <item>الرقم السري</item>
+        <item>سر</item>
+        <item>مفتاح</item>
+        <item>تسجيل الدخول</item>
+    </string-array>
+    <string name="about_message">يحفظ PassKey بيانات تسجيل الدخول وكلمات المرور والملاحظات الخاصة الأخرى في قاعدة بيانات مشفّرة على جهازك.\n\nخزنتك لا تغادر هاتفك أبدًا. لا يوجد حساب ولا مزامنة ولا خادم لـ PassKey: التطبيق لا يجري أي طلبات شبكة من تلقاء نفسه، ولا تُرسل مدخلاتك إلى أي مكان.\n\nقاعدة البيانات مشفّرة بواسطة SQLCipher وتُفتح ببصمتك أو قفل شاشة جهازك. تُقفل الخزنة تلقائيًا عند مغادرة التطبيق، ولقطات الشاشة محظورة، وكلمات المرور المنسوخة تُعلَّم كحساسة وتُمسح من الحافظة بعد وقت قصير.\n\nيمكنك تنظيم المدخلات في فئات، وإعادة ترتيبها بالسحب، وإنشاء كلمات مرور قوية، وفحص خزنتك بحثًا عن كلمات مرور ضعيفة أو مكررة. تُصدَّر النسخ الاحتياطية كملف واحد مشفّر بكلمة مرور تختارها، ويمكن استعادتها على أي جهاز. يمكن لـ PassKey ملء بيانات تسجيل الدخول في التطبيقات والمواقع الأخرى، والاحتفاظ برموز المصادقة الثنائية، وحفظ سجل لكل كلمة مرور تغيّرها.\n\nPassKey مجاني ومفتوح المصدر، طوّره Aditya Bhardwaj. الشيفرة المصدرية الكاملة متاحة على GitHub.</string>
+    <string name="privacy_message">تبقى خزنتك على جهازك.\n\nما لا نجمعه أبدًا: لا يجمع PassKey ولا ينقل ولا يخزّن كلمات المرور أو أسماء المستخدمين أو الملاحظات أو أي مدخلات تحفظها. توجد فقط في قاعدة بيانات مشفّرة على هاتفك. لا يمكننا قراءتها ولا استعادتها لك.\n\nما يرسله التطبيق: يتضمن PassKey خدمات Google Firebase Crashlytics وAnalytics وPerformance Monitoring، وتحديثات Google Play داخل التطبيق. ترسل هذه الخدمات إلى Google تشخيصات الأعطال وأحداث الاستخدام وبيانات الأداء ومعرّفات الجهاز والتثبيت بما في ذلك معرّف إعلاني. لا تصل هذه الخدمات إلى محتوى خزنتك إطلاقًا. بسبب هذه الخدمات يحتاج التطبيق إلى إذن الإنترنت، وتخضع معالجتها للبيانات لسياسة خصوصية Google.\n\nالنسخ الاحتياطية: عند التصدير يُشفَّر الملف بكلمة مرور تختارها ويُحفظ حيث تحدد للنظام. تصبح مسؤولية هذا الملف عليك بعد ذلك؛ من يحصل على الملف وكلمة مروره معًا يستطيع قراءته. نحن لا نحتفظ بأي نسخة.\n\nنسخ الجهاز الاحتياطي: PassKey مستثنى من النسخ الاحتياطي السحابي في Android ومن النقل بين الأجهزة، لذا لا تُرفع خزنتك إلى حساب Google الخاص بك.\n\nالتغييرات: قد تُحدَّث هذه السياسة؛ وستُذكر التغييرات الجوهرية في ملاحظات إصدار التطبيق.\n\nللاستفسار: تواصل عبر <xliff:g id="email" example="name@example.com">yrkkh.cclub@gmail.com</xliff:g>.</string>
+    <string name="terms_n_condition_message">باستخدامك PassKey فإنك توافق على ما يلي.\n\n1. PassKey برنامج مجاني مفتوح المصدر طوّره Aditya Bhardwaj.\n\n2. تُخزَّن خزنتك على جهازك فقط. لا توجد نسخة على أي خادم، وبالتالي لا توجد وسيلة لاستعادة بياناتك إذا فقدت جهازك أو أزلت التطبيق أو نسيت كلمة مرور النسخة الاحتياطية.\n\n3. الاحتفاظ بالنسخ الاحتياطية مسؤوليتك. صدّرها بانتظام واحفظ كلمة مرور النسخة في مكان آمن ومنفصل.\n\n4. يعتمد التطبيق على أمان البصمة أو قفل الشاشة في جهازك. إذا كان هذا القفل ضعيفًا أو مُزالًا أو مخترقًا، تقل الحماية التي يوفرها PassKey بالقدر نفسه.\n\n5. يتضمن PassKey خدمات Google Firebase وGoogle Play كما هو موضح في سياسة الخصوصية.\n\n6. يُقدَّم التطبيق \"كما هو\" دون أي ضمان صريح أو ضمني، بما في ذلك القابلية للتسويق والملاءمة لغرض معين.\n\n7. إلى الحد الذي يسمح به القانون، لا يتحمل المطوّر مسؤولية أي أضرار ناتجة عن استخدام التطبيق، بما في ذلك فقدان البيانات.\n\n8. يجوز تعديل التطبيق أو إيقافه في أي وقت.</string>
+    <string name="recovery_setup_title">عيّن كلمة مرور للاسترداد</string>
+    <string name="recovery_setup_message_new">يُفتح PassKey ببصمتك أو قفل الشاشة. كلمة مرور الاسترداد هذه هي الطريق البديل للدخول — ستحتاج إليها إذا غيّرت بصماتك أو أزلت قفل الجهاز. لا يمكن إعادة تعيينها، فاحفظها في مكان آمن.</string>
+    <string name="recovery_setup_message_upgrade">يعيد هذا التحديث تشفير خزنتك بمفتاح خاص بهذا الجهاز. عيّن كلمة مرور للاسترداد أولًا: هي الطريق الوحيد للعودة إذا غيّرت بصماتك أو أزلت قفل الجهاز. لا يمكن إعادة تعيينها، فاحفظها في مكان آمن.</string>
+    <string name="recovery_unlock_title">أدخل كلمة مرور الاسترداد</string>
+    <string name="recovery_unlock_message">تغيّرت بصمات جهازك أو قفل الشاشة، لذا يحتاج PassKey إلى كلمة مرور الاسترداد لفتح الخزنة.</string>
+    <string name="recovery_unlock_wrong">لم تنجح كلمة المرور هذه. حاول مرة أخرى.</string>
+    <string name="migration_title">جارٍ تأمين خزنتك</string>
+    <string name="migration_message">تُعاد الآن تشفير مدخلاتك بمفتاح خاص بهذا الجهاز. يُرجى إبقاء التطبيق مفتوحًا.</string>
+    <string name="migration_failed_title">تعذّر إكمال تأمين الخزنة</string>
+    <string name="migration_failed_message">لم يُفقد شيء ومدخلاتك كما هي. حاول مرة أخرى أو افتح التطبيق لاحقًا.</string>
+    <string name="migration_failed_message_can_export">لم يُفقد شيء — خزنتك سليمة ويمكن قراءتها. حاول مرة أخرى، أو صدّر نسخة احتياطية من الإعدادات أولًا.</string>
+    <string name="migration_retry">حاول مرة أخرى</string>
+    <string name="device_lock_required_title">قفل الجهاز مطلوب</string>
+    <string name="device_lock_required_message">يحمي PassKey خزنتك بقفل شاشة جهازك. عيّن رمز PIN أو نمطًا أو كلمة مرور أو بصمة للمتابعة.</string>
+    <string name="device_lock_open_settings">فتح الإعدادات</string>
+    <string name="change_recovery_password">تغيير كلمة مرور الاسترداد</string>
+    <string name="recovery_change_current_title">تأكيد كلمة المرور الحالية</string>
+    <string name="recovery_change_current_message">أدخل كلمة مرور الاسترداد الحالية لإثبات هويتك.</string>
+    <string name="recovery_change_new_title">اختر كلمة مرور استرداد جديدة</string>
+    <string name="recovery_change_new_message">تحل هذه محل كلمة مرور الاسترداد القديمة. لا يمكن إعادة تعيينها، فاحفظها في مكان آمن.</string>
+    <string name="recovery_change_done">تم تغيير كلمة مرور الاسترداد.</string>
+    <string name="recovery_change_failed">كلمة المرور غير صحيحة.</string>
+    <string name="migration_export_first">صدّر نسخة احتياطية أولًا</string>
+    <string name="migration_export_now">صدّر خزنتي الآن</string>
+    <string name="store_unavailable">خدمة Google Play غير متوفرة على هذا الجهاز.</string>
+    <string name="autofill">الملء التلقائي</string>
+    <string name="autofill_unlock">افتح القفل للملء</string>
+    <string name="autofill_open_app">افتح PassKey لإكمال إعداد خزنتك، ثم أعد المحاولة.</string>
+    <string name="autofill_save_failed">تعذر حفظ بيانات تسجيل الدخول.</string>
+    <string name="autofill_save_locked">افتح قفل PassKey لحفظ بيانات تسجيل الدخول.</string>
+    <string name="autofill_unsupported">الملء التلقائي غير متوفر على هذا الجهاز.</string>
+    <string name="authenticator">المصادقة</string>
+    <string name="add_authenticator">إضافة مصادقة</string>
+    <string name="authenticator_input_hint">الصق رابط otpauth:// أو اكتب المفتاح السري</string>
+    <string name="authenticator_invalid">هذا ليس مفتاح مصادقة صالحًا.</string>
+    <string name="password_history">سجل كلمات المرور</string>
+    <string name="password_history_empty">لم يتم تغيير كلمة المرور هذه بعد.</string>
+    <string name="cd_remove_authenticator">إزالة المصادقة</string>
 </resources>

@@ -1,5 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="no_previews_found">아직 항목이 없습니다</string>
+    <string name="no_details_found">아직 세부 정보가 없습니다</string>
+    <!--    Splash Screen    -->
+    <string name="app_version">앱 버전 <xliff:g id="version" example="5.5.1">%1$s</xliff:g></string>
+    <string name="app_description">당신에게 필요한 단 하나의 비밀번호 관리자</string>
+
+    <!--    OnBoarding Screens    -->
+    <!--    Keep the 
+ line breaks and the [[ ]] highlight markers.    -->
+    <string name="skip">건너뛰기</string>
+    <string name="next">다음</string>
+    <string name="first_heading">[[안전한]]\n비밀번호를\n만드세요.</string>
+    <string name="second_heading">모든\n[[비밀번호]]가\n여기에.</string>
+    <string name="third_heading">입력하지 말고\n자격 증명을\n[[자동 완성]].</string>
+    <string name="first_description">온라인 계정에 취약한 비밀번호를 쓰지 마세요. PassKey로 한 단계 올라서세요. 가장 안전하고 뚫기 어려운 비밀번호를 만들어 드립니다.</string>
+    <string name="second_description">모든 비밀번호를 한곳에서 저장하고 관리하세요. 수백 개를 외울 필요 없이 하나만 기억하면 됩니다.</string>
+    <string name="third_description">사람들 앞에서 입력하다 비밀번호를 노출하지 마세요. PassKey가 자동으로 채워 자격 증명을 안전하게 지켜 드립니다.</string>
+
     <!--    Main Screens    -->
     <string name="banks">은행</string>
     <string name="mails">메일</string>
@@ -10,7 +28,6 @@
     <string name="search">검색</string>
     <string name="title">제목</string>
     <string name="response">응답</string>
-    <string name="export_download">파일이 다운로드 폴더에 내보내졌습니다.</string>
     <string name="rate_app">앱 평가</string>
     <string name="change_language">언어 변경</string>
     <string name="privacy">개인 정보 보호</string>
@@ -20,7 +37,6 @@
     <string name="export_data">데이터 내보내기</string>
 
     <!--    Edit Text Hints    -->
-    <string name="type_here">여기에 입력…</string>
     <string name="type_your_title_here">여기에 제목 입력…</string>
     <string name="type_your_response_here">여기에 응답 입력…</string>
     <string name="type_your_heading_here">여기에 제목 입력…</string>
@@ -35,12 +51,7 @@
 
     <!--    Authentication Screen    -->
     <string name="welcome_to_pass_key">PassKey Manager에 오신 것을 환영합니다</string>
-    <string name="authentication_failed">인증 실패했습니다.</string>
     <string name="something_went_wrong">문제가 발생했습니다..</string>
-    <string name="set_password">먼저 장치의 비밀번호를 설정하십시오.</string>
-    <string name="permission_required">데이터베이스를 내보내려면 저장소 액세스가 필요합니다.</string>
-    <string name="permission_denied">허가가 거부되었습니다</string>
-    <string name="ok">확인</string>
 
     <!--    Dialogs and Requests    -->
     <string name="change">변경</string>
@@ -53,7 +64,6 @@
     <string name="security_heading">PassKey가 잠겨 있습니다</string>
     <string name="security_description">PassKey 앱에 액세스하려면 인증이 필요합니다.</string>
     <string name="security_button">지금 잠금 해제</string>
-    <string name="coming_soon">곧 출시 예정</string>
     <string name="confirm_delete_title">삭제 확인</string>
     <string name="confirm_delete_description_question">질문을 삭제하시겠습니까?</string>
     <string name="confirm_delete_description_heading">제목을 삭제하시겠습니까?</string>
@@ -62,15 +72,106 @@
     <!-- Password Health Report -->
     <string name="analyze_passwords">안전 상태</string>
     <string name="security_analysis">보안 분석</string>
-    <string name="security_score">보안 점수</string>
     <string name="weak_passwords">취약한 비밀번호</string>
     <string name="reused_passwords">재사용된 비밀번호</string>
-    <string name="safe_passwords">안전한 비밀번호</string>
     <string name="excellent">훌륭함</string>
     <string name="needs_attention">주의 필요</string>
     <string name="critical">심각함</string>
-    <string name="found_weak">%1$d개의 취약한 비밀번호 발견</string>
-    <string name="found_reused">%1$d개의 재사용된 비밀번호 발견</string>
-    <string name="used_times">%1$d회 사용됨</string>
     <string name="no_issues">문제가 발견되지 않았습니다. 잘하셨습니다!</string>
+    <string name="cd_drag_handle">순서 변경</string>
+    <string name="cd_edit">편집</string>
+    <string name="cd_delete">삭제</string>
+    <string name="cd_add_detail">세부 정보 추가</string>
+    <string name="cd_add_entry">항목 추가</string>
+    <string name="cd_settings">설정</string>
+    <string name="cd_generate_password">비밀번호 생성</string>
+    <string name="cd_password_options">비밀번호 옵션</string>
+    <string name="cd_clear_search">검색 지우기</string>
+    <string name="cd_open">열기</string>
+    <string name="cd_back">뒤로</string>
+    <string name="password_settings">비밀번호 설정</string>
+    <string name="password_length">길이: %1$d</string>
+    <string name="security_score_percent">%1$d%%</string>
+    <string name="invalid_file_selected">잘못된 파일을 선택했습니다.</string>
+    <plurals name="password_used_times">
+        <item quantity="other">%1$d회 사용됨</item>
+    </plurals>
+    <string name="export_success">암호화된 백업을 저장했습니다.</string>
+    <string name="export_failed">백업을 저장하지 못했습니다.</string>
+    <string name="import_summary">항목 %1$d개와 세부 정보 %2$d개를 가져왔습니다.</string>
+    <string name="import_wrong_password">비밀번호가 틀렸거나 파일이 손상되었습니다.</string>
+    <string name="import_file_too_large">이 파일은 PassKey 백업이라기엔 너무 큽니다.</string>
+    <string name="import_unsupported_version">이 백업은 최신 버전의 PassKey에서 만들어졌습니다.</string>
+    <string name="backup_password_title">백업 보호</string>
+    <string name="backup_password_message">이 백업 파일의 비밀번호를 정하세요. 복원할 수 있는 유일한 방법이며 다시 찾을 수 없습니다.</string>
+    <string name="backup_password_hint">백업 비밀번호</string>
+    <string name="backup_password_confirm_hint">비밀번호 확인</string>
+    <string name="backup_password_mismatch">비밀번호가 일치하지 않습니다.</string>
+    <string name="backup_password_too_short">8자 이상 사용하세요.</string>
+    <string name="restore_password_title">백업 복원</string>
+    <string name="restore_password_message">이 백업 파일을 만들 때 정한 비밀번호를 입력하세요.</string>
+    <string name="backup_confirm">계속</string>
+    <string name="update_required_title">업데이트 필요</string>
+    <string name="update_required_message">이 버전의 PassKey는 더 이상 지원되지 않습니다. 보관함을 계속 사용하려면 업데이트하세요.</string>
+    <string name="update_now">지금 업데이트</string>
+    <string name="update_ready_message">설치할 업데이트가 준비되었습니다.</string>
+    <string name="update_restart">다시 시작</string>
+    <string name="auto_lock">자동 잠금</string>
+    <string name="auto_lock_immediately">즉시</string>
+    <string name="auto_lock_15_seconds">15초 후</string>
+    <string name="auto_lock_30_seconds">30초 후</string>
+    <string name="auto_lock_1_minute">1분 후</string>
+    <string name="auto_lock_5_minutes">5분 후</string>
+    <string name="auto_lock_never">안 함</string>
+    <string name="auto_lock_never_warning">앱을 닫을 때까지 보관함이 열린 채로 유지됩니다. 잠금 해제된 기기를 가진 사람은 누구나 비밀번호를 볼 수 있습니다.</string>
+    <string-array name="secret_field_keywords">
+        <item>비밀번호</item>
+        <item>암호</item>
+        <item>핀</item>
+        <item>코드</item>
+        <item>비밀</item>
+        <item>키</item>
+        <item>로그인</item>
+    </string-array>
+    <string name="about_message">PassKey는 로그인 정보, 비밀번호, 그 밖의 비공개 메모를 기기 안의 암호화된 데이터베이스에 저장합니다.\n\n보관함은 기기를 벗어나지 않습니다. 계정도, 동기화도, PassKey 서버도 없습니다. 앱 자체는 네트워크 요청을 하지 않으며 저장한 항목이 어디로도 전송되지 않습니다.\n\n데이터베이스는 SQLCipher로 암호화되며 기기의 생체 인증이나 화면 잠금으로 해제합니다. 앱을 벗어나면 보관함이 자동으로 다시 잠기고, 스크린샷은 차단되며, 복사한 비밀번호는 민감 정보로 표시된 뒤 잠시 후 클립보드에서 지워집니다.\n\n항목을 카테고리로 정리하고 끌어서 순서를 바꿀 수 있으며, 강력한 비밀번호를 생성하고 취약하거나 재사용된 비밀번호를 점검할 수 있습니다. 백업은 직접 정한 비밀번호로 암호화된 단일 파일로 내보내지며 어떤 기기에서도 복원할 수 있습니다. PassKey는 다른 앱과 웹사이트에 로그인 정보를 입력하고, 2단계 인증 코드를 보관하며, 변경한 비밀번호의 기록을 남길 수 있습니다.\n\nPassKey는 Aditya Bhardwaj가 개발한 무료 오픈소스 소프트웨어이며 전체 소스 코드는 GitHub에서 공개되어 있습니다.</string>
+    <string name="privacy_message">보관함은 기기에 남아 있습니다.\n\n수집하지 않는 것: PassKey는 저장한 비밀번호, 사용자 이름, 메모 등 어떤 항목도 수집하거나 전송하거나 보관하지 않습니다. 해당 정보는 기기의 암호화된 데이터베이스에만 존재합니다. 저희는 이를 읽을 수도, 대신 복구해 드릴 수도 없습니다.\n\n앱이 전송하는 것: PassKey에는 Google Firebase Crashlytics, Analytics, Performance Monitoring과 Google Play 인앱 업데이트가 포함됩니다. 이들은 비정상 종료 진단, 사용 이벤트, 성능 기록, 광고 ID를 포함한 기기 및 설치 식별자를 Google로 전송합니다. 보관함 내용에는 접근하지 않습니다. 이러한 서비스 때문에 앱은 인터넷 권한을 필요로 하며, 해당 데이터 처리는 Google의 개인정보처리방침을 따릅니다.\n\n백업: 백업을 내보내면 직접 정한 비밀번호로 파일이 암호화되어 지정한 위치에 저장됩니다. 이후 그 파일은 사용자의 책임이며, 파일과 비밀번호를 모두 가진 사람은 내용을 읽을 수 있습니다. 저희는 사본을 보관하지 않습니다.\n\n기기 백업: PassKey는 Android 클라우드 백업과 기기 간 전송에서 제외되어 보관함이 Google 계정에 업로드되지 않습니다.\n\n변경: 본 방침은 변경될 수 있으며, 중요한 변경은 앱 출시 노트에 기재됩니다.\n\n문의: <xliff:g id="email" example="name@example.com">yrkkh.cclub@gmail.com</xliff:g> 로 연락해 주세요.</string>
+    <string name="terms_n_condition_message">PassKey를 사용함으로써 다음에 동의하게 됩니다.\n\n1. PassKey는 Aditya Bhardwaj가 개발한 무료 오픈소스 소프트웨어입니다.\n\n2. 보관함은 기기에만 저장됩니다. 서버 사본이 없으므로 기기를 분실하거나 앱을 삭제하거나 백업 비밀번호를 잊은 경우 데이터를 복구할 방법이 없습니다.\n\n3. 백업 보관은 사용자의 책임입니다. 정기적으로 내보내고 백업 비밀번호는 안전한 별도 장소에 보관하세요.\n\n4. 앱은 기기의 생체 인증 또는 화면 잠금 보안에 의존합니다. 해당 잠금이 취약하거나 해제되거나 침해되면 PassKey가 제공하는 보호도 그만큼 약해집니다.\n\n5. PassKey에는 개인정보처리방침에 기술된 Google Firebase 및 Google Play 서비스가 포함됩니다.\n\n6. 본 애플리케이션은 상품성 및 특정 목적 적합성을 포함하여 명시적이든 묵시적이든 어떠한 보증도 없이 \"있는 그대로\" 제공됩니다.\n\n7. 법이 허용하는 범위에서 개발자는 데이터 손실을 포함해 애플리케이션 사용으로 발생한 손해에 대해 책임지지 않습니다.\n\n8. 애플리케이션은 언제든 변경되거나 중단될 수 있습니다.</string>
+    <string name="recovery_setup_title">복구 비밀번호 설정</string>
+    <string name="recovery_setup_message_new">PassKey는 지문이나 화면 잠금으로 열립니다. 이 복구 비밀번호는 대체 수단으로, 지문을 변경하거나 기기 잠금을 해제하면 필요합니다. 재설정할 수 없으니 안전한 곳에 보관하세요.</string>
+    <string name="recovery_setup_message_upgrade">이 업데이트는 보관함을 이 기기 전용 키로 다시 암호화합니다. 먼저 복구 비밀번호를 설정하세요. 지문을 변경하거나 기기 잠금을 없앴을 때 유일한 방법입니다. 재설정할 수 없습니다.</string>
+    <string name="recovery_unlock_title">복구 비밀번호 입력</string>
+    <string name="recovery_unlock_message">기기의 생체 인증이나 화면 잠금이 변경되어 보관함을 열려면 복구 비밀번호가 필요합니다.</string>
+    <string name="recovery_unlock_wrong">해당 비밀번호로는 열 수 없습니다. 다시 시도하세요.</string>
+    <string name="migration_title">보관함을 보호하는 중</string>
+    <string name="migration_message">이 기기 전용 키로 항목을 다시 암호화하고 있습니다. 앱을 열어 두세요.</string>
+    <string name="migration_failed_title">보관함 보호를 마치지 못했습니다</string>
+    <string name="migration_failed_message">잃어버린 것은 없으며 항목은 그대로입니다. 다시 시도하거나 나중에 앱을 열어 주세요.</string>
+    <string name="migration_failed_message_can_export">잃어버린 것은 없습니다. 보관함은 온전하며 읽을 수 있습니다. 다시 시도하거나 설정에서 먼저 백업을 내보내세요.</string>
+    <string name="migration_retry">다시 시도</string>
+    <string name="device_lock_required_title">기기 잠금 필요</string>
+    <string name="device_lock_required_message">PassKey는 기기의 화면 잠금으로 보관함을 보호합니다. 계속하려면 PIN, 패턴, 비밀번호 또는 생체 인증을 설정하세요.</string>
+    <string name="device_lock_open_settings">설정 열기</string>
+    <string name="change_recovery_password">복구 비밀번호 변경</string>
+    <string name="recovery_change_current_title">현재 비밀번호 확인</string>
+    <string name="recovery_change_current_message">본인 확인을 위해 기존 복구 비밀번호를 입력하세요.</string>
+    <string name="recovery_change_new_title">새 복구 비밀번호 설정</string>
+    <string name="recovery_change_new_message">기존 복구 비밀번호를 대체합니다. 재설정할 수 없으니 안전한 곳에 보관하세요.</string>
+    <string name="recovery_change_done">복구 비밀번호를 변경했습니다.</string>
+    <string name="recovery_change_failed">비밀번호가 올바르지 않습니다.</string>
+    <string name="migration_export_first">먼저 백업 내보내기</string>
+    <string name="migration_export_now">지금 보관함 내보내기</string>
+    <string name="store_unavailable">이 기기에서는 Google Play를 사용할 수 없습니다.</string>
+    <string name="autofill">자동 완성</string>
+    <string name="autofill_unlock">잠금 해제 후 입력</string>
+    <string name="autofill_open_app">PassKey를 열어 보관함 설정을 완료한 후 다시 시도하세요.</string>
+    <string name="autofill_save_failed">이 로그인 정보를 저장하지 못했습니다.</string>
+    <string name="autofill_save_locked">이 로그인 정보를 저장하려면 PassKey의 잠금을 해제하세요.</string>
+    <string name="autofill_unsupported">이 기기에서는 자동 완성을 사용할 수 없습니다.</string>
+    <string name="authenticator">인증기</string>
+    <string name="add_authenticator">인증기 추가</string>
+    <string name="authenticator_input_hint">otpauth:// 링크를 붙여넣거나 비밀 키를 입력하세요</string>
+    <string name="authenticator_invalid">유효한 인증 키가 아닙니다.</string>
+    <string name="password_history">비밀번호 기록</string>
+    <string name="password_history_empty">이 비밀번호는 아직 변경되지 않았습니다.</string>
+    <string name="cd_remove_authenticator">인증기 제거</string>
 </resources>

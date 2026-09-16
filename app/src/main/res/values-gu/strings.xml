@@ -1,5 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="no_previews_found">હજી કોઈ એન્ટ્રી નથી</string>
+    <string name="no_details_found">હજી કોઈ વિગત નથી</string>
+    <!--    Splash Screen    -->
+    <string name="app_version">ઍપ સંસ્કરણ <xliff:g id="version" example="5.5.1">%1$s</xliff:g></string>
+    <string name="app_description">તમને જરૂરી એકમાત્ર પાસવર્ડ મેનેજર</string>
+
+    <!--    OnBoarding Screens    -->
+    <!--    Keep the 
+ line breaks and the [[ ]] highlight markers.    -->
+    <string name="skip">છોડો</string>
+    <string name="next">આગળ</string>
+    <string name="first_heading">બનાવો\n[[સુરક્ષિત]]\nપાસવર્ડ.</string>
+    <string name="second_heading">તમારા બધા\n[[પાસવર્ડ]]\nઅહીં છે.</string>
+    <string name="third_heading">ટાઇપ નહીં,\nવિગતો\n[[ઑટોફિલ]] કરો.</string>
+    <string name="first_description">તમારા ઓનલાઇન ખાતાં માટે અસુરક્ષિત પાસવર્ડ વાપરવાનું બંધ કરો, PassKey સાથે આગળ વધો. સૌથી સુરક્ષિત અને તોડવા મુશ્કેલ પાસવર્ડ મેળવો.</string>
+    <string name="second_description">તમારા બધા પાસવર્ડ એક જ જગ્યાએથી સાચવો અને સંભાળો. સેંકડો પાસવર્ડ નહીં, ફક્ત એક જ યાદ રાખો.</string>
+    <string name="third_description">જાહેરમાં ટાઇપ કરીને તમારા પાસવર્ડ જોખમમાં ન મૂકો, PassKey ને તે ઑટોફિલ કરવા દો અને તમારી વિગતો સુરક્ષિત રાખો.</string>
+
     <!--    Main Screens    -->
     <string name="banks">બેંકો</string>
     <string name="mails">મેલ</string>
@@ -10,7 +28,6 @@
     <string name="search">શોધો</string>
     <string name="title">શીર્ષક</string>
     <string name="response">જવાબ</string>
-    <string name="export_download">ફાઇલ ડાઉનલોડ કરી ગઈ છે.</string>
     <string name="rate_app">એપ્લિકેશન રેટ કરો</string>
     <string name="change_language">ભાષા બદલો</string>
     <string name="privacy">ગોપનીયતા</string>
@@ -20,7 +37,6 @@
     <string name="export_data">ડેટા નિર્યાત કરો</string>
 
     <!--    Edit Text Hints    -->
-    <string name="type_here">અહીં ટાઇપ કરો…</string>
     <string name="type_your_title_here">તમારો શીર્ષક અહીં ટાઇપ કરો…</string>
     <string name="type_your_response_here">તમારો જવાબ અહીં ટાઇપ કરો…</string>
     <string name="type_your_heading_here">તમારો શીર્ષક અહીં ટાઇપ કરો…</string>
@@ -35,12 +51,7 @@
 
     <!--    Authentication Screen    -->
     <string name="welcome_to_pass_key">PassKey મેનેજર માં આપનું સ્વાગત છે</string>
-    <string name="authentication_failed">પ્રમાણીકરણ નિષ્ફળ થયું.</string>
     <string name="something_went_wrong">કંઈક ખોટું થયું છે..</string>
-    <string name="set_password">કૃપા કરીને પ્રથમ તમારા ડિવાઇસ માટે પાસવર્ડ સેટ કરો.</string>
-    <string name="permission_required">ડેટાબેઝ નિર્યાત કરવા માટે સ્ટોરેજ ઍક્સેસ જરૂરી છે.</string>
-    <string name="permission_denied">પરવાનગી નકારી</string>
-    <string name="ok">ઠીક છે</string>
 
     <!--    Dialogs and Requests    -->
     <string name="change">બદલવું</string>
@@ -53,7 +64,6 @@
     <string name="security_heading">પાસકી લોકાંતિક છે</string>
     <string name="security_description">પાસકી એપ્લિકેશન એક્સેસ માટે પ્રમાણીકરણ જરૂરી છે.</string>
     <string name="security_button">હાલ ખોલો</string>
-    <string name="coming_soon">શીઘ્રવાર આવી રહ્યું છે</string>
     <string name="confirm_delete_title">ડિલીટ કન્ફર્મ કરો</string>
     <string name="confirm_delete_description_question">શું તમે ખાતરી છો કે તમે પ્રશ્ન ડિલીટ કરવા માંગો છો?</string>
     <string name="confirm_delete_description_heading">શું તમે ખાતરી છો કે તમે શીર્ષક ડિલીટ કરવા માંગો છો?</string>
@@ -62,15 +72,106 @@
     <!-- Password Health Report -->
     <string name="analyze_passwords">સુરક્ષા સ્થિતિ</string>
     <string name="security_analysis">સુરક્ષા વિશ્લેષણ</string>
-    <string name="security_score">સુરક્ષા સ્કોર</string>
     <string name="weak_passwords">નબળા પાસવર્ડ્સ</string>
     <string name="reused_passwords">પુનઃઉપયોગમાં લેવાયેલા પાસવર્ડ્સ</string>
-    <string name="safe_passwords">સુરક્ષિત પાસવર્ડ્સ</string>
     <string name="excellent">ઉત્તમ</string>
     <string name="needs_attention">ધ્યાન આપવાની જરૂર છે</string>
     <string name="critical">ગંભીર</string>
-    <string name="found_weak">%1$d નબળા પાસવર્ડ્સ મળ્યા</string>
-    <string name="found_reused">%1$d પુનઃઉપયોગમાં લેવાયેલા પાસવર્ડ્સ મળ્યા</string>
-    <string name="used_times">%1$d વખત ઉપયોગ થયો</string>
     <string name="no_issues">કોઈ સમસ્યા મળી નથી. સરસ!</string>
+    <string name="cd_drag_handle">ફરીથી ગોઠવો</string>
+    <string name="cd_edit">સંપાદિત કરો</string>
+    <string name="cd_delete">કાઢી નાખો</string>
+    <string name="cd_add_detail">વિગત ઉમેરો</string>
+    <string name="cd_add_entry">એન્ટ્રી ઉમેરો</string>
+    <string name="cd_settings">સેટિંગ્સ</string>
+    <string name="cd_generate_password">પાસવર્ડ બનાવો</string>
+    <string name="cd_password_options">પાસવર્ડ વિકલ્પો</string>
+    <string name="cd_clear_search">શોધ સાફ કરો</string>
+    <string name="cd_open">ખોલો</string>
+    <string name="cd_back">પાછળ</string>
+    <string name="password_settings">પાસવર્ડ સેટિંગ્સ</string>
+    <string name="password_length">લંબાઈ: %1$d</string>
+    <string name="security_score_percent">%1$d%%</string>
+    <string name="invalid_file_selected">અમાન્ય ફાઇલ પસંદ કરી.</string>
+    <plurals name="password_used_times">
+        <item quantity="one">%1$d વાર વપરાયેલ</item>
+        <item quantity="other">%1$d વાર વપરાયેલ</item>
+    </plurals>
+    <string name="export_success">એન્ક્રિપ્ટેડ બૅકઅપ સાચવ્યું.</string>
+    <string name="export_failed">બૅકઅપ સાચવી શકાયું નહીં.</string>
+    <string name="import_summary">%1$d એન્ટ્રી અને %2$d વિગતો આયાત થઈ.</string>
+    <string name="import_wrong_password">ખોટો પાસવર્ડ, અથવા ફાઇલ બગડેલી છે.</string>
+    <string name="import_file_too_large">આ ફાઇલ PassKey બૅકઅપ માટે ઘણી મોટી છે.</string>
+    <string name="import_unsupported_version">આ બૅકઅપ PassKey ના નવા સંસ્કરણથી બન્યું છે.</string>
+    <string name="backup_password_title">તમારું બૅકઅપ સુરક્ષિત કરો</string>
+    <string name="backup_password_message">આ બૅકઅપ ફાઇલ માટે પાસવર્ડ પસંદ કરો. પુનઃસ્થાપનનો આ એકમાત્ર રસ્તો છે, અને તે પાછો મેળવી શકાતો નથી.</string>
+    <string name="backup_password_hint">બૅકઅપ પાસવર્ડ</string>
+    <string name="backup_password_confirm_hint">પાસવર્ડની પુષ્ટિ કરો</string>
+    <string name="backup_password_mismatch">પાસવર્ડ મેળ ખાતા નથી.</string>
+    <string name="backup_password_too_short">ઓછામાં ઓછા 8 અક્ષર વાપરો.</string>
+    <string name="restore_password_title">બૅકઅપ પુનઃસ્થાપિત કરો</string>
+    <string name="restore_password_message">આ બૅકઅપ ફાઇલ બનાવતી વખતે પસંદ કરેલો પાસવર્ડ દાખલ કરો.</string>
+    <string name="backup_confirm">ચાલુ રાખો</string>
+    <string name="update_required_title">અપડેટ જરૂરી છે</string>
+    <string name="update_required_message">PassKey નું આ સંસ્કરણ હવે સમર્થિત નથી. તમારી વૉલ્ટ વાપરવાનું ચાલુ રાખવા અપડેટ કરો.</string>
+    <string name="update_now">હમણાં અપડેટ કરો</string>
+    <string name="update_ready_message">એક અપડેટ ઇન્સ્ટોલ કરવા તૈયાર છે.</string>
+    <string name="update_restart">ફરી શરૂ કરો</string>
+    <string name="auto_lock">ઑટો-લૉક</string>
+    <string name="auto_lock_immediately">તરત જ</string>
+    <string name="auto_lock_15_seconds">15 સેકન્ડ પછી</string>
+    <string name="auto_lock_30_seconds">30 સેકન્ડ પછી</string>
+    <string name="auto_lock_1_minute">1 મિનિટ પછી</string>
+    <string name="auto_lock_5_minutes">5 મિનિટ પછી</string>
+    <string name="auto_lock_never">ક્યારેય નહીં</string>
+    <string name="auto_lock_never_warning">ઍપ બંધ ન કરો ત્યાં સુધી વૉલ્ટ ખુલ્લી રહેશે. તમારો અનલૉક કરેલો ફોન જેની પાસે હશે તે તમારા પાસવર્ડ વાંચી શકશે.</string>
+    <string-array name="secret_field_keywords">
+        <item>પાસવર્ડ</item>
+        <item>પિન</item>
+        <item>કોડ</item>
+        <item>ગુપ્ત</item>
+        <item>ચાવી</item>
+        <item>લૉગિન</item>
+    </string-array>
+    <string name="about_message">PassKey તમારા લૉગિન, પાસવર્ડ અને અન્ય ખાનગી નોંધો તમારા ઉપકરણ પરના એન્ક્રિપ્ટેડ ડેટાબેઝમાં સાચવે છે.\n\nતમારી વૉલ્ટ ક્યારેય તમારા ફોનની બહાર જતી નથી. કોઈ ખાતું નથી, સિંક નથી, PassKey નું કોઈ સર્વર પણ નથી: ઍપ પોતે કોઈ નેટવર્ક વિનંતી કરતી નથી અને તમારી નોંધો ક્યાંય મોકલાતી નથી.\n\nડેટાબેઝ SQLCipher થી એન્ક્રિપ્ટ થયેલો છે અને તમારા ઉપકરણના બાયોમેટ્રિક કે સ્ક્રીન લૉકથી ખૂલે છે. ઍપ છોડતાં જ વૉલ્ટ આપોઆપ ફરી લૉક થાય છે, સ્ક્રીનશૉટ રોકાયેલા છે, અને કૉપિ કરેલા પાસવર્ડ સંવેદનશીલ તરીકે ચિહ્નિત થઈને થોડી વારમાં ક્લિપબોર્ડમાંથી દૂર થાય છે.\n\nતમે નોંધોને શ્રેણીઓમાં ગોઠવી શકો, ખેંચીને ક્રમ બદલી શકો, મજબૂત પાસવર્ડ બનાવી શકો અને નબળા કે પુનરાવર્તિત પાસવર્ડ તપાસી શકો. બૅકઅપ એક જ ફાઇલ તરીકે નિકાસ થાય છે, તમે પસંદ કરેલા પાસવર્ડથી એન્ક્રિપ્ટેડ, અને કોઈ પણ ઉપકરણ પર પુનઃસ્થાપિત થઈ શકે છે. PassKey અન્ય એપ્લિકેશન અને વેબસાઇટ પર તમારા લૉગિન ભરી શકે છે, તમારા બે-પરિબળ કોડ રાખી શકે છે અને તમે બદલેલા દરેક પાસવર્ડનો ઇતિહાસ સાચવી શકે છે.\n\nPassKey મફત અને ઓપન સોર્સ છે, Aditya Bhardwaj દ્વારા વિકસાવાયેલ. સંપૂર્ણ સ્રોત કોડ GitHub પર ઉપલબ્ધ છે.</string>
+    <string name="privacy_message">તમારી વૉલ્ટ તમારા ઉપકરણ પર જ રહે છે.\n\nઅમે ક્યારેય શું એકત્ર કરતા નથી: PassKey તમે સાચવેલા પાસવર્ડ, વપરાશકર્તાનામ, નોંધો કે અન્ય કોઈ પણ નોંધ એકત્ર, પ્રસારિત કે સંગ્રહિત કરતું નથી. તે માત્ર તમારા ફોનના એન્ક્રિપ્ટેડ ડેટાબેઝમાં રહે છે. અમે તે વાંચી શકતા નથી અને તમારા માટે પાછી મેળવી પણ શકતા નથી.\n\nઍપ શું મોકલે છે: PassKey માં Google Firebase Crashlytics, Analytics અને Performance Monitoring તથા Google Play ઇન-ઍપ અપડેટ સામેલ છે. આ ક્રેશ નિદાન, વપરાશ ઘટનાઓ, કામગીરી માહિતી અને જાહેરાત ID સહિત ઉપકરણ તથા ઇન્સ્ટોલેશન ઓળખકર્તાઓ Google ને મોકલે છે. તેમને તમારી વૉલ્ટની સામગ્રી સુધી ક્યારેય પ્રવેશ મળતો નથી. આ સેવાઓને કારણે ઍપને ઇન્ટરનેટ પરવાનગી જોઈએ છે, અને તેમનું ડેટા સંચાલન Google ની ગોપનીયતા નીતિ હેઠળ આવે છે.\n\nબૅકઅપ: નિકાસ વખતે ફાઇલ તમે પસંદ કરેલા પાસવર્ડથી એન્ક્રિપ્ટ થાય છે અને તમે સિસ્ટમને જ્યાં કહો ત્યાં સચવાય છે. ત્યાર બાદ તે ફાઇલની જવાબદારી તમારી છે; જેની પાસે ફાઇલ અને પાસવર્ડ બંને હોય તે તેને વાંચી શકે છે. અમે કોઈ નકલ રાખતા નથી.\n\nઉપકરણ બૅકઅપ: PassKey ને Android ક્લાઉડ બૅકઅપ અને ઉપકરણ-થી-ઉપકરણ સ્થાનાંતરણમાંથી બાકાત રાખ્યું છે, તેથી તમારી વૉલ્ટ તમારા Google ખાતામાં અપલોડ થતી નથી.\n\nફેરફારો: આ નીતિ અપડેટ થઈ શકે છે; મહત્ત્વના ફેરફારો ઍપની રિલીઝ નોંધમાં જણાવાશે.\n\nપ્રશ્નો: સંપર્ક <xliff:g id="email" example="name@example.com">yrkkh.cclub@gmail.com</xliff:g>.</string>
+    <string name="terms_n_condition_message">PassKey વાપરીને તમે નીચેની બાબતો સાથે સંમત થાઓ છો.\n\n1. PassKey એ Aditya Bhardwaj દ્વારા વિકસાવાયેલ મફત, ઓપન-સોર્સ સોફ્ટવેર છે.\n\n2. તમારી વૉલ્ટ માત્ર તમારા ઉપકરણ પર સંગ્રહિત છે. સર્વર પર કોઈ નકલ નથી, તેથી ઉપકરણ ખોવાય, ઍપ દૂર કરો કે બૅકઅપ પાસવર્ડ ભૂલી જાઓ તો ડેટા પાછો મેળવવાનો કોઈ માર્ગ નથી.\n\n3. બૅકઅપ રાખવાની જવાબદારી તમારી છે. નિયમિત નિકાસ કરો અને બૅકઅપ પાસવર્ડ સુરક્ષિત, અલગ જગ્યાએ રાખો.\n\n4. ઍપ તમારા ઉપકરણની બાયોમેટ્રિક કે સ્ક્રીન-લૉક સુરક્ષા પર આધારિત છે. જો તે લૉક નબળો, દૂર કરેલો કે ભંગ થયેલો હોય, તો PassKey નું રક્ષણ તે પ્રમાણમાં ઘટે છે.\n\n5. PassKey માં ગોપનીયતા નીતિમાં વર્ણવેલ Google Firebase અને Google Play સેવાઓ સામેલ છે.\n\n6. આ એપ્લિકેશન \"જેમ છે તેમ\" પૂરી પાડવામાં આવે છે, કોઈ પણ સ્પષ્ટ કે ગર્ભિત વોરંટી વિના, જેમાં વેપારયોગ્યતા અને ચોક્કસ હેતુ માટેની યોગ્યતા સામેલ છે.\n\n7. કાયદા દ્વારા માન્ય હદ સુધી, ડેવલપર એપ્લિકેશનના ઉપયોગથી થતા કોઈ પણ નુકસાન માટે, ડેટા ગુમાવવા સહિત, જવાબદાર નથી.\n\n8. એપ્લિકેશન કોઈ પણ સમયે સુધારી કે બંધ કરી શકાય છે.</string>
+    <string name="recovery_setup_title">પુનઃપ્રાપ્તિ પાસવર્ડ સેટ કરો</string>
+    <string name="recovery_setup_message_new">PassKey તમારી ફિંગરપ્રિન્ટ કે સ્ક્રીન લૉકથી ખૂલે છે. આ પુનઃપ્રાપ્તિ પાસવર્ડ વૈકલ્પિક રસ્તો છે — ફિંગરપ્રિન્ટ બદલો કે ઉપકરણ લૉક દૂર કરો ત્યારે જરૂર પડશે. તે રીસેટ થઈ શકતો નથી, સુરક્ષિત જગ્યાએ રાખો.</string>
+    <string name="recovery_setup_message_upgrade">આ અપડેટ તમારી વૉલ્ટને આ ઉપકરણ માટેની અનન્ય કી વડે ફરીથી એન્ક્રિપ્ટ કરે છે. પહેલાં પુનઃપ્રાપ્તિ પાસવર્ડ સેટ કરો: ફિંગરપ્રિન્ટ બદલો કે લૉક દૂર કરો ત્યારે એ જ એકમાત્ર રસ્તો છે. તે રીસેટ થઈ શકતો નથી.</string>
+    <string name="recovery_unlock_title">તમારો પુનઃપ્રાપ્તિ પાસવર્ડ દાખલ કરો</string>
+    <string name="recovery_unlock_message">તમારા ઉપકરણના બાયોમેટ્રિક કે સ્ક્રીન લૉક બદલાયા છે, તેથી વૉલ્ટ ખોલવા PassKey ને પુનઃપ્રાપ્તિ પાસવર્ડ જોઈએ.</string>
+    <string name="recovery_unlock_wrong">એ પાસવર્ડ કામ ન આવ્યો. ફરી પ્રયાસ કરો.</string>
+    <string name="migration_title">તમારી વૉલ્ટ સુરક્ષિત કરી રહ્યા છીએ</string>
+    <string name="migration_message">તમારી નોંધો આ ઉપકરણની અનન્ય કી વડે ફરીથી એન્ક્રિપ્ટ થઈ રહી છે. ઍપ ખુલ્લી રાખો.</string>
+    <string name="migration_failed_title">વૉલ્ટ સુરક્ષિત કરવાનું પૂરું ન થઈ શક્યું</string>
+    <string name="migration_failed_message">કંઈ ખોવાયું નથી અને તમારી નોંધો અકબંધ છે. ફરી પ્રયાસ કરો, અથવા પછી ઍપ ખોલો.</string>
+    <string name="migration_failed_message_can_export">કંઈ ખોવાયું નથી — તમારી વૉલ્ટ અકબંધ અને વાંચી શકાય તેવી છે. ફરી પ્રયાસ કરો, અથવા પહેલાં સેટિંગ્સમાંથી બૅકઅપ લો.</string>
+    <string name="migration_retry">ફરી પ્રયાસ કરો</string>
+    <string name="device_lock_required_title">ઉપકરણ લૉક જરૂરી</string>
+    <string name="device_lock_required_message">PassKey તમારી વૉલ્ટને ઉપકરણના સ્ક્રીન લૉકથી સુરક્ષિત રાખે છે. ચાલુ રાખવા પિન, પૅટર્ન, પાસવર્ડ કે બાયોમેટ્રિક સેટ કરો.</string>
+    <string name="device_lock_open_settings">સેટિંગ્સ ખોલો</string>
+    <string name="change_recovery_password">પુનઃપ્રાપ્તિ પાસવર્ડ બદલો</string>
+    <string name="recovery_change_current_title">વર્તમાન પાસવર્ડની પુષ્ટિ કરો</string>
+    <string name="recovery_change_current_message">તમે જ છો તે સાબિત કરવા હાલનો પુનઃપ્રાપ્તિ પાસવર્ડ દાખલ કરો.</string>
+    <string name="recovery_change_new_title">નવો પુનઃપ્રાપ્તિ પાસવર્ડ પસંદ કરો</string>
+    <string name="recovery_change_new_message">આ તમારા જૂના પુનઃપ્રાપ્તિ પાસવર્ડની જગ્યા લે છે. તે રીસેટ થઈ શકતો નથી, સુરક્ષિત જગ્યાએ રાખો.</string>
+    <string name="recovery_change_done">પુનઃપ્રાપ્તિ પાસવર્ડ બદલાયો.</string>
+    <string name="recovery_change_failed">એ પાસવર્ડ સાચો ન હતો.</string>
+    <string name="migration_export_first">પહેલાં બૅકઅપ લો</string>
+    <string name="migration_export_now">હમણાં મારી વૉલ્ટ નિકાસ કરો</string>
+    <string name="store_unavailable">આ ઉપકરણ પર Google Play ઉપલબ્ધ નથી.</string>
+    <string name="autofill">ઑટોફિલ</string>
+    <string name="autofill_unlock">ભરવા માટે અનલૉક કરો</string>
+    <string name="autofill_open_app">તમારું વૉલ્ટ સેટઅપ પૂરું કરવા PassKey ખોલો, પછી ફરી પ્રયાસ કરો.</string>
+    <string name="autofill_save_failed">આ લૉગિન સાચવી શકાયું નહીં.</string>
+    <string name="autofill_save_locked">આ લૉગિન સાચવવા માટે PassKey અનલૉક કરો.</string>
+    <string name="autofill_unsupported">આ ઉપકરણ પર ઑટોફિલ ઉપલબ્ધ નથી.</string>
+    <string name="authenticator">ઑથેન્ટિકેટર</string>
+    <string name="add_authenticator">ઑથેન્ટિકેટર ઉમેરો</string>
+    <string name="authenticator_input_hint">otpauth:// લિંક પેસ્ટ કરો અથવા ગુપ્ત કી લખો</string>
+    <string name="authenticator_invalid">આ માન્ય ઑથેન્ટિકેટર કી નથી.</string>
+    <string name="password_history">પાસવર્ડ ઇતિહાસ</string>
+    <string name="password_history_empty">આ પાસવર્ડ હજી બદલાયો નથી.</string>
+    <string name="cd_remove_authenticator">ઑથેન્ટિકેટર દૂર કરો</string>
 </resources>

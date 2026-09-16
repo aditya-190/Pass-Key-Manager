@@ -22,7 +22,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.bhardwaj.passkey.R
-import com.bhardwaj.passkey.domain.models.Language
+import com.bhardwaj.passkey.domain.model.Language
 import com.bhardwaj.passkey.presentation.theme.Poppins
 
 @Composable
@@ -68,104 +68,87 @@ fun LanguageBottomSheet(
         Language(
             languageId = "ar",
             languageName = "عربي",
-            languageNameInEnglish = "Arabic",
-            comingSoon = false
+            languageNameInEnglish = "Arabic"
         ),
         Language(
             languageId = "bn",
             languageName = "বাংলা",
-            languageNameInEnglish = "Bengali",
-            comingSoon = false
+            languageNameInEnglish = "Bengali"
         ),
         Language(
             languageId = "zh",
             languageName = "中文",
-            languageNameInEnglish = "Chinese",
-            comingSoon = false
+            languageNameInEnglish = "Chinese"
         ),
         Language(
             languageId = "en",
             languageName = "English",
-            languageNameInEnglish = "English",
-            comingSoon = false
+            languageNameInEnglish = "English"
         ),
         Language(
             languageId = "fr",
             languageName = "Français",
-            languageNameInEnglish = "French",
-            comingSoon = false
+            languageNameInEnglish = "French"
         ),
         Language(
             languageId = "de",
             languageName = "Deutsch",
-            languageNameInEnglish = "German",
-            comingSoon = false
+            languageNameInEnglish = "German"
         ),
         Language(
             languageId = "gu",
             languageName = "ગુજરાતી",
-            languageNameInEnglish = "Gujarati",
-            comingSoon = false
+            languageNameInEnglish = "Gujarati"
         ),
         Language(
             languageId = "hi",
             languageName = "हिन्दी",
-            languageNameInEnglish = "Hindi",
-            comingSoon = false
+            languageNameInEnglish = "Hindi"
         ),
         Language(
             languageId = "it",
             languageName = "Italiano",
-            languageNameInEnglish = "Italian",
-            comingSoon = false
+            languageNameInEnglish = "Italian"
         ),
         Language(
             languageId = "ja",
             languageName = "日本語",
-            languageNameInEnglish = "Japanese",
-            comingSoon = false
+            languageNameInEnglish = "Japanese"
         ),
         Language(
             languageId = "ko",
             languageName = "한국어",
-            languageNameInEnglish = "Korean",
-            comingSoon = false
+            languageNameInEnglish = "Korean"
         ),
         Language(
             languageId = "mr",
             languageName = "मराठी",
-            languageNameInEnglish = "Marathi",
-            comingSoon = false
+            languageNameInEnglish = "Marathi"
         ),
         Language(
             languageId = "pt",
             languageName = "Português",
-            languageNameInEnglish = "Portuguese",
-            comingSoon = false
+            languageNameInEnglish = "Portuguese"
         ),
         Language(
             languageId = "ru",
             languageName = "Русский",
-            languageNameInEnglish = "Russian",
-            comingSoon = false
+            languageNameInEnglish = "Russian"
         ),
         Language(
             languageId = "es",
             languageName = "Español",
-            languageNameInEnglish = "Spanish",
-            comingSoon = false
+            languageNameInEnglish = "Spanish"
         ),
         Language(
             languageId = "ta",
             languageName = "தமிழ்",
-            languageNameInEnglish = "Tamil",
-            comingSoon = false
+            languageNameInEnglish = "Tamil"
         ),
         Language(
             languageId = "te",
             languageName = "తెలుగు",
-            languageNameInEnglish = "Telugu",
-            comingSoon = false
+            languageNameInEnglish = "Telugu"
         ),
     )
 
@@ -182,7 +165,7 @@ fun LanguageBottomSheet(
                     onClick = { onBackIconClick() }
                 ),
             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-            contentDescription = "Back Icon"
+            contentDescription = stringResource(R.string.cd_back)
         )
         Text(
             modifier = Modifier.padding(start = 16.dp),

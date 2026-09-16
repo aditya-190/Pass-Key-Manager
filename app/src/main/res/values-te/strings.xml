@@ -1,5 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="no_previews_found">ఇంకా ఎంట్రీలు లేవు</string>
+    <string name="no_details_found">ఇంకా వివరాలు లేవు</string>
+    <!--    Splash Screen    -->
+    <string name="app_version">యాప్ వెర్షన్ <xliff:g id="version" example="5.5.1">%1$s</xliff:g></string>
+    <string name="app_description">మీకు కావలసిన ఏకైక పాస్‌వర్డ్ మేనేజర్</string>
+
+    <!--    OnBoarding Screens    -->
+    <!--    Keep the 
+ line breaks and the [[ ]] highlight markers.    -->
+    <string name="skip">దాటవేయి</string>
+    <string name="next">తదుపరి</string>
+    <string name="first_heading">[[సురక్షిత]]\nపాస్‌వర్డ్‌లను\nసృష్టించండి.</string>
+    <string name="second_heading">మీ అన్ని\n[[పాస్‌వర్డ్‌లు]]\nఇక్కడే.</string>
+    <string name="third_heading">టైప్ చేయవద్దు,\nవివరాలను\n[[ఆటోఫిల్]] చేయండి.</string>
+    <string name="first_description">మీ ఆన్‌లైన్ ఖాతాలకు అసురక్షిత పాస్‌వర్డ్‌లను ఉపయోగించడం ఆపండి, PassKey తో ముందుకు సాగండి. అత్యంత సురక్షితమైన, ఛేదించడం కష్టమైన పాస్‌వర్డ్‌లను పొందండి.</string>
+    <string name="second_description">మీ అన్ని పాస్‌వర్డ్‌లను ఒకే చోట నుండి భద్రపరచండి, నిర్వహించండి. వందల పాస్‌వర్డ్‌లు కాదు, ఒక్కటే గుర్తుంచుకోండి.</string>
+    <string name="third_description">బహిరంగంగా టైప్ చేసి మీ పాస్‌వర్డ్‌లను ప్రమాదంలో పెట్టవద్దు, PassKey వాటిని ఆటోఫిల్ చేసి మీ వివరాలను సురక్షితంగా ఉంచనివ్వండి.</string>
+
     <!-- Main Screens -->
     <string name="banks">బ్యాంకులు</string>
     <string name="mails">మెయిల్‌లు</string>
@@ -10,7 +28,6 @@
     <string name="search">శోధన</string>
     <string name="title">శీర్షిక</string>
     <string name="response">సమాధానం</string>
-    <string name="export_download">ఫైల్‌ను డౌన్‌లోడ్లు ఫోల్డర్‌కు ఎగురుతున్నది.</string>
     <string name="rate_app">అనువర్తనం రేట్ చేయండి</string>
     <string name="change_language">భాషను మార్చు</string>
     <string name="privacy">గౌప్యం</string>
@@ -20,7 +37,6 @@
     <string name="export_data">డేటా ఎగురుతున్నది</string>
 
     <!-- Edit Text Hints -->
-    <string name="type_here">ఇక్కడ టైప్ చేయండి…</string>
     <string name="type_your_title_here">మీ శీర్షికను ఇక్కడ టైప్ చేయండి…</string>
     <string name="type_your_response_here">మీ సమాధానం ఇక్కడ టైప్ చేయండి…</string>
     <string name="type_your_heading_here">మీ శీర్షికను ఇక్కడ టైప్ చేయండి…</string>
@@ -35,12 +51,7 @@
 
     <!-- Authentication Screen -->
     <string name="welcome_to_pass_key">పాస్‌కీ మేనేజర్‌కు స్వాగతం</string>
-    <string name="authentication_failed">ప్రమాణీకరణ విఫలమైంది.</string>
     <string name="something_went_wrong">ఏదో తప్పు జరిగింది..</string>
-    <string name="set_password">దయచేసి మీ ఉపకరణానికి మొదటిసారిగా పాస్‌వర్డ్‌ను సెట్ చేయండి.</string>
-    <string name="permission_required">పరిమితితములు యిక్కడి ప్రవేశించి డేటాబేస్‌ను ఎగురుతున్నాయి.</string>
-    <string name="permission_denied">అనుమతి తప్పబడింది</string>
-    <string name="ok">సరే</string>
 
     <!-- Dialogs and Requests -->
     <string name="change">మార్చు</string>
@@ -53,7 +64,6 @@
     <string name="security_heading">పాస్‌కీ లాక్ చేయబడింది</string>
     <string name="security_description">పాస్‌కీ అనువర్తనంకు ప్రవేశించడానికి ధృవీకరణ అవసరం.</string>
     <string name="security_button">ఇప్పుడు అన్‌లాక్ చేయండి</string>
-    <string name="coming_soon">త్వరలో</string>
     <string name="confirm_delete_title">తొలగించు నిర్ధారించండి</string>
     <string name="confirm_delete_description_question">ఖచ్చితంగా మీరు ప్రశ్నను తొలగించాలా?</string>
     <string name="confirm_delete_description_heading">ఖచ్చితంగా మీరు శీర్షికను తొలగించాలా?</string>
@@ -62,16 +72,107 @@
     <!-- Password Health Report -->
     <string name="analyze_passwords">భద్రతా స్థితి</string>
     <string name="security_analysis">భద్రతా విశ్లేషణ</string>
-    <string name="security_score">భద్రతా స్కోర్</string>
     <string name="weak_passwords">బలహీనమైన పాస్‌వర్డ్‌లు</string>
     <string name="reused_passwords">తిరిగి ఉపయోగించిన పాస్‌వర్డ్‌లు</string>
-    <string name="safe_passwords">సురక్షిత పాస్‌వర్డ్‌లు</string>
     <string name="excellent">అద్భుతం</string>
     <string name="needs_attention">శ్రద్ధ అవసరం</string>
     <string name="critical">క్లిష్టమైన</string>
-    <string name="found_weak">%1$d బలహీనమైన పాస్‌వర్డ్‌లు కనుగొనబడ్డాయి</string>
-    <string name="found_reused">%1$d తిరిగి ఉపయోగించిన పాస్‌వర్డ్‌లు కనుగొనబడ్డాయి</string>
-    <string name="used_times">%1$d సార్లు ఉపయోగించబడింది</string>
     <string name="no_issues">ఎటువంటి సమస్యలు కనుగొనబడలేదు. బాగా చేసారు!</string>
+    <string name="cd_drag_handle">క్రమం మార్చు</string>
+    <string name="cd_edit">సవరించు</string>
+    <string name="cd_delete">తొలగించు</string>
+    <string name="cd_add_detail">వివరం జోడించు</string>
+    <string name="cd_add_entry">ఎంట్రీ జోడించు</string>
+    <string name="cd_settings">సెట్టింగ్‌లు</string>
+    <string name="cd_generate_password">పాస్‌వర్డ్ సృష్టించు</string>
+    <string name="cd_password_options">పాస్‌వర్డ్ ఎంపికలు</string>
+    <string name="cd_clear_search">శోధనను తొలగించు</string>
+    <string name="cd_open">తెరువు</string>
+    <string name="cd_back">వెనుకకు</string>
+    <string name="password_settings">పాస్‌వర్డ్ సెట్టింగ్‌లు</string>
+    <string name="password_length">పొడవు: %1$d</string>
+    <string name="security_score_percent">%1$d%%</string>
+    <string name="invalid_file_selected">చెల్లని ఫైల్ ఎంపిక చేయబడింది.</string>
+    <plurals name="password_used_times">
+        <item quantity="one">%1$d సారి ఉపయోగించబడింది</item>
+        <item quantity="other">%1$d సార్లు ఉపయోగించబడింది</item>
+    </plurals>
+    <string name="export_success">ఎన్‌క్రిప్ట్ చేసిన బ్యాకప్ సేవ్ చేయబడింది.</string>
+    <string name="export_failed">బ్యాకప్‌ను సేవ్ చేయలేకపోయాం.</string>
+    <string name="import_summary">%1$d ఎంట్రీలు, %2$d వివరాలు దిగుమతి అయ్యాయి.</string>
+    <string name="import_wrong_password">తప్పు పాస్‌వర్డ్, లేదా ఫైల్ పాడైంది.</string>
+    <string name="import_file_too_large">ఈ ఫైల్ PassKey బ్యాకప్‌కి చాలా పెద్దది.</string>
+    <string name="import_unsupported_version">ఈ బ్యాకప్ PassKey కొత్త వెర్షన్‌తో రూపొందించబడింది.</string>
+    <string name="backup_password_title">మీ బ్యాకప్‌ను రక్షించండి</string>
+    <string name="backup_password_message">ఈ బ్యాకప్ ఫైల్‌కు పాస్‌వర్డ్ ఎంచుకోండి. పునరుద్ధరించడానికి ఇదే ఏకైక మార్గం, దీన్ని తిరిగి పొందలేరు.</string>
+    <string name="backup_password_hint">బ్యాకప్ పాస్‌వర్డ్</string>
+    <string name="backup_password_confirm_hint">పాస్‌వర్డ్‌ను నిర్ధారించండి</string>
+    <string name="backup_password_mismatch">పాస్‌వర్డ్‌లు సరిపోలడం లేదు.</string>
+    <string name="backup_password_too_short">కనీసం 8 అక్షరాలు వాడండి.</string>
+    <string name="restore_password_title">బ్యాకప్‌ను పునరుద్ధరించు</string>
+    <string name="restore_password_message">ఈ బ్యాకప్ ఫైల్‌ను సృష్టించినప్పుడు ఎంచుకున్న పాస్‌వర్డ్‌ను నమోదు చేయండి.</string>
+    <string name="backup_confirm">కొనసాగించు</string>
+    <string name="update_required_title">అప్‌డేట్ అవసరం</string>
+    <string name="update_required_message">PassKey ఈ వెర్షన్‌కు ఇకపై మద్దతు లేదు. మీ వాల్ట్‌ను వాడటం కొనసాగించడానికి అప్‌డేట్ చేయండి.</string>
+    <string name="update_now">ఇప్పుడే అప్‌డేట్ చేయి</string>
+    <string name="update_ready_message">ఒక అప్‌డేట్ ఇన్‌స్టాల్ చేయడానికి సిద్ధంగా ఉంది.</string>
+    <string name="update_restart">పునఃప్రారంభించు</string>
+    <string name="auto_lock">ఆటో-లాక్</string>
+    <string name="auto_lock_immediately">వెంటనే</string>
+    <string name="auto_lock_15_seconds">15 సెకన్ల తర్వాత</string>
+    <string name="auto_lock_30_seconds">30 సెకన్ల తర్వాత</string>
+    <string name="auto_lock_1_minute">1 నిమిషం తర్వాత</string>
+    <string name="auto_lock_5_minutes">5 నిమిషాల తర్వాత</string>
+    <string name="auto_lock_never">ఎప్పుడూ కాదు</string>
+    <string name="auto_lock_never_warning">యాప్ మూసే వరకు వాల్ట్ తెరిచే ఉంటుంది. మీ అన్‌లాక్ చేసిన ఫోన్ ఎవరి దగ్గర ఉన్నా మీ పాస్‌వర్డ్‌లు చదవగలరు.</string>
+    <string-array name="secret_field_keywords">
+        <item>పాస్‌వర్డ్</item>
+        <item>పిన్</item>
+        <item>కోడ్</item>
+        <item>రహస్యం</item>
+        <item>కీ</item>
+        <item>లాగిన్</item>
+    </string-array>
+    <string name="about_message">PassKey మీ లాగిన్‌లు, పాస్‌వర్డ్‌లు మరియు ఇతర వ్యక్తిగత గమనికలను మీ పరికరంలోని ఎన్‌క్రిప్ట్ చేసిన డేటాబేస్‌లో నిల్వ చేస్తుంది.\n\nమీ వాల్ట్ ఎప్పుడూ మీ ఫోన్‌ను వదిలి వెళ్లదు. ఖాతా లేదు, సింక్ లేదు, PassKey సర్వర్ కూడా లేదు: యాప్ తనంతట తానుగా ఎలాంటి నెట్‌వర్క్ అభ్యర్థనలూ చేయదు, మీ ఎంట్రీలు ఎక్కడికీ పంపబడవు.\n\nడేటాబేస్ SQLCipher తో ఎన్‌క్రిప్ట్ చేయబడి, మీ పరికరం బయోమెట్రిక్ లేదా స్క్రీన్ లాక్‌తో తెరుచుకుంటుంది. యాప్ నుండి బయటకు వెళ్లగానే వాల్ట్ స్వయంచాలకంగా మళ్లీ లాక్ అవుతుంది, స్క్రీన్‌షాట్‌లు నిరోధించబడ్డాయి, కాపీ చేసిన పాస్‌వర్డ్‌లు సున్నితమైనవిగా గుర్తించబడి కొద్దిసేపటిలో క్లిప్‌బోర్డ్ నుండి తొలగించబడతాయి.\n\nఎంట్రీలను వర్గాలుగా అమర్చవచ్చు, లాగి క్రమం మార్చవచ్చు, బలమైన పాస్‌వర్డ్‌లు సృష్టించవచ్చు, బలహీనమైన లేదా పునరావృత పాస్‌వర్డ్‌లను తనిఖీ చేయవచ్చు. బ్యాకప్‌లు మీరు ఎంచుకున్న పాస్‌వర్డ్‌తో ఎన్‌క్రిప్ట్ చేసిన ఒకే ఫైల్‌గా ఎగుమతి అవుతాయి, ఏ పరికరంలోనైనా పునరుద్ధరించవచ్చు. PassKey మీ లాగిన్‌లను ఇతర యాప్‌లు మరియు వెబ్‌సైట్‌లలో నింపగలదు, మీ రెండు-కారక కోడ్‌లను ఉంచగలదు, మరియు మీరు మార్చిన ప్రతి పాస్‌వర్డ్ చరిత్రను ఉంచగలదు.\n\nPassKey ఉచితం, ఓపెన్ సోర్స్, Aditya Bhardwaj అభివృద్ధి చేశారు. పూర్తి సోర్స్ కోడ్ GitHub లో అందుబాటులో ఉంది.</string>
+    <string name="privacy_message">మీ వాల్ట్ మీ పరికరంలోనే ఉంటుంది.\n\nమేము ఎప్పుడూ సేకరించనివి: మీరు సేవ్ చేసిన పాస్‌వర్డ్‌లు, వినియోగదారు పేర్లు, గమనికలు లేదా ఇతర ఏ ఎంట్రీలనూ PassKey సేకరించదు, పంపదు, నిల్వ చేయదు. అవి మీ ఫోన్‌లోని ఎన్‌క్రిప్ట్ చేసిన డేటాబేస్‌లో మాత్రమే ఉంటాయి. మేము వాటిని చదవలేము, మీ కోసం తిరిగి పొందలేము.\n\nయాప్ పంపేవి: PassKey లో Google Firebase Crashlytics, Analytics, Performance Monitoring మరియు Google Play ఇన్-యాప్ అప్‌డేట్‌లు ఉన్నాయి. ఇవి క్రాష్ డయాగ్నస్టిక్స్, వినియోగ ఈవెంట్‌లు, పనితీరు డేటా, ప్రకటన IDతో సహా పరికర మరియు ఇన్‌స్టాలేషన్ గుర్తింపులను Google కు పంపుతాయి. మీ వాల్ట్ కంటెంట్‌కు వీటికి ఎప్పుడూ ప్రాప్యత ఉండదు. ఈ సేవల కారణంగా యాప్‌కు ఇంటర్నెట్ అనుమతి అవసరం, వాటి డేటా నిర్వహణ Google గోప్యతా విధానం ప్రకారం జరుగుతుంది.\n\nబ్యాకప్‌లు: ఎగుమతి చేసినప్పుడు ఫైల్ మీరు ఎంచుకున్న పాస్‌వర్డ్‌తో ఎన్‌క్రిప్ట్ అవుతుంది, మీరు సిస్టమ్‌కు చెప్పిన చోట నిల్వ అవుతుంది. ఆ తర్వాత ఆ ఫైల్ మీ బాధ్యత; ఫైల్ మరియు పాస్‌వర్డ్ రెండూ పొందిన ఎవరైనా దాన్ని చదవగలరు. మేము ఎలాంటి కాపీ ఉంచుకోము.\n\nపరికర బ్యాకప్: PassKey Android క్లౌడ్ బ్యాకప్ మరియు పరికరాల మధ్య బదిలీ నుండి మినహాయించబడింది, కాబట్టి మీ వాల్ట్ మీ Google ఖాతాకు అప్‌లోడ్ కాదు.\n\nమార్పులు: ఈ విధానం నవీకరించబడవచ్చు; ముఖ్యమైన మార్పులు యాప్ విడుదల గమనికలలో తెలియజేయబడతాయి.\n\nప్రశ్నలు: సంప్రదించండి <xliff:g id="email" example="name@example.com">yrkkh.cclub@gmail.com</xliff:g>.</string>
+    <string name="terms_n_condition_message">PassKey ను ఉపయోగించడం ద్వారా మీరు కింది వాటికి అంగీకరిస్తున్నారు.\n\n1. PassKey అనేది Aditya Bhardwaj అభివృద్ధి చేసిన ఉచిత, ఓపెన్-సోర్స్ సాఫ్ట్‌వేర్.\n\n2. మీ వాల్ట్ మీ పరికరంలో మాత్రమే నిల్వ చేయబడుతుంది. సర్వర్‌లో కాపీ లేదు, కాబట్టి పరికరం పోగొట్టుకున్నా, యాప్ అన్‌ఇన్‌స్టాల్ చేసినా, బ్యాకప్ పాస్‌వర్డ్ మరచిపోయినా డేటాను తిరిగి పొందే మార్గం లేదు.\n\n3. బ్యాకప్‌లు ఉంచుకోవడం మీ బాధ్యత. వాటిని క్రమం తప్పకుండా ఎగుమతి చేయండి, బ్యాకప్ పాస్‌వర్డ్‌ను సురక్షితమైన, వేరే చోట ఉంచండి.\n\n4. యాప్ మీ పరికరం బయోమెట్రిక్ లేదా స్క్రీన్-లాక్ భద్రతపై ఆధారపడి ఉంటుంది. ఆ లాక్ బలహీనంగా, తొలగించబడి లేదా రాజీపడి ఉంటే, PassKey అందించే రక్షణ కూడా అదే మేరకు తగ్గుతుంది.\n\n5. PassKey లో గోప్యతా విధానంలో వివరించిన Google Firebase మరియు Google Play సేవలు ఉన్నాయి.\n\n6. ఈ అప్లికేషన్ \"ఉన్నది ఉన్నట్లుగా\" అందించబడుతుంది, వర్తకయోగ్యత మరియు నిర్దిష్ట ప్రయోజనానికి అనుకూలత సహా, ఎలాంటి స్పష్టమైన లేదా అంతర్గత హామీ లేకుండా.\n\n7. చట్టం అనుమతించిన మేరకు, అప్లికేషన్ వినియోగం వల్ల కలిగే ఏ నష్టానికీ, డేటా నష్టంతో సహా, డెవలపర్ బాధ్యత వహించరు.\n\n8. అప్లికేషన్ ఎప్పుడైనా మార్చబడవచ్చు లేదా నిలిపివేయబడవచ్చు.</string>
+    <string name="recovery_setup_title">రికవరీ పాస్‌వర్డ్ సెట్ చేయండి</string>
+    <string name="recovery_setup_message_new">PassKey మీ వేలిముద్ర లేదా స్క్రీన్ లాక్‌తో తెరుచుకుంటుంది. ఈ రికవరీ పాస్‌వర్డ్ ప్రత్యామ్నాయ మార్గం — వేలిముద్రలు మార్చినా, పరికర లాక్ తీసేసినా ఇది అవసరం. దీన్ని రీసెట్ చేయలేరు, సురక్షితంగా ఉంచండి.</string>
+    <string name="recovery_setup_message_upgrade">ఈ అప్‌డేట్ మీ వాల్ట్‌ను ఈ పరికరానికే ప్రత్యేకమైన కీతో మళ్లీ ఎన్‌క్రిప్ట్ చేస్తుంది. ముందుగా రికవరీ పాస్‌వర్డ్ సెట్ చేయండి: వేలిముద్రలు మార్చినా, లాక్ తీసేసినా ఇదే ఏకైక మార్గం. దీన్ని రీసెట్ చేయలేరు.</string>
+    <string name="recovery_unlock_title">మీ రికవరీ పాస్‌వర్డ్ నమోదు చేయండి</string>
+    <string name="recovery_unlock_message">మీ పరికర బయోమెట్రిక్ లేదా స్క్రీన్ లాక్ మారింది, కాబట్టి వాల్ట్ తెరవడానికి PassKey కి రికవరీ పాస్‌వర్డ్ కావాలి.</string>
+    <string name="recovery_unlock_wrong">ఆ పాస్‌వర్డ్ పని చేయలేదు. మళ్లీ ప్రయత్నించండి.</string>
+    <string name="migration_title">మీ వాల్ట్‌ను భద్రపరుస్తున్నాం</string>
+    <string name="migration_message">మీ ఎంట్రీలు ఈ పరికరానికే ప్రత్యేకమైన కీతో మళ్లీ ఎన్‌క్రిప్ట్ అవుతున్నాయి. యాప్‌ను తెరిచే ఉంచండి.</string>
+    <string name="migration_failed_title">వాల్ట్ భద్రపరచడం పూర్తి కాలేదు</string>
+    <string name="migration_failed_message">ఏమీ పోలేదు, మీ ఎంట్రీలు యథాతథంగా ఉన్నాయి. మళ్లీ ప్రయత్నించండి, లేదా తర్వాత యాప్ తెరవండి.</string>
+    <string name="migration_failed_message_can_export">ఏమీ పోలేదు — మీ వాల్ట్ చెక్కుచెదరలేదు, చదవగలిగేలా ఉంది. మళ్లీ ప్రయత్నించండి, లేదా ముందు సెట్టింగ్‌ల నుండి బ్యాకప్ తీసుకోండి.</string>
+    <string name="migration_retry">మళ్లీ ప్రయత్నించు</string>
+    <string name="device_lock_required_title">పరికర లాక్ అవసరం</string>
+    <string name="device_lock_required_message">PassKey మీ వాల్ట్‌ను పరికర స్క్రీన్ లాక్‌తో కాపాడుతుంది. కొనసాగించడానికి పిన్, నమూనా, పాస్‌వర్డ్ లేదా బయోమెట్రిక్ సెట్ చేయండి.</string>
+    <string name="device_lock_open_settings">సెట్టింగ్‌లు తెరువు</string>
+    <string name="change_recovery_password">రికవరీ పాస్‌వర్డ్ మార్చు</string>
+    <string name="recovery_change_current_title">ప్రస్తుత పాస్‌వర్డ్‌ను నిర్ధారించండి</string>
+    <string name="recovery_change_current_message">మీరేనని నిరూపించడానికి ప్రస్తుత రికవరీ పాస్‌వర్డ్‌ను నమోదు చేయండి.</string>
+    <string name="recovery_change_new_title">కొత్త రికవరీ పాస్‌వర్డ్ ఎంచుకోండి</string>
+    <string name="recovery_change_new_message">ఇది మీ పాత రికవరీ పాస్‌వర్డ్‌ను భర్తీ చేస్తుంది. దీన్ని రీసెట్ చేయలేరు, సురక్షితంగా ఉంచండి.</string>
+    <string name="recovery_change_done">రికవరీ పాస్‌వర్డ్ మార్చబడింది.</string>
+    <string name="recovery_change_failed">ఆ పాస్‌వర్డ్ సరైనది కాదు.</string>
+    <string name="migration_export_first">ముందు బ్యాకప్ తీసుకోండి</string>
+    <string name="migration_export_now">నా వాల్ట్‌ను ఇప్పుడే ఎగుమతి చేయి</string>
+    <string name="store_unavailable">ఈ పరికరంలో Google Play అందుబాటులో లేదు.</string>
+    <string name="autofill">ఆటోఫిల్</string>
+    <string name="autofill_unlock">నింపడానికి అన్‌లాక్ చేయండి</string>
+    <string name="autofill_open_app">మీ వాల్ట్ సెటప్ పూర్తి చేయడానికి PassKey తెరిచి, మళ్లీ ప్రయత్నించండి.</string>
+    <string name="autofill_save_failed">ఈ లాగిన్‌ను సేవ్ చేయలేకపోయాం.</string>
+    <string name="autofill_save_locked">ఈ లాగిన్‌ను సేవ్ చేయడానికి PassKey అన్‌లాక్ చేయండి.</string>
+    <string name="autofill_unsupported">ఈ పరికరంలో ఆటోఫిల్ అందుబాటులో లేదు.</string>
+    <string name="authenticator">ప్రామాణీకరణి</string>
+    <string name="add_authenticator">ప్రామాణీకరణిని జోడించు</string>
+    <string name="authenticator_input_hint">otpauth:// లింక్‌ను అతికించండి లేదా రహస్య కీని టైప్ చేయండి</string>
+    <string name="authenticator_invalid">ఇది చెల్లుబాటు అయ్యే ప్రామాణీకరణ కీ కాదు.</string>
+    <string name="password_history">పాస్‌వర్డ్ చరిత్ర</string>
+    <string name="password_history_empty">ఈ పాస్‌వర్డ్ ఇంకా మార్చబడలేదు.</string>
+    <string name="cd_remove_authenticator">ప్రామాణీకరణిని తీసివేయి</string>
 </resources>
 

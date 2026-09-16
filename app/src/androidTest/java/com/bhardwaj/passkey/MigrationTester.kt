@@ -4,10 +4,12 @@ import androidx.room.testing.MigrationTestHelper
 import androidx.sqlite.db.framework.FrameworkSQLiteOpenHelperFactory
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
-import com.bhardwaj.passkey.data.local.PassKeyDatabase
+import com.bhardwaj.passkey.data.local.PasskeyDatabase
 import com.bhardwaj.passkey.utils.Constants.Companion.DETAILS_TABLE
 import com.bhardwaj.passkey.utils.Constants.Companion.PREVIEW_TABLE
 import com.bhardwaj.passkey.utils.MIGRATION_1_2
+import com.bhardwaj.passkey.utils.MIGRATION_2_3
+import com.bhardwaj.passkey.utils.MIGRATION_3_4
 import com.google.common.truth.Truth.assertThat
 import org.junit.Rule
 import org.junit.Test
@@ -21,7 +23,7 @@ class MigrationTester {
     @get:Rule
     val helper = MigrationTestHelper(
         InstrumentationRegistry.getInstrumentation(),
-        PassKeyDatabase::class.java,
+        PasskeyDatabase::class.java,
         listOf(),
         FrameworkSQLiteOpenHelperFactory()
     )
@@ -111,6 +113,132 @@ class MigrationTester {
                 assertThat(getString(getColumnIndex("question"))).startsWith("Question_")
                 assertThat(getString(getColumnIndex("answer"))).startsWith("Answer_")
             }
+        }
+    }
+
+    @Test
+    fun migration_checker_from_2_to_3_preserves_rows_and_defaults_isSecret() {
+        var db = helper.createDatabase(DB_NAME, 2)
+
+        db.execSQL(
+            "INSERT INTO $PREVIEW_TABLE (heading, categoryName, sequence) " +
+                "VALUES ('Bank', 'BANKS', 0)"
+        )
+        db.execSQL(
+            "INSERT INTO $DETAILS_TABLE (previewId, question, answer, sequence) " +
+                "VALUES (1, 'Password', 's3cret', 0)"
+        )
+        db.close()
+
+        db = helper.runMigrationsAndValidate(DB_NAME, 3, true, MIGRATION_2_3)
+
+        db.query("SELECT * FROM $DETAILS_TABLE").apply {
+            assertThat(moveToFirst()).isTrue()
+            assertThat(getString(getColumnIndex("question"))).isEqualTo("Password")
+            assertThat(getString(getColumnIndex("answer"))).isEqualTo("s3cret")
+            // Additive column: existing rows must default to 0 rather than being lost.
+            assertThat(getInt(getColumnIndex("isSecret"))).isEqualTo(0)
+        }
+    }
+
+    @Test
+    fun migration_chain_1_to_3_runs_end_to_end() {
+        // A user who skipped 5.x entirely upgrades straight to the newest build, so the whole
+        // chain has to apply in one go.
+        var db = helper.createDatabase(DB_NAME, 1)
+        db.execSQL(
+            "INSERT INTO $PREVIEW_TABLE (heading, categoryName, priority) " +
+                "VALUES ('Old Entry', 'MAILS', 2)"
+        )
+        db.execSQL(
+            "INSERT INTO $DETAILS_TABLE (question, answer, priority, headingName, categoryName) " +
+                "VALUES ('Password', 'legacy', 2, 'Old Entry', 'MAILS')"
+        )
+        db.close()
+
+        db = helper.runMigrationsAndValidate(DB_NAME, 3, true, MIGRATION_1_2, MIGRATION_2_3)
+
+        db.query("SELECT * FROM $DETAILS_TABLE").apply {
+            assertThat(moveToFirst()).isTrue()
+            assertThat(getString(getColumnIndex("answer"))).isEqualTo("legacy")
+            assertThat(getInt(getColumnIndex("isSecret"))).isEqualTo(0)
+        }
+    }
+
+    @Test
+    fun migration_3_to_4_adds_the_new_tables_and_keeps_every_row() {
+        var db = helper.createDatabase(DB_NAME, 3)
+
+        db.execSQL(
+            "INSERT INTO $PREVIEW_TABLE (heading, categoryName, sequence) " +
+                "VALUES ('Bank', 'BANKS', 0)"
+        )
+        db.execSQL(
+            "INSERT INTO $DETAILS_TABLE (previewId, question, answer, sequence, isSecret) " +
+                "VALUES (1, 'Password', 's3cret', 0, 1)"
+        )
+        db.close()
+
+        db = helper.runMigrationsAndValidate(DB_NAME, 4, true, MIGRATION_3_4)
+
+        // runMigrationsAndValidate already fails if the schema does not match 4.json exactly;
+        // these assertions cover what it cannot see - that the data survived, and that the new
+        // tables are usable rather than merely present.
+        db.query("SELECT * FROM $DETAILS_TABLE").apply {
+            assertThat(moveToFirst()).isTrue()
+            assertThat(getString(getColumnIndex("answer"))).isEqualTo("s3cret")
+            assertThat(getInt(getColumnIndex("isSecret"))).isEqualTo(1)
+        }
+
+        db.execSQL(
+            "INSERT INTO totp_table " +
+                "(previewId, label, secret, issuer, algorithm, digits, periodSeconds) " +
+                "VALUES (1, 'Bank', 'GEZDGNBVGY3TQOJQ', 'Bank', 'SHA1', 6, 30)"
+        )
+        db.execSQL(
+            "INSERT INTO detail_history_table (detailsId, answer, changedAt) " +
+                "VALUES (1, 'previous', 1700000000000)"
+        )
+        db.query("SELECT COUNT(*) FROM totp_table").apply {
+            assertThat(moveToFirst()).isTrue()
+            assertThat(getInt(0)).isEqualTo(1)
+        }
+        db.query("SELECT COUNT(*) FROM detail_history_table").apply {
+            assertThat(moveToFirst()).isTrue()
+            assertThat(getInt(0)).isEqualTo(1)
+        }
+    }
+
+    @Test
+    fun migration_3_to_4_is_safe_to_run_twice() {
+        // Every statement is CREATE ... IF NOT EXISTS, so an interrupted upgrade that runs again
+        // must not fail on the objects it already created.
+        var db = helper.createDatabase(DB_NAME, 3)
+        db.close()
+        db = helper.runMigrationsAndValidate(DB_NAME, 4, true, MIGRATION_3_4)
+        MIGRATION_3_4.migrate(db)
+    }
+
+    @Test
+    fun migration_chain_1_to_4_runs_end_to_end() {
+        var db = helper.createDatabase(DB_NAME, 1)
+        db.execSQL(
+            "INSERT INTO $PREVIEW_TABLE (heading, categoryName, priority) " +
+                "VALUES ('Old Entry', 'MAILS', 2)"
+        )
+        db.execSQL(
+            "INSERT INTO $DETAILS_TABLE (question, answer, priority, headingName, categoryName) " +
+                "VALUES ('Password', 'legacy', 2, 'Old Entry', 'MAILS')"
+        )
+        db.close()
+
+        db = helper.runMigrationsAndValidate(
+            DB_NAME, 4, true, MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4
+        )
+
+        db.query("SELECT * FROM $DETAILS_TABLE").apply {
+            assertThat(moveToFirst()).isTrue()
+            assertThat(getString(getColumnIndex("answer"))).isEqualTo("legacy")
         }
     }
 }

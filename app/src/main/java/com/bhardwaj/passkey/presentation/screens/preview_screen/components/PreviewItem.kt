@@ -1,5 +1,7 @@
 package com.bhardwaj.passkey.presentation.screens.preview_screen.components
 
+import com.bhardwaj.passkey.domain.model.Preview
+import com.bhardwaj.passkey.presentation.screens.preview_screen.PreviewIntent
 import android.os.Build
 import android.view.HapticFeedbackConstants
 import androidx.compose.foundation.background
@@ -23,23 +25,24 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.bhardwaj.passkey.domain.events.PreviewEvents
+import com.bhardwaj.passkey.R
 import com.bhardwaj.passkey.presentation.theme.Poppins
 import sh.calvin.reorderable.ReorderableCollectionItemScope
-import com.bhardwaj.passkey.data.local.entity.Preview as PreviewEntity
+import com.bhardwaj.passkey.domain.model.Preview as PreviewEntity
 
 @Composable
 fun PreviewItem(
     modifier: Modifier = Modifier,
     scope: ReorderableCollectionItemScope? = null,
-    preview: PreviewEntity,
-    onEvent: (PreviewEvents) -> Unit,
+    preview: Preview,
+    onIntent: (PreviewIntent) -> Unit,
 ) {
     val view = LocalView.current
     Box(modifier = modifier.fillMaxWidth()) {
@@ -76,7 +79,7 @@ fun PreviewItem(
                     }
                 } ?: Modifier,
                 imageVector = Icons.Default.Apps,
-                contentDescription = "Icon Drag",
+                contentDescription = stringResource(R.string.cd_drag_handle),
                 tint = MaterialTheme.colorScheme.primary
             )
             Text(
@@ -85,10 +88,10 @@ fun PreviewItem(
                     .weight(1F)
                     .combinedClickable(
                         onClick = {
-                            onEvent(PreviewEvents.OnPreviewClick(preview.previewId!!))
+                            onIntent(PreviewIntent.ItemClicked(preview.id))
                         },
                         onLongClick = {
-                            onEvent(PreviewEvents.OnLongPress(preview.heading))
+                            onIntent(PreviewIntent.ItemLongPressed(preview.heading))
                         },
                         indication = null,
                         interactionSource = remember { MutableInteractionSource() }
@@ -104,13 +107,13 @@ fun PreviewItem(
                 Icon(
                     modifier = Modifier.clickable(
                         onClick = {
-                            onEvent(PreviewEvents.OnChangeClick(preview))
+                            onIntent(PreviewIntent.EditClicked(preview))
                         },
                         indication = null,
                         interactionSource = remember { MutableInteractionSource() }
                     ),
                     imageVector = Icons.Default.Edit,
-                    contentDescription = "Icon Edit",
+                    contentDescription = stringResource(R.string.cd_edit),
                     tint = MaterialTheme.colorScheme.primary
                 )
             }

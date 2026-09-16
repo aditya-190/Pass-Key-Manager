@@ -2,65 +2,49 @@ package com.bhardwaj.passkey.presentation.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.navArgument
 import com.bhardwaj.passkey.presentation.screens.detail_screen.DetailScreen
 import com.bhardwaj.passkey.presentation.screens.onboarding_screens.OnBoardingScreen
 import com.bhardwaj.passkey.presentation.screens.preview_screen.PreviewScreen
-import com.bhardwaj.passkey.presentation.screens.security_screen.SecurityScreen
+import com.bhardwaj.passkey.presentation.screens.security_screen.VaultGateScreen
 import com.bhardwaj.passkey.presentation.screens.settings_screen.SettingsScreen
 import com.bhardwaj.passkey.presentation.screens.splash_screen.SplashPage
-import com.bhardwaj.passkey.utils.Categories
 
 @Composable
-fun NavGraph(
-    navController: NavHostController,
-    startDestination: String
-) {
-    NavHost(navController = navController, startDestination = startDestination) {
-        composable(route = NavScreens.SplashPage.route) {
-            SplashPage(
-                onNavigate = {
-                    navController.popBackStack()
-                    navController.navigate(it.route)
-                }
-            )
+fun NavGraph(navController: NavHostController) {
+    // Splash is a constant start destination. It used to come from a mutable ViewModel field,
+    // and changing a NavHost's start destination after first composition recreates the graph and
+    // resets the back stack. Splash already routes onward with a Navigate effect.
+    NavHost(navController = navController, startDestination = NavRoute.Splash) {
+
+        composable<NavRoute.Splash> {
+            SplashPage(onNavigate = { navController.replaceWith(it) })
         }
-        composable(route = NavScreens.OnboardingPage.route) {
-            OnBoardingScreen(
-                onNavigate = {
-                    navController.popBackStack()
-                    navController.navigate(it.route)
-                }
-            )
+
+        composable<NavRoute.Onboarding> {
+            OnBoardingScreen(onNavigate = { navController.replaceWith(it) })
         }
-        composable(
-            route = NavScreens.PreviewPage.route + "?categoryName={categoryName}",
-            arguments = listOf(navArgument(name = "categoryName") {
-                type = NavType.StringType
-                defaultValue = Categories.BANKS.name
-            }),
-        ) {
-            PreviewScreen(onNavigate = { navController.navigate(it.route) })
+
+        composable<NavRoute.Security> {
+            VaultGateScreen(onUnlocked = { navController.replaceWith(NavRoute.Previews) })
         }
-        composable(
-            route = NavScreens.DetailsPage.route + "?previewId={previewId}",
-            arguments = listOf(navArgument(name = "previewId") {
-                type = NavType.LongType
-                defaultValue = -1
-            })
-        ) {
+
+        composable<NavRoute.Previews> {
+            PreviewScreen(onNavigate = { navController.navigate(it) })
+        }
+
+        composable<NavRoute.Details> {
             DetailScreen(onPopBackStack = { navController.popBackStack() })
         }
-        composable(route = NavScreens.SettingPage.route) {
-            SettingsScreen(
-                onPopBackStack = { navController.popBackStack() },
-                onNavigate = { route -> navController.navigate(route) })
-        }
-        composable(route = NavScreens.SecurityPage.route) {
-            SecurityScreen(navController = navController)
+
+        composable<NavRoute.Settings> {
+            SettingsScreen(onNavigate = { navController.navigate(it) })
         }
     }
+}
+
+/** Navigates and drops everything behind it, for one-way transitions past a gate. */
+private fun NavHostController.replaceWith(route: NavRoute) {
+    navigate(route) { popUpTo(0) { inclusive = true } }
 }

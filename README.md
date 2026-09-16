@@ -30,22 +30,54 @@ design -> https://www.figma.com/community/file/1116675775484733517
 
 ## 🤩 Features:
 
-- Kotlin & Jetpack Compose.
-- Clean Architecture.
-- Kotlin Flows.
-- Dark Mode Support.
-- Biometric Authentication.
-- Dagger-Hilt (Dependency Injection).
-- DataStore Preferences.
-- Encrypted Database.
-- Screenshot Blocked.
-- Open Source.
-- Drag & Drop to reorder list.
-- Swipe to Delete Feature.
-- Separation of content.
-- Import / Export data to and from storage.
-- SQL Cipher (For Room DB Encryption and Decryption).
-- Fully Offline : No internet permission required.
+- Kotlin & Jetpack Compose, Material 3.
+- Clean architecture with Kotlin Flows and Dagger-Hilt.
+- Encrypted database (Room + SQLCipher).
+- Biometric / device-credential unlock, with automatic re-lock on background and idle.
+- Screenshot blocking, including dialogs and bottom sheets.
+- Clipboard entries marked sensitive and cleared automatically.
+- Autofill service: fills usernames and passwords into other apps and web pages, and offers to
+  save new logins.
+- Built-in authenticator: RFC 6238 time-based codes, added from an `otpauth://` link or a typed
+  secret. No camera permission.
+- Password history per entry, so a change can be traced or copied back.
+- Password generator backed by SecureRandom.
+- Vault analysis for weak and reused passwords.
+- Password-protected encrypted backup and restore, written wherever you choose.
+- Excluded from Android cloud backup and device-to-device transfer.
+- Drag & drop reordering, swipe to delete, category separation.
+- Dark mode and 17 languages.
+- Open source.
+
+## 🔐 Security model:
+
+- The vault is a Room database encrypted with SQLCipher, stored only on the device.
+- It is unlocked with device biometrics or the screen lock, and re-locks automatically after a
+  configurable idle period.
+- Backups are encrypted with AES-256-GCM under a key derived from a password you choose
+  (PBKDF2-HMAC-SHA512), written through the system file picker.
+- The app performs no network requests of its own and has no server or account.
+
+- The database key is a per-install random key, never a build-time constant. It is wrapped three
+  independent ways - by a biometric-bound Keystore key unlocked through a `CryptoObject`, by a
+  device-credential-bound one, and by a recovery password - so losing any one of them, including
+  by re-enrolling a fingerprint, does not lose the vault.
+- Vaults created before 5.7.0 are re-keyed once, on first launch, by exporting through
+  `sqlcipher_export()` into a sidecar file that only replaces the original after it verifies.
+- Autofill never reveals entry names before the vault is unlocked: a locked vault offers a single
+  "unlock" suggestion and nothing else.
+
+## 🌐 Network and privacy:
+
+The app itself makes no network calls, but it bundles Google Firebase (Crashlytics, Analytics,
+Performance Monitoring) and Google Play in-app updates. These require the `INTERNET` permission
+and send crash diagnostics, usage events, performance traces and device/installation identifiers
+— including an advertising ID — to Google. They never have access to vault contents.
+
+Autofill runs entirely on the device: Android shows the app the structure of the form being
+filled so it can offer matching entries, and nothing about that form or those entries is
+transmitted or logged. See [Privacy Policy.md](Privacy%20Policy.md).
+
 
 ## 🌎 Released Android Application:
 
