@@ -11,6 +11,7 @@ import androidx.navigation.navArgument
 import com.bhardwaj.passkey.analytics.AnalyticsTracker
 import com.bhardwaj.passkey.analytics.AppEvents
 import com.bhardwaj.passkey.consent.ConsentRoute
+import com.bhardwaj.passkey.domain.model.Category
 import com.bhardwaj.passkey.legal.LegalViewModel
 import com.bhardwaj.passkey.presentation.screens.detail_screen.DetailScreen
 import com.bhardwaj.passkey.presentation.screens.onboarding_screens.OnBoardingScreen
@@ -18,7 +19,6 @@ import com.bhardwaj.passkey.presentation.screens.preview_screen.PreviewScreen
 import com.bhardwaj.passkey.presentation.screens.security_screen.VaultGateScreen
 import com.bhardwaj.passkey.presentation.screens.settings_screen.SettingsScreen
 import com.bhardwaj.passkey.presentation.screens.splash_screen.SplashPage
-import com.bhardwaj.passkey.utils.Categories
 
 @Composable
 fun NavGraph(navController: NavHostController, startDestination: String, analytics: AnalyticsTracker) {
@@ -52,7 +52,7 @@ fun NavGraph(navController: NavHostController, startDestination: String, analyti
             arguments = listOf(
                 navArgument(name = "categoryName") {
                     type = NavType.StringType
-                    defaultValue = Categories.BANKS.name
+                    defaultValue = Category.BANKS.name
                 }
             )
         ) {

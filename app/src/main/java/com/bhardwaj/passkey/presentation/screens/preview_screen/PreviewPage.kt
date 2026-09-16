@@ -61,9 +61,11 @@ import androidx.compose.ui.window.DialogProperties
 import androidx.compose.ui.window.SecureFlagPolicy
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.bhardwaj.passkey.R
+import com.bhardwaj.passkey.domain.model.Category
 import com.bhardwaj.passkey.presentation.navigation.HomeAnnouncement
 import com.bhardwaj.passkey.presentation.screens.common.PassKeyButton
 import com.bhardwaj.passkey.presentation.screens.common.PasskeySearchBar
+import com.bhardwaj.passkey.presentation.screens.common.labelRes
 import com.bhardwaj.passkey.presentation.screens.preview_screen.PreviewEvents
 import com.bhardwaj.passkey.presentation.screens.preview_screen.PreviewViewModel
 import com.bhardwaj.passkey.presentation.screens.preview_screen.components.MainBottomNavigation
@@ -71,7 +73,6 @@ import com.bhardwaj.passkey.presentation.screens.preview_screen.components.Previ
 import com.bhardwaj.passkey.presentation.screens.preview_screen.components.PreviewItem
 import com.bhardwaj.passkey.presentation.theme.BebasNeue
 import com.bhardwaj.passkey.utils.ButtonType
-import com.bhardwaj.passkey.utils.Categories
 import com.bhardwaj.passkey.utils.SecureClipboard
 import com.bhardwaj.passkey.utils.UiEvents
 import com.bhardwaj.passkey.utils.UiText
@@ -84,9 +85,9 @@ import sh.calvin.reorderable.rememberReorderableLazyListState
 @Composable
 fun PreviewScreen(onNavigate: (UiEvents.Navigate) -> Unit, viewModel: PreviewViewModel = hiltViewModel()) {
     val categoryName by viewModel.categoryName.collectAsState()
-    // Localized display names come from Categories.labelRes, which the bottom navigation
+    // Localized display names come from Category.labelRes, which the bottom navigation
     // also uses, so the two can no longer drift apart.
-    val categoryNameMap = Categories.entries.associate { it.name to stringResource(it.labelRes) }
+    val categoryNameMap = Category.entries.associate { it.name to stringResource(it.labelRes()) }
 
     val previewHeading by viewModel.previewHeading.collectAsState()
     val isEditingSheet by viewModel.isEditingSheet.collectAsState()
@@ -269,7 +270,7 @@ fun PreviewScreen(onNavigate: (UiEvents.Navigate) -> Unit, viewModel: PreviewVie
                     ) {
                         items(
                             items = previews,
-                            key = { item -> "${item.previewId}" }
+                            key = { item -> item.id }
                         ) { preview ->
                             if (searchText.isNotBlank()) {
                                 PreviewItem(
@@ -290,7 +291,7 @@ fun PreviewScreen(onNavigate: (UiEvents.Navigate) -> Unit, viewModel: PreviewVie
                                 }
                                 ReorderableItem(
                                     reorderableLazyColumnState,
-                                    "${preview.previewId}"
+                                    "${preview.id}"
                                 ) {
                                     SwipeToDismissBox(
                                         state = state,

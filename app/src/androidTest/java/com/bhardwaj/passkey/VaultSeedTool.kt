@@ -4,9 +4,9 @@ import androidx.room.Room
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import com.bhardwaj.passkey.data.local.PasskeyDatabase
-import com.bhardwaj.passkey.data.local.entity.Details
-import com.bhardwaj.passkey.data.local.entity.Preview
-import com.bhardwaj.passkey.utils.Categories
+import com.bhardwaj.passkey.data.local.entity.DetailsEntity
+import com.bhardwaj.passkey.data.local.entity.PreviewEntity
+import com.bhardwaj.passkey.domain.model.Category
 import com.bhardwaj.passkey.utils.Constants
 import com.bhardwaj.passkey.utils.MIGRATION_1_2
 import kotlinx.coroutines.flow.first
@@ -36,9 +36,9 @@ class VaultSeedTool {
         runBlocking {
             val existing = db.previewDao.getPreviews().first().firstOrNull { it.heading == HEADING }
             val previewId = existing?.previewId
-                ?: db.previewDao.upsertPreview(Preview(heading = HEADING, categoryName = Categories.BANKS))
+                ?: db.previewDao.upsertPreview(PreviewEntity(heading = HEADING, categoryName = Category.BANKS))
             if (db.detailsDao.getDetailsByPreviewId(previewId).first().none { it.question == QUESTION }) {
-                db.detailsDao.upsertDetails(Details(previewId = previewId, question = QUESTION, answer = ANSWER))
+                db.detailsDao.upsertDetails(DetailsEntity(previewId = previewId, question = QUESTION, answer = ANSWER))
             }
         }
         db.close()

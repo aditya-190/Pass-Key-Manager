@@ -1,6 +1,6 @@
 package com.bhardwaj.passkey.analytics
 
-import com.bhardwaj.passkey.utils.Categories
+import com.bhardwaj.passkey.domain.model.Category
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Test
@@ -53,7 +53,7 @@ class AppEventsTest {
     fun `entry created carries only the category enum`() {
         assertEquals(
             mapOf(AppParams.CATEGORY to "mails"),
-            AppEvents.entryCreated(Categories.MAILS).params
+            AppEvents.entryCreated(Category.MAILS).params
         )
     }
 

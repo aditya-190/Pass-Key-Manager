@@ -1,6 +1,6 @@
 package com.bhardwaj.passkey.analytics
 
-import com.bhardwaj.passkey.utils.Categories
+import com.bhardwaj.passkey.domain.model.Category
 
 /** Every event the app sends. Catalogued in docs/ANALYTICS_EVENTS.md; keep both in step. */
 object AppEventNames {
@@ -73,7 +73,7 @@ object AppEvents {
 
     fun onboardingComplete() = AnalyticsEvent(AppEventNames.ONBOARDING_COMPLETE)
 
-    fun entryCreated(category: Categories) =
+    fun entryCreated(category: Category) =
         AnalyticsEvent(AppEventNames.ENTRY_CREATED, mapOf(AppParams.CATEGORY to category.name.lowercase()))
 
     fun fieldSaved(isEdit: Boolean) = AnalyticsEvent(AppEventNames.FIELD_SAVED, mapOf(AppParams.IS_EDIT to isEdit))

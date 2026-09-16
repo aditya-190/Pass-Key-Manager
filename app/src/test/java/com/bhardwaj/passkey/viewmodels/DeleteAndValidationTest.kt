@@ -2,8 +2,8 @@ package com.bhardwaj.passkey.viewmodels
 
 import androidx.lifecycle.SavedStateHandle
 import com.bhardwaj.passkey.R
-import com.bhardwaj.passkey.data.local.entity.Details
-import com.bhardwaj.passkey.data.local.entity.Preview
+import com.bhardwaj.passkey.domain.model.Category
+import com.bhardwaj.passkey.domain.model.Preview
 import com.bhardwaj.passkey.presentation.screens.detail_screen.DetailEvents
 import com.bhardwaj.passkey.presentation.screens.detail_screen.DetailViewModel
 import com.bhardwaj.passkey.presentation.screens.preview_screen.PreviewEvents
@@ -11,7 +11,6 @@ import com.bhardwaj.passkey.presentation.screens.preview_screen.PreviewViewModel
 import com.bhardwaj.passkey.testing.FakePasskeyRepository
 import com.bhardwaj.passkey.testing.MainDispatcherRule
 import com.bhardwaj.passkey.testing.RecordingAnalyticsTracker
-import com.bhardwaj.passkey.utils.Categories
 import com.bhardwaj.passkey.utils.UiEvents
 import com.bhardwaj.passkey.utils.UiText
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -36,9 +35,9 @@ class DeleteAndValidationTest {
     private val analytics = RecordingAnalyticsTracker()
 
     private suspend fun seedEntry(): Preview {
-        val id = repository.upsertPreview(Preview(heading = "Bank", categoryName = Categories.BANKS, sequence = 3))
-        repository.upsertDetails(Details(previewId = id, question = "PIN", answer = "4321", isSecret = true))
-        repository.upsertDetails(Details(previewId = id, question = "User", answer = "aditya"))
+        val id = repository.createPreview(heading = "Bank", category = Category.BANKS, sequence = 3)
+        repository.createDetail(previewId = id, question = "PIN", answer = "4321", isSecret = true)
+        repository.createDetail(previewId = id, question = "User", answer = "aditya")
         return repository.getPreviewById(id)!!
     }
 
@@ -64,7 +63,7 @@ class DeleteAndValidationTest {
     @Test
     fun `confirming deletes the entry with its fields, and undo brings both back unchanged`() = runTest {
         val entry = seedEntry()
-        val before = repository.allDetails.sortedBy { it.detailsId }
+        val before = repository.allDetails.sortedBy { it.id }
         val vm = previewVm()
         vm.onEvent(PreviewEvents.OnSwipedLeft(entry))
         vm.onEvent(PreviewEvents.OnDeleteClick)
@@ -75,7 +74,7 @@ class DeleteAndValidationTest {
 
         vm.onEvent(PreviewEvents.OnUndoDelete)
         assertEquals(listOf(entry), repository.allPreviews)
-        assertEquals(before, repository.allDetails.sortedBy { it.detailsId })
+        assertEquals(before, repository.allDetails.sortedBy { it.id })
     }
 
     @Test
@@ -108,7 +107,7 @@ class DeleteAndValidationTest {
     fun `fields follow the same rules - confirm before delete, undo, keep input`() = runTest {
         val entry = seedEntry()
         val pin = repository.allDetails.single { it.question == "PIN" }
-        val vm = detailVm(entry.previewId!!)
+        val vm = detailVm(entry.id)
 
         vm.onEvent(DetailEvents.OnSwipedLeft(pin))
         assertEquals(2, repository.allDetails.size)
@@ -116,7 +115,7 @@ class DeleteAndValidationTest {
         assertEquals(listOf("User"), repository.allDetails.map { it.question })
         assertEquals(UiEvents.ShowUndo(UiText.StringResource(R.string.field_deleted)), vm.uiEvents.first())
         vm.onEvent(DetailEvents.OnUndoDelete)
-        assertEquals(pin, repository.getDetailById(pin.detailsId!!))
+        assertEquals(pin, repository.getDetailById(pin.id))
 
         vm.onEvent(DetailEvents.OnAddDetailClick)
         vm.onEvent(DetailEvents.OnTitleChange("Recovery code"))

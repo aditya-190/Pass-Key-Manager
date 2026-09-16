@@ -1,7 +1,6 @@
 package com.bhardwaj.passkey.data.backup
 
-import com.bhardwaj.passkey.data.local.entity.Details
-import com.bhardwaj.passkey.data.local.entity.Preview
+import com.bhardwaj.passkey.domain.model.Category
 import com.bhardwaj.passkey.domain.repository.PasskeyRepository
 import java.io.ByteArrayOutputStream
 import java.util.Arrays
@@ -27,10 +26,10 @@ internal class BackupCodec(
         val previews = repository.getPreviews().first()
         return encodePreviews(
             previews = previews.map { preview ->
-                val details = repository.getDetailsByPreviewId(preview.previewId!!).first()
+                val details = repository.getDetailsByPreviewId(preview.id).first()
                 BackupPreview(
                     heading = preview.heading,
-                    categoryName = preview.categoryName.name,
+                    categoryName = preview.category.name,
                     sequence = preview.sequence,
                     details = details.map { BackupDetail(it.question, it.answer, it.sequence, it.isSecret) }
                 )
@@ -119,11 +118,10 @@ internal class BackupCodec(
             counts.skipped++
             return
         }
-        val category = backupPreview.categoryName.toCategoryOrOther()
-        val previewId = repository.getPreviewByHeading(heading, category.name)?.previewId
-            ?: repository.upsertPreview(
-                Preview(heading = heading, categoryName = category, sequence = backupPreview.sequence)
-            ).also { counts.previews++ }
+        val category = Category.fromNameOrOther(backupPreview.categoryName)
+        val previewId = repository.getPreviewByHeading(heading, category)?.id
+            ?: repository.createPreview(heading = heading, category = category, sequence = backupPreview.sequence)
+                .also { counts.previews++ }
 
         backupPreview.details.forEach { detail ->
             val question = detail.question.trim()
@@ -133,14 +131,12 @@ internal class BackupCodec(
             when {
                 question.isEmpty() || tooLong -> counts.skipped++
                 repository.getDetailByContent(previewId, question, answer) == null -> {
-                    repository.upsertDetails(
-                        Details(
-                            previewId = previewId,
-                            question = question,
-                            answer = answer,
-                            sequence = detail.sequence,
-                            isSecret = detail.isSecret
-                        )
+                    repository.createDetail(
+                        previewId = previewId,
+                        question = question,
+                        answer = answer,
+                        sequence = detail.sequence,
+                        isSecret = detail.isSecret
                     )
                     counts.details++
                 }

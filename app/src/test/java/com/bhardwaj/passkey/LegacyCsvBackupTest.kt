@@ -50,7 +50,7 @@ class LegacyCsvBackupTest {
 
     @Test
     fun `an unknown category does not throw`() {
-        // Categories.valueOf would have thrown here.
+        // Category.valueOf would have thrown here.
         val result = LegacyCsvBackup.parse(header + "NOT_A_CATEGORY,Thing,Question,answer\n")
         assertThat(result.previews).hasSize(1)
         assertThat(result.previews.single().categoryName).isEqualTo("NOT_A_CATEGORY")

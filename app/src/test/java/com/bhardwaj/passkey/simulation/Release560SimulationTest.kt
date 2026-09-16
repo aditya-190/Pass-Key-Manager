@@ -4,16 +4,14 @@ import androidx.lifecycle.SavedStateHandle
 import com.bhardwaj.passkey.banner.AnnouncementRoutes
 import com.bhardwaj.passkey.data.backup.BackupCodec
 import com.bhardwaj.passkey.data.backup.ImportMode
-import com.bhardwaj.passkey.data.local.entity.Details
-import com.bhardwaj.passkey.data.local.entity.Preview
 import com.bhardwaj.passkey.data.security.LockPolicy
 import com.bhardwaj.passkey.domain.model.AutoLockTimeout
+import com.bhardwaj.passkey.domain.model.Category
 import com.bhardwaj.passkey.presentation.screens.preview_screen.PreviewEvents
 import com.bhardwaj.passkey.presentation.screens.preview_screen.PreviewViewModel
 import com.bhardwaj.passkey.testing.FakePasskeyRepository
 import com.bhardwaj.passkey.testing.MainDispatcherRule
 import com.bhardwaj.passkey.testing.RecordingAnalyticsTracker
-import com.bhardwaj.passkey.utils.Categories
 import com.bhardwaj.passkey.utils.PasswordAnalyzer
 import java.util.Random
 import kotlin.time.Duration.Companion.minutes
@@ -45,21 +43,19 @@ class Release560SimulationTest {
     }
 
     private suspend fun randomVault(rnd: Random): FakePasskeyRepository = FakePasskeyRepository().apply {
-        val headings = mutableSetOf<Pair<String, Categories>>()
+        val headings = mutableSetOf<Pair<String, Category>>()
         repeat(rnd.nextInt(12)) { i ->
-            val category = Categories.entries[rnd.nextInt(Categories.entries.size)]
+            val category = Category.entries[rnd.nextInt(Category.entries.size)]
             val heading = "${rnd.text(30).trim().ifEmpty { "h" }} $i"
             if (!headings.add(heading to category)) return@repeat
-            val id = upsertPreview(Preview(heading = heading, categoryName = category, sequence = i.toLong()))
+            val id = createPreview(heading = heading, category = category, sequence = i.toLong())
             repeat(rnd.nextInt(6)) { j ->
-                upsertDetails(
-                    Details(
-                        previewId = id,
-                        question = "${rnd.text(20).trim().ifEmpty { "q" }} $j",
-                        answer = rnd.text(200),
-                        sequence = j.toLong(),
-                        isSecret = rnd.nextBoolean()
-                    )
+                createDetail(
+                    previewId = id,
+                    question = "${rnd.text(20).trim().ifEmpty { "q" }} $j",
+                    answer = rnd.text(200),
+                    sequence = j.toLong(),
+                    isSecret = rnd.nextBoolean()
                 )
             }
         }
@@ -67,9 +63,9 @@ class Release560SimulationTest {
 
     private fun FakePasskeyRepository.snapshot() = allPreviews.map { p ->
         Triple(
-            p.heading.trim() to p.categoryName,
+            p.heading.trim() to p.category,
             p.sequence,
-            allDetails.filter { it.previewId == p.previewId }
+            allDetails.filter { it.previewId == p.id }
                 .map { Triple(it.question.trim(), it.answer, it.isSecret) }
                 .sortedBy { it.first }
         )
@@ -177,7 +173,7 @@ class Release560SimulationTest {
                     }
                     else -> vm.onEvent(PreviewEvents.OnUndoDelete)
                 }
-                val ids = repo.allPreviews.mapNotNull { it.previewId }.toSet()
+                val ids = repo.allPreviews.map { it.id }.toSet()
                 assertTrue("seed $seed orphan", repo.allDetails.all { it.previewId in ids })
             }
             if (confirmedDeletes == 0) assertEquals("seed $seed changed without confirm", original, repo.snapshot())

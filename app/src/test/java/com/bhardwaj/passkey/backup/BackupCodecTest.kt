@@ -4,10 +4,8 @@ import com.bhardwaj.passkey.data.backup.BackupCodec
 import com.bhardwaj.passkey.data.backup.BackupError
 import com.bhardwaj.passkey.data.backup.BackupException
 import com.bhardwaj.passkey.data.backup.ImportMode
-import com.bhardwaj.passkey.data.local.entity.Details
-import com.bhardwaj.passkey.data.local.entity.Preview
+import com.bhardwaj.passkey.domain.model.Category
 import com.bhardwaj.passkey.testing.FakePasskeyRepository
-import com.bhardwaj.passkey.utils.Categories
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
@@ -18,19 +16,19 @@ class BackupCodecTest {
     private val password = "correct horse battery".toCharArray()
 
     private suspend fun FakePasskeyRepository.seed(): FakePasskeyRepository = apply {
-        val bank = upsertPreview(Preview(heading = "Bank, with comma", categoryName = Categories.BANKS, sequence = 2))
-        upsertDetails(Details(previewId = bank, question = "PIN", answer = "4321", sequence = 1))
-        upsertDetails(Details(previewId = bank, question = "Note", answer = "line1\nline2 🔐", sequence = 0))
-        val mail = upsertPreview(Preview(heading = "Mail", categoryName = Categories.MAILS))
-        upsertDetails(Details(previewId = mail, question = "Password", answer = "hunter2"))
+        val bank = createPreview(heading = "Bank, with comma", category = Category.BANKS, sequence = 2)
+        createDetail(previewId = bank, question = "PIN", answer = "4321", sequence = 1)
+        createDetail(previewId = bank, question = "Note", answer = "line1\nline2 🔐", sequence = 0)
+        val mail = createPreview(heading = "Mail", category = Category.MAILS)
+        createDetail(previewId = mail, question = "Password", answer = "hunter2")
     }
 
     private fun FakePasskeyRepository.snapshot() = allPreviews.sortedBy { it.heading }.map { preview ->
         Triple(
             preview.heading,
-            preview.categoryName,
+            preview.category,
             allDetails.filter {
-                it.previewId == preview.previewId
+                it.previewId == preview.id
             }.map { it.question to it.answer }.sortedBy { it.first }
         )
     }
@@ -55,9 +53,9 @@ class BackupCodecTest {
     @Test
     fun `the secret flag survives a backup round trip`() = runTest {
         val source = FakePasskeyRepository()
-        val id = source.upsertPreview(Preview(heading = "Wi-Fi", categoryName = Categories.OTHERS))
-        source.upsertDetails(Details(previewId = id, question = "Network", answer = "home", isSecret = false))
-        source.upsertDetails(Details(previewId = id, question = "Clave", answer = "x9!", isSecret = true))
+        val id = source.createPreview(heading = "Wi-Fi", category = Category.OTHERS)
+        source.createDetail(previewId = id, question = "Network", answer = "home", isSecret = false)
+        source.createDetail(previewId = id, question = "Clave", answer = "x9!", isSecret = true)
         val bytes = BackupCodec(source).encode(password.copyOf(), 1L, "test")
 
         val target = FakePasskeyRepository()
@@ -96,7 +94,7 @@ class BackupCodecTest {
         assertEquals(true, summary.legacyFormat)
         assertEquals(1, summary.skipped)
         // Unknown categories land in Others instead of aborting the whole import.
-        assertEquals(Categories.OTHERS, target.allPreviews.single { it.heading == "Odd" }.categoryName)
+        assertEquals(Category.OTHERS, target.allPreviews.single { it.heading == "Odd" }.category)
         assertEquals("1111", target.allDetails.single { it.question == "PIN" }.answer)
     }
 
@@ -105,7 +103,7 @@ class BackupCodecTest {
         val vault = FakePasskeyRepository().seed()
         val codec = BackupCodec(vault)
         val bytes = codec.encode(password.copyOf(), 1L, "test")
-        vault.upsertPreview(Preview(heading = "Only here", categoryName = Categories.APPS))
+        vault.createPreview(heading = "Only here", category = Category.APPS)
 
         val merged = codec.restore(codec.decode(bytes, password.copyOf()).getOrThrow(), ImportMode.MERGE)
         assertEquals(0, merged.detailsAdded)

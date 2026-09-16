@@ -1,13 +1,13 @@
 package com.bhardwaj.passkey.utils
 
-import com.bhardwaj.passkey.data.local.entity.Details
+import com.bhardwaj.passkey.domain.model.Detail
 import java.text.Normalizer
 import java.util.Locale
 
 data class PasswordAnalysisResult(
     val totalPasswords: Int = 0,
-    val weakPasswords: List<Details> = emptyList(),
-    val reusedPasswords: Map<String, List<Details>> = emptyMap(),
+    val weakPasswords: List<Detail> = emptyList(),
+    val reusedPasswords: Map<String, List<Detail>> = emptyMap(),
     val strengthScore: Int = 0
 )
 
@@ -28,7 +28,7 @@ object PasswordAnalyzer {
         return secretKeywords.map { it.normalizeForMatch() }.any { it.isNotBlank() && normalizedLabel.contains(it) }
     }
 
-    fun analyze(details: List<Details>, secretKeywords: Set<String>): PasswordAnalysisResult {
+    fun analyze(details: List<Detail>, secretKeywords: Set<String>): PasswordAnalysisResult {
         val passwordEntries = details.filter { detail ->
             detail.isSecret || looksSecret(detail.question, secretKeywords)
         }

@@ -210,7 +210,7 @@ fun DetailScreen(onPopBackStack: () -> Unit, viewModel: DetailViewModel = hiltVi
                     ) {
                         items(
                             items = details,
-                            key = { item -> "${item.detailsId}" }
+                            key = { item -> item.id }
                         ) { detail ->
                             if (searchText.isNotBlank()) {
                                 DetailsItem(details = detail, onEvent = viewModel::onEvent)
@@ -228,7 +228,7 @@ fun DetailScreen(onPopBackStack: () -> Unit, viewModel: DetailViewModel = hiltVi
                                 }
                                 ReorderableItem(
                                     reorderableLazyColumnState,
-                                    "${detail.detailsId}"
+                                    "${detail.id}"
                                 ) {
                                     SwipeToDismissBox(
                                         state = state,

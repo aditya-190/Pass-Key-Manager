@@ -3,7 +3,8 @@ package com.bhardwaj.passkey.viewmodels
 import androidx.lifecycle.SavedStateHandle
 import com.bhardwaj.passkey.analytics.AppEventNames
 import com.bhardwaj.passkey.analytics.AppParams
-import com.bhardwaj.passkey.data.local.entity.Details
+import com.bhardwaj.passkey.domain.model.Category
+import com.bhardwaj.passkey.domain.model.Detail
 import com.bhardwaj.passkey.presentation.screens.detail_screen.DetailEvents
 import com.bhardwaj.passkey.presentation.screens.detail_screen.DetailViewModel
 import com.bhardwaj.passkey.presentation.screens.preview_screen.PreviewEvents
@@ -11,7 +12,6 @@ import com.bhardwaj.passkey.presentation.screens.preview_screen.PreviewViewModel
 import com.bhardwaj.passkey.testing.FakePasskeyRepository
 import com.bhardwaj.passkey.testing.MainDispatcherRule
 import com.bhardwaj.passkey.testing.RecordingAnalyticsTracker
-import com.bhardwaj.passkey.utils.Categories
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
@@ -37,7 +37,7 @@ class VaultAnalyticsTest {
     @Test
     fun `creating an entry logs its category only`() = runTest {
         val vm = PreviewViewModel(repository, SavedStateHandle(), analytics)
-        vm.onEvent(PreviewEvents.OnBottomNavigationClick(Categories.MAILS.name))
+        vm.onEvent(PreviewEvents.OnBottomNavigationClick(Category.MAILS.name))
         vm.onEvent(PreviewEvents.OnAddPreviewClick)
         vm.onEvent(PreviewEvents.OnHeadingChange("my-secret-bank"))
         vm.onEvent(PreviewEvents.OnSaveClick)
@@ -51,8 +51,9 @@ class VaultAnalyticsTest {
 
     @Test
     fun `renaming an entry is not counted as a new entry`() = runTest {
-        val id = repository.upsertPreview(
-            com.bhardwaj.passkey.data.local.entity.Preview(heading = "Old", categoryName = Categories.BANKS)
+        val id = repository.createPreview(
+            heading = "Old",
+            category = Category.BANKS
         )
         val vm = PreviewViewModel(repository, SavedStateHandle(), analytics)
         vm.onEvent(PreviewEvents.OnChangeClick(repository.getPreviewById(id)!!))
@@ -94,7 +95,7 @@ class VaultAnalyticsTest {
         val vm = DetailViewModel(repository, SavedStateHandle(mapOf("previewId" to 1L)), analytics, { emptySet() })
         vm.onEvent(
             DetailEvents.OnLongPress(
-                Details(detailsId = 1, previewId = 1, question = "PIN", answer = "4321").answer
+                Detail(id = 1, previewId = 1, question = "PIN", answer = "4321").answer
             )
         )
         assertEquals(AppEventNames.VALUE_COPIED, analytics.events.single().name)

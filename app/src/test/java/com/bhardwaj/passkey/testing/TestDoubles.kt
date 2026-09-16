@@ -6,8 +6,9 @@ import androidx.datastore.preferences.core.Preferences
 import com.bhardwaj.passkey.analytics.AnalyticsEvent
 import com.bhardwaj.passkey.analytics.AnalyticsTracker
 import com.bhardwaj.passkey.crash.CrashReporter
-import com.bhardwaj.passkey.data.local.entity.Details
-import com.bhardwaj.passkey.data.local.entity.Preview
+import com.bhardwaj.passkey.domain.model.Category
+import com.bhardwaj.passkey.domain.model.Detail
+import com.bhardwaj.passkey.domain.model.Preview
 import com.bhardwaj.passkey.domain.repository.PasskeyRepository
 import java.io.File
 import kotlinx.coroutines.CoroutineScope
@@ -99,59 +100,78 @@ fun testDataStore(
 /** In-memory vault with Room-like id assignment, for ViewModel tests. */
 class FakePasskeyRepository : PasskeyRepository {
     private val previews = MutableStateFlow<List<Preview>>(emptyList())
-    private val details = MutableStateFlow<List<Details>>(emptyList())
+    private val details = MutableStateFlow<List<Detail>>(emptyList())
     private var nextId = 1L
 
     val allPreviews: List<Preview> get() = previews.value
-    val allDetails: List<Details> get() = details.value
+    val allDetails: List<Detail> get() = details.value
 
-    override fun getDetails(): Flow<List<Details>> = details
+    override fun getPreviews(): Flow<List<Preview>> = previews.map { list -> list.sortedBy { it.sequence } }
 
-    override fun getDetailsByPreviewId(previewId: Long): Flow<List<Details>> =
-        details.map { list -> list.filter { it.previewId == previewId }.sortedBy { it.sequence } }
+    override fun getPreviewsByCategory(category: Category): Flow<List<Preview>> =
+        getPreviews().map { list -> list.filter { it.category == category } }
 
-    override suspend fun getDetailById(detailId: Long): Details? = details.value.find { it.detailsId == detailId }
+    override suspend fun getPreviewById(previewId: Long): Preview? = previews.value.find { it.id == previewId }
 
-    override suspend fun getDetailByContent(previewId: Long, question: String, answer: String): Details? =
-        details.value.find { it.previewId == previewId && it.question == question && it.answer == answer }
+    // Case-insensitive, like the DAO's COLLATE NOCASE.
+    override suspend fun getPreviewByHeading(heading: String, category: Category): Preview? =
+        previews.value.find { it.heading.equals(heading, ignoreCase = true) && it.category == category }
 
-    override suspend fun upsertDetails(details: Details): Long {
-        val id = details.detailsId ?: nextId++
-        this.details.value = this.details.value.filterNot { it.detailsId == id } + details.copy(detailsId = id)
+    override suspend fun createPreview(heading: String, category: Category, sequence: Long): Long {
+        val id = nextId++
+        previews.value = previews.value + Preview(id = id, heading = heading, category = category, sequence = sequence)
         return id
     }
 
-    override suspend fun deleteDetail(details: Details) {
-        this.details.value = this.details.value.filterNot { it.detailsId == details.detailsId }
+    /** Room upsert: replaces the row with this id, or inserts it (with that id) when it is gone. */
+    override suspend fun updatePreview(preview: Preview) {
+        previews.value = previews.value.filterNot { it.id == preview.id } + preview
     }
 
-    override suspend fun deleteDetailByPreviewId(previewId: Long) {
+    override suspend fun deletePreview(preview: Preview) {
+        previews.value = previews.value.filterNot { it.id == preview.id }
+    }
+
+    override suspend fun updatePreviewSequence(previewId: Long, sequence: Long) {
+        previews.value = previews.value.map { if (it.id == previewId) it.copy(sequence = sequence) else it }
+    }
+
+    override fun getDetails(): Flow<List<Detail>> = details
+
+    override fun getDetailsByPreviewId(previewId: Long): Flow<List<Detail>> =
+        details.map { list -> list.filter { it.previewId == previewId }.sortedBy { it.sequence } }
+
+    override suspend fun getDetailById(detailId: Long): Detail? = details.value.find { it.id == detailId }
+
+    override suspend fun getDetailByContent(previewId: Long, question: String, answer: String): Detail? =
+        details.value.find { it.previewId == previewId && it.question == question && it.answer == answer }
+
+    override suspend fun createDetail(
+        previewId: Long,
+        question: String,
+        answer: String,
+        sequence: Long,
+        isSecret: Boolean
+    ): Long {
+        val id = nextId++
+        details.value = details.value + Detail(id, previewId, question, answer, sequence, isSecret)
+        return id
+    }
+
+    override suspend fun updateDetail(detail: Detail) {
+        details.value = details.value.filterNot { it.id == detail.id } + detail
+    }
+
+    override suspend fun deleteDetail(detail: Detail) {
+        details.value = details.value.filterNot { it.id == detail.id }
+    }
+
+    override suspend fun deleteDetailsByPreviewId(previewId: Long) {
         details.value = details.value.filterNot { it.previewId == previewId }
     }
 
     override suspend fun updateDetailSequence(detailId: Long, sequence: Long) {
-        details.value = details.value.map { if (it.detailsId == detailId) it.copy(sequence = sequence) else it }
-    }
-
-    override fun getPreviews(): Flow<List<Preview>> = previews.map { list -> list.sortedBy { it.sequence } }
-
-    override suspend fun getPreviewById(previewId: Long): Preview? = previews.value.find { it.previewId == previewId }
-
-    override suspend fun getPreviewByHeading(previewHeading: String, categoryName: String): Preview? =
-        previews.value.find { it.heading == previewHeading && it.categoryName.name == categoryName }
-
-    override suspend fun upsertPreview(previews: Preview): Long {
-        val id = previews.previewId ?: nextId++
-        this.previews.value = this.previews.value.filterNot { it.previewId == id } + previews.copy(previewId = id)
-        return id
-    }
-
-    override suspend fun deletePreview(previews: Preview) {
-        this.previews.value = this.previews.value.filterNot { it.previewId == previews.previewId }
-    }
-
-    override suspend fun updatePreviewSequence(previewId: Long, sequence: Long) {
-        previews.value = previews.value.map { if (it.previewId == previewId) it.copy(sequence = sequence) else it }
+        details.value = details.value.map { if (it.id == detailId) it.copy(sequence = sequence) else it }
     }
 
     override suspend fun <R> runInTransaction(block: suspend () -> R): R = block()

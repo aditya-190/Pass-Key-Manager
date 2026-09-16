@@ -4,7 +4,6 @@ import android.content.Context
 import android.net.Uri
 import com.bhardwaj.passkey.BuildConfig
 import com.bhardwaj.passkey.domain.repository.PasskeyRepository
-import com.bhardwaj.passkey.utils.Categories
 import dagger.hilt.android.qualifiers.ApplicationContext
 import java.io.ByteArrayOutputStream
 import javax.inject.Inject
@@ -93,9 +92,6 @@ class BackupRepository @Inject constructor(
 class BackupException(val error: BackupError) : Exception(error.toString())
 
 /**
- * Never [Categories.valueOf]: it throws on unknown input, and the previous importer let that
+ * Never [Category.valueOf]: it throws on unknown input, and the previous importer let that
  * escape into a broad catch that silently abandoned the rest of the file.
  */
-internal fun String.toCategoryOrOther(): Categories =
-    Categories.entries.firstOrNull { it.name.equals(this.trim(), ignoreCase = true) }
-        ?: Categories.OTHERS

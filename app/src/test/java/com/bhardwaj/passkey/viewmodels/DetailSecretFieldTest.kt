@@ -1,7 +1,6 @@
 package com.bhardwaj.passkey.viewmodels
 
 import androidx.lifecycle.SavedStateHandle
-import com.bhardwaj.passkey.data.local.entity.Details
 import com.bhardwaj.passkey.presentation.screens.detail_screen.DetailEvents
 import com.bhardwaj.passkey.presentation.screens.detail_screen.DetailViewModel
 import com.bhardwaj.passkey.testing.FakePasskeyRepository
@@ -73,7 +72,7 @@ class DetailSecretFieldTest {
 
     @Test
     fun `editing a stored secret keeps it secret, and turning it off sticks`() = runTest {
-        val id = repository.upsertDetails(Details(previewId = 1, question = "Wi-Fi", answer = "x", isSecret = true))
+        val id = repository.createDetail(previewId = 1, question = "Wi-Fi", answer = "x", isSecret = true)
         val vm = vm()
         vm.onEvent(DetailEvents.OnChangeClick(repository.getDetailById(id)!!))
         assertTrue(vm.isSecretField.value)

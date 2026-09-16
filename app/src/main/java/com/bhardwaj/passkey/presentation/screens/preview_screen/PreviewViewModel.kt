@@ -9,12 +9,11 @@ import androidx.lifecycle.viewModelScope
 import com.bhardwaj.passkey.R
 import com.bhardwaj.passkey.analytics.AnalyticsTracker
 import com.bhardwaj.passkey.analytics.AppEvents
-import com.bhardwaj.passkey.data.local.entity.Details
-import com.bhardwaj.passkey.data.local.entity.Preview
+import com.bhardwaj.passkey.domain.model.Category
+import com.bhardwaj.passkey.domain.model.Detail
+import com.bhardwaj.passkey.domain.model.Preview
 import com.bhardwaj.passkey.domain.repository.PasskeyRepository
 import com.bhardwaj.passkey.presentation.navigation.Routes
-import com.bhardwaj.passkey.presentation.screens.preview_screen.PreviewEvents
-import com.bhardwaj.passkey.utils.Categories
 import com.bhardwaj.passkey.utils.Constants.Companion.BOTTOM_SHEET_HEADING
 import com.bhardwaj.passkey.utils.Constants.Companion.PREVIEW_CATEGORY_NAME
 import com.bhardwaj.passkey.utils.Constants.Companion.PREVIEW_HEADING
@@ -22,6 +21,7 @@ import com.bhardwaj.passkey.utils.UiEvents
 import com.bhardwaj.passkey.utils.UiText
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -29,10 +29,12 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalCoroutinesApi::class)
 @HiltViewModel
 class PreviewViewModel @Inject constructor(
     private val repository: PasskeyRepository,
@@ -42,7 +44,7 @@ class PreviewViewModel @Inject constructor(
     private val _uiEvents = Channel<UiEvents>()
     val uiEvents = _uiEvents.receiveAsFlow()
 
-    val categoryName = savedStateHandle.getStateFlow(PREVIEW_CATEGORY_NAME, Categories.BANKS.name)
+    val categoryName = savedStateHandle.getStateFlow(PREVIEW_CATEGORY_NAME, Category.BANKS.name)
     val previewHeading = savedStateHandle.getStateFlow(PREVIEW_HEADING, "")
 
     /** true = editing an existing row, false = adding. Resolved to text by the UI. */
@@ -51,17 +53,18 @@ class PreviewViewModel @Inject constructor(
     private val _searchText = MutableStateFlow("")
     val searchText = _searchText.asStateFlow()
 
-    val previews: StateFlow<List<Preview>> = repository.getPreviews()
-        .combine(categoryName) { previews, categoryName ->
-            previews.filter { it.categoryName == Categories.valueOf(categoryName) }
-        }.combine(searchText) { previews, text ->
+    // Filtered by category in SQL, so a reorder renumbers one category's rows rather than a slice of a
+    // globally ordered list. fromNameOrOther, never valueOf: the name comes from saved state.
+    val previews: StateFlow<List<Preview>> = categoryName
+        .flatMapLatest { name -> repository.getPreviewsByCategory(Category.fromNameOrOther(name)) }
+        .combine(searchText) { previews, text ->
             if (text.isBlank()) {
                 previews
             } else {
                 previews.filter { it.heading.contains(text, ignoreCase = true) }
             }
         }
-        .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), emptyList())
 
     var isSheetOpen by mutableStateOf(false)
         private set
@@ -73,7 +76,7 @@ class PreviewViewModel @Inject constructor(
         private set
 
     private var pendingDelete: Preview? = null
-    private var lastDeleted: Pair<Preview, List<Details>>? = null
+    private var lastDeleted: Pair<Preview, List<Detail>>? = null
 
     /** Shown inside the add/edit sheet; a failed save keeps the sheet and what was typed. */
     var sheetError by mutableStateOf<UiText?>(null)
@@ -104,7 +107,7 @@ class PreviewViewModel @Inject constructor(
             is PreviewEvents.OnChangeClick -> {
                 viewModelScope.launch {
                     _searchText.value = ""
-                    repository.getPreviewById(event.preview.previewId!!)?.let { preview ->
+                    repository.getPreviewById(event.preview.id)?.let { preview ->
                         isSheetOpen = true
                         savedStateHandle[BOTTOM_SHEET_HEADING] = true
                         savedStateHandle[PREVIEW_HEADING] = event.preview.heading
@@ -125,35 +128,25 @@ class PreviewViewModel @Inject constructor(
                         return@launch
                     }
 
-                    val newPreview = Preview(
-                        heading = previewHeading.value.trim(),
-                        categoryName = Categories.valueOf(categoryName.value)
-                    )
+                    val heading = previewHeading.value.trim()
+                    val category = Category.fromNameOrOther(categoryName.value)
 
-                    val existingPreview = repository.getPreviewByHeading(
-                        newPreview.heading,
-                        newPreview.categoryName.toString()
-                    )
+                    val existingPreview = repository.getPreviewByHeading(heading, category)
                     // When editing, the lookup finds the very row being edited. Treating that as
                     // a clash meant saving an edit without renaming it reported "heading exists"
                     // and silently discarded the edit.
                     val isClashWithAnotherRow =
-                        existingPreview != null && existingPreview.previewId != preview?.previewId
+                        existingPreview != null && existingPreview.id != preview?.id
                     if (isClashWithAnotherRow) {
                         sheetError = UiText.StringResource(R.string.heading_exists)
                         return@launch
                     }
 
                     preview?.let {
-                        repository.upsertPreview(
-                            it.copy(
-                                heading = newPreview.heading,
-                                categoryName = newPreview.categoryName
-                            )
-                        )
+                        repository.updatePreview(it.copy(heading = heading, category = category))
                     } ?: run {
-                        repository.upsertPreview(newPreview)
-                        analytics.log(AppEvents.entryCreated(newPreview.categoryName))
+                        repository.createPreview(heading = heading, category = category)
+                        analytics.log(AppEvents.entryCreated(category))
                     }
 
                     preview = null
@@ -194,10 +187,9 @@ class PreviewViewModel @Inject constructor(
                 pendingDelete = null
                 isAlertOpen = false
                 viewModelScope.launch {
-                    val previewId = preview.previewId ?: return@launch
-                    val details = repository.getDetailsByPreviewId(previewId).first()
+                    val details = repository.getDetailsByPreviewId(preview.id).first()
                     repository.runInTransaction {
-                        repository.deleteDetailByPreviewId(previewId)
+                        repository.deleteDetailsByPreviewId(preview.id)
                         repository.deletePreview(preview)
                     }
                     lastDeleted = preview to details
@@ -210,8 +202,9 @@ class PreviewViewModel @Inject constructor(
                 lastDeleted = null
                 viewModelScope.launch {
                     repository.runInTransaction {
-                        repository.upsertPreview(preview)
-                        details.forEach { repository.upsertDetails(it) }
+                        // Same ids as before the delete, so the details point at the restored row.
+                        repository.updatePreview(preview)
+                        details.forEach { repository.updateDetail(it) }
                     }
                 }
             }
@@ -235,7 +228,7 @@ class PreviewViewModel @Inject constructor(
                     repository.runInTransaction {
                         updatedList.forEach { preview ->
                             repository.updatePreviewSequence(
-                                previewId = preview.previewId!!,
+                                previewId = preview.id,
                                 sequence = preview.sequence
                             )
                         }
