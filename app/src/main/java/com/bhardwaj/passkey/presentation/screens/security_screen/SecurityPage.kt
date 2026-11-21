@@ -54,16 +54,13 @@ import com.bhardwaj.passkey.R
 import com.bhardwaj.passkey.domain.events.SecurityEvents
 import com.bhardwaj.passkey.domain.viewModels.SecurityViewModel
 import com.bhardwaj.passkey.presentation.theme.Poppins
-import com.bhardwaj.passkey.utils.asString
 import com.bhardwaj.passkey.utils.UiEvents
+import com.bhardwaj.passkey.utils.asString
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 @Composable
-fun SecurityScreen(
-    navController: NavController,
-    viewModel: SecurityViewModel = hiltViewModel()
-) {
+fun SecurityScreen(navController: NavController, viewModel: SecurityViewModel = hiltViewModel()) {
     val snackBarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
 
@@ -126,7 +123,8 @@ fun SecurityScreen(
         ) {
             if (viewModel.needToOpenAlertDialog) {
                 Dialog(
-                    onDismissRequest = {}, properties = DialogProperties(
+                    onDismissRequest = {},
+                    properties = DialogProperties(
                         securePolicy = SecureFlagPolicy.SecureOn,
                         dismissOnBackPress = false,
                         dismissOnClickOutside = false
@@ -136,7 +134,7 @@ fun SecurityScreen(
                         shape = RoundedCornerShape(10.dp),
                         modifier = Modifier
                             .fillMaxWidth(),
-                        elevation = CardDefaults.cardElevation(8.dp),
+                        elevation = CardDefaults.cardElevation(8.dp)
                     ) {
                         Column(
                             modifier = Modifier.fillMaxWidth()
@@ -221,7 +219,8 @@ fun biometricPrompt(
         .build()
 
     val biometricPrompt = BiometricPrompt(
-        activity, executor,
+        activity,
+        executor,
         object : BiometricPrompt.AuthenticationCallback() {
             override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
                 super.onAuthenticationError(errorCode, errString)

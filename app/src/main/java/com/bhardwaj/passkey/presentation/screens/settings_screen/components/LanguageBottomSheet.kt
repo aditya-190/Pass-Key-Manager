@@ -26,11 +26,7 @@ import com.bhardwaj.passkey.domain.models.Language
 import com.bhardwaj.passkey.presentation.theme.Poppins
 
 @Composable
-fun LanguageItem(
-    modifier: Modifier = Modifier,
-    language: Language,
-    onLanguageChange: (Language) -> Unit
-) {
+fun LanguageItem(modifier: Modifier = Modifier, language: Language, onLanguageChange: (Language) -> Unit) {
     Column(
         modifier = modifier
             .fillMaxWidth()
@@ -62,7 +58,7 @@ fun LanguageItem(
 fun LanguageBottomSheet(
     modifier: Modifier = Modifier,
     onBackIconClick: () -> Unit,
-    onLanguageChange: (Language) -> Unit,
+    onLanguageChange: (Language) -> Unit
 ) {
     val languageList = arrayListOf(
         Language(
@@ -166,7 +162,7 @@ fun LanguageBottomSheet(
             languageName = "తెలుగు",
             languageNameInEnglish = "Telugu",
             comingSoon = false
-        ),
+        )
     )
 
     Column(modifier = modifier.background(MaterialTheme.colorScheme.background)) {

@@ -1,5 +1,8 @@
 # Overrides on top of detekt's default config (buildUponDefaultConfig = true).
 naming:
+  # TODO(5.8.0 / Phase 4a): re-enable with ktlint's package-name rule (see .editorconfig).
+  PackageNaming:
+    active: false
   FunctionNaming:
     ignoreAnnotated: ['Composable']
   TopLevelPropertyNaming:

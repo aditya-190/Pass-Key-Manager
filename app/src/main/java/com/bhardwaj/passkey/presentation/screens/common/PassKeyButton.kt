@@ -46,14 +46,20 @@ fun PassKeyButton(
             .clickable(
                 onClick = { onClick() },
                 indication = null,
-                interactionSource = remember { MutableInteractionSource() },
+                interactionSource = remember { MutableInteractionSource() }
             ),
         contentAlignment = Alignment.Center
     ) {
         Text(
             text = text,
             fontFamily = BebasNeue,
-            color = if (buttonType == ButtonType.DEFAULT) MaterialTheme.colorScheme.background else MaterialTheme.colorScheme.primary,
+            color = if (buttonType ==
+                ButtonType.DEFAULT
+            ) {
+                MaterialTheme.colorScheme.background
+            } else {
+                MaterialTheme.colorScheme.primary
+            },
             fontSize = 16.sp,
             fontStyle = FontStyle.Normal
         )

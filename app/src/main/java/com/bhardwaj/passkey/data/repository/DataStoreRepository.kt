@@ -11,11 +11,11 @@ import com.bhardwaj.passkey.data.local.DataStoreSource
 import com.bhardwaj.passkey.utils.Constants.Companion.CURRENT_LANGUAGE
 import com.bhardwaj.passkey.utils.Constants.Companion.ONBOARDING_COMPLETE
 import com.bhardwaj.passkey.utils.Constants.Companion.PASSKEY_PREFS
+import java.io.IOException
+import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
-import java.io.IOException
-import javax.inject.Inject
 
 class DataStoreRepository @Inject constructor(private val context: Context) : DataStoreSource {
     companion object {

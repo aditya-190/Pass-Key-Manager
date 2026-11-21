@@ -36,5 +36,4 @@ interface DetailsDao {
 
     @Query("DELETE FROM $DETAILS_TABLE")
     suspend fun deleteAllDetails()
-
 }

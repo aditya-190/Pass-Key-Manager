@@ -1,10 +1,10 @@
 package com.bhardwaj.passkey
 
 import com.bhardwaj.passkey.utils.PasswordGenerator
+import java.util.Random
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
-import java.util.Random
 
 class PasswordGeneratorTest {
 
@@ -48,8 +48,12 @@ class PasswordGeneratorTest {
     fun `never emits characters from a deselected class`() {
         repeat(200) { seed ->
             val password = generate(
-                length = 12, upper = true, lower = true,
-                numbers = false, special = false, random = Random(seed.toLong())
+                length = 12,
+                upper = true,
+                lower = true,
+                numbers = false,
+                special = false,
+                random = Random(seed.toLong())
             )
             assertTrue("digit leaked into $password", password.none { it in DIGITS })
             assertTrue("symbol leaked into $password", password.none { it in SPECIAL })
@@ -59,7 +63,11 @@ class PasswordGeneratorTest {
     @Test
     fun `falls back to lowercase when no class is selected`() {
         val password = generate(
-            length = 10, upper = false, lower = false, numbers = false, special = false
+            length = 10,
+            upper = false,
+            lower = false,
+            numbers = false,
+            special = false
         )
         assertEquals(10, password.length)
         assertTrue("expected lowercase only, got $password", password.all { it in LOWER })
@@ -78,8 +86,10 @@ class PasswordGeneratorTest {
         val results = List(1_000) {
             PasswordGenerator.generate(
                 length = 16,
-                includeUpper = true, includeLower = true,
-                includeNumbers = true, includeSpecial = true
+                includeUpper = true,
+                includeLower = true,
+                includeNumbers = true,
+                includeSpecial = true
             )
         }
         assertEquals("generated passwords repeated", results.size, results.toSet().size)
@@ -93,7 +103,10 @@ class PasswordGeneratorTest {
             .map { generate(length = 12, random = Random(it.toLong())).first() }
             .map { c ->
                 when (c) {
-                    in UPPER -> "upper"; in LOWER -> "lower"; in DIGITS -> "digit"; else -> "special"
+                    in UPPER -> "upper"
+                    in LOWER -> "lower"
+                    in DIGITS -> "digit"
+                    else -> "special"
                 }
             }
             .toSet()

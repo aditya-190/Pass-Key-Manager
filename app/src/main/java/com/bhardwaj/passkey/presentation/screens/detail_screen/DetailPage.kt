@@ -37,15 +37,15 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.window.SecureFlagPolicy
-import androidx.compose.ui.window.DialogProperties
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.DialogProperties
+import androidx.compose.ui.window.SecureFlagPolicy
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.bhardwaj.passkey.R
 import com.bhardwaj.passkey.domain.events.DetailEvents
@@ -57,20 +57,17 @@ import com.bhardwaj.passkey.presentation.screens.detail_screen.components.Detail
 import com.bhardwaj.passkey.presentation.screens.detail_screen.components.PasswordSettingsSheet
 import com.bhardwaj.passkey.presentation.theme.BebasNeue
 import com.bhardwaj.passkey.utils.ButtonType
-import com.bhardwaj.passkey.utils.asString
 import com.bhardwaj.passkey.utils.SecureClipboard
-import com.bhardwaj.passkey.utils.UiText
 import com.bhardwaj.passkey.utils.UiEvents
+import com.bhardwaj.passkey.utils.UiText
+import com.bhardwaj.passkey.utils.asString
 import kotlinx.coroutines.launch
 import sh.calvin.reorderable.ReorderableItem
 import sh.calvin.reorderable.rememberReorderableLazyListState
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun DetailScreen(
-    onPopBackStack: () -> Unit,
-    viewModel: DetailViewModel = hiltViewModel()
-) {
+fun DetailScreen(onPopBackStack: () -> Unit, viewModel: DetailViewModel = hiltViewModel()) {
     val detailTitle by viewModel.detailTitle.collectAsState()
     val detailResponse by viewModel.detailResponse.collectAsState()
     val isEditingSheet by viewModel.isEditingSheet.collectAsState()
@@ -122,7 +119,6 @@ fun DetailScreen(
                     }
                 }
 
-
                 else -> Unit
             }
         }
@@ -140,9 +136,9 @@ fun DetailScreen(
                 content = {
                     Icon(
                         imageVector = Icons.Default.Add,
-                        contentDescription = stringResource(R.string.cd_add_detail),
+                        contentDescription = stringResource(R.string.cd_add_detail)
                     )
-                },
+                }
             )
         }
     ) { paddingValues ->
@@ -190,7 +186,7 @@ fun DetailScreen(
                     )
                 } else {
                     LazyColumn(
-                        state = lazyListState,
+                        state = lazyListState
                     ) {
                         items(
                             items = details,
@@ -321,7 +317,7 @@ fun DetailScreen(
                         text = stringResource(id = R.string.cancel),
                         buttonType = ButtonType.OUTLINED
                     )
-                },
+                }
             )
         }
     }

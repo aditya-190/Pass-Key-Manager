@@ -16,6 +16,7 @@ import com.bhardwaj.passkey.utils.PasswordGenerator
 import com.bhardwaj.passkey.utils.UiEvents
 import com.bhardwaj.passkey.utils.UiText
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -25,7 +26,6 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @HiltViewModel
 class DetailViewModel @Inject constructor(
@@ -45,6 +45,7 @@ class DetailViewModel @Inject constructor(
 
     private val _detailResponse = MutableStateFlow("")
     val detailResponse = _detailResponse.asStateFlow()
+
     /** true = editing an existing row, false = adding. Resolved to text by the UI. */
     val isEditingSheet = savedStateHandle.getStateFlow(BOTTOM_SHEET_HEADING, false)
     val previewId = savedStateHandle.get<Long>("previewId") ?: -1
@@ -152,7 +153,7 @@ class DetailViewModel @Inject constructor(
                     val newDetail = Details(
                         previewId = previewId,
                         question = detailTitle.value.trim(),
-                        answer = detailResponse.value.trim(),
+                        answer = detailResponse.value.trim()
                     )
 
                     detail?.let {
@@ -162,7 +163,7 @@ class DetailViewModel @Inject constructor(
                                 // Trimmed to match the create path above. A trailing space in a
                                 // stored password fails silently wherever it is pasted.
                                 question = newDetail.question,
-                                answer = newDetail.answer,
+                                answer = newDetail.answer
                             )
                         )
                     } ?: repository.upsertDetails(newDetail)

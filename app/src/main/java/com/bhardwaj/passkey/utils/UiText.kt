@@ -23,16 +23,10 @@ sealed interface UiText {
 
     data class DynamicString(val value: String) : UiText
 
-    data class StringResource(
-        @param:StringRes val resId: Int,
-        val args: List<Any> = emptyList()
-    ) : UiText
+    data class StringResource(@param:StringRes val resId: Int, val args: List<Any> = emptyList()) : UiText
 
-    data class PluralResource(
-        @param:PluralsRes val resId: Int,
-        val count: Int,
-        val args: List<Any> = emptyList()
-    ) : UiText
+    data class PluralResource(@param:PluralsRes val resId: Int, val count: Int, val args: List<Any> = emptyList()) :
+        UiText
 }
 
 /** Resolves against [context]. Prefer the `@Composable` overload inside composition. */

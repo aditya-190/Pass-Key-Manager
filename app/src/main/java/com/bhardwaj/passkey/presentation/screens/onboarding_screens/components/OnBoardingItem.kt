@@ -18,12 +18,8 @@ import com.bhardwaj.passkey.R
 import com.bhardwaj.passkey.presentation.screens.onboarding_screens.OnBoardingScreen
 import com.bhardwaj.passkey.presentation.theme.Poppins
 
-
 @Composable
-fun OnBoardingItem(
-    modifier: Modifier = Modifier,
-    screen: OnBoardingScreen
-) {
+fun OnBoardingItem(modifier: Modifier = Modifier, screen: OnBoardingScreen) {
     Column(
         modifier = modifier
             .fillMaxHeight(0.8F)

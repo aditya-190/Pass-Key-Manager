@@ -23,25 +23,25 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalView
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.bhardwaj.passkey.R
+import com.bhardwaj.passkey.data.local.entity.Preview as PreviewEntity
 import com.bhardwaj.passkey.domain.events.PreviewEvents
 import com.bhardwaj.passkey.presentation.theme.Poppins
 import sh.calvin.reorderable.ReorderableCollectionItemScope
-import com.bhardwaj.passkey.data.local.entity.Preview as PreviewEntity
 
 @Composable
 fun PreviewItem(
     modifier: Modifier = Modifier,
     scope: ReorderableCollectionItemScope? = null,
     preview: PreviewEntity,
-    onEvent: (PreviewEvents) -> Unit,
+    onEvent: (PreviewEvents) -> Unit
 ) {
     val view = LocalView.current
     Box(modifier = modifier.fillMaxWidth()) {
@@ -73,7 +73,7 @@ fun PreviewItem(
                                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                                     view.performHapticFeedback(HapticFeedbackConstants.GESTURE_END)
                                 }
-                            },
+                            }
                         )
                     }
                 } ?: Modifier,
@@ -99,7 +99,7 @@ fun PreviewItem(
                 fontFamily = Poppins,
                 fontWeight = FontWeight.Normal,
                 fontSize = 18.sp,
-                color = MaterialTheme.colorScheme.onBackground,
+                color = MaterialTheme.colorScheme.onBackground
             )
 
             if (scope != null) {

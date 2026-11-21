@@ -22,7 +22,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
-import androidx.compose.ui.window.SecureFlagPolicy
 import androidx.compose.material3.ModalBottomSheetProperties
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
@@ -37,6 +36,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.SecureFlagPolicy
 import com.bhardwaj.passkey.R
 import com.bhardwaj.passkey.presentation.screens.common.PassKeyButton
 import com.bhardwaj.passkey.presentation.screens.common.PassKeyTextField
@@ -55,7 +55,7 @@ fun DetailsBottomSheet(
     onDismiss: () -> Unit,
     onSave: () -> Unit,
     onGeneratePasswordClicked: () -> Unit,
-    onPasswordSettingsClicked: () -> Unit,
+    onPasswordSettingsClicked: () -> Unit
 ) {
     val sheetState = rememberModalBottomSheetState()
     ModalBottomSheet(
@@ -65,7 +65,7 @@ fun DetailsBottomSheet(
         sheetState = sheetState,
         onDismissRequest = { onDismiss() },
         dragHandle = {},
-        shape = RectangleShape,
+        shape = RectangleShape
     ) {
         Box(
             modifier = modifier
@@ -85,7 +85,7 @@ fun DetailsBottomSheet(
                     fontFamily = BebasNeue,
                     fontWeight = FontWeight.Normal,
                     fontSize = 54.sp,
-                    color = MaterialTheme.colorScheme.secondary,
+                    color = MaterialTheme.colorScheme.secondary
                 )
                 PassKeyTextField(
                     value = detailTitle,
@@ -97,7 +97,7 @@ fun DetailsBottomSheet(
                         fontSize = 16.sp,
                         fontStyle = FontStyle.Normal,
                         fontWeight = FontWeight.Normal,
-                        color = MaterialTheme.colorScheme.onBackground,
+                        color = MaterialTheme.colorScheme.onBackground
                     ),
                     modifier = Modifier.padding(top = 24.dp)
                 )
@@ -118,7 +118,7 @@ fun DetailsBottomSheet(
                             fontSize = 16.sp,
                             fontStyle = FontStyle.Normal,
                             fontWeight = FontWeight.Normal,
-                            color = MaterialTheme.colorScheme.onBackground,
+                            color = MaterialTheme.colorScheme.onBackground
                         ),
                         imeAction = ImeAction.Done,
                         modifier = Modifier.weight(1f)

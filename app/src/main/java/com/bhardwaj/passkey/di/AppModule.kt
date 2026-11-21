@@ -15,34 +15,29 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import net.zetetic.database.sqlcipher.SupportOpenHelperFactory
 import javax.inject.Singleton
+import net.zetetic.database.sqlcipher.SupportOpenHelperFactory
 
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
     @Provides
     @Singleton
-    fun provideDatabase(appContext: Application): PassKeyDatabase {
-        return Room.databaseBuilder(
-            context = appContext,
-            klass = PassKeyDatabase::class.java,
-            name = Constants.PASS_KEY_DATABASE
-        )
-            .addMigrations(MIGRATION_1_2)
-            .openHelperFactory(factory = SupportOpenHelperFactory(BuildConfig.PASS_PHRASE.toByteArray()))
-            .build()
-    }
+    fun provideDatabase(appContext: Application): PassKeyDatabase = Room.databaseBuilder(
+        context = appContext,
+        klass = PassKeyDatabase::class.java,
+        name = Constants.PASS_KEY_DATABASE
+    )
+        .addMigrations(MIGRATION_1_2)
+        .openHelperFactory(factory = SupportOpenHelperFactory(BuildConfig.PASS_PHRASE.toByteArray()))
+        .build()
 
     @Provides
     @Singleton
-    fun provideTodoRepository(db: PassKeyDatabase): PasskeyRepository {
-        return PasskeyRepositoryImpl(db, db.previewDao, db.detailsDao)
-    }
+    fun provideTodoRepository(db: PassKeyDatabase): PasskeyRepository =
+        PasskeyRepositoryImpl(db, db.previewDao, db.detailsDao)
 
     @Provides
     @Singleton
-    fun provideDataStoreRepository(
-        @ApplicationContext context: Context
-    ) = DataStoreRepository(context = context)
+    fun provideDataStoreRepository(@ApplicationContext context: Context) = DataStoreRepository(context = context)
 }

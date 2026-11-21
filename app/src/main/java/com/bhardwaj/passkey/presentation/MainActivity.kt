@@ -44,7 +44,9 @@ class MainActivity : FragmentActivity() {
             }
             if (isUpdateAvailable && isUpdateAllowed) {
                 appUpdateManager.startUpdateFlowForResult(
-                    info, activityResultLauncher, AppUpdateOptions.newBuilder(updateType).build()
+                    info,
+                    activityResultLauncher,
+                    AppUpdateOptions.newBuilder(updateType).build()
                 )
             }
         }

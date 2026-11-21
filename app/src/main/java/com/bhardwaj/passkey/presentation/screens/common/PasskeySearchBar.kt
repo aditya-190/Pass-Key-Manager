@@ -35,7 +35,7 @@ fun PasskeySearchBar(
     query: String,
     onQueryChange: (String) -> Unit,
     onTrailingIconClick: () -> Unit,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     Row(
         modifier = modifier
@@ -65,7 +65,7 @@ fun PasskeySearchBar(
                 fontSize = 16.sp,
                 fontStyle = FontStyle.Normal,
                 fontWeight = FontWeight.Normal,
-                color = MaterialTheme.colorScheme.onBackground,
+                color = MaterialTheme.colorScheme.onBackground
             ),
             maxLines = 1,
             decorationBox = { innerTextField ->
@@ -86,7 +86,7 @@ fun PasskeySearchBar(
                 modifier = Modifier.clickable(
                     onClick = { onTrailingIconClick() },
                     indication = null,
-                    interactionSource = remember { MutableInteractionSource() },
+                    interactionSource = remember { MutableInteractionSource() }
                 ),
                 imageVector = Icons.Default.Close,
                 contentDescription = stringResource(R.string.cd_clear_search),

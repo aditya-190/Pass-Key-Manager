@@ -18,6 +18,7 @@ import com.bhardwaj.passkey.utils.Constants.Companion.PREVIEW_HEADING
 import com.bhardwaj.passkey.utils.UiEvents
 import com.bhardwaj.passkey.utils.UiText
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -27,7 +28,6 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @HiltViewModel
 class PreviewViewModel @Inject constructor(
@@ -39,6 +39,7 @@ class PreviewViewModel @Inject constructor(
 
     val categoryName = savedStateHandle.getStateFlow(PREVIEW_CATEGORY_NAME, Categories.BANKS.name)
     val previewHeading = savedStateHandle.getStateFlow(PREVIEW_HEADING, "")
+
     /** true = editing an existing row, false = adding. Resolved to text by the UI. */
     val isEditingSheet = savedStateHandle.getStateFlow(BOTTOM_SHEET_HEADING, false)
 

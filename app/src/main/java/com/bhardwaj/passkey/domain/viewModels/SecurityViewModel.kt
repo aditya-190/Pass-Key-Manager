@@ -9,10 +9,10 @@ import com.bhardwaj.passkey.domain.events.SecurityEvents
 import com.bhardwaj.passkey.presentation.navigation.Routes
 import com.bhardwaj.passkey.utils.UiEvents
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @HiltViewModel
 class SecurityViewModel @Inject constructor() : ViewModel() {

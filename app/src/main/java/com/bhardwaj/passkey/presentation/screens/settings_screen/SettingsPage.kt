@@ -20,7 +20,6 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
-import androidx.compose.ui.window.SecureFlagPolicy
 import androidx.compose.material3.ModalBottomSheetProperties
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
@@ -40,6 +39,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.SecureFlagPolicy
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.bhardwaj.passkey.R
 import com.bhardwaj.passkey.domain.events.SettingsEvents
@@ -51,8 +51,8 @@ import com.bhardwaj.passkey.presentation.screens.settings_screen.components.Sett
 import com.bhardwaj.passkey.presentation.theme.BebasNeue
 import com.bhardwaj.passkey.presentation.theme.Poppins
 import com.bhardwaj.passkey.utils.Constants.Companion.FILE_TYPE
-import com.bhardwaj.passkey.utils.asString
 import com.bhardwaj.passkey.utils.UiEvents
+import com.bhardwaj.passkey.utils.asString
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -130,7 +130,7 @@ fun SettingsScreen(
                         sheetState = sheetState,
                         onDismissRequest = { viewModel.onEvent(SettingsEvents.OnDismissBottomSheet) },
                         dragHandle = {},
-                        shape = RectangleShape,
+                        shape = RectangleShape
                     ) {
                         LanguageBottomSheet(
                             onLanguageChange = {
@@ -158,11 +158,11 @@ fun SettingsScreen(
             ) {
                 Column(
                     modifier = Modifier.fillMaxSize(),
-                    verticalArrangement = Arrangement.SpaceBetween,
+                    verticalArrangement = Arrangement.SpaceBetween
                 ) {
                     Column(
                         modifier = Modifier.fillMaxWidth(),
-                        verticalArrangement = Arrangement.Top,
+                        verticalArrangement = Arrangement.Top
                     ) {
                         Icon(
                             painter = painterResource(id = R.drawable.icon_logo),
@@ -184,7 +184,7 @@ fun SettingsScreen(
                                     color = MaterialTheme.colorScheme.primary,
                                     shape = RoundedCornerShape(10.dp)
                                 )
-                                .padding(top = 16.dp, start = 16.dp, end = 16.dp),
+                                .padding(top = 16.dp, start = 16.dp, end = 16.dp)
                         ) {
                             SettingsText(text = stringResource(id = R.string.change_language)) {
                                 viewModel.onEvent(SettingsEvents.OnLanguageClick)

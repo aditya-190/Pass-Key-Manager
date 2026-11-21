@@ -48,15 +48,15 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.window.SecureFlagPolicy
-import androidx.compose.ui.window.DialogProperties
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.DialogProperties
+import androidx.compose.ui.window.SecureFlagPolicy
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.bhardwaj.passkey.R
 import com.bhardwaj.passkey.domain.events.PreviewEvents
@@ -69,20 +69,17 @@ import com.bhardwaj.passkey.presentation.screens.preview_screen.components.Previ
 import com.bhardwaj.passkey.presentation.theme.BebasNeue
 import com.bhardwaj.passkey.utils.ButtonType
 import com.bhardwaj.passkey.utils.Categories
-import com.bhardwaj.passkey.utils.asString
 import com.bhardwaj.passkey.utils.SecureClipboard
-import com.bhardwaj.passkey.utils.UiText
 import com.bhardwaj.passkey.utils.UiEvents
+import com.bhardwaj.passkey.utils.UiText
+import com.bhardwaj.passkey.utils.asString
 import kotlinx.coroutines.launch
 import sh.calvin.reorderable.ReorderableItem
 import sh.calvin.reorderable.rememberReorderableLazyListState
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun PreviewScreen(
-    onNavigate: (UiEvents.Navigate) -> Unit,
-    viewModel: PreviewViewModel = hiltViewModel()
-) {
+fun PreviewScreen(onNavigate: (UiEvents.Navigate) -> Unit, viewModel: PreviewViewModel = hiltViewModel()) {
     val categoryName by viewModel.categoryName.collectAsState()
     // Localized display names come from Categories.labelRes, which the bottom navigation
     // also uses, so the two can no longer drift apart.
@@ -139,7 +136,6 @@ fun PreviewScreen(
                     }
                 }
 
-
                 else -> Unit
             }
         }
@@ -170,11 +166,11 @@ fun PreviewScreen(
                 content = {
                     Icon(
                         imageVector = Icons.Default.Add,
-                        contentDescription = stringResource(R.string.cd_add_entry),
+                        contentDescription = stringResource(R.string.cd_add_entry)
                     )
                 }
             )
-        },
+        }
     ) { paddingValues ->
         Box(
             modifier = Modifier
@@ -240,7 +236,7 @@ fun PreviewScreen(
                     )
                 } else {
                     LazyColumn(
-                        state = lazyListState,
+                        state = lazyListState
                     ) {
                         items(
                             items = previews,

@@ -22,10 +22,7 @@ import com.bhardwaj.passkey.presentation.theme.BebasNeue
  * languages, which would clip at a fixed 64sp on small screens.
  */
 @Composable
-fun TextHighlighter(
-    markedUpText: String,
-    modifier: Modifier = Modifier,
-) {
+fun TextHighlighter(markedUpText: String, modifier: Modifier = Modifier) {
     val highlightColor = MaterialTheme.colorScheme.primary
     val parsed = remember(markedUpText) { parseHighlightMarkup(markedUpText) }
 

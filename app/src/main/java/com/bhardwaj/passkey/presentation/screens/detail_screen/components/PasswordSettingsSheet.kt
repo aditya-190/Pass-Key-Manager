@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
-import androidx.compose.ui.window.SecureFlagPolicy
 import androidx.compose.material3.ModalBottomSheetProperties
 import androidx.compose.material3.Slider
 import androidx.compose.material3.SliderDefaults
@@ -22,11 +21,12 @@ import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.SecureFlagPolicy
 import com.bhardwaj.passkey.R
 import com.bhardwaj.passkey.presentation.theme.BebasNeue
 import com.bhardwaj.passkey.presentation.theme.Poppins
@@ -52,7 +52,7 @@ fun PasswordSettingsSheet(
         sheetState = sheetState,
         onDismissRequest = { onDismissPasswordSettings() },
         dragHandle = { },
-        shape = RectangleShape,
+        shape = RectangleShape
     ) {
         Column(
             modifier = Modifier

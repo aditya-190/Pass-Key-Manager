@@ -11,6 +11,10 @@ indent_size = 4
 max_line_length = 120
 ktlint_code_style = android_studio
 ktlint_function_naming_ignore_when_annotated_with = Composable
+# TODO(5.8.0 / Phase 4a): re-enable once screens move to per-feature packages. Renaming packages and files
+# now would break cherry-picking the archived PR #4, which still uses the underscore paths.
+ktlint_standard_package-name = disabled
+ktlint_standard_filename = disabled
 
 [*.{json,yml,yaml,ts,js}]
 indent_size = 2

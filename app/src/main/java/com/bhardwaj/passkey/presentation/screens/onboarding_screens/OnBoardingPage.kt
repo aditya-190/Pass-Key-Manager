@@ -24,16 +24,10 @@ import com.bhardwaj.passkey.presentation.screens.onboarding_screens.components.O
 import com.bhardwaj.passkey.utils.UiEvents
 import kotlinx.coroutines.launch
 
-data class OnBoardingScreen(
-    val title: String,
-    val description: String
-)
+data class OnBoardingScreen(val title: String, val description: String)
 
 @Composable
-fun OnBoardingScreen(
-    onNavigate: (UiEvents.Navigate) -> Unit,
-    viewModel: OnBoardingViewModel = hiltViewModel()
-) {
+fun OnBoardingScreen(onNavigate: (UiEvents.Navigate) -> Unit, viewModel: OnBoardingViewModel = hiltViewModel()) {
     // The emphasised word is marked with [[ ]] inside each heading string resource, so each
     // translation controls which of its own words is highlighted.
     val pages = listOf(

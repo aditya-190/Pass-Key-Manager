@@ -29,11 +29,7 @@ import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.unit.dp
 import com.bhardwaj.passkey.utils.Categories
 
-data class BottomNavigationItem(
-    val category: Categories,
-    val icon: ImageVector,
-    val isVisible: Boolean = true
-) {
+data class BottomNavigationItem(val category: Categories, val icon: ImageVector, val isVisible: Boolean = true) {
     /** The persisted enum name, used as the navigation/selection key. */
     val title: String get() = category.name
 }
@@ -51,7 +47,7 @@ val bottomNavigationList = listOf(
     BottomNavigationItem(
         category = Categories.BANKS,
         icon = Icons.Filled.AccountBalance,
-        isVisible = false,
+        isVisible = false
     ),
 
     BottomNavigationItem(
@@ -65,10 +61,7 @@ val bottomNavigationList = listOf(
 )
 
 @Composable
-fun MainBottomNavigation(
-    selectedIndex: Int,
-    onItemClick: (index: Int, title: String) -> Unit
-) {
+fun MainBottomNavigation(selectedIndex: Int, onItemClick: (index: Int, title: String) -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -102,9 +95,16 @@ fun MainBottomNavigation(
                             if (item.isVisible) {
                                 onItemClick(index, item.title)
                             }
-                        })
+                        }
+                    )
                     .alpha(if (item.isVisible) 1F else 0F),
-                tint = if (selectedIndex == index) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline,
+                tint = if (selectedIndex ==
+                    index
+                ) {
+                    MaterialTheme.colorScheme.primary
+                } else {
+                    MaterialTheme.colorScheme.outline
+                }
             )
         }
     }
