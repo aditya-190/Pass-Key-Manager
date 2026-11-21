@@ -13,10 +13,10 @@
     <string name="next">Weiter</string>
     <string name="first_heading">Erstelle\n[[sichere]]\nPasswörter.</string>
     <string name="second_heading">All deine\n[[Passwörter]]\nan einem Ort.</string>
-    <string name="third_heading">Nicht tippen,\nZugangsdaten\n[[automatisch]] füllen.</string>
+    <string name="third_heading">Öffnet nur\nfür [[dich]],\nauf diesem Handy.</string>
     <string name="first_description">Verwende keine unsicheren Passwörter mehr für deine Online-Konten – mit PassKey geht es besser. Hol dir besonders sichere und schwer zu knackende Passwörter.</string>
     <string name="second_description">Speichere und verwalte all deine Passwörter an einem Ort. Merke dir nicht Hunderte von Passwörtern, sondern nur eines.</string>
-    <string name="third_description">Gefährde deine Passwörter nicht, indem du sie in der Öffentlichkeit eintippst – lass sie PassKey automatisch ausfüllen und halte deine Zugangsdaten sicher.</string>
+    <string name="third_description">Dein Tresor ist auf diesem Handy verschlüsselt und fragt vor dem Öffnen nach Fingerabdruck, Gesicht oder Displaysperre. Kein Konto, keine Cloud, keine Werbung.</string>
 
     <!--    Main Screens-->
     <string name="banks">Banken</string>
@@ -99,4 +99,18 @@
         <item quantity="one">%1$d Mal verwendet</item>
         <item quantity="other">%1$d Mal verwendet</item>
     </plurals>
+    <string name="about_message">PassKey ist ein kostenloser Open-Source-Passwortmanager ohne Werbung und ohne Konto.\n\nDeine Einträge liegen in einer verschlüsselten Datenbank auf diesem Handy. PassKey fragt vor dem Anzeigen nach Fingerabdruck, Gesicht oder Displaysperre, blockiert Screenshots, erzeugt starke Passwörter und prüft gespeicherte Passwörter auf schwache oder mehrfach verwendete.\n\nDer Quellcode ist öffentlich auf GitHub: github.com/aditya-190/Pass-Key-Manager</string>
+    <string name="privacy_message">Dein Tresor bleibt auf deinem Handy. PassKey hat kein Konto, keine Synchronisierung und keinen eigenen Server und sendet niemals die Einträge, die du speicherst.\n\nNur mit deiner Erlaubnis sendet die App über Google Firebase:\n• Absturz- und Leistungsberichte: technische Details wie Gerätemodell, Android-Version und App-Version.\n• Nutzungsstatistiken: welche Bildschirme und Funktionen genutzt werden, niemals, was du speicherst.\n\nBeides ist aus, bis du dich entscheidest, und du kannst deine Wahl jederzeit unter Einstellungen › Datenschutzoptionen ändern. PassKey verwendet keine Werbe-ID. Google Play wird genutzt, um nach App-Updates zu suchen.\n\nExportierte Dateien sind in dieser Version nicht verschlüsselt. Bewahre sie sicher auf und lösche sie, wenn du sie nicht mehr brauchst.</string>
+    <string name="terms_n_condition_message">PassKey wird kostenlos und ohne jede Gewährleistung bereitgestellt, so wie es ist.\n\nDu bist dafür verantwortlich, dein Handy, deine Displaysperre und exportierte Dateien zu schützen. Deine Daten verlassen nie dein Handy, daher kann sie niemand wiederherstellen, wenn das Handy verloren geht oder die App entfernt wird. Exportiere regelmäßig eine Sicherung.\n\nMit der Nutzung von PassKey stimmst du diesen Bedingungen und der Datenschutzerklärung zu.</string>
+    <string name="consent_title">Hilf mit, PassKey zu verbessern</string>
+    <string name="consent_body">Deine Passwörter verlassen nie dieses Handy. Mit deiner Erlaubnis kann PassKey anonyme Berichte an Google Firebase senden, die helfen, Abstürze zu beheben und zu sehen, welche Funktionen genutzt werden. Sie enthalten nie etwas, das du speicherst.</string>
+    <string name="consent_crash_title">Absturz- und Leistungsberichte</string>
+    <string name="consent_crash_body">Technische Details, wenn etwas schiefgeht, etwa Gerätemodell, Android-Version und App-Version.</string>
+    <string name="consent_analytics_title">Nutzungsstatistiken</string>
+    <string name="consent_analytics_body">Welche Bildschirme und Funktionen genutzt werden, gezählt ohne deine Daten.</string>
+    <string name="consent_allow_all">Alle erlauben</string>
+    <string name="consent_decline_all">Alle ablehnen</string>
+    <string name="consent_save">Meine Auswahl speichern</string>
+    <string name="consent_change_later">Du kannst das jederzeit unter Einstellungen › Datenschutzoptionen ändern.</string>
+    <string name="privacy_options">Datenschutzoptionen</string>
 </resources>

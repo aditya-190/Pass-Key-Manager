@@ -13,10 +13,10 @@
     <string name="next">次へ</string>
     <string name="first_heading">[[安全な]]\nパスワードを\n作成。</string>
     <string name="second_heading">すべての\n[[パスワード]]が\nここに。</string>
-    <string name="third_heading">入力せずに\n認証情報を\n[[自動入力]]。</string>
+    <string name="third_heading">開けるのは\n[[あなた]]だけ、\nこのスマホで。</string>
     <string name="first_description">オンラインアカウントに安全でないパスワードを使うのはやめて、PassKey で一歩先へ。最も安全で解読されにくいパスワードを手に入れましょう。</string>
     <string name="second_description">すべてのパスワードをひとつの場所で保存・管理。何百ものパスワードではなく、覚えるのはひとつだけ。</string>
-    <string name="third_description">人前で入力してパスワードを危険にさらさないでください。PassKey に自動入力させて、認証情報を安全に保ちましょう。</string>
+    <string name="third_description">保管庫はこのスマホ内で暗号化され、開く前に指紋・顔・画面ロックを求めます。アカウントもクラウドも広告もありません。</string>
 
     <!--    Main Screens    -->
     <string name="banks">銀行</string>
@@ -98,4 +98,18 @@
     <plurals name="password_used_times">
         <item quantity="other">%1$d 回使用</item>
     </plurals>
+    <string name="about_message">PassKey は、広告もアカウントも不要な、無料のオープンソース パスワード マネージャーです。\n\nエントリはこのスマホ内の暗号化されたデータベースに保存されます。PassKey は表示する前に指紋・顔・画面ロックを求め、スクリーンショットをブロックし、強力なパスワードを生成し、保存したパスワードの中から弱いものや使い回しを見つけます。\n\nソースコードは GitHub で公開されています: github.com/aditya-190/Pass-Key-Manager</string>
+    <string name="privacy_message">保管庫はあなたのスマホから出ません。PassKey にはアカウントも同期も独自のサーバーもなく、保存したエントリを送信することは決してありません。\n\nあなたが許可した場合に限り、アプリは Google Firebase を通じて次の情報を送信します:\n• クラッシュとパフォーマンスのレポート: 端末モデル、Android バージョン、アプリ バージョンなどの技術情報。\n• 利用統計: どの画面や機能が使われたか。保存内容は決して含みません。\n\nどちらも選択するまではオフで、設定 › プライバシー オプションからいつでも変更できます。PassKey は広告 ID を使用しません。アプリの更新確認には Google Play を使用します。\n\nこのバージョンでは、エクスポートしたファイルは暗号化されません。安全な場所に保管し、不要になったら削除してください。</string>
+    <string name="terms_n_condition_message">PassKey は無料で、現状のまま、いかなる保証もなく提供されます。\n\nスマホ、画面ロック、エクスポートしたファイルの安全を守るのはあなたの責任です。データはスマホの外に出ないため、スマホを紛失したりアプリを削除したりすると、誰も復元できません。定期的にバックアップをエクスポートしてください。\n\nPassKey を使用することで、本規約とプライバシー ポリシーに同意したものとみなされます。</string>
+    <string name="consent_title">PassKey の改善にご協力ください</string>
+    <string name="consent_body">パスワードがこのスマホから出ることはありません。許可していただくと、PassKey はクラッシュの修正や利用機能の把握に役立つ匿名レポートを Google Firebase に送信できます。保存した内容が含まれることは決してありません。</string>
+    <string name="consent_crash_title">クラッシュとパフォーマンスのレポート</string>
+    <string name="consent_crash_body">問題が起きたときの技術情報 (端末モデル、Android バージョン、アプリ バージョンなど)。</string>
+    <string name="consent_analytics_title">利用統計</string>
+    <string name="consent_analytics_body">どの画面や機能が使われたかを、あなたのデータを含めずに集計します。</string>
+    <string name="consent_allow_all">すべて許可</string>
+    <string name="consent_decline_all">すべて拒否</string>
+    <string name="consent_save">選択を保存</string>
+    <string name="consent_change_later">設定 › プライバシー オプションからいつでも変更できます。</string>
+    <string name="privacy_options">プライバシー オプション</string>
 </resources>

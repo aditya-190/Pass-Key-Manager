@@ -5,15 +5,15 @@ import android.view.WindowManager
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.fragment.app.FragmentActivity
 import androidx.navigation.compose.rememberNavController
-import com.bhardwaj.passkey.domain.viewModels.SplashViewModel
+import com.bhardwaj.passkey.analytics.AnalyticsTracker
 import com.bhardwaj.passkey.presentation.navigation.NavGraph
+import com.bhardwaj.passkey.presentation.navigation.NavScreens
 import com.bhardwaj.passkey.presentation.theme.PassKeyTheme
 import com.google.android.play.core.appupdate.AppUpdateManager
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
@@ -23,10 +23,13 @@ import com.google.android.play.core.install.model.UpdateAvailability
 import com.google.android.play.core.ktx.isFlexibleUpdateAllowed
 import com.google.android.play.core.ktx.isImmediateUpdateAllowed
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : FragmentActivity() {
-    private val splashViewModel: SplashViewModel by viewModels()
+    @Inject
+    lateinit var analytics: AnalyticsTracker
+
     private lateinit var appUpdateManager: AppUpdateManager
     private val updateType = AppUpdateType.IMMEDIATE
 
@@ -83,11 +86,10 @@ class MainActivity : FragmentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     val navController = rememberNavController()
-                    val startScreen = splashViewModel.startDestination
-
                     NavGraph(
                         navController = navController,
-                        startDestination = startScreen
+                        startDestination = NavScreens.SplashPage.route,
+                        analytics = analytics
                     )
                 }
             }

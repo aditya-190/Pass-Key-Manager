@@ -13,10 +13,10 @@
     <string name="next">다음</string>
     <string name="first_heading">[[안전한]]\n비밀번호를\n만드세요.</string>
     <string name="second_heading">모든\n[[비밀번호]]가\n여기에.</string>
-    <string name="third_heading">입력하지 말고\n자격 증명을\n[[자동 완성]].</string>
+    <string name="third_heading">오직 [[당신]]만,\n이 휴대폰에서\n열 수 있어요.</string>
     <string name="first_description">온라인 계정에 취약한 비밀번호를 쓰지 마세요. PassKey로 한 단계 올라서세요. 가장 안전하고 뚫기 어려운 비밀번호를 만들어 드립니다.</string>
     <string name="second_description">모든 비밀번호를 한곳에서 저장하고 관리하세요. 수백 개를 외울 필요 없이 하나만 기억하면 됩니다.</string>
-    <string name="third_description">사람들 앞에서 입력하다 비밀번호를 노출하지 마세요. PassKey가 자동으로 채워 자격 증명을 안전하게 지켜 드립니다.</string>
+    <string name="third_description">보관함은 이 휴대폰에서 암호화되며, 열기 전에 지문, 얼굴 또는 화면 잠금을 요청합니다. 계정도, 클라우드도, 광고도 없습니다.</string>
 
     <!--    Main Screens    -->
     <string name="banks">은행</string>
@@ -98,4 +98,18 @@
     <plurals name="password_used_times">
         <item quantity="other">%1$d회 사용됨</item>
     </plurals>
+    <string name="about_message">PassKey는 광고와 계정이 없는 무료 오픈 소스 비밀번호 관리자입니다.\n\n항목은 이 휴대폰의 암호화된 데이터베이스에 저장됩니다. PassKey는 항목을 보여 주기 전에 지문, 얼굴 또는 화면 잠금을 요청하고, 스크린샷을 차단하며, 강력한 비밀번호를 생성하고, 저장된 비밀번호 중 약하거나 재사용된 비밀번호를 확인합니다.\n\n소스 코드는 GitHub에 공개되어 있습니다: github.com/aditya-190/Pass-Key-Manager</string>
+    <string name="privacy_message">보관함은 휴대폰에만 있습니다. PassKey에는 계정, 동기화, 자체 서버가 없으며 저장한 항목을 절대 전송하지 않습니다.\n\n허용한 경우에만 앱이 Google Firebase를 통해 다음을 전송합니다:\n• 비정상 종료 및 성능 보고서: 기기 모델, Android 버전, 앱 버전 등의 기술 정보.\n• 사용 통계: 어떤 화면과 기능이 사용되는지. 저장한 내용은 절대 포함되지 않습니다.\n\n두 항목 모두 선택하기 전까지 꺼져 있으며, 설정 › 개인정보 옵션에서 언제든지 변경할 수 있습니다. PassKey는 광고 ID를 사용하지 않습니다. 앱 업데이트 확인에는 Google Play를 사용합니다.\n\n이 버전에서 내보낸 파일은 암호화되지 않습니다. 안전한 곳에 보관하고 더 이상 필요하지 않으면 삭제하세요.</string>
+    <string name="terms_n_condition_message">PassKey는 무료로, 있는 그대로, 어떠한 보증도 없이 제공됩니다.\n\n휴대폰, 화면 잠금, 내보낸 파일을 안전하게 지키는 것은 사용자의 책임입니다. 데이터는 휴대폰 밖으로 나가지 않으므로 휴대폰을 분실하거나 앱을 삭제하면 아무도 복구할 수 없습니다. 정기적으로 백업을 내보내세요.\n\nPassKey를 사용하면 이 약관과 개인정보처리방침에 동의하는 것으로 간주됩니다.</string>
+    <string name="consent_title">PassKey 개선에 도움을 주세요</string>
+    <string name="consent_body">비밀번호는 이 휴대폰 밖으로 나가지 않습니다. 허용하시면 PassKey가 비정상 종료 수정과 기능 사용 현황 파악에 도움이 되는 익명 보고서를 Google Firebase로 보낼 수 있습니다. 저장한 내용은 절대 포함되지 않습니다.</string>
+    <string name="consent_crash_title">비정상 종료 및 성능 보고서</string>
+    <string name="consent_crash_body">문제가 생겼을 때의 기술 정보 (기기 모델, Android 버전, 앱 버전 등).</string>
+    <string name="consent_analytics_title">사용 통계</string>
+    <string name="consent_analytics_body">어떤 화면과 기능이 사용되는지를 사용자 데이터 없이 집계합니다.</string>
+    <string name="consent_allow_all">모두 허용</string>
+    <string name="consent_decline_all">모두 거부</string>
+    <string name="consent_save">선택 저장</string>
+    <string name="consent_change_later">설정 › 개인정보 옵션에서 언제든지 변경할 수 있습니다.</string>
+    <string name="privacy_options">개인정보 옵션</string>
 </resources>

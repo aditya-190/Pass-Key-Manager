@@ -45,7 +45,7 @@ design -> https://www.figma.com/community/file/1116675775484733517
 - Separation of content.
 - Import / Export data to and from storage.
 - SQL Cipher (For Room DB Encryption and Decryption).
-- Fully Offline : No internet permission required.
+- Your vault never leaves your phone. Crash reports and usage statistics (Firebase) are opt-in and never include vault content.
 
 ## 🌎 Released Android Application:
 

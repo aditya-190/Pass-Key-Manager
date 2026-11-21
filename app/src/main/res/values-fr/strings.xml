@@ -13,10 +13,10 @@
     <string name="next">Suivant</string>
     <string name="first_heading">Créez des\nmots de passe\n[[sécurisés]].</string>
     <string name="second_heading">Tous vos\n[[mots de passe]]\nsont ici.</string>
-    <string name="third_heading">Ne tapez plus,\n[[remplissez]]\nautomatiquement.</string>
+    <string name="third_heading">S\'ouvre\nrien que pour [[vous]],\nsur ce téléphone.</string>
     <string name="first_description">Arrêtez d\'utiliser des mots de passe peu sûrs pour vos comptes en ligne, passez à PassKey. Obtenez des mots de passe très sécurisés et difficiles à craquer.</string>
     <string name="second_description">Stockez et gérez tous vos mots de passe au même endroit. Ne retenez pas des centaines de mots de passe, un seul suffit.</string>
-    <string name="third_description">Ne compromettez pas vos mots de passe en les saisissant en public : laissez PassKey les remplir automatiquement et garder vos identifiants en sécurité.</string>
+    <string name="third_description">Votre coffre est chiffré sur ce téléphone et demande votre empreinte, votre visage ou le verrouillage de l\'écran avant de s\'ouvrir. Sans compte, sans cloud, sans publicité.</string>
 
     <!--    Main Screens    -->
     <string name="banks">Banques</string>
@@ -100,4 +100,18 @@
         <item quantity="many">Utilisé %1$d fois</item>
         <item quantity="other">Utilisé %1$d fois</item>
     </plurals>
+    <string name="about_message">PassKey est un gestionnaire de mots de passe gratuit et open source, sans publicité et sans compte.\n\nVos entrées sont stockées dans une base de données chiffrée sur ce téléphone. PassKey demande votre empreinte, votre visage ou le verrouillage de l\'écran avant de les afficher, bloque les captures d\'écran, génère des mots de passe robustes et repère parmi vos mots de passe enregistrés ceux qui sont faibles ou réutilisés.\n\nLe code source est public sur GitHub : github.com/aditya-190/Pass-Key-Manager</string>
+    <string name="privacy_message">Votre coffre reste sur votre téléphone. PassKey n\'a ni compte, ni synchronisation, ni serveur propre, et n\'envoie jamais les entrées que vous enregistrez.\n\nUniquement avec votre accord, l\'application utilise Google Firebase pour envoyer :\n• Des rapports de plantage et de performances : des informations techniques comme le modèle de l\'appareil, la version d\'Android et la version de l\'application.\n• Des statistiques d\'utilisation : les écrans et fonctions utilisés, jamais ce que vous enregistrez.\n\nLes deux sont désactivés tant que vous n\'avez pas choisi, et vous pouvez modifier votre choix à tout moment dans Paramètres › Options de confidentialité. PassKey n\'utilise pas d\'identifiant publicitaire. Google Play sert à vérifier les mises à jour de l\'application.\n\nLes fichiers exportés ne sont pas chiffrés dans cette version. Conservez-les en lieu sûr et supprimez-les quand vous n\'en avez plus besoin.</string>
+    <string name="terms_n_condition_message">PassKey est fourni gratuitement, en l\'état, sans aucune garantie.\n\nVous êtes responsable de la protection de votre téléphone, de votre verrouillage d\'écran et des fichiers exportés. Vos données ne quittent jamais votre téléphone : personne ne peut donc les récupérer si le téléphone est perdu ou l\'application supprimée. Exportez régulièrement une sauvegarde.\n\nEn utilisant PassKey, vous acceptez ces conditions et la politique de confidentialité.</string>
+    <string name="consent_title">Aidez-nous à améliorer PassKey</string>
+    <string name="consent_body">Vos mots de passe ne quittent jamais ce téléphone. Avec votre accord, PassKey peut envoyer des rapports anonymes à Google Firebase pour corriger les plantages et savoir quelles fonctions sont utilisées. Ils ne contiennent jamais rien de ce que vous enregistrez.</string>
+    <string name="consent_crash_title">Rapports de plantage et de performances</string>
+    <string name="consent_crash_body">Des informations techniques en cas de problème, comme le modèle de l\'appareil, la version d\'Android et la version de l\'application.</string>
+    <string name="consent_analytics_title">Statistiques d\'utilisation</string>
+    <string name="consent_analytics_body">Les écrans et fonctions utilisés, comptés sans aucune de vos données.</string>
+    <string name="consent_allow_all">Tout autoriser</string>
+    <string name="consent_decline_all">Tout refuser</string>
+    <string name="consent_save">Enregistrer mes choix</string>
+    <string name="consent_change_later">Vous pouvez modifier ce choix à tout moment dans Paramètres › Options de confidentialité.</string>
+    <string name="privacy_options">Options de confidentialité</string>
 </resources>

@@ -14,7 +14,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.BottomSheetScaffold
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -44,6 +46,7 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.bhardwaj.passkey.R
 import com.bhardwaj.passkey.domain.events.SettingsEvents
 import com.bhardwaj.passkey.domain.viewModels.SettingsViewModel
+import com.bhardwaj.passkey.presentation.navigation.Routes
 import com.bhardwaj.passkey.presentation.screens.settings_screen.components.AnalysisBottomSheet
 import com.bhardwaj.passkey.presentation.screens.settings_screen.components.FaqItem
 import com.bhardwaj.passkey.presentation.screens.settings_screen.components.LanguageBottomSheet
@@ -157,7 +160,10 @@ fun SettingsScreen(
                     .padding(16.dp)
             ) {
                 Column(
-                    modifier = Modifier.fillMaxSize(),
+                    // Scrolls so every row stays reachable at 200% font size and in landscape.
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .verticalScroll(rememberScrollState()),
                     verticalArrangement = Arrangement.SpaceBetween
                 ) {
                     Column(
@@ -205,6 +211,9 @@ fun SettingsScreen(
                             SettingsText(text = stringResource(id = R.string.privacy)) {
                                 viewModel.onEvent(SettingsEvents.OnPrivacyClick)
                                 scope.launch { scaffoldState.bottomSheetState.expand() }
+                            }
+                            SettingsText(text = stringResource(id = R.string.privacy_options)) {
+                                onNavigate(Routes.CONSENT_PAGE + "?${Routes.CONSENT_FROM_SETTINGS_ARG}=true")
                             }
                             SettingsText(text = stringResource(id = R.string.terms_n_condition)) {
                                 viewModel.onEvent(SettingsEvents.OnTermsAndConditionClick)

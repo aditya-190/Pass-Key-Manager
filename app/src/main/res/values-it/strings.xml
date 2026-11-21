@@ -13,10 +13,10 @@
     <string name="next">Avanti</string>
     <string name="first_heading">Genera\npassword\n[[sicure]].</string>
     <string name="second_heading">Tutte le tue\n[[password]]\nsono qui.</string>
-    <string name="third_heading">Non digitare,\n[[compila]]\nle credenziali.</string>
+    <string name="third_heading">Si apre solo\nper [[te]],\nsu questo telefono.</string>
     <string name="first_description">Smetti di usare password poco sicure per i tuoi account online, fai il salto con PassKey. Ottieni password sicurissime e difficili da violare.</string>
     <string name="second_description">Salva e gestisci tutte le tue password da un unico posto. Non ricordare centinaia di password, ricordane una sola.</string>
-    <string name="third_description">Non mettere a rischio le tue password digitandole in pubblico: lascia che PassKey le compili automaticamente e protegga le tue credenziali.</string>
+    <string name="third_description">La tua cassaforte è crittografata su questo telefono e chiede impronta, volto o blocco schermo prima di aprirsi. Nessun account, nessun cloud, nessuna pubblicità.</string>
 
     <!--    Main Screens    -->
     <string name="banks">Banche</string>
@@ -100,4 +100,18 @@
         <item quantity="many">Usata %1$d volte</item>
         <item quantity="other">Usata %1$d volte</item>
     </plurals>
+    <string name="about_message">PassKey è un gestore di password gratuito e open source, senza pubblicità e senza account.\n\nLe tue voci sono salvate in un database crittografato su questo telefono. PassKey chiede impronta, volto o blocco schermo prima di mostrarle, blocca gli screenshot, genera password robuste e controlla quelle salvate per trovare password deboli o riutilizzate.\n\nIl codice sorgente è pubblico su GitHub: github.com/aditya-190/Pass-Key-Manager</string>
+    <string name="privacy_message">La tua cassaforte resta sul tuo telefono. PassKey non ha account, sincronizzazione o server propri e non invia mai le voci che salvi.\n\nSolo con il tuo permesso, l\'app usa Google Firebase per inviare:\n• Report di arresti anomali e prestazioni: dati tecnici come modello del dispositivo, versione di Android e versione dell\'app.\n• Statistiche di utilizzo: quali schermate e funzioni vengono usate, mai ciò che salvi.\n\nEntrambi restano disattivati finché non scegli, e puoi cambiare la tua scelta in qualsiasi momento in Impostazioni › Opzioni privacy. PassKey non usa un ID pubblicitario. Google Play viene usato per cercare aggiornamenti dell\'app.\n\nI file esportati non sono crittografati in questa versione. Conservali in un luogo sicuro ed eliminali quando non ti servono più.</string>
+    <string name="terms_n_condition_message">PassKey è fornito gratuitamente, così com\'è, senza alcuna garanzia.\n\nSei responsabile della protezione del tuo telefono, del blocco schermo e dei file esportati. I tuoi dati non lasciano mai il telefono, quindi nessuno può recuperarli se il telefono viene perso o l\'app rimossa. Esporta regolarmente un backup.\n\nUsando PassKey accetti questi termini e l\'informativa sulla privacy.</string>
+    <string name="consent_title">Aiuta a migliorare PassKey</string>
+    <string name="consent_body">Le tue password non lasciano mai questo telefono. Con il tuo permesso, PassKey può inviare report anonimi a Google Firebase che aiutano a correggere gli arresti anomali e a capire quali funzioni vengono usate. Non includono mai nulla di ciò che salvi.</string>
+    <string name="consent_crash_title">Report di arresti anomali e prestazioni</string>
+    <string name="consent_crash_body">Dati tecnici quando qualcosa va storto, come modello del dispositivo, versione di Android e versione dell\'app.</string>
+    <string name="consent_analytics_title">Statistiche di utilizzo</string>
+    <string name="consent_analytics_body">Quali schermate e funzioni vengono usate, conteggiate senza nessuno dei tuoi dati.</string>
+    <string name="consent_allow_all">Consenti tutto</string>
+    <string name="consent_decline_all">Rifiuta tutto</string>
+    <string name="consent_save">Salva le mie scelte</string>
+    <string name="consent_change_later">Puoi cambiarlo in qualsiasi momento in Impostazioni › Opzioni privacy.</string>
+    <string name="privacy_options">Opzioni privacy</string>
 </resources>

@@ -12,6 +12,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -62,6 +63,11 @@ fun OnBoardingScreen(onNavigate: (UiEvents.Navigate) -> Unit, viewModel: OnBoard
     ) {
         val scope = rememberCoroutineScope()
         val pagerState = rememberPagerState(initialPage = 0) { pages.size }
+        LaunchedEffect(pagerState) {
+            snapshotFlow { pagerState.currentPage }.collect { page ->
+                viewModel.onEvent(OnBoardingEvents.OnPageViewed(page))
+            }
+        }
         HorizontalPager(
             modifier = Modifier.fillMaxWidth(),
             state = pagerState
@@ -74,7 +80,7 @@ fun OnBoardingScreen(onNavigate: (UiEvents.Navigate) -> Unit, viewModel: OnBoard
             currentPage = pagerState.currentPage,
             totalPages = pages.size,
             onSkipClick = {
-                viewModel.onEvent(OnBoardingEvents.OnBoardingComplete)
+                viewModel.onEvent(OnBoardingEvents.OnSkip(pagerState.currentPage))
             },
             onNextClick = { index ->
                 if (index == pagerState.pageCount) {

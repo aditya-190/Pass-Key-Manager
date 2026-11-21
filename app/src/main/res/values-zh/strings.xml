@@ -13,10 +13,10 @@
     <string name="next">下一步</string>
     <string name="first_heading">生成\n[[安全]]\n密码。</string>
     <string name="second_heading">你的所有\n[[密码]]\n都在这里。</string>
-    <string name="third_heading">无需输入，\n[[自动填充]]\n你的凭据。</string>
+    <string name="third_heading">只为[[你]]\n打开，\n就在这部手机上。</string>
     <string name="first_description">别再为在线账户使用不安全的密码，用 PassKey 更进一步。获取最安全、最难破解的密码。</string>
     <string name="second_description">在一个地方存储和管理你的所有密码。不必记住几百个密码，只需记住一个。</string>
-    <string name="third_description">不要在公共场合输入密码而让它们暴露风险，让 PassKey 自动填充，保护你的凭据安全。</string>
+    <string name="third_description">你的保险库在这部手机上加密，打开前会要求指纹、面容或屏幕锁。无需账号，没有云端，没有广告。</string>
 
     <!-- Main Screens -->
     <string name="banks">银行</string>
@@ -98,4 +98,18 @@
     <plurals name="password_used_times">
         <item quantity="other">已使用 %1$d 次</item>
     </plurals>
+    <string name="about_message">PassKey 是一款免费、开源的密码管理器，没有广告，也无需账号。\n\n你的条目保存在这部手机上的加密数据库中。PassKey 在显示前会要求指纹、面容或屏幕锁，会阻止截屏，能生成高强度密码，并检查已保存密码中是否有弱密码或重复使用的密码。\n\n源代码在 GitHub 上公开：github.com/aditya-190/Pass-Key-Manager</string>
+    <string name="privacy_message">你的保险库只留在你的手机上。PassKey 没有账号、没有同步，也没有自己的服务器，绝不会发送你保存的条目。\n\n只有在你允许时，应用才会通过 Google Firebase 发送：\n• 崩溃和性能报告：设备型号、Android 版本和应用版本等技术信息。\n• 使用统计：使用了哪些界面和功能，绝不包括你保存的内容。\n\n在你选择之前两者都处于关闭状态，你可以随时在“设置 › 隐私选项”中更改。PassKey 不使用广告 ID。应用通过 Google Play 检查更新。\n\n此版本导出的文件未加密。请妥善保管，不再需要时请删除。</string>
+    <string name="terms_n_condition_message">PassKey 免费提供，按现状提供，不附带任何形式的保证。\n\n你有责任保护好自己的手机、屏幕锁和导出的文件。你的数据从不离开手机，因此手机丢失或应用被删除后，任何人都无法恢复。请定期导出备份。\n\n使用 PassKey 即表示你同意本条款和隐私政策。</string>
+    <string name="consent_title">帮助改进 PassKey</string>
+    <string name="consent_body">你的密码绝不会离开这部手机。经你允许，PassKey 可以向 Google Firebase 发送匿名报告，用于修复崩溃并了解哪些功能被使用。报告中绝不包含你保存的任何内容。</string>
+    <string name="consent_crash_title">崩溃和性能报告</string>
+    <string name="consent_crash_body">出现问题时的技术信息，例如设备型号、Android 版本和应用版本。</string>
+    <string name="consent_analytics_title">使用统计</string>
+    <string name="consent_analytics_body">统计使用了哪些界面和功能，不包含你的任何数据。</string>
+    <string name="consent_allow_all">全部允许</string>
+    <string name="consent_decline_all">全部拒绝</string>
+    <string name="consent_save">保存我的选择</string>
+    <string name="consent_change_later">你可以随时在“设置 › 隐私选项”中更改。</string>
+    <string name="privacy_options">隐私选项</string>
 </resources>

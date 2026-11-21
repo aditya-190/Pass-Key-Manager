@@ -8,6 +8,8 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bhardwaj.passkey.R
+import com.bhardwaj.passkey.analytics.AnalyticsTracker
+import com.bhardwaj.passkey.analytics.AppEvents
 import com.bhardwaj.passkey.data.local.entity.Details
 import com.bhardwaj.passkey.data.repository.PasskeyRepository
 import com.bhardwaj.passkey.domain.events.DetailEvents
@@ -30,7 +32,8 @@ import kotlinx.coroutines.launch
 @HiltViewModel
 class DetailViewModel @Inject constructor(
     private val repository: PasskeyRepository,
-    private val savedStateHandle: SavedStateHandle
+    private val savedStateHandle: SavedStateHandle,
+    private val analytics: AnalyticsTracker
 ) : ViewModel() {
     private val _uiEvents = Channel<UiEvents>()
     val uiEvents = _uiEvents.receiveAsFlow()
@@ -167,6 +170,7 @@ class DetailViewModel @Inject constructor(
                             )
                         )
                     } ?: repository.upsertDetails(newDetail)
+                    analytics.log(AppEvents.fieldSaved(isEdit = detail != null))
 
                     detail = null
                     _detailTitle.value = ""
@@ -177,6 +181,7 @@ class DetailViewModel @Inject constructor(
 
             is DetailEvents.OnLongPress -> {
                 sendUiEvents(UiEvents.CopyToClipboard(value = event.detailsDescription, isSensitive = true))
+                analytics.log(AppEvents.valueCopied(sensitive = true))
             }
 
             is DetailEvents.OnSwipedLeft -> {
@@ -242,6 +247,7 @@ class DetailViewModel @Inject constructor(
                     includeSpecial = includeSpecial
                 )
                 _detailResponse.value = newPassword
+                analytics.log(AppEvents.passwordGenerated(length = newPassword.length))
             }
 
             DetailEvents.OnPasswordSettingsClick -> {

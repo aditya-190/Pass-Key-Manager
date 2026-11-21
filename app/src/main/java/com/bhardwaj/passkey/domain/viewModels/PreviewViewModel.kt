@@ -7,6 +7,8 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bhardwaj.passkey.R
+import com.bhardwaj.passkey.analytics.AnalyticsTracker
+import com.bhardwaj.passkey.analytics.AppEvents
 import com.bhardwaj.passkey.data.local.entity.Preview
 import com.bhardwaj.passkey.data.repository.PasskeyRepository
 import com.bhardwaj.passkey.domain.events.PreviewEvents
@@ -32,7 +34,8 @@ import kotlinx.coroutines.launch
 @HiltViewModel
 class PreviewViewModel @Inject constructor(
     private val repository: PasskeyRepository,
-    private val savedStateHandle: SavedStateHandle
+    private val savedStateHandle: SavedStateHandle,
+    private val analytics: AnalyticsTracker
 ) : ViewModel() {
     private val _uiEvents = Channel<UiEvents>()
     val uiEvents = _uiEvents.receiveAsFlow()
@@ -150,7 +153,10 @@ class PreviewViewModel @Inject constructor(
                                 categoryName = newPreview.categoryName
                             )
                         )
-                    } ?: repository.upsertPreview(newPreview)
+                    } ?: run {
+                        repository.upsertPreview(newPreview)
+                        analytics.log(AppEvents.entryCreated(newPreview.categoryName))
+                    }
 
                     preview = null
                     savedStateHandle[PREVIEW_HEADING] = ""
@@ -165,6 +171,7 @@ class PreviewViewModel @Inject constructor(
 
             is PreviewEvents.OnLongPress -> {
                 sendUiEvents(UiEvents.CopyToClipboard(value = event.previewHeading, isSensitive = false))
+                analytics.log(AppEvents.valueCopied(sensitive = false))
             }
 
             PreviewEvents.OnSettingsClick -> {

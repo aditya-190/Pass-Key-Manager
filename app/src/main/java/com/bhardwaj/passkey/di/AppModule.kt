@@ -2,11 +2,14 @@ package com.bhardwaj.passkey.di
 
 import android.app.Application
 import android.content.Context
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
 import androidx.room.Room
 import com.bhardwaj.passkey.BuildConfig
 import com.bhardwaj.passkey.data.local.PassKeyDatabase
 import com.bhardwaj.passkey.data.repository.DataStoreRepository
 import com.bhardwaj.passkey.data.repository.PasskeyRepository
+import com.bhardwaj.passkey.data.repository.passkeyDataStore
 import com.bhardwaj.passkey.domain.repository.PasskeyRepositoryImpl
 import com.bhardwaj.passkey.utils.Constants
 import com.bhardwaj.passkey.utils.MIGRATION_1_2
@@ -39,5 +42,9 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideDataStoreRepository(@ApplicationContext context: Context) = DataStoreRepository(context = context)
+    fun provideDataStore(@ApplicationContext context: Context): DataStore<Preferences> = context.passkeyDataStore
+
+    @Provides
+    @Singleton
+    fun provideDataStoreRepository(dataStore: DataStore<Preferences>) = DataStoreRepository(dataStore)
 }

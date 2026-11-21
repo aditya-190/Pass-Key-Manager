@@ -121,6 +121,8 @@ fun DetailsBottomSheet(
                             color = MaterialTheme.colorScheme.onBackground
                         ),
                         imeAction = ImeAction.Done,
+                        // The response is the stored value itself, so the keyboard must not learn it.
+                        isSecret = true,
                         modifier = Modifier.weight(1f)
                     )
 

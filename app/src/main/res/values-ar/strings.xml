@@ -13,10 +13,10 @@
     <string name="next">التالي</string>
     <string name="first_heading">أنشئ\nكلمات مرور\n[[آمنة]].</string>
     <string name="second_heading">كل\n[[كلمات مرورك]]\nهنا.</string>
-    <string name="third_heading">لا تكتبها،\n[[املأ]] بياناتك\nتلقائيًا.</string>
+    <string name="third_heading">يُفتح\n[[لك]] وحدك،\nعلى هذا الهاتف.</string>
     <string name="first_description">توقّف عن استخدام كلمات مرور ضعيفة لحساباتك على الإنترنت، وارتقِ بها مع PassKey. احصل على كلمات مرور آمنة يصعب اختراقها.</string>
     <string name="second_description">احفظ كل كلمات مرورك وأدرها من مكان واحد. لا تحفظ مئات كلمات المرور، بل واحدة فقط.</string>
-    <string name="third_description">لا تُعرّض كلمات مرورك للخطر بكتابتها أمام الآخرين، دع PassKey يملأها تلقائيًا ويحافظ على أمان بياناتك.</string>
+    <string name="third_description">خزنتك مشفّرة على هذا الهاتف وتطلب بصمتك أو وجهك أو قفل الشاشة قبل أن تُفتح. بلا حساب، بلا سحابة، بلا إعلانات.</string>
 
     <!-- Main Screens -->
     <string name="banks">البنوك</string>
@@ -103,4 +103,18 @@
         <item quantity="many">استُخدمت %1$d مرة</item>
         <item quantity="other">استُخدمت %1$d مرة</item>
     </plurals>
+    <string name="about_message">PassKey مدير كلمات مرور مجاني ومفتوح المصدر، بلا إعلانات وبلا حساب.\n\nتُحفظ إدخالاتك في قاعدة بيانات مشفّرة على هذا الهاتف. يطلب PassKey بصمتك أو وجهك أو قفل الشاشة قبل عرضها، ويمنع لقطات الشاشة، وينشئ كلمات مرور قوية، ويفحص كلماتك المحفوظة بحثًا عن الضعيفة أو المكررة.\n\nالشيفرة المصدرية متاحة للعموم على GitHub: github.com/aditya-190/Pass-Key-Manager</string>
+    <string name="privacy_message">تبقى خزنتك على هاتفك. لا يملك PassKey حسابًا ولا مزامنة ولا خادمًا خاصًا به، ولا يرسل أبدًا الإدخالات التي تحفظها.\n\nفقط بإذنك، يرسل التطبيق عبر Google Firebase:\n• تقارير الأعطال والأداء: تفاصيل تقنية مثل طراز الجهاز وإصدار Android وإصدار التطبيق.\n• إحصاءات الاستخدام: الشاشات والميزات المستخدمة، وليس ما تحفظه أبدًا.\n\nكلاهما متوقف حتى تختار، ويمكنك تغيير اختيارك في أي وقت من الإعدادات › خيارات الخصوصية. لا يستخدم PassKey معرّف الإعلانات. يُستخدم Google Play للتحقق من تحديثات التطبيق.\n\nالملفات المُصدَّرة غير مشفّرة في هذا الإصدار. احفظها في مكان آمن واحذفها عندما لا تحتاج إليها.</string>
+    <string name="terms_n_condition_message">يُقدَّم PassKey مجانًا، كما هو، دون أي ضمان.\n\nأنت مسؤول عن حماية هاتفك وقفل الشاشة وأي ملفات مُصدَّرة. لا تغادر بياناتك هاتفك أبدًا، لذا لا يستطيع أحد استعادتها إذا فُقد الهاتف أو حُذف التطبيق. صدِّر نسخة احتياطية بانتظام.\n\nباستخدامك PassKey فإنك توافق على هذه الشروط وعلى سياسة الخصوصية.</string>
+    <string name="consent_title">ساعد في تحسين PassKey</string>
+    <string name="consent_body">كلمات مرورك لا تغادر هذا الهاتف أبدًا. بإذنك، يمكن لـ PassKey إرسال تقارير مجهولة الهوية إلى Google Firebase تساعد على إصلاح الأعطال ومعرفة الميزات المستخدمة. لا تتضمن أبدًا أي شيء تحفظه.</string>
+    <string name="consent_crash_title">تقارير الأعطال والأداء</string>
+    <string name="consent_crash_body">تفاصيل تقنية عند حدوث خطأ، مثل طراز الجهاز وإصدار Android وإصدار التطبيق.</string>
+    <string name="consent_analytics_title">إحصاءات الاستخدام</string>
+    <string name="consent_analytics_body">الشاشات والميزات المستخدمة، تُحصى دون أي من بياناتك.</string>
+    <string name="consent_allow_all">السماح بالكل</string>
+    <string name="consent_decline_all">رفض الكل</string>
+    <string name="consent_save">حفظ اختياراتي</string>
+    <string name="consent_change_later">يمكنك تغيير ذلك في أي وقت من الإعدادات › خيارات الخصوصية.</string>
+    <string name="privacy_options">خيارات الخصوصية</string>
 </resources>

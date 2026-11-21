@@ -13,10 +13,10 @@
     <string name="next">Avançar</string>
     <string name="first_heading">Crie\nsenhas\n[[seguras]].</string>
     <string name="second_heading">Todas as suas\n[[senhas]]\nestão aqui.</string>
-    <string name="third_heading">Não digite,\n[[preencha]]\nsuas credenciais.</string>
+    <string name="third_heading">Abre só\npara [[você]],\nneste telefone.</string>
     <string name="first_description">Pare de usar senhas inseguras nas suas contas online e avance com o PassKey. Tenha senhas muito seguras e difíceis de quebrar.</string>
     <string name="second_description">Guarde e gerencie todas as suas senhas em um só lugar. Não decore centenas de senhas, memorize apenas uma.</string>
-    <string name="third_description">Não comprometa suas senhas digitando-as em público; deixe o PassKey preencher tudo automaticamente e manter suas credenciais seguras.</string>
+    <string name="third_description">Seu cofre é criptografado neste telefone e pede sua digital, seu rosto ou o bloqueio de tela antes de abrir. Sem conta, sem nuvem, sem anúncios.</string>
 
     <!-- Main Screens -->
     <string name="banks">Bancos</string>
@@ -100,4 +100,18 @@
         <item quantity="many">Usada %1$d vezes</item>
         <item quantity="other">Usada %1$d vezes</item>
     </plurals>
+    <string name="about_message">O PassKey é um gerenciador de senhas gratuito e de código aberto, sem anúncios e sem conta.\n\nSuas entradas ficam em um banco de dados criptografado neste telefone. O PassKey pede sua digital, seu rosto ou o bloqueio de tela antes de mostrá-las, bloqueia capturas de tela, gera senhas fortes e verifica as senhas salvas em busca de senhas fracas ou repetidas.\n\nO código-fonte é público no GitHub: github.com/aditya-190/Pass-Key-Manager</string>
+    <string name="privacy_message">Seu cofre fica no seu telefone. O PassKey não tem conta, sincronização nem servidor próprio, e nunca envia as entradas que você salva.\n\nSomente com a sua permissão, o app usa o Google Firebase para enviar:\n• Relatórios de falhas e desempenho: detalhes técnicos como modelo do aparelho, versão do Android e versão do app.\n• Estatísticas de uso: quais telas e recursos são usados, nunca o que você guarda.\n\nAmbos ficam desativados até você escolher, e você pode mudar sua escolha a qualquer momento em Configurações › Opções de privacidade. O PassKey não usa ID de publicidade. O Google Play é usado para verificar atualizações do app.\n\nOs arquivos exportados não são criptografados nesta versão. Guarde-os em local seguro e apague-os quando não precisar mais deles.</string>
+    <string name="terms_n_condition_message">O PassKey é fornecido gratuitamente, no estado em que se encontra, sem garantia de qualquer tipo.\n\nVocê é responsável por proteger seu telefone, seu bloqueio de tela e quaisquer arquivos exportados. Seus dados nunca saem do seu telefone, então ninguém pode recuperá-los se o telefone for perdido ou o app for removido. Exporte um backup regularmente.\n\nAo usar o PassKey, você concorda com estes termos e com a política de privacidade.</string>
+    <string name="consent_title">Ajude a melhorar o PassKey</string>
+    <string name="consent_body">Suas senhas nunca saem deste telefone. Com sua permissão, o PassKey pode enviar relatórios anônimos ao Google Firebase que ajudam a corrigir falhas e a ver quais recursos são usados. Eles nunca incluem nada do que você salva.</string>
+    <string name="consent_crash_title">Relatórios de falhas e desempenho</string>
+    <string name="consent_crash_body">Detalhes técnicos quando algo dá errado, como modelo do aparelho, versão do Android e versão do app.</string>
+    <string name="consent_analytics_title">Estatísticas de uso</string>
+    <string name="consent_analytics_body">Quais telas e recursos são usados, contados sem nenhum dos seus dados.</string>
+    <string name="consent_allow_all">Permitir tudo</string>
+    <string name="consent_decline_all">Recusar tudo</string>
+    <string name="consent_save">Salvar minhas escolhas</string>
+    <string name="consent_change_later">Você pode mudar isso a qualquer momento em Configurações › Opções de privacidade.</string>
+    <string name="privacy_options">Opções de privacidade</string>
 </resources>
