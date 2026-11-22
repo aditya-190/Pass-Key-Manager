@@ -31,6 +31,21 @@ Done:
   0 crashes, 0 ANRs. Vault still opens and decrypts afterwards. Monkey deleted the seeded detail (expected data churn).
 - No ANRs. The API 37 emulator is shared with another session, so no results were taken from it.
 
+## Phase 2: release 5.6.0 (branch `release/5.6.0`), in progress ⏸
+Done (each gated: ktlint, detekt, unit tests, lint, build; device checks on PassKey_API28):
+1. Toolchain `afacb64`: Gradle 9.7.1, AGP 9.4.0, Kotlin 2.4.20, KSP 2.3.14; release APK 28 → 13 MB; release build refuses
+   to package without PASS_PHRASE; upgrade check against real 5.5.1 passes.
+2. Encrypted backup `b4b114e`: `.pkbak` (AES-256-GCM, PBKDF2 600k), legacy CSV import, allowBackup=false; format logic in
+   BackupCodec with 7 restore tests.
+3. Auto-lock `ca916ba` + `93c7ef9`: LockPolicy (10 tests), SecurityViewModel prompt rules (7 tests); the lock screen prompts
+   on resume and always offers Unlock; Immediately no longer locks a vault in use; vault screens restored from Recents
+   after process death now lock (5.5.2 showed a secret there with no unlock). `scripts/e2e/lock_check.sh` 5/5.
+Unit tests: 111, all passing. Attack pass for 2–3 listed in the 2026-11-22 session summary, waiting on owner choice.
+
+Next: isSecret column + per-field secret keyboard (from PR #2 c8ede1e), studio baseline (Remote Config, force update,
+banner, About/Legal, LaunchCoordinator), UX fixes (visible Add, back buttons, undo delete, keep typed input), then the
+5.6.0 privacy text rewrite + translations and the version bump.
+
 ## Carried into 5.6.0
 - Per-field secret keyboard (attack-pass finding #1), built on the `isSecret` column.
 - A failed Android 10+ export is reported as success (`SettingsViewModel.kt:260`); replaced by the encrypted backup.
