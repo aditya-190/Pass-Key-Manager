@@ -65,9 +65,18 @@ class LaunchFlowE2ETest {
             compose.onNodeWithText(string(R.string.consent_decline_all)).performClick()
         }
 
-        // Unlock screen, reached only after the consent decision.
-        compose.awaitText(string(R.string.welcome_to_pass_key))
-        assertThat(compose.onAllNodes(hasText(string(R.string.consent_decline_all))).fetchSemanticsNodes()).isEmpty()
+        // Unlock, reached only after the consent decision. On a device with a screen lock the system
+        // credential screen may already cover the app, which also means the unlock step was reached.
+        // runCatching: "no compose hierarchy" means the credential screen covers the app, i.e. unlock was reached.
+        compose.waitUntil(timeoutMs) {
+            runCatching {
+                compose.onAllNodesWithText(string(R.string.welcome_to_pass_key)).fetchSemanticsNodes().isNotEmpty()
+            }.getOrDefault(true)
+        }
+        val consentStillShown = runCatching {
+            compose.onAllNodes(hasText(string(R.string.consent_decline_all))).fetchSemanticsNodes().isNotEmpty()
+        }.getOrDefault(false)
+        assertThat(consentStillShown).isFalse()
 
         val after = prefs()
         assertThat(after[booleanPreferencesKey("onboarding_complete")]).isTrue()
