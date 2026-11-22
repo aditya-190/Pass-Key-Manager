@@ -51,6 +51,29 @@ class ConsentApplierTest {
     }
 
     @Test
+    fun `reports captured before the user decides are kept, not deleted`() = runTest(UnconfinedTestDispatcher()) {
+        applier(MutableStateFlow(ConsentState.Undecided), backgroundScope).start()
+        assertEquals(0, crash.discardedUnsentReports)
+    }
+
+    @Test
+    fun `an explicit no to crash reports deletes anything captured meanwhile`() = runTest(UnconfinedTestDispatcher()) {
+        val consent = MutableStateFlow(ConsentState.Undecided)
+        applier(consent, backgroundScope).start()
+        consent.value = ConsentState(decided = true, analytics = true, crash = false)
+        assertEquals(1, crash.discardedUnsentReports)
+    }
+
+    @Test
+    fun `allowing crash reports keeps the pending ones so they are sent`() = runTest(UnconfinedTestDispatcher()) {
+        val consent = MutableStateFlow(ConsentState.Undecided)
+        applier(consent, backgroundScope).start()
+        consent.value = ConsentState(decided = true, analytics = false, crash = true)
+        assertEquals(0, crash.discardedUnsentReports)
+        assertEquals(true, crash.collectionEnabled)
+    }
+
+    @Test
     fun `identical states are applied once`() = runTest(UnconfinedTestDispatcher()) {
         val state = ConsentState(decided = true, analytics = true, crash = true)
         val consent = MutableStateFlow(state)

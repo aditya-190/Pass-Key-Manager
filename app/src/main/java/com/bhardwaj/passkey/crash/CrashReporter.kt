@@ -23,6 +23,9 @@ interface CrashReporter {
     fun recordException(throwable: Throwable)
 
     fun setCollectionEnabled(enabled: Boolean)
+
+    /** Deletes reports captured on the device while collection was off, so they are never sent. */
+    fun discardUnsentReports()
 }
 
 object CrashKeys {
@@ -42,10 +45,9 @@ class FirebaseCrashReporter(private val crashlytics: FirebaseCrashlytics) : Cras
 
     override fun setCollectionEnabled(enabled: Boolean) {
         crashlytics.isCrashlyticsCollectionEnabled = enabled
-        // Reports captured while collection was off are kept on the device. If the user said no,
-        // they must never be sent later, so drop them.
-        if (!enabled) crashlytics.deleteUnsentReports()
     }
+
+    override fun discardUnsentReports() = crashlytics.deleteUnsentReports()
 
     companion object {
         /** Crashlytics when Firebase is configured, otherwise [NoOpCrashReporter]. */
@@ -69,6 +71,8 @@ object NoOpCrashReporter : CrashReporter {
     override fun recordException(throwable: Throwable) = Unit
 
     override fun setCollectionEnabled(enabled: Boolean) = Unit
+
+    override fun discardUnsentReports() = Unit
 }
 
 /**

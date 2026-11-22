@@ -50,6 +50,11 @@ class RecordingCrashReporter : CrashReporter {
     val logs = mutableListOf<String>()
     val keys = mutableMapOf<String, Any>()
     var collectionEnabled: Boolean? = null
+    var discardedUnsentReports = 0
+
+    override fun discardUnsentReports() {
+        discardedUnsentReports++
+    }
 
     override fun setCustomKey(key: String, value: String) {
         keys[key] = value

@@ -13,13 +13,17 @@ Done:
 - New: ktlint and detekt gates; consent-gated Analytics, Crashlytics and Performance behind interfaces; no AD_ID;
   consent step plus Settings › Privacy options; splash routes once; password keyboard on the Response field;
   honest About/Privacy/Terms in 17 languages; onboarding no longer promises autofill.
-- Tests: 63 unit tests (from 17); simulation of 18,000 seeded cases, 0 failures.
+- Tests: 69 unit tests (from 17), including a manifest test that pins every privacy default; simulation of 18,000 seeded cases, 0 failures.
 - Gates: `ktlintCheck detekt testDebugUnitTest lintDebug assembleRelease` all green.
 
 Not done: device E2E and `adb monkey`, because no emulator or device is available on this machine.
 
+## Carried into 5.6.0
+- Per-field secret keyboard (attack-pass finding #1), built on the `isSecret` column.
+- A failed Android 10+ export is reported as success (`SettingsViewModel.kt:260`); replaced by the encrypted backup.
+
 ## Owner actions
-- [ ] Choose which 5.5.2 attack-pass findings to fix (see the 2026-11-22 session summary).
+- [x] 5.5.2 attack pass: fixed #2 (keep pre-consent crash reports until the user decides) and #3 (no automatic screen reporting). #1 (per-field secret keyboard) moved to 5.6.0.
 - [ ] Connect a device or create an emulator so on-device E2E can run, including an upgrade from the Play 5.5.1 build with a real vault.
 - [ ] Confirm `PASS_PHRASE` is set in `local.properties` before building the release (agents never read it).
 - [ ] Update the Play Data-safety form for 5.5.2: optional crash logs, app interactions and diagnostics, no ad ID,

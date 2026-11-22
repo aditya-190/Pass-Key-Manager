@@ -19,8 +19,8 @@ choose**, and you can change that choice at any time in **Settings › Privacy o
 | Usage statistics | Firebase Analytics | Which screens and features are used, as counts and coarse ranges (for example "a 12–15 character password was generated"), plus a Firebase installation identifier |
 
 Neither ever contains vault content: no entry names, field names, values or passwords. Both are
-off on a new install and on upgrade until you decide. If you decline crash reports, any reports
-captured on the device in the meantime are deleted, not sent.
+off on a new install and on upgrade until you decide. A crash that happens before you decide is
+kept on the device: it is sent only if you then allow crash reports, and deleted if you decline.
 
 PassKey does **not** use an advertising ID, and has no ads.
 

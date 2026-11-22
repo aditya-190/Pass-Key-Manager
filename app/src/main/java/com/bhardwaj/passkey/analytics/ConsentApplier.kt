@@ -45,6 +45,9 @@ class ConsentApplier(
     fun apply(state: ConsentState) {
         analytics.setCollectionEnabled(state.analytics)
         crashReporter.setCollectionEnabled(state.crash)
+        // Crashes captured before the choice (onboarding, the consent screen itself) wait on the device.
+        // An explicit "no" deletes them; a "yes" lets Crashlytics send them; undecided keeps waiting.
+        if (state.decided && !state.crash) crashReporter.discardUnsentReports()
         performance.setEnabled(state.crash)
         consentMode.apply(analyticsGranted = state.analytics)
         analytics.setUserProperty(AppUserProps.CONSENT_ANALYTICS, state.analytics.toString())
