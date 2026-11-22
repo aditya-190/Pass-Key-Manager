@@ -1,6 +1,6 @@
 # Privacy Policy: PassKey Password Manager
 
-_Last updated: 2026-11-22 (app version 5.5.2)_
+_Last updated: 2026-11-23 (app version 5.6.0)_
 
 ## Summary
 
@@ -30,23 +30,25 @@ Data handled by these services is processed by Google under
 ## Always on
 
 - **Google Play in-app updates**: the app asks Google Play whether a newer version is available.
+- **Google Firebase Remote Config**: the app fetches settings for update notices and announcements. The request
+  carries a Firebase installation identifier and nothing you save. It is not used for analytics.
 
-## Exports
+## Backups
 
-In this version, **Export Data** writes an unencrypted file to your Downloads folder. Anyone who
-gets that file can read it. Keep it somewhere safe and delete it when you no longer need it. An
-encrypted backup format replaces it in the next release.
+**Export Data** writes a backup encrypted with AES-256-GCM, using a key derived from a password you
+choose, to a location you pick with the system file picker. Anyone who has both the file and its
+password can read it. We keep no copy and cannot recover the password.
 
 ## Device backup
 
-If Android backup is enabled on your phone, it can include PassKey's encrypted database.
+PassKey excludes its data from Android cloud backup and device-to-device transfer, so your vault is
+not uploaded to your Google account. Use an encrypted backup to move to a new phone.
 
 ## Permissions
 
 | Permission | Why |
 |---|---|
 | `USE_BIOMETRIC` | Unlocking the vault with your fingerprint, face or screen lock |
-| `READ_/WRITE_EXTERNAL_STORAGE` (Android 9 only) | Writing an export to Downloads |
 | `INTERNET`, `ACCESS_NETWORK_STATE`, `WAKE_LOCK` | Required by the Firebase and Google Play libraries above |
 
 ## Children
