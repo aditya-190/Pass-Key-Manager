@@ -15,6 +15,7 @@ import com.bhardwaj.passkey.crash.CrashReporter
 import com.bhardwaj.passkey.legal.LegalSection
 import com.bhardwaj.passkey.legal.LegalTexts
 import com.bhardwaj.passkey.update.UpdateGateController
+import com.bhardwaj.passkey.update.withoutMaintenance
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -22,6 +23,9 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 
 /** Studio baseline: Remote Config, force update, announcement banner, About and Legal. */
 @Module
@@ -53,8 +57,17 @@ object BaselineModule {
         analytics: AnalyticsTracker,
         clock: Clock,
         @ApplicationScope scope: CoroutineScope
-    ): UpdateGateController =
-        UpdateGateController(remoteConfig.config, BuildConfig.VERSION_CODE.toLong(), dataStore, analytics, clock, scope)
+    ): UpdateGateController = UpdateGateController(
+        // Maintenance mode is ignored for an offline vault (see withoutMaintenance); forced updates still apply.
+        remoteConfig.config.map(
+            ::withoutMaintenance
+        ).stateIn(scope, SharingStarted.Eagerly, withoutMaintenance(remoteConfig.config.value)),
+        BuildConfig.VERSION_CODE.toLong(),
+        dataStore,
+        analytics,
+        clock,
+        scope
+    )
 
     @Provides
     @Singleton

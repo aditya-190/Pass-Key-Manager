@@ -17,6 +17,7 @@ import com.bhardwaj.passkey.about.baselineLibraries
 import com.bhardwaj.passkey.banner.AnnouncementBanner
 import com.bhardwaj.passkey.banner.AnnouncementEffect
 import com.bhardwaj.passkey.banner.AnnouncementIntent
+import com.bhardwaj.passkey.banner.AnnouncementRoutes
 import com.bhardwaj.passkey.banner.AnnouncementViewModel
 import com.bhardwaj.passkey.legal.LegalDocument
 import com.bhardwaj.passkey.legal.LegalEffect
@@ -75,7 +76,7 @@ fun HomeAnnouncement(onNavigate: (String) -> Unit, modifier: Modifier = Modifier
         viewModel.effects.collect { effect ->
             when (effect) {
                 is AnnouncementEffect.OpenUrl -> ExternalLinks.openUrl(context, effect.url)
-                is AnnouncementEffect.Navigate -> onNavigate(effect.route)
+                is AnnouncementEffect.Navigate -> AnnouncementRoutes.safeRoute(effect.route)?.let(onNavigate)
             }
         }
     }
