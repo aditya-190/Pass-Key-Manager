@@ -35,4 +35,10 @@ internal data class BackupPreview(
 )
 
 @Serializable
-internal data class BackupDetail(val question: String, val answer: String, val sequence: Long = 0)
+internal data class BackupDetail(
+    val question: String,
+    val answer: String,
+    val sequence: Long = 0,
+    /** Carried so a restore keeps the user's per-field choice; defaults keep older files readable. */
+    val isSecret: Boolean = false
+)

@@ -34,7 +34,7 @@ internal class BackupCodec(
                     heading = preview.heading,
                     categoryName = preview.categoryName.name,
                     sequence = preview.sequence,
-                    details = details.map { BackupDetail(it.question, it.answer, it.sequence) }
+                    details = details.map { BackupDetail(it.question, it.answer, it.sequence, it.isSecret) }
                 )
             }
         )
@@ -123,7 +123,13 @@ internal class BackupCodec(
                 question.isEmpty() || tooLong -> counts.skipped++
                 repository.getDetailByContent(previewId, question, answer) == null -> {
                     repository.upsertDetails(
-                        Details(previewId = previewId, question = question, answer = answer, sequence = detail.sequence)
+                        Details(
+                            previewId = previewId,
+                            question = question,
+                            answer = answer,
+                            sequence = detail.sequence,
+                            isSecret = detail.isSecret
+                        )
                     )
                     counts.details++
                 }

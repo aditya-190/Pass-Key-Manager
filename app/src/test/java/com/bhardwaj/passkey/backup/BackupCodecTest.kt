@@ -53,6 +53,22 @@ class BackupCodecTest {
     }
 
     @Test
+    fun `the secret flag survives a backup round trip`() = runTest {
+        val source = FakePasskeyRepository()
+        val id = source.upsertPreview(Preview(heading = "Wi-Fi", categoryName = Categories.OTHERS))
+        source.upsertDetails(Details(previewId = id, question = "Network", answer = "home", isSecret = false))
+        source.upsertDetails(Details(previewId = id, question = "Clave", answer = "x9!", isSecret = true))
+        val bytes = BackupCodec(source).encode(password.copyOf(), 1L, "test")
+
+        val target = FakePasskeyRepository()
+        val codec = BackupCodec(target)
+        codec.restore(codec.decode(bytes, password.copyOf()).getOrThrow(), ImportMode.MERGE)
+
+        assertEquals(true, target.allDetails.single { it.question == "Clave" }.isSecret)
+        assertEquals(false, target.allDetails.single { it.question == "Network" }.isSecret)
+    }
+
+    @Test
     fun `the file is not readable as plaintext`() = runTest {
         val bytes = BackupCodec(FakePasskeyRepository().seed()).encode(password.copyOf(), 1L, "test")
         val asText = bytes.toString(Charsets.ISO_8859_1)
