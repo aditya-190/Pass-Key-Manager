@@ -123,34 +123,11 @@ fun SettingsScreen(
             sheetShape = RectangleShape,
             sheetSwipeEnabled = true,
             sheetDragHandle = {},
+            // Only the Privacy/Terms/About text lives in this sheet. The language picker is a ModalBottomSheet in
+            // its own window; hosting it here left this sheet expanded at 0 px, and Material3's overscroll scale
+            // divides by the sheet height, so a bouncing drag crashed with "scaleY = Infinity" (monkey seed 5521).
             sheetContent = {
-                if (viewModel.isSheetOpen) {
-                    val sheetState = rememberModalBottomSheetState()
-                    ModalBottomSheet(
-                        properties = ModalBottomSheetProperties(
-                            securePolicy = SecureFlagPolicy.SecureOn
-                        ),
-                        sheetState = sheetState,
-                        onDismissRequest = { viewModel.onEvent(SettingsEvents.OnDismissBottomSheet) },
-                        dragHandle = {},
-                        shape = RectangleShape
-                    ) {
-                        LanguageBottomSheet(
-                            onLanguageChange = {
-                                viewModel.onEvent(
-                                    SettingsEvents.OnLanguageChange(
-                                        newLanguage = it
-                                    )
-                                )
-                            },
-                            onBackIconClick = {
-                                viewModel.onEvent(SettingsEvents.OnDismissBottomSheet)
-                            }
-                        )
-                    }
-                } else {
-                    FaqItem(openedBy = viewModel.bottomSheetOpenedBy)
-                }
+                FaqItem(openedBy = viewModel.bottomSheetOpenedBy)
             }
         ) {
             Box(
@@ -194,7 +171,6 @@ fun SettingsScreen(
                         ) {
                             SettingsText(text = stringResource(id = R.string.change_language)) {
                                 viewModel.onEvent(SettingsEvents.OnLanguageClick)
-                                scope.launch { scaffoldState.bottomSheetState.expand() }
                             }
                             SettingsText(text = stringResource(id = R.string.analyze_passwords)) {
                                 viewModel.onEvent(SettingsEvents.OnAnalyzePasswordsClick)
@@ -237,6 +213,32 @@ fun SettingsScreen(
             }
         }
     }
+    if (viewModel.isSheetOpen) {
+        val sheetState = rememberModalBottomSheetState()
+        ModalBottomSheet(
+            properties = ModalBottomSheetProperties(
+                securePolicy = SecureFlagPolicy.SecureOn
+            ),
+            sheetState = sheetState,
+            onDismissRequest = { viewModel.onEvent(SettingsEvents.OnDismissBottomSheet) },
+            dragHandle = {},
+            shape = RectangleShape
+        ) {
+            LanguageBottomSheet(
+                onLanguageChange = {
+                    viewModel.onEvent(
+                        SettingsEvents.OnLanguageChange(
+                            newLanguage = it
+                        )
+                    )
+                },
+                onBackIconClick = {
+                    viewModel.onEvent(SettingsEvents.OnDismissBottomSheet)
+                }
+            )
+        }
+    }
+
     if (isAnalysisSheetOpen) {
         AnalysisBottomSheet(
             result = analysisResult,
