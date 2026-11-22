@@ -104,6 +104,12 @@ android {
 }
 
 dependencies {
+    constraints {
+        // room-testing 2.8.3 is compiled against kotlinx-serialization 1.8; navigation pulls in 1.7.3, which made
+        // every on-device migration test fail with AbstractMethodError. Test APKs must share the app's version.
+        implementation(libs.kotlinx.serialization.json)
+    }
+
     // Android Essentials
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.activity.compose)

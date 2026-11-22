@@ -61,6 +61,7 @@ espresso_core = "3.7.0"
 compose_ui_test = "1.9.4"
 truth = "1.4.5"
 coroutines_test = "1.10.2"
+kotlinx_serialization = "1.8.1"
 detekt_cli = "1.23.8"
 
 [plugins]
@@ -143,6 +144,7 @@ espresso_core = { module = "androidx.test.espresso:espresso-core", version.ref =
 compose_ui_test_junit4 = { module = "androidx.compose.ui:ui-test-junit4" }
 google_truth = { module = "com.google.truth:truth", version.ref = "truth" }
 kotlinx_coroutines_test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines_test" }
+kotlinx_serialization_json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx_serialization" }
 detekt_cli = { module = "io.gitlab.arturbosch.detekt:detekt-cli", version.ref = "detekt_cli" }
 compose_ui_tooling = { module = "androidx.compose.ui:ui-tooling" }
 compose_ui_test_manifest = { module = "androidx.compose.ui:ui-test-manifest", version.ref = "compose_ui_test" }
