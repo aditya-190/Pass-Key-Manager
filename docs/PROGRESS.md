@@ -40,9 +40,13 @@ Done (each gated: ktlint, detekt, unit tests, lint, build; device checks on Pass
 3. Auto-lock `ca916ba` + `93c7ef9`: LockPolicy (10 tests), SecurityViewModel prompt rules (7 tests); the lock screen prompts
    on resume and always offers Unlock; Immediately no longer locks a vault in use; vault screens restored from Recents
    after process death now lock (5.5.2 showed a secret there with no unlock). `scripts/e2e/lock_check.sh` 5/5.
-Unit tests: 111, all passing. Attack pass for 2–3 listed in the 2026-11-22 session summary, waiting on owner choice.
+4. Backup hardening `f29c93b` (owner chose findings 1+2): decompression capped at 64 MB, PBKDF2 cost capped at 2M.
+5. isSecret `3877824` (PR #2 c8ede1e, Room 2→3): analysis works in every locale; a real 5.5.1 vault migrates on device.
+6. Secret switch `999524d`: per-field switch drives the keyboard and isSecret (5.5.2 finding #1); fixes PR #2's
+   never-reset wasGenerated flag.
+Unit tests: 121, all passing. Instrumented: 10/10 on API 28.
 
-Next: isSecret column + per-field secret keyboard (from PR #2 c8ede1e), studio baseline (Remote Config, force update,
+Next: studio baseline (Remote Config, force update,
 banner, About/Legal, LaunchCoordinator), UX fixes (visible Add, back buttons, undo delete, keep typed input), then the
 5.6.0 privacy text rewrite + translations and the version bump.
 
