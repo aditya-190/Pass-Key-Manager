@@ -44,11 +44,16 @@ Done (each gated: ktlint, detekt, unit tests, lint, build; device checks on Pass
 5. isSecret `3877824` (PR #2 c8ede1e, Room 2→3): analysis works in every locale; a real 5.5.1 vault migrates on device.
 6. Secret switch `999524d`: per-field switch drives the keyboard and isSecret (5.5.2 finding #1); fixes PR #2's
    never-reset wasGenerated flag.
-Unit tests: 121, all passing. Instrumented: 10/10 on API 28.
+7. isSecret in backups `721795c` (finding #1).
+8. Studio baseline `b2ba381`: Remote Config, force update + maintenance overlays (UpdateHost), announcement banner,
+   About / Terms / Privacy / Licences screens replacing the Settings sheet; 52 strings × 17 languages.
+9. UX fixes `b204f5b`: labelled Add buttons + empty-state CTA, back buttons, confirm-then-undo delete, inline save errors
+   that keep typed input; fixed an unlabeled-FAB TalkBack bug found on device.
+Unit tests: 179, all passing. Instrumented: 10/10 on API 28. All gates green incl. release build.
 
-Next: studio baseline (Remote Config, force update,
-banner, About/Legal, LaunchCoordinator), UX fixes (visible Add, back buttons, undo delete, keep typed input), then the
-5.6.0 privacy text rewrite + translations and the version bump.
+Remaining for 5.6.0: owner choice on step 3–4 attack findings, version bump (5.6.0 / 45), seeded simulation for backup
+and lock policy, monkey rerun, health report.
+
 
 ## Carried into 5.6.0
 - Per-field secret keyboard (attack-pass finding #1), built on the `isSecret` column.
