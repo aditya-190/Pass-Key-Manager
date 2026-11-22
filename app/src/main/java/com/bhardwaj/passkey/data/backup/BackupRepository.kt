@@ -60,13 +60,8 @@ class BackupRepository @Inject constructor(
                 Result.success(Unit)
             } catch (_: Exception) {
                 Result.failure(BackupException(BackupError.WriteFailed))
+            }
         }
-        context.contentResolver.openOutputStream(uri, "wt")?.use { it.write(encrypted) }
-            ?: return Result.failure(BackupException(BackupError.WriteFailed))
-        Result.success(Unit)
-    } catch (_: Exception) {
-        Result.failure(BackupException(BackupError.WriteFailed))
-    }
 
     suspend fun import(uri: Uri, password: CharArray?, mode: ImportMode): Result<ImportSummary> =
         withContext(Dispatchers.IO) {

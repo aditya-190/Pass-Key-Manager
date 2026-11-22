@@ -17,10 +17,10 @@ import com.bhardwaj.passkey.R
 import com.bhardwaj.passkey.data.backup.BackupError
 import com.bhardwaj.passkey.data.backup.BackupException
 import com.bhardwaj.passkey.data.backup.BackupRepository
-import com.bhardwaj.passkey.data.security.AutoLockTimeout
-import com.bhardwaj.passkey.data.security.DatabaseKeyManager
 import com.bhardwaj.passkey.data.repository.DataStoreRepository
 import com.bhardwaj.passkey.data.repository.PasskeyRepository
+import com.bhardwaj.passkey.data.security.AutoLockTimeout
+import com.bhardwaj.passkey.data.security.DatabaseKeyManager
 import com.bhardwaj.passkey.domain.events.SettingsEvents
 import com.bhardwaj.passkey.presentation.navigation.Routes
 import com.bhardwaj.passkey.utils.PasswordAnalysisResult
@@ -226,8 +226,11 @@ class SettingsViewModel @Inject constructor(
                     sendUiEvents(
                         UiEvents.ShowSnackBar(
                             UiText.StringResource(
-                                if (changed) R.string.recovery_change_done
-                                else R.string.recovery_change_failed
+                                if (changed) {
+                                    R.string.recovery_change_done
+                                } else {
+                                    R.string.recovery_change_failed
+                                }
                             )
                         )
                     )

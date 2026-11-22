@@ -8,14 +8,14 @@ import com.bhardwaj.passkey.data.backup.BackupPreview
 import com.bhardwaj.passkey.data.local.toSqlCipherRawKey
 import com.bhardwaj.passkey.utils.Constants
 import dagger.hilt.android.qualifiers.ApplicationContext
+import java.io.File
+import javax.inject.Inject
+import javax.inject.Singleton
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 import net.zetetic.database.sqlcipher.SQLiteDatabase
-import java.io.File
-import javax.inject.Inject
-import javax.inject.Singleton
 
 /**
  * Re-keys a pre-5.7 database from the build-time constant to the per-install DEK.
@@ -26,9 +26,7 @@ import javax.inject.Singleton
  * which makes the operation atomic by construction.
  */
 @Singleton
-class VaultMigration @Inject constructor(
-    @param:ApplicationContext private val context: Context
-) {
+class VaultMigration @Inject constructor(@param:ApplicationContext private val context: Context) {
     private val mutex = Mutex()
 
     sealed interface Result {
@@ -38,7 +36,11 @@ class VaultMigration @Inject constructor(
     }
 
     enum class FailureReason {
-        NO_LEGACY_KEY_WORKS, INSUFFICIENT_SPACE, EXPORT_FAILED, VERIFY_FAILED, SWAP_FAILED
+        NO_LEGACY_KEY_WORKS,
+        INSUFFICIENT_SPACE,
+        EXPORT_FAILED,
+        VERIFY_FAILED,
+        SWAP_FAILED
     }
 
     /**
@@ -57,6 +59,11 @@ class VaultMigration @Inject constructor(
         withContext(Dispatchers.IO) { runMigration(dek) }
     }
 
+    // Deliberately one linear sequence of guarded steps with early returns: each step's failure maps to a
+    // distinct Result, and the order (slots PENDING -> export -> verify -> rename) is what makes the re-key
+    // safe. Splitting it to satisfy complexity limits would obscure that order. Covered by VaultMigrationTest.
+    // TooGenericExceptionCaught: any failure of the SQLCipher export must become Result.Failed, never a crash.
+    @Suppress("ReturnCount", "CyclomaticComplexMethod", "LongMethod", "TooGenericExceptionCaught")
     private fun runMigration(dek: ByteArray): Result {
         val original = context.getDatabasePath(Constants.PASS_KEY_DATABASE)
         if (!original.exists()) return Result.NotNeeded
@@ -95,7 +102,10 @@ class VaultMigration @Inject constructor(
             // connection is opened OPEN_READWRITE without CREATE, so ATTACH of a non-existent
             // file fails with SQLITE_CANTOPEN.
             SQLiteDatabase.openOrCreateDatabase(
-                newFile.absolutePath, dek.toSqlCipherRawKey(), null, null
+                newFile.absolutePath,
+                dek.toSqlCipherRawKey(),
+                null,
+                null
             ).close()
 
             // The path is inlined rather than bound: SQLite does not accept bind parameters in
@@ -118,8 +128,12 @@ class VaultMigration @Inject constructor(
         // Step 5 - verify before anything destructive happens.
         val verified = runCatching {
             SQLiteDatabase.openDatabase(
-                newFile.absolutePath, dek.toSqlCipherRawKey(), null,
-                SQLiteDatabase.OPEN_READONLY, null, null
+                newFile.absolutePath,
+                dek.toSqlCipherRawKey(),
+                null,
+                SQLiteDatabase.OPEN_READONLY,
+                null,
+                null
             ).use { db ->
                 val integrityOk = db.rawQuery("PRAGMA cipher_integrity_check", null)
                     .use { !it.moveToFirst() }
@@ -218,8 +232,12 @@ class VaultMigration @Inject constructor(
         for (candidate in legacyCandidates) {
             val db = runCatching {
                 SQLiteDatabase.openDatabase(
-                    file.absolutePath, candidate.toByteArray(), null,
-                    SQLiteDatabase.OPEN_READWRITE, null, null
+                    file.absolutePath,
+                    candidate.toByteArray(),
+                    null,
+                    SQLiteDatabase.OPEN_READWRITE,
+                    null,
+                    null
                 )
             }.getOrNull()
             if (db != null) {

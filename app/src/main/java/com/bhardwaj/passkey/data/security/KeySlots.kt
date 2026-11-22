@@ -79,8 +79,7 @@ data class KeySlotFile(
 
     fun slot(id: SlotId): KeySlot? = slots.firstOrNull { it.id == id }
 
-    fun withSlot(slot: KeySlot): KeySlotFile =
-        copy(slots = slots.filterNot { it.id == slot.id } + slot)
+    fun withSlot(slot: KeySlot): KeySlotFile = copy(slots = slots.filterNot { it.id == slot.id } + slot)
 
     fun withoutSlot(id: SlotId): KeySlotFile {
         require(id != SlotId.REC) { "the recovery slot may not be removed" }

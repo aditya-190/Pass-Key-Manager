@@ -1,12 +1,12 @@
 package com.bhardwaj.passkey
 
+import android.util.Base64
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.bhardwaj.passkey.data.security.DefaultKeyDerivation
 import com.bhardwaj.passkey.data.security.KdfSpec
 import com.google.common.truth.Truth.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
-import android.util.Base64
 
 /**
  * PBKDF2-HMAC-SHA512 for the recovery-password slot (owner decision: no native Argon2 dependency).
@@ -33,7 +33,10 @@ class KeyDerivationTest {
 
     @Test
     fun non_ascii_passwords_match_their_utf8_reference() {
-        val key = derivation.derive("pÿssw0rd-éü-中文".toCharArray(), pbkdf2("saltsaltsaltsalt".toByteArray(), iterations = 2))
+        val key = derivation.derive(
+            "pÿssw0rd-éü-中文".toCharArray(),
+            pbkdf2("saltsaltsaltsalt".toByteArray(), iterations = 2)
+        )
         assertThat(hex(key)).isEqualTo("e5e1930941e36ffd68fd71fef55ffc44a4916940e5dec88cb4ca863452c9af4f")
     }
 

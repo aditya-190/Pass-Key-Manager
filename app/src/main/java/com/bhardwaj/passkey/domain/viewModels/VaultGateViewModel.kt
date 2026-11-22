@@ -1,22 +1,25 @@
 package com.bhardwaj.passkey.domain.viewModels
 
+import android.net.Uri
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import android.net.Uri
+import com.bhardwaj.passkey.analytics.AnalyticsTracker
+import com.bhardwaj.passkey.analytics.AppEvents
 import com.bhardwaj.passkey.data.backup.BackupRepository
 import com.bhardwaj.passkey.data.local.VaultDatabaseProvider
 import com.bhardwaj.passkey.data.security.DatabaseKeyManager
 import com.bhardwaj.passkey.data.security.MigrationState
+import com.bhardwaj.passkey.data.security.UnlockPromptPolicy
 import com.bhardwaj.passkey.data.security.VaultMigration
 import com.bhardwaj.passkey.data.security.VaultSession
 import dagger.hilt.android.lifecycle.HiltViewModel
+import java.util.Arrays
+import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import java.util.Arrays
-import javax.inject.Inject
 
 /**
  * Drives everything between app launch and an open vault: first-run provisioning, the one-time
@@ -28,8 +31,22 @@ class VaultGateViewModel @Inject constructor(
     private val migration: VaultMigration,
     private val backupRepository: BackupRepository,
     private val vault: VaultDatabaseProvider,
-    private val session: VaultSession
+    private val session: VaultSession,
+    private val analytics: AnalyticsTracker
 ) : ViewModel() {
+    private val promptPolicy = UnlockPromptPolicy()
+
+    /**
+     * Called when the gate is on screen (ON_RESUME, or the state changing while resumed). Prompts only when
+     * [UnlockPromptPolicy] allows, so a cancelled PIN screen does not re-prompt forever.
+     */
+    fun onGateVisible(activity: FragmentActivity, title: String, subtitle: String, negativeButton: String) {
+        if (promptPolicy.shouldPromptOnResume(isLocked = _state.value is State.Locked)) {
+            onUnlockRequested(activity, title, subtitle, negativeButton)
+        }
+    }
+
+    fun onGateStopped() = promptPolicy.onStopped()
 
     sealed interface State {
         data object Checking : State
@@ -94,15 +111,16 @@ class VaultGateViewModel @Inject constructor(
         }
     }
 
-    fun onUnlockRequested(
-        activity: FragmentActivity,
-        title: String,
-        subtitle: String,
-        negativeButton: String
-    ) {
+    fun onUnlockRequested(activity: FragmentActivity, title: String, subtitle: String, negativeButton: String) {
+        if (!promptPolicy.canPromptManually(isLocked = _state.value is State.Locked)) return
+        promptPolicy.onPromptStarted()
         viewModelScope.launch {
             _state.value = State.Authenticating
-            when (val result = keyManager.unlock(activity, title, subtitle, negativeButton)) {
+            val result = keyManager.unlock(activity, title, subtitle, negativeButton)
+            promptPolicy.onPromptFinished()
+            val unlocked = result is DatabaseKeyManager.UnlockResult.Success
+            analytics.log(if (unlocked) AppEvents.vaultUnlocked() else AppEvents.unlockFailed())
+            when (result) {
                 is DatabaseKeyManager.UnlockResult.Success -> runMigrationThenOpen(result.dek)
                 DatabaseKeyManager.UnlockResult.NeedsRecoveryPassword ->
                     _state.value = State.NeedsRecoveryPassword

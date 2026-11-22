@@ -5,6 +5,9 @@ import androidx.room.Room
 import com.bhardwaj.passkey.utils.Constants
 import com.bhardwaj.passkey.utils.MIGRATION_1_2
 import com.bhardwaj.passkey.utils.MIGRATION_2_3
+import java.util.Arrays
+import javax.inject.Inject
+import javax.inject.Singleton
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -15,9 +18,6 @@ import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 import net.zetetic.database.sqlcipher.SupportOpenHelperFactory
-import java.util.Arrays
-import javax.inject.Inject
-import javax.inject.Singleton
 
 /**
  * Opens the encrypted database once a key is available, and closes it on lock.
@@ -27,9 +27,7 @@ import javax.inject.Singleton
  * That is incompatible with a key that only exists after a biometric unlock.
  */
 @Singleton
-class VaultDatabaseProvider @Inject constructor(
-    private val application: Application
-) {
+class VaultDatabaseProvider @Inject constructor(private val application: Application) {
     private val mutex = Mutex()
 
     private val _database = MutableStateFlow<PassKeyDatabase?>(null)

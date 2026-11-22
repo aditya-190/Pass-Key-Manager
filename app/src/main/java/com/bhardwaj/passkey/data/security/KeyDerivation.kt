@@ -2,7 +2,6 @@ package com.bhardwaj.passkey.data.security
 
 import android.util.Base64
 import java.security.SecureRandom
-import java.util.Arrays
 import javax.crypto.SecretKeyFactory
 import javax.crypto.spec.PBEKeySpec
 import javax.inject.Inject
@@ -28,11 +27,7 @@ class DefaultKeyDerivation @Inject constructor() : KeyDerivation {
         }
     }
 
-    private fun derivePbkdf2(
-        password: CharArray,
-        salt: ByteArray,
-        iterations: Int
-    ): ByteArray {
+    private fun derivePbkdf2(password: CharArray, salt: ByteArray, iterations: Int): ByteArray {
         val keySpec = PBEKeySpec(password, salt, iterations, KEY_BYTES * 8)
         try {
             return SecretKeyFactory.getInstance("PBKDF2WithHmacSHA512")

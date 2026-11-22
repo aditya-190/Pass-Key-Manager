@@ -66,8 +66,11 @@ fun BackupPasswordDialog(
         title = {
             Text(
                 text = stringResource(
-                    titleRes ?: if (confirmMode) R.string.backup_password_title
-                    else R.string.restore_password_title
+                    titleRes ?: if (confirmMode) {
+                        R.string.backup_password_title
+                    } else {
+                        R.string.restore_password_title
+                    }
                 )
             )
         },
@@ -75,8 +78,11 @@ fun BackupPasswordDialog(
             Column {
                 Text(
                     text = stringResource(
-                        messageRes ?: if (confirmMode) R.string.backup_password_message
-                        else R.string.restore_password_message
+                        messageRes ?: if (confirmMode) {
+                            R.string.backup_password_message
+                        } else {
+                            R.string.restore_password_message
+                        }
                     ),
                     style = MaterialTheme.typography.bodyMedium
                 )

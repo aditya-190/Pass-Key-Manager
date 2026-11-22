@@ -2,13 +2,13 @@ package com.bhardwaj.passkey.data.security
 
 import android.content.Context
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
-import kotlinx.serialization.json.Json
 import java.io.File
 import java.io.FileOutputStream
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import kotlinx.serialization.json.Json
 
 /**
  * Persists [KeySlotFile] to `filesDir/vault/keyslots.json`.
@@ -21,10 +21,11 @@ import javax.inject.Singleton
  * truncated slot file — which would be an unopenable vault.
  */
 @Singleton
-class KeySlotStore @Inject constructor(
-    @param:ApplicationContext private val context: Context
-) {
-    private val json = Json { ignoreUnknownKeys = false; encodeDefaults = true }
+class KeySlotStore @Inject constructor(@param:ApplicationContext private val context: Context) {
+    private val json = Json {
+        ignoreUnknownKeys = false
+        encodeDefaults = true
+    }
 
     private val directory: File get() = File(context.filesDir, "vault")
     private val file: File get() = File(directory, "keyslots.json")

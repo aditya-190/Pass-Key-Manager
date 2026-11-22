@@ -7,11 +7,11 @@ import androidx.biometric.BiometricManager.Authenticators.DEVICE_CREDENTIAL
 import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
-import kotlinx.coroutines.suspendCancellableCoroutine
 import javax.crypto.Cipher
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlin.coroutines.resume
+import kotlinx.coroutines.suspendCancellableCoroutine
 
 /**
  * Suspend wrapper over [BiometricPrompt].
@@ -39,9 +39,8 @@ class BiometricAuthenticator @Inject constructor() {
     fun canAuthenticate(activity: FragmentActivity): Int =
         BiometricManager.from(activity).canAuthenticate(BIOMETRIC_STRONG or DEVICE_CREDENTIAL)
 
-    fun hasStrongBiometric(activity: FragmentActivity): Boolean =
-        BiometricManager.from(activity)
-            .canAuthenticate(BIOMETRIC_STRONG) == BiometricManager.BIOMETRIC_SUCCESS
+    fun hasStrongBiometric(activity: FragmentActivity): Boolean = BiometricManager.from(activity)
+        .canAuthenticate(BIOMETRIC_STRONG) == BiometricManager.BIOMETRIC_SUCCESS
 
     /**
      * Strong-biometric prompt bound to [cipher]. BIOMETRIC_WEAK is deliberately excluded: a weak
@@ -66,22 +65,19 @@ class BiometricAuthenticator @Inject constructor() {
      * Device-credential (or biometric) prompt with no CryptoObject. Opens the validity window
      * for the time-bound CRED key, which the caller must use promptly.
      */
-    suspend fun authenticateForTimeBoundKey(
-        activity: FragmentActivity,
-        title: String,
-        subtitle: String
-    ): Outcome = prompt(
-        activity = activity,
-        cryptoObject = null,
-        allowed = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            BIOMETRIC_STRONG or DEVICE_CREDENTIAL
-        } else {
-            DEVICE_CREDENTIAL
-        },
-        title = title,
-        subtitle = subtitle,
-        negativeButton = null
-    )
+    suspend fun authenticateForTimeBoundKey(activity: FragmentActivity, title: String, subtitle: String): Outcome =
+        prompt(
+            activity = activity,
+            cryptoObject = null,
+            allowed = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                BIOMETRIC_STRONG or DEVICE_CREDENTIAL
+            } else {
+                DEVICE_CREDENTIAL
+            },
+            title = title,
+            subtitle = subtitle,
+            negativeButton = null
+        )
 
     private suspend fun prompt(
         activity: FragmentActivity,
@@ -126,9 +122,7 @@ class BiometricAuthenticator @Inject constructor() {
                     )
                 }
 
-                override fun onAuthenticationSucceeded(
-                    result: BiometricPrompt.AuthenticationResult
-                ) {
+                override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
                     if (!continuation.isActive) return
                     continuation.resume(Outcome.Success(result.cryptoObject?.cipher))
                 }

@@ -51,7 +51,7 @@ class KeyStoreWrapperTest {
 
     @Test
     fun credential_key_is_creatable_when_the_device_has_a_lock() {
-        if (!isDeviceSecure) return   // nothing meaningful to assert
+        if (!isDeviceSecure) return // nothing meaningful to assert
         wrapper.createCredentialKey()
         assertThat(wrapper.exists(KeyStoreWrapper.ALIAS_CRED)).isTrue()
         // The property this whole design rests on: encryption uses the public key and needs no

@@ -7,16 +7,16 @@ import android.util.Base64
 import androidx.core.content.getSystemService
 import androidx.fragment.app.FragmentActivity
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.sync.Mutex
-import kotlinx.coroutines.sync.withLock
-import kotlinx.coroutines.withContext
 import java.security.MessageDigest
 import java.security.SecureRandom
 import java.util.Arrays
 import javax.crypto.Cipher
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
+import kotlinx.coroutines.withContext
 
 /**
  * Owns the vault's data encryption key (DEK) and the slots that wrap it.
@@ -38,8 +38,10 @@ class DatabaseKeyManager @Inject constructor(
 
     sealed interface UnlockResult {
         data class Success(val dek: ByteArray) : UnlockResult
+
         /** Both Keystore slots are gone; only the recovery password remains. */
         data object NeedsRecoveryPassword : UnlockResult
+
         /** The device has no lock screen, so no auth-bound key can exist. */
         data object NeedsDeviceLock : UnlockResult
         data object Cancelled : UnlockResult
@@ -54,11 +56,9 @@ class DatabaseKeyManager @Inject constructor(
 
     fun isProvisioned(): Boolean = slotStore.exists()
 
-    fun isDeviceSecure(): Boolean =
-        context.getSystemService<KeyguardManager>()?.isDeviceSecure == true
+    fun isDeviceSecure(): Boolean = context.getSystemService<KeyguardManager>()?.isDeviceSecure == true
 
-    suspend fun migrationState(): MigrationState =
-        slotStore.load()?.migrationState ?: MigrationState.NONE
+    suspend fun migrationState(): MigrationState = slotStore.load()?.migrationState ?: MigrationState.NONE
 
     /**
      * Creates a fresh DEK and all three slots. The recovery password is mandatory: it is the
@@ -145,14 +145,20 @@ class DatabaseKeyManager @Inject constructor(
         val cipher = try {
             keyStore.initDecryptCipher(slot.alias)
         } catch (_: KeyPermanentlyInvalidatedException) {
-            return null   // enrollment changed - fall through to CRED
+            return null // enrollment changed - fall through to CRED
         } catch (_: Exception) {
             return null
         }
 
-        return when (val outcome = biometrics.authenticateWithCrypto(
-            activity, cipher, title, subtitle, negativeButton
-        )) {
+        return when (
+            val outcome = biometrics.authenticateWithCrypto(
+                activity,
+                cipher,
+                title,
+                subtitle,
+                negativeButton
+            )
+        ) {
             is BiometricAuthenticator.Outcome.Success -> runCatching {
                 val dek = outcome.cipher!!.doFinal(slot.wrappedKeyB64.decodeB64())
                 UnlockResult.Success(dek)
@@ -165,6 +171,9 @@ class DatabaseKeyManager @Inject constructor(
         }
     }
 
+    // Each early return is a distinct, deliberate fall-through outcome of the credential slot (absent,
+    // invalidated, cancelled, failed); kept explicit for review of the key path.
+    @Suppress("ReturnCount")
     private suspend fun tryCredentialSlot(
         file: KeySlotFile,
         activity: FragmentActivity,
@@ -229,10 +238,7 @@ class DatabaseKeyManager @Inject constructor(
      * replacing the recovery credential with one of their own. It also means the key never has
      * to be retained in memory for the lifetime of the session.
      */
-    suspend fun changeRecoveryPassword(
-        currentPassword: CharArray,
-        newPassword: CharArray
-    ): Boolean = mutex.withLock {
+    suspend fun changeRecoveryPassword(currentPassword: CharArray, newPassword: CharArray): Boolean = mutex.withLock {
         withContext(Dispatchers.IO) {
             val file = slotStore.load() ?: return@withContext false
             val slot = file.slot(SlotId.REC) as? KeySlot.Password ?: return@withContext false
@@ -301,11 +307,7 @@ class DatabaseKeyManager @Inject constructor(
         )
     }
 
-    private fun wrapWithPassword(
-        id: SlotId,
-        dek: ByteArray,
-        password: CharArray
-    ): KeySlot.Password {
+    private fun wrapWithPassword(id: SlotId, dek: ByteArray, password: CharArray): KeySlot.Password {
         val spec = KdfSpec.Pbkdf2HmacSha512(saltB64 = keyDerivation.newSalt().encodeB64())
         val wrappingKey = keyDerivation.derive(password, spec)
         try {
@@ -321,11 +323,10 @@ class DatabaseKeyManager @Inject constructor(
         }
     }
 
-    private fun dekCheck(dek: ByteArray): String =
-        MessageDigest.getInstance("SHA-256")
-            .digest(dek + DEK_CHECK_CONTEXT.toByteArray(Charsets.US_ASCII))
-            .take(16)
-            .joinToString("") { "%02x".format(it) }
+    private fun dekCheck(dek: ByteArray): String = MessageDigest.getInstance("SHA-256")
+        .digest(dek + DEK_CHECK_CONTEXT.toByteArray(Charsets.US_ASCII))
+        .take(16)
+        .joinToString("") { "%02x".format(it) }
 
     private companion object {
         const val DEK_BYTES = 32

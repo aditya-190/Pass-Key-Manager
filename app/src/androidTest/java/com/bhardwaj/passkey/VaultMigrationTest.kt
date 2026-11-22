@@ -6,14 +6,14 @@ import com.bhardwaj.passkey.data.local.toSqlCipherRawKey
 import com.bhardwaj.passkey.data.security.VaultMigration
 import com.bhardwaj.passkey.utils.Constants
 import com.google.common.truth.Truth.assertThat
+import java.io.File
+import java.security.SecureRandom
 import kotlinx.coroutines.runBlocking
 import net.zetetic.database.sqlcipher.SQLiteDatabase
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import java.io.File
-import java.security.SecureRandom
 
 /**
  * Covers the one-time re-key from the legacy build-time passphrase to a per-install key.
@@ -83,7 +83,12 @@ class VaultMigrationTest {
 
     private fun <T> openWith(key: ByteArray, block: (SQLiteDatabase) -> T): T? = runCatching {
         SQLiteDatabase.openDatabase(
-            dbFile.absolutePath, key, null, SQLiteDatabase.OPEN_READONLY, null, null
+            dbFile.absolutePath,
+            key,
+            null,
+            SQLiteDatabase.OPEN_READONLY,
+            null,
+            null
         ).use(block)
     }.getOrNull()
 

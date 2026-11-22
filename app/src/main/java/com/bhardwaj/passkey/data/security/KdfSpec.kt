@@ -17,10 +17,7 @@ sealed interface KdfSpec {
 
     @Serializable
     @SerialName("pbkdf2-hmac-sha512")
-    data class Pbkdf2HmacSha512(
-        override val saltB64: String,
-        val iterations: Int = DEFAULT_ITERATIONS
-    ) : KdfSpec {
+    data class Pbkdf2HmacSha512(override val saltB64: String, val iterations: Int = DEFAULT_ITERATIONS) : KdfSpec {
         companion object {
             const val DEFAULT_ITERATIONS = 600_000
         }

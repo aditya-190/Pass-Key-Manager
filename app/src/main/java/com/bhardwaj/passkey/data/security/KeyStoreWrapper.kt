@@ -36,9 +36,7 @@ import javax.inject.Singleton
  *    user changes their fingerprints without ever creating an unauthenticated path to the key.
  */
 @Singleton
-class KeyStoreWrapper @Inject constructor(
-    @param:ApplicationContext private val context: Context
-) {
+class KeyStoreWrapper @Inject constructor(@param:ApplicationContext private val context: Context) {
     companion object {
         const val ALIAS_BIO = "passkey_dek_wrap_bio"
         const val ALIAS_CRED = "passkey_dek_wrap_cred"
@@ -168,7 +166,6 @@ class KeyStoreWrapper @Inject constructor(
         }.generateKeyPair()
     }
 
-    private fun supportsStrongBox(): Boolean =
-        Build.VERSION.SDK_INT >= Build.VERSION_CODES.P &&
-            context.packageManager.hasSystemFeature(PackageManager.FEATURE_STRONGBOX_KEYSTORE)
+    private fun supportsStrongBox(): Boolean = Build.VERSION.SDK_INT >= Build.VERSION_CODES.P &&
+        context.packageManager.hasSystemFeature(PackageManager.FEATURE_STRONGBOX_KEYSTORE)
 }

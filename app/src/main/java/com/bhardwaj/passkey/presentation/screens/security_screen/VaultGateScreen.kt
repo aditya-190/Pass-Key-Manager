@@ -1,18 +1,12 @@
 package com.bhardwaj.passkey.presentation.screens.security_screen
 
+import android.content.Intent
 import android.net.Uri
+import android.provider.Settings
 import android.widget.Toast
+import androidx.activity.compose.LocalActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
-import android.content.Intent
-import android.provider.Settings
-import androidx.activity.compose.LocalActivity
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -25,6 +19,9 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -33,10 +30,16 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.FragmentActivity
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.LifecycleEventEffect
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.bhardwaj.passkey.R
 import com.bhardwaj.passkey.domain.viewModels.VaultGateViewModel
 import com.bhardwaj.passkey.presentation.screens.settings_screen.components.BackupPasswordDialog
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 /**
  * The screen standing between app launch and an open vault.
@@ -47,10 +50,7 @@ import com.bhardwaj.passkey.presentation.screens.settings_screen.components.Back
  * changed underneath the app.
  */
 @Composable
-fun VaultGateScreen(
-    onUnlocked: () -> Unit,
-    viewModel: VaultGateViewModel = hiltViewModel()
-) {
+fun VaultGateScreen(onUnlocked: () -> Unit, viewModel: VaultGateViewModel = hiltViewModel()) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     val recoveryFailed by viewModel.recoveryFailed.collectAsStateWithLifecycle()
     val activity = LocalActivity.current as? FragmentActivity
@@ -99,12 +99,17 @@ fun VaultGateScreen(
         if (state is VaultGateViewModel.State.Unlocked) onUnlocked()
     }
 
-    // Auto-prompt on entering the locked state, so the user is not made to tap twice.
+    // Auto-prompt only while the gate is really in front: prompting from a screen composed in the background
+    // (the vault locks while the app is away) left users with nothing to tap. UnlockPromptPolicy decides when.
+    val lifecycleOwner = LocalLifecycleOwner.current
     LaunchedEffect(state, activity) {
-        if (state is VaultGateViewModel.State.Locked && activity != null) {
-            viewModel.onUnlockRequested(activity, promptTitle, promptSubtitle, promptNegative)
-        }
+        val resumed = lifecycleOwner.lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)
+        if (resumed && activity != null) viewModel.onGateVisible(activity, promptTitle, promptSubtitle, promptNegative)
     }
+    LifecycleEventEffect(Lifecycle.Event.ON_RESUME) {
+        activity?.let { viewModel.onGateVisible(it, promptTitle, promptSubtitle, promptNegative) }
+    }
+    LifecycleEventEffect(Lifecycle.Event.ON_STOP) { viewModel.onGateStopped() }
 
     when (val current = state) {
         is VaultGateViewModel.State.SetUpRecovery -> {
