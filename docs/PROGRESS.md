@@ -3,7 +3,7 @@
 ## Phase 0: research and spec (2026-11-21) ✅
 - `docs/research/{BRIEF,COMPETITORS,FEATURE_MATRIX,PAIN_POINTS}.md`, `docs/SPEC.md`, `docs/DECISIONS.md`, app `CLAUDE.md`.
 
-## Phase 1: release 5.5.2 "Correct and honest" (branch `release/5.5.2`), code complete, waiting on owner ⏸
+## Phase 1: release 5.5.2 "Correct and honest" (branch `release/5.5.2`) ✅ code and device checks done; release needs the owner actions below
 Done:
 - PR #1 cherry-picked: localised onboarding without the crash trap, SecureRandom generator, 17-locale parity
   (Arabic in `locales_config`), duplicate-heading and edit-trim fixes, TalkBack labels.
@@ -26,7 +26,9 @@ Done:
   Root cause: Material3 1.4.0 `BottomSheetScaffold.verticalScaleUp` divides by sheet height; Settings expands the
   scaffold sheet for the language picker, whose only content is a separate-window ModalBottomSheet, so the
   expanded sheet is 0 px tall and an overshooting drag gives Infinity. Pre-existing (same code in 5.5.1).
-  Status: fix waiting on owner choice. Repro attempt: `scripts/e2e/repro_settings_sheet_crash.sh`.
+  **Fixed** (owner chose option A, `582711d`): the language picker now sits at screen level, outside the scaffold sheet.
+- Monkey rerun after the fix: 6 seeds (5521 replayed from the same state, 5524–5528) × 7,000 events = 42,000 events,
+  0 crashes, 0 ANRs. Vault still opens and decrypts afterwards. Monkey deleted the seeded detail (expected data churn).
 - No ANRs. The API 37 emulator is shared with another session, so no results were taken from it.
 
 ## Carried into 5.6.0
@@ -36,7 +38,7 @@ Done:
 ## Owner actions
 - [x] 5.5.2 attack pass: fixed #2 (keep pre-consent crash reports until the user decides) and #3 (no automatic screen reporting). #1 (per-field secret keyboard) moved to 5.6.0.
 - [x] Emulators created (`PassKey_API28`, `PassKey_API37`); device run done (see above).
-- [ ] Choose a fix for the Settings sheet crash (monkey seed 5521).
+- [x] Settings sheet crash: option A applied and verified.
 - [ ] Confirm `PASS_PHRASE` is set in `local.properties` before building the release (agents never read it).
 - [ ] Update the Play Data-safety form for 5.5.2: optional crash logs, app interactions and diagnostics, no ad ID,
       nothing shared, vault content never collected.
