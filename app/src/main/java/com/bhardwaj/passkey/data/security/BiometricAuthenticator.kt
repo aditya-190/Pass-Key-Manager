@@ -11,6 +11,7 @@ import javax.crypto.Cipher
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlin.coroutines.resume
+import kotlinx.coroutines.CancellableContinuation
 import kotlinx.coroutines.suspendCancellableCoroutine
 
 /**
@@ -69,11 +70,7 @@ class BiometricAuthenticator @Inject constructor() {
         prompt(
             activity = activity,
             cryptoObject = null,
-            allowed = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                BIOMETRIC_STRONG or DEVICE_CREDENTIAL
-            } else {
-                DEVICE_CREDENTIAL
-            },
+            allowed = CredentialAuthenticators.forSdk(Build.VERSION.SDK_INT),
             title = title,
             subtitle = subtitle,
             negativeButton = null
@@ -87,7 +84,18 @@ class BiometricAuthenticator @Inject constructor() {
         subtitle: String,
         negativeButton: String?
     ): Outcome = suspendCancellableCoroutine { continuation ->
-        val info = BiometricPrompt.PromptInfo.Builder()
+        // Building the prompt validates the authenticator combination per API level and throws on an unsupported
+        // one. That must never crash the vault gate: report it as a failure so unlock falls through to the
+        // recovery password (found on API 28, where DEVICE_CREDENTIAL alone is rejected).
+        val info = runCatching { buildInfo(allowed, title, subtitle, negativeButton) }.getOrElse { error ->
+            continuation.resume(Outcome.Failed(code = -1, message = error.javaClass.simpleName))
+            return@suspendCancellableCoroutine
+        }
+        startPrompt(activity, cryptoObject, info, continuation)
+    }
+
+    private fun buildInfo(allowed: Int, title: String, subtitle: String, negativeButton: String?) =
+        BiometricPrompt.PromptInfo.Builder()
             .setTitle(title)
             .setSubtitle(subtitle)
             .setAllowedAuthenticators(allowed)
@@ -99,6 +107,12 @@ class BiometricAuthenticator @Inject constructor() {
             }
             .build()
 
+    private fun startPrompt(
+        activity: FragmentActivity,
+        cryptoObject: BiometricPrompt.CryptoObject?,
+        info: BiometricPrompt.PromptInfo,
+        continuation: CancellableContinuation<Outcome>
+    ) {
         val prompt = BiometricPrompt(
             activity,
             ContextCompat.getMainExecutor(activity),
