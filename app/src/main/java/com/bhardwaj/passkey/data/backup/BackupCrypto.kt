@@ -71,6 +71,12 @@ internal object BackupCrypto {
         }
     }
 
+    /**
+     * Highest PBKDF2 cost a file may demand. The header is only authenticated after the key is derived, so a
+     * hostile header could otherwise force minutes of work on import. 3x what this app writes.
+     */
+    const val MAX_PBKDF2_ITERATIONS = 2_000_000
+
     fun decrypt(bytes: ByteArray, password: CharArray): DecryptResult {
         val header = BackupFormat.parse(bytes)
             ?: return DecryptResult.UnsupportedFormat("not a PassKey backup")
@@ -102,7 +108,7 @@ internal object BackupCrypto {
             "made by a newer version of PassKey (format ${header.formatVersion})"
         header.kdfId != BackupFormat.KDF_PBKDF2_HMAC_SHA512 -> "unsupported key derivation (${header.kdfId})"
         // Bounds the PBKDF2 work a hostile header can demand.
-        header.iterations !in 1..10_000_000 -> "implausible iteration count"
+        header.iterations !in 1..MAX_PBKDF2_ITERATIONS -> "implausible iteration count"
         bytes.size <= BackupFormat.HEADER_BYTES -> "truncated file"
         else -> null
     }

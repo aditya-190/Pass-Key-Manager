@@ -17,7 +17,10 @@ internal data class ParsedBackup(val previews: List<BackupPreview>, val skipped:
  * The backup format with no Android I/O: vault → encrypted bytes, and bytes → validated entries → vault.
  * [BackupRepository] only adds the file reading and writing.
  */
-internal class BackupCodec(private val repository: PasskeyRepository) {
+internal class BackupCodec(
+    private val repository: PasskeyRepository,
+    private val maxDecompressedBytes: Int = MAX_DECOMPRESSED_BYTES
+) {
     private val json = Json { ignoreUnknownKeys = false }
 
     suspend fun encode(password: CharArray, exportedAt: Long, appVersion: String): ByteArray {
@@ -64,9 +67,8 @@ internal class BackupCodec(private val repository: PasskeyRepository) {
             is BackupCrypto.DecryptResult.UnsupportedFormat -> failure(BackupError.UnsupportedVersion(result.reason))
             is BackupCrypto.DecryptResult.Success -> {
                 val payload = try {
-                    runCatching {
-                        json.decodeFromString<BackupPayload>(gunzip(result.plaintext).toString(Charsets.UTF_8))
-                    }.getOrNull()
+                    val json = gunzipBounded(result.plaintext) ?: return failure(BackupError.FileTooLarge)
+                    runCatching { this.json.decodeFromString<BackupPayload>(json.toString(Charsets.UTF_8)) }.getOrNull()
                 } finally {
                     // Wiped on every path, including a payload that fails to parse.
                     Arrays.fill(result.plaintext, 0)
@@ -135,11 +137,28 @@ internal class BackupCodec(private val repository: PasskeyRepository) {
         GZIPOutputStream(out).use { it.write(bytes) }
     }.toByteArray()
 
-    private fun gunzip(bytes: ByteArray): ByteArray = GZIPInputStream(bytes.inputStream()).use { it.readBytes() }
+    /** Null when the data expands beyond [maxDecompressedBytes] or is not valid gzip. */
+    private fun gunzipBounded(bytes: ByteArray): ByteArray? = runCatching {
+        GZIPInputStream(bytes.inputStream()).use { input ->
+            val out = ByteArrayOutputStream()
+            val buffer = ByteArray(BUFFER_BYTES)
+            while (true) {
+                val read = input.read(buffer)
+                if (read < 0) break
+                if (out.size() + read > maxDecompressedBytes) return null
+                out.write(buffer, 0, read)
+            }
+            out.toByteArray()
+        }
+    }.getOrElse { ByteArray(0) }
 
     companion object {
         /** A vault large enough to exceed this is not plausible; a hostile file is. */
         const val MAX_FILE_BYTES = 32 * 1024 * 1024
         const val MAX_LEGACY_CHARS = 8 * 1024 * 1024
+        private const val BUFFER_BYTES = 64 * 1024
+
+        /** A real vault is a few MB of JSON; this stops a small gzip bomb from exhausting memory. */
+        const val MAX_DECOMPRESSED_BYTES = 64 * 1024 * 1024
     }
 }
