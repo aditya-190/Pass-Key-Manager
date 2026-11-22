@@ -46,11 +46,13 @@ class VaultSession(private val now: () -> Long) {
     var unlockedWhenBackgrounded: Boolean = false
 
     fun onUnlocked() {
+        lockTrace("session unlocked")
         _isUnlocked.value = true
         touch()
     }
 
     fun lock(reason: LockReason) {
+        lockTrace("session lock reason=$reason wasUnlocked=${_isUnlocked.value}")
         _lockReason.value = reason
         _isUnlocked.value = false
     }

@@ -31,6 +31,7 @@ class AppLockObserver @Inject constructor(
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
 
     override fun onStop(owner: LifecycleOwner) {
+        lockTrace("process ON_STOP unlocked=${session.isUnlocked.value}")
         session.backgroundedAtElapsed = SystemClock.elapsedRealtime()
         session.unlockedWhenBackgrounded = session.isUnlocked.value
         scope.launch {
@@ -39,6 +40,9 @@ class AppLockObserver @Inject constructor(
     }
 
     override fun onStart(owner: LifecycleOwner) {
+        lockTrace(
+            "process ON_START unlocked=${session.isUnlocked.value} wasUnlocked=${session.unlockedWhenBackgrounded}"
+        )
         scope.launch {
             val lock = LockPolicy.lockOnReturn(
                 timeout = timeout(),

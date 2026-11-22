@@ -38,7 +38,10 @@ sleep 2
 a shell input keyevent KEYCODE_HOME; sleep 2
 a shell am kill com.bhardwaj.passkey; sleep 2
 a shell pidof com.bhardwaj.passkey >/dev/null && echo "note: process still alive"
-a shell am start -n com.bhardwaj.passkey/.presentation.MainActivity >/dev/null; sleep 6
-result "$(ui has '^Add detail$|^Settings$' && echo open || echo locked)" locked "restored after process death is locked"
+# Return through Recents: that restores the saved back stack (a launcher intent does not).
+a shell input keyevent KEYCODE_APP_SWITCH; sleep 3
+ui tap "^PassKey$" >/dev/null || a shell input tap 540 1100
+sleep 6
+result "$(ui has '^Add detail$|^Settings$' && echo open || echo locked)" locked "restored from Recents after process death is locked"
 unlock
 result "$(home_visible && echo open || echo locked)" open "PIN unlocks after process death"

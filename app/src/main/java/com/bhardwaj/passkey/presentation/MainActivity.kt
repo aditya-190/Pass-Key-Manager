@@ -21,6 +21,7 @@ import com.bhardwaj.passkey.analytics.AnalyticsTracker
 import com.bhardwaj.passkey.data.security.AppLockObserver
 import com.bhardwaj.passkey.data.security.LockPolicy
 import com.bhardwaj.passkey.data.security.VaultSession
+import com.bhardwaj.passkey.data.security.lockTrace
 import com.bhardwaj.passkey.presentation.navigation.NavGraph
 import com.bhardwaj.passkey.presentation.navigation.NavScreens
 import com.bhardwaj.passkey.presentation.navigation.Routes
@@ -144,6 +145,7 @@ class MainActivity : FragmentActivity() {
         }
         LaunchedEffect(isUnlocked, lockReason, route) {
             if (LockPolicy.mustShowLockScreen(isUnlocked, lockReason, route)) {
+                lockTrace("gate -> lock screen from $route reason=$lockReason")
                 navController.navigate(Routes.SECURITY_PAGE) { popUpTo(0) { inclusive = true } }
             }
         }

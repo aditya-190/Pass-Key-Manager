@@ -50,6 +50,13 @@ class LockPolicyTest {
     }
 
     @Test
+    fun `immediately locks on leaving the app, never while the user is in it`() {
+        // Found on device: treating it as a 0 ms foreground idle timeout locked the vault every 5 s in use.
+        assertFalse(LockPolicy.lockWhenIdle(AutoLockTimeout.IMMEDIATELY, isUnlocked = true, idleMillis = 0))
+        assertFalse(LockPolicy.lockWhenIdle(AutoLockTimeout.IMMEDIATELY, isUnlocked = true, idleMillis = 600_000))
+    }
+
+    @Test
     fun `vault screens restored after process death go to the lock screen`() {
         // Android restores the back stack after killing the app; the session starts locked (ColdStart).
         listOf(Routes.PREVIEW_PAGE, Routes.DETAILS_PAGE + "?previewId=4", Routes.SETTINGS_PAGE).forEach { route ->

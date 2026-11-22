@@ -27,8 +27,15 @@ object LockPolicy {
         return away >= 0 && away >= timeout.millis
     }
 
-    fun lockWhenIdle(timeout: AutoLockTimeout, isUnlocked: Boolean, idleMillis: Long): Boolean =
-        isUnlocked && timeout != AutoLockTimeout.NEVER && idleMillis >= timeout.millis
+    /**
+     * Foreground idle. IMMEDIATELY means "when I leave the app", not "0 ms after my last touch": read as an idle
+     * timeout it locked a vault in active use on every poll. Leaving covers the idle phone too, since the
+     * screen timing out stops the app.
+     */
+    fun lockWhenIdle(timeout: AutoLockTimeout, isUnlocked: Boolean, idleMillis: Long): Boolean = isUnlocked &&
+        timeout != AutoLockTimeout.NEVER &&
+        timeout != AutoLockTimeout.IMMEDIATELY &&
+        idleMillis >= timeout.millis
 
     /**
      * After a real lock every screen but the lock screen itself goes. On a cold start (including Android
