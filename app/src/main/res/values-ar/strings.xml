@@ -153,4 +153,5 @@
         <item>مفتاح</item>
         <item>تسجيل الدخول</item>
     </string-array>
+    <string name="secret_field_toggle">سرّي (كلمة مرور، رمز PIN، رمز)</string>
 </resources>

@@ -148,4 +148,5 @@
         <item>秘密</item>
         <item>登录</item>
     </string-array>
+    <string name="secret_field_toggle">保密内容（密码、PIN、验证码）</string>
 </resources>

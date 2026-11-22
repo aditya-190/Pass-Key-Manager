@@ -150,4 +150,5 @@
         <item>ключ</item>
         <item>вход</item>
     </string-array>
+    <string name="secret_field_toggle">Секрет (пароль, PIN-код, код)</string>
 </resources>

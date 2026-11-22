@@ -14,6 +14,8 @@ import com.bhardwaj.passkey.domain.repository.PasskeyRepositoryImpl
 import com.bhardwaj.passkey.utils.Constants
 import com.bhardwaj.passkey.utils.MIGRATION_1_2
 import com.bhardwaj.passkey.utils.MIGRATION_2_3
+import com.bhardwaj.passkey.utils.ResourceSecretKeywords
+import com.bhardwaj.passkey.utils.SecretKeywords
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -51,4 +53,8 @@ object AppModule {
     @Provides
     @Singleton
     fun provideDataStoreRepository(dataStore: DataStore<Preferences>) = DataStoreRepository(dataStore)
+
+    @Provides
+    @Singleton
+    fun provideSecretKeywords(keywords: ResourceSecretKeywords): SecretKeywords = keywords
 }

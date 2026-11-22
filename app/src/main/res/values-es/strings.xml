@@ -150,4 +150,5 @@
         <item>llave</item>
         <item>acceso</item>
     </string-array>
+    <string name="secret_field_toggle">Secreto (contraseña, PIN, código)</string>
 </resources>

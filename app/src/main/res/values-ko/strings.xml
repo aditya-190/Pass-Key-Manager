@@ -148,4 +148,5 @@
         <item>키</item>
         <item>로그인</item>
     </string-array>
+    <string name="secret_field_toggle">비밀 값 (비밀번호, PIN, 코드)</string>
 </resources>

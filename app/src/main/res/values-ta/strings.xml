@@ -148,4 +148,5 @@
         <item>சாவி</item>
         <item>உள்நுழைவு</item>
     </string-array>
+    <string name="secret_field_toggle">ரகசியம் (கடவுச்சொல், PIN, குறியீடு)</string>
 </resources>

@@ -8,10 +8,12 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Key
@@ -23,6 +25,7 @@ import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.ModalBottomSheetProperties
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
@@ -30,6 +33,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -50,6 +54,8 @@ fun DetailsBottomSheet(
     bottomSheetHeading: String,
     detailTitle: String,
     detailResponse: String,
+    isSecret: Boolean,
+    onSecretToggle: (Boolean) -> Unit,
     onTitleChange: (heading: String) -> Unit,
     onDescriptionChange: (description: String) -> Unit,
     onDismiss: () -> Unit,
@@ -121,8 +127,9 @@ fun DetailsBottomSheet(
                             color = MaterialTheme.colorScheme.onBackground
                         ),
                         imeAction = ImeAction.Done,
-                        // The response is the stored value itself, so the keyboard must not learn it.
-                        isSecret = true,
+                        // Secrets get a password keyboard, which never learns or suggests what is typed;
+                        // usernames and notes keep a normal keyboard with Enter and suggestions.
+                        isSecret = isSecret,
                         modifier = Modifier.weight(1f)
                     )
 
@@ -159,6 +166,23 @@ fun DetailsBottomSheet(
                             tint = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                     }
+                }
+                // One switch for the whole row, read by TalkBack as "Secret, switch, on".
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .heightIn(min = 48.dp)
+                        .toggleable(value = isSecret, role = Role.Switch, onValueChange = onSecretToggle)
+                        .padding(top = 8.dp)
+                ) {
+                    Text(
+                        text = stringResource(R.string.secret_field_toggle),
+                        style = MaterialTheme.typography.bodyLarge,
+                        color = MaterialTheme.colorScheme.onBackground,
+                        modifier = Modifier.weight(1f)
+                    )
+                    Switch(checked = isSecret, onCheckedChange = null)
                 }
                 PassKeyButton(
                     modifier = Modifier

@@ -150,4 +150,5 @@
         <item>zugangsdaten</item>
         <item>anmeldung</item>
     </string-array>
+    <string name="secret_field_toggle">Geheim (Passwort, PIN, Code)</string>
 </resources>

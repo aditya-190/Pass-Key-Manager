@@ -147,4 +147,5 @@
         <item>鍵</item>
         <item>ログイン</item>
     </string-array>
+    <string name="secret_field_toggle">秘密の値 (パスワード、PIN、コード)</string>
 </resources>

@@ -149,4 +149,5 @@
         <item>किल्ली</item>
         <item>लॉगिन</item>
     </string-array>
+    <string name="secret_field_toggle">गोपनीय (पासवर्ड, पिन, कोड)</string>
 </resources>

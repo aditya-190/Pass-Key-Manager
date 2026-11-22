@@ -7,6 +7,7 @@ sealed interface DetailEvents {
     // Dialogs.
     data class OnTitleChange(val newTitle: String) : DetailEvents
     data class OnDescriptionChange(val newDescription: String) : DetailEvents
+    data class OnSecretToggle(val isSecret: Boolean) : DetailEvents
     data object OnSaveClick : DetailEvents
     data object OnCancelClick : DetailEvents
     data object OnDeleteClick : DetailEvents

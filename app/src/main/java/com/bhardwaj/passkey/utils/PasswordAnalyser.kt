@@ -22,14 +22,15 @@ object PasswordAnalyzer {
      * locales nothing matched: totalPasswords came back 0, the score came back 100, and users
      * were told their vault was perfect. That is worse than having no feature at all.
      */
-    fun analyze(details: List<Details>, secretKeywords: Set<String>): PasswordAnalysisResult {
-        val normalizedKeywords = secretKeywords.map { it.normalizeForMatch() }.filter { it.isNotBlank() }
+    /** Whether a field title names a secret. Case-folded and accent-stripped: "CONTRASENA" matches "contraseña". */
+    fun looksSecret(label: String, secretKeywords: Set<String>): Boolean {
+        val normalizedLabel = label.normalizeForMatch()
+        return secretKeywords.map { it.normalizeForMatch() }.any { it.isNotBlank() && normalizedLabel.contains(it) }
+    }
 
+    fun analyze(details: List<Details>, secretKeywords: Set<String>): PasswordAnalysisResult {
         val passwordEntries = details.filter { detail ->
-            detail.isSecret ||
-                normalizedKeywords.any { keyword ->
-                    detail.question.normalizeForMatch().contains(keyword)
-                }
+            detail.isSecret || looksSecret(detail.question, secretKeywords)
         }
 
         val weakList = passwordEntries.filter { isWeak(it.answer) }

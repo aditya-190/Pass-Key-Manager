@@ -148,5 +148,6 @@
         <item>కీ</item>
         <item>లాగిన్</item>
     </string-array>
+    <string name="secret_field_toggle">రహస్యం (పాస్‌వర్డ్, పిన్, కోడ్)</string>
 </resources>
 

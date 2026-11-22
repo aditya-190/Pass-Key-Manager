@@ -70,6 +70,7 @@ import sh.calvin.reorderable.rememberReorderableLazyListState
 fun DetailScreen(onPopBackStack: () -> Unit, viewModel: DetailViewModel = hiltViewModel()) {
     val detailTitle by viewModel.detailTitle.collectAsState()
     val detailResponse by viewModel.detailResponse.collectAsState()
+    val isSecretField by viewModel.isSecretField.collectAsState()
     val isEditingSheet by viewModel.isEditingSheet.collectAsState()
     // Resolved here rather than in the ViewModel so it follows the app locale.
     val bottomSheetHeading =
@@ -252,6 +253,8 @@ fun DetailScreen(onPopBackStack: () -> Unit, viewModel: DetailViewModel = hiltVi
                     bottomSheetHeading = bottomSheetHeading,
                     detailTitle = detailTitle,
                     detailResponse = detailResponse,
+                    isSecret = isSecretField,
+                    onSecretToggle = { viewModel.onEvent(DetailEvents.OnSecretToggle(it)) },
                     onTitleChange = {
                         viewModel.onEvent(DetailEvents.OnTitleChange(it))
                     },

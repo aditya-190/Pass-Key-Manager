@@ -150,4 +150,5 @@
         <item>identifiant</item>
         <item>connexion</item>
     </string-array>
+    <string name="secret_field_toggle">Secret (mot de passe, code PIN, code)</string>
 </resources>

@@ -148,4 +148,5 @@
         <item>ચાવી</item>
         <item>લૉગિન</item>
     </string-array>
+    <string name="secret_field_toggle">ગુપ્ત (પાસવર્ડ, પિન, કોડ)</string>
 </resources>

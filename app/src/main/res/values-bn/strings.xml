@@ -149,4 +149,5 @@
         <item>চাবি</item>
         <item>লগইন</item>
     </string-array>
+    <string name="secret_field_toggle">গোপন (পাসওয়ার্ড, পিন, কোড)</string>
 </resources>

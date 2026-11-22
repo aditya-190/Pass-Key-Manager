@@ -123,6 +123,7 @@
     <string name="cd_clear_search">Clear search</string>
     <string name="cd_open">Open</string>
     <string name="cd_back">Back</string>
+    <string name="secret_field_toggle">Secret (password, PIN, code)</string>
     <string name="password_settings">Password settings</string>
     <string name="password_length">Length: %1$d</string>
     <string name="security_score_percent">%1$d%%</string>
