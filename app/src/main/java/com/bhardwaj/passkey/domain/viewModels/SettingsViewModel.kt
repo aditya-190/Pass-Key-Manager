@@ -22,9 +22,6 @@ import com.bhardwaj.passkey.data.repository.PasskeyRepository
 import com.bhardwaj.passkey.data.security.AutoLockTimeout
 import com.bhardwaj.passkey.domain.events.SettingsEvents
 import com.bhardwaj.passkey.presentation.navigation.Routes
-import com.bhardwaj.passkey.utils.AlertBy.ABOUT
-import com.bhardwaj.passkey.utils.AlertBy.PRIVACY
-import com.bhardwaj.passkey.utils.AlertBy.TERMS_N_CONDITIONS
 import com.bhardwaj.passkey.utils.PasswordAnalysisResult
 import com.bhardwaj.passkey.utils.PasswordAnalyzer
 import com.bhardwaj.passkey.utils.SecretKeywords
@@ -62,9 +59,6 @@ class SettingsViewModel @Inject constructor(
             0
         ).versionName ?: "1.0.0"
     )
-        private set
-
-    var bottomSheetOpenedBy by mutableStateOf(PRIVACY)
         private set
 
     var isSheetOpen by mutableStateOf(false)
@@ -108,18 +102,6 @@ class SettingsViewModel @Inject constructor(
                     )
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 appContext.startActivity(intent)
-            }
-
-            SettingsEvents.OnPrivacyClick -> {
-                bottomSheetOpenedBy = PRIVACY
-            }
-
-            SettingsEvents.OnTermsAndConditionClick -> {
-                bottomSheetOpenedBy = TERMS_N_CONDITIONS
-            }
-
-            SettingsEvents.OnAboutClick -> {
-                bottomSheetOpenedBy = ABOUT
             }
 
             is SettingsEvents.OnLanguageChange -> {

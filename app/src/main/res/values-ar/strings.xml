@@ -102,9 +102,6 @@
         <item quantity="many">استُخدمت %1$d مرة</item>
         <item quantity="other">استُخدمت %1$d مرة</item>
     </plurals>
-    <string name="about_message">PassKey مدير كلمات مرور مجاني ومفتوح المصدر، بلا إعلانات وبلا حساب.\n\nتُحفظ إدخالاتك في قاعدة بيانات مشفّرة على هذا الهاتف. يطلب PassKey بصمتك أو وجهك أو قفل الشاشة قبل عرضها، ويمنع لقطات الشاشة، وينشئ كلمات مرور قوية، ويفحص كلماتك المحفوظة بحثًا عن الضعيفة أو المكررة.\n\nالشيفرة المصدرية متاحة للعموم على GitHub: github.com/aditya-190/Pass-Key-Manager</string>
-    <string name="privacy_message">تبقى خزنتك على هاتفك. لا يملك PassKey حسابًا ولا مزامنة ولا خادمًا خاصًا به، ولا يرسل أبدًا الإدخالات التي تحفظها.\n\nفقط بإذنك، يرسل التطبيق عبر Google Firebase:\n• تقارير الأعطال والأداء: تفاصيل تقنية مثل طراز الجهاز وإصدار Android وإصدار التطبيق.\n• إحصاءات الاستخدام: الشاشات والميزات المستخدمة، وليس ما تحفظه أبدًا.\n\nكلاهما متوقف حتى تختار، ويمكنك تغيير اختيارك في أي وقت من الإعدادات › خيارات الخصوصية. لا يستخدم PassKey معرّف الإعلانات. يُستخدم Google Play للتحقق من تحديثات التطبيق.\n\nالملفات المُصدَّرة غير مشفّرة في هذا الإصدار. احفظها في مكان آمن واحذفها عندما لا تحتاج إليها.</string>
-    <string name="terms_n_condition_message">يُقدَّم PassKey مجانًا، كما هو، دون أي ضمان.\n\nأنت مسؤول عن حماية هاتفك وقفل الشاشة وأي ملفات مُصدَّرة. لا تغادر بياناتك هاتفك أبدًا، لذا لا يستطيع أحد استعادتها إذا فُقد الهاتف أو حُذف التطبيق. صدِّر نسخة احتياطية بانتظام.\n\nباستخدامك PassKey فإنك توافق على هذه الشروط وعلى سياسة الخصوصية.</string>
     <string name="consent_title">ساعد في تحسين PassKey</string>
     <string name="consent_body">كلمات مرورك لا تغادر هذا الهاتف أبدًا. بإذنك، يمكن لـ PassKey إرسال تقارير مجهولة الهوية إلى Google Firebase تساعد على إصلاح الأعطال ومعرفة الميزات المستخدمة. لا تتضمن أبدًا أي شيء تحفظه.</string>
     <string name="consent_crash_title">تقارير الأعطال والأداء</string>
@@ -154,4 +151,56 @@
         <item>تسجيل الدخول</item>
     </string-array>
     <string name="secret_field_toggle">سرّي (كلمة مرور، رمز PIN، رمز)</string>
+    <string name="update_hard_title">حان وقت التحديث</string>
+    <string name="update_hard_body">لم يعد هذا الإصدار مدعومًا. حدّث التطبيق لتواصل استخدامه؛ تبقى خزنتك على هذا الهاتف ولا تتأثر.</string>
+    <string name="update_soft_title">إصدار جديد جاهز</string>
+    <string name="update_soft_body">حدّث للحصول على أحدث تحسينات الأمان والإصلاحات.</string>
+    <string name="update_action">تحديث</string>
+    <string name="update_later">لاحقًا</string>
+    <string name="update_ready">تم تنزيل التحديث</string>
+    <string name="maintenance_title">نعود قريبًا</string>
+    <string name="maintenance_body">نُجري صيانة سريعة. يُرجى العودة بعد قليل.</string>
+    <string name="announcement_dismiss">إغلاق التنويه</string>
+    <string name="about_title">حول التطبيق</string>
+    <string name="about_version">الإصدار %1$s (%2$d)</string>
+    <string name="about_studio_title">حول PassKey</string>
+    <string name="about_studio_blurb">PassKey مدير كلمات مرور مجاني ومفتوح المصدر، بلا إعلانات وبلا حساب. خزنتك مشفّرة على هذا الهاتف ولا تغادره أبدًا. الشيفرة المصدرية متاحة للعموم على GitHub.</string>
+    <string name="about_rate">قيّم التطبيق</string>
+    <string name="about_share">شاركه مع أصدقائك</string>
+    <string name="about_share_chooser">مشاركة عبر</string>
+    <string name="about_share_text">أحفظ كلمات مروري بأمان مع %1$s. احصل عليه من Google Play: %2$s</string>
+    <string name="about_contact">تواصل معنا</string>
+    <string name="about_contact_subject">ملاحظات حول %1$s (الإصدار %2$s)</string>
+    <string name="about_more_apps">المزيد من تطبيقاتنا</string>
+    <string name="about_licences">تراخيص المصادر المفتوحة</string>
+    <string name="about_footer">صُنع بعناية في الهند</string>
+    <string name="legal_terms_title">شروط الخدمة</string>
+    <string name="legal_privacy_title">سياسة الخصوصية</string>
+    <string name="legal_last_updated">آخر تحديث: %1$s</string>
+    <string name="legal_read_online">اقرأ النسخة الكاملة على الإنترنت</string>
+    <string name="legal_back">رجوع</string>
+    <string name="legal_contact_heading">التواصل</string>
+    <string name="legal_contact_body">للأسئلة أو الطلبات: استخدم البريد الإلكتروني للتواصل الموجود في «حول التطبيق» أو في صفحة التطبيق على Google Play.</string>
+    <string name="legal_privacy_intro_heading">نظرة عامة</string>
+    <string name="legal_privacy_intro_body">لا يملك PassKey حسابًا ولا مزامنة ولا خادمًا خاصًا به. لا نجمع الإدخالات التي تحفظها ولا نرسلها ولا نخزّنها أبدًا، ولا يمكننا قراءتها أو استعادتها.</string>
+    <string name="legal_privacy_device_heading">خزنتك</string>
+    <string name="legal_privacy_device_body">تُحفظ إدخالاتك في قاعدة بيانات مشفّرة على هذا الهاتف، وتُستثنى من النسخ الاحتياطي السحابي في Android ومن النقل من جهاز إلى جهاز. وتُحذف عند إلغاء تثبيت التطبيق.</string>
+    <string name="legal_privacy_analytics_heading">التحليلات وتقارير الأعطال</string>
+    <string name="legal_privacy_analytics_body">فقط إذا سمحت بذلك، يتلقى Google Firebase تقارير الأعطال والأداء (طراز الجهاز وإصدار Android وإصدار التطبيق) وإحصاءات الاستخدام (الشاشات والميزات المستخدمة). ولا تتضمن أبدًا أي شيء تحفظه. يكون كلاهما متوقفًا حتى تختار، ويمكنك تغيير ذلك في أي وقت من الإعدادات › خيارات الخصوصية. لا يستخدم PassKey معرّف الإعلانات. ولعرض إشعارات التحديث والتنويهات، يجلب التطبيق إعدادات من Google Firebase Remote Config ويتحقق من Google Play بحثًا عن تحديثات؛ وتحمل هذه الطلبات معرّفًا لتثبيت التطبيق ولا تحمل أي شيء تحفظه.</string>
+    <string name="legal_privacy_backup_heading">النسخ الاحتياطية</string>
+    <string name="legal_privacy_backup_body">تُشفَّر النسخة الاحتياطية المُصدَّرة (AES-256) بكلمة مرور تختارها، وتُحفظ في المكان الذي تحدده. يمكن لأي شخص لديه الملف وكلمة مروره معًا قراءتها. لا نحتفظ بأي نسخة ولا يمكننا استعادة كلمة المرور.</string>
+    <string name="legal_privacy_children_heading">الأطفال</string>
+    <string name="legal_privacy_children_body">التطبيق غير موجّه للأطفال دون 13 عامًا، ولا يجمع معلوماتهم الشخصية عن علم.</string>
+    <string name="legal_privacy_deletion_heading">حذف بياناتك</string>
+    <string name="legal_privacy_deletion_body">يؤدي إلغاء التثبيت إلى حذف خزنتك وإعداداتك من هذا الهاتف. لا نحتفظ بأي نسخة من بياناتك في أي مكان.</string>
+    <string name="legal_terms_use_heading">استخدام التطبيق</string>
+    <string name="legal_terms_use_body">PassKey مجاني للاستخدام الشخصي. لا تُسئ استخدامه ولا تحاول التدخل في استخدام الآخرين له.</string>
+    <string name="legal_terms_safety_heading">الحفاظ على أمان خزنتك</string>
+    <string name="legal_terms_safety_body">أنت مسؤول عن هاتفك وقفل شاشته وأي ملفات نسخ احتياطي وكلمات مرورها. لا تغادر بياناتك هاتفك أبدًا، لذا لا يمكن لأحد استعادتها إذا فُقد الهاتف أو أُزيل التطبيق. صدِّر نسخة احتياطية مشفّرة بانتظام.</string>
+    <string name="legal_terms_content_heading">المحتوى والملكية</string>
+    <string name="legal_terms_content_body">الإدخالات التي تحفظها ملكك. المحتوى الأصلي للتطبيق ملك لنا؛ وتُستخدم المكوّنات مفتوحة المصدر بموجب تراخيصها الخاصة، المدرجة في «حول التطبيق».</string>
+    <string name="legal_terms_liability_heading">دون ضمان</string>
+    <string name="legal_terms_liability_body">يُقدَّم التطبيق كما هو، دون أي ضمان. وفي الحدود التي يسمح بها القانون، لسنا مسؤولين عن الخسائر الناتجة عن استخدامه.</string>
+    <string name="legal_terms_changes_heading">التغييرات</string>
+    <string name="legal_terms_changes_body">قد نحدّث هذه الشروط. يوضح التاريخ في الأعلى أحدث نسخة؛ ومواصلة الاستخدام تعني قبولك لها.</string>
 </resources>

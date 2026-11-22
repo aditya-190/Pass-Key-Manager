@@ -179,6 +179,11 @@ dependencies {
     implementation(libs.firebase.crashlytics)
     implementation(libs.firebase.analytics)
     implementation(libs.firebase.perf)
+    implementation(libs.firebase.config)
+    implementation(libs.kotlinx.coroutines.play.services)
+
+    // In-app review (About > Rate). The base artifact, not review-ktx, which breaks R8.
+    implementation(libs.play.review)
 
     // In App Updates
     implementation(libs.app.update)

@@ -11,6 +11,7 @@ import androidx.navigation.navArgument
 import com.bhardwaj.passkey.analytics.AnalyticsTracker
 import com.bhardwaj.passkey.analytics.AppEvents
 import com.bhardwaj.passkey.consent.ConsentRoute
+import com.bhardwaj.passkey.legal.LegalViewModel
 import com.bhardwaj.passkey.presentation.screens.detail_screen.DetailScreen
 import com.bhardwaj.passkey.presentation.screens.onboarding_screens.OnBoardingScreen
 import com.bhardwaj.passkey.presentation.screens.preview_screen.PreviewScreen
@@ -97,6 +98,22 @@ fun NavGraph(navController: NavHostController, startDestination: String, analyti
                 },
                 onBack = { navController.popBackStack() }
             )
+        }
+        composable(route = Routes.ABOUT_PAGE) {
+            AboutRoute(
+                onBack = { navController.popBackStack() },
+                onOpenLicences = { navController.navigate(Routes.LICENCES_PAGE) },
+                onOpenLegal = { document -> navController.navigate(Routes.LEGAL_PAGE + "/" + document.name) }
+            )
+        }
+        composable(
+            route = Routes.LEGAL_PAGE + "/{" + LegalViewModel.ARG_DOCUMENT + "}",
+            arguments = listOf(navArgument(LegalViewModel.ARG_DOCUMENT) { type = NavType.StringType })
+        ) {
+            LegalRoute(onBack = { navController.popBackStack() })
+        }
+        composable(route = Routes.LICENCES_PAGE) {
+            LicencesRoute(onBack = { navController.popBackStack() })
         }
         composable(route = NavScreens.SecurityPage.route) {
             SecurityScreen(navController = navController)

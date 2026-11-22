@@ -98,9 +98,6 @@
         <item quantity="one">%1$d वेळा वापरले</item>
         <item quantity="other">%1$d वेळा वापरले</item>
     </plurals>
-    <string name="about_message">PassKey हा मोफत, ओपन-सोर्स पासवर्ड मॅनेजर आहे, ज्यात जाहिराती नाहीत आणि खाते लागत नाही.\n\nतुमच्या नोंदी याच फोनवर एन्क्रिप्ट केलेल्या डेटाबेसमध्ये साठवल्या जातात. PassKey त्या दाखवण्यापूर्वी तुमचा फिंगरप्रिंट, चेहरा किंवा स्क्रीन लॉक मागतो, स्क्रीनशॉट रोखतो, मजबूत पासवर्ड तयार करतो आणि जतन केलेल्या पासवर्डमधील कमकुवत किंवा पुन्हा वापरलेले पासवर्ड तपासतो.\n\nसोर्स कोड GitHub वर सार्वजनिक आहे: github.com/aditya-190/Pass-Key-Manager</string>
-    <string name="privacy_message">तुमचा वॉल्ट तुमच्या फोनवरच राहतो. PassKey चे खाते, सिंक किंवा स्वतःचा सर्व्हर नाही, आणि तो तुम्ही जतन केलेल्या नोंदी कधीही पाठवत नाही.\n\nफक्त तुमच्या परवानगीने, ॲप Google Firebase द्वारे हे पाठवतो:\n• क्रॅश आणि परफॉर्मन्स अहवाल: डिव्हाइस मॉडेल, Android आवृत्ती आणि ॲप आवृत्ती यांसारखी तांत्रिक माहिती.\n• वापराची आकडेवारी: कोणत्या स्क्रीन आणि वैशिष्ट्ये वापरली जातात, तुम्ही काय साठवता ते कधीही नाही.\n\nतुम्ही निवडेपर्यंत दोन्ही बंद असतात, आणि सेटिंग्ज › गोपनीयता पर्याय मध्ये तुम्ही कधीही निवड बदलू शकता. PassKey जाहिरात आयडी वापरत नाही. ॲप अपडेट तपासण्यासाठी Google Play वापरले जाते.\n\nया आवृत्तीत एक्सपोर्ट केलेल्या फायली एन्क्रिप्ट केलेल्या नाहीत. त्या सुरक्षित ठिकाणी ठेवा आणि गरज नसताना हटवा.</string>
-    <string name="terms_n_condition_message">PassKey मोफत, जसे आहे तसे, कोणत्याही हमीशिवाय दिले जाते.\n\nतुमचा फोन, स्क्रीन लॉक आणि एक्सपोर्ट केलेल्या फायली सुरक्षित ठेवणे ही तुमची जबाबदारी आहे. तुमचा डेटा कधीही फोनबाहेर जात नाही, त्यामुळे फोन हरवल्यास किंवा ॲप काढल्यास तो कोणीही परत मिळवू शकत नाही. नियमितपणे बॅकअप एक्सपोर्ट करा.\n\nPassKey वापरून तुम्ही या अटी आणि गोपनीयता धोरणास सहमती देता.</string>
     <string name="consent_title">PassKey अधिक चांगले करण्यास मदत करा</string>
     <string name="consent_body">तुमचे पासवर्ड कधीही या फोनबाहेर जात नाहीत. तुमच्या परवानगीने, PassKey Google Firebase ला निनावी अहवाल पाठवू शकतो, जे क्रॅश दुरुस्त करण्यास आणि कोणती वैशिष्ट्ये वापरली जातात हे समजण्यास मदत करतात. त्यात तुम्ही जतन केलेले काहीही नसते.</string>
     <string name="consent_crash_title">क्रॅश आणि परफॉर्मन्स अहवाल</string>
@@ -150,4 +147,56 @@
         <item>लॉगिन</item>
     </string-array>
     <string name="secret_field_toggle">गोपनीय (पासवर्ड, पिन, कोड)</string>
+    <string name="update_hard_title">अपडेट करण्याची वेळ</string>
+    <string name="update_hard_body">ही आवृत्ती आता समर्थित नाही. पुढे वापरत राहण्यासाठी अपडेट करा; तुमचा वॉल्ट याच फोनवर राहतो आणि त्यावर कोणताही परिणाम होत नाही.</string>
+    <string name="update_soft_title">नवीन आवृत्ती तयार आहे</string>
+    <string name="update_soft_body">नवीनतम सुरक्षा सुधारणा आणि दुरुस्त्यांसाठी अपडेट करा.</string>
+    <string name="update_action">अपडेट करा</string>
+    <string name="update_later">नंतर</string>
+    <string name="update_ready">अपडेट डाउनलोड झाले</string>
+    <string name="maintenance_title">लवकरच परत येत आहोत</string>
+    <string name="maintenance_body">आम्ही थोडी देखभाल करत आहोत. कृपया थोड्या वेळाने पुन्हा पाहा.</string>
+    <string name="announcement_dismiss">घोषणा बंद करा</string>
+    <string name="about_title">ॲपबद्दल</string>
+    <string name="about_version">आवृत्ती %1$s (%2$d)</string>
+    <string name="about_studio_title">PassKey बद्दल</string>
+    <string name="about_studio_blurb">PassKey हा मोफत, ओपन-सोर्स पासवर्ड मॅनेजर आहे, ज्यात जाहिराती नाहीत आणि खाते लागत नाही. तुमचा वॉल्ट याच फोनवर एन्क्रिप्ट केलेला असतो आणि कधीही फोनबाहेर जात नाही. सोर्स कोड GitHub वर सार्वजनिक आहे.</string>
+    <string name="about_rate">ॲपला रेटिंग द्या</string>
+    <string name="about_share">मित्रांसोबत शेअर करा</string>
+    <string name="about_share_chooser">याद्वारे शेअर करा</string>
+    <string name="about_share_text">माझे पासवर्ड %1$s मध्ये सुरक्षित राहतात. Google Play वरून मिळवा: %2$s</string>
+    <string name="about_contact">आमच्याशी संपर्क साधा</string>
+    <string name="about_contact_subject">%1$s अभिप्राय (आवृत्ती %2$s)</string>
+    <string name="about_more_apps">आमची आणखी ॲप्स</string>
+    <string name="about_licences">ओपन-सोर्स परवाने</string>
+    <string name="about_footer">भारतात काळजीपूर्वक बनवलेले</string>
+    <string name="legal_terms_title">सेवा अटी</string>
+    <string name="legal_privacy_title">गोपनीयता धोरण</string>
+    <string name="legal_last_updated">शेवटचे अपडेट: %1$s</string>
+    <string name="legal_read_online">संपूर्ण आवृत्ती ऑनलाइन वाचा</string>
+    <string name="legal_back">मागे</string>
+    <string name="legal_contact_heading">संपर्क</string>
+    <string name="legal_contact_body">प्रश्न किंवा विनंत्या: “ॲपबद्दल” मध्ये किंवा Google Play वरील ॲपच्या पेजवर दिलेला संपर्क ईमेल वापरा.</string>
+    <string name="legal_privacy_intro_heading">थोडक्यात</string>
+    <string name="legal_privacy_intro_body">PassKey मध्ये कोणतेही खाते, सिंक किंवा स्वतःचा सर्व्हर नाही. तुम्ही सेव्ह केलेल्या नोंदी आम्ही कधीही गोळा करत नाही, पाठवत नाही किंवा साठवत नाही, आणि त्या आम्ही वाचू किंवा परत मिळवू शकत नाही.</string>
+    <string name="legal_privacy_device_heading">तुमचा वॉल्ट</string>
+    <string name="legal_privacy_device_body">तुमच्या नोंदी याच फोनवरील एन्क्रिप्ट केलेल्या डेटाबेसमध्ये ठेवल्या जातात आणि Android क्लाउड बॅकअप व एका डिव्हाइसवरून दुसऱ्या डिव्हाइसवर होणाऱ्या ट्रान्सफरमधून वगळल्या जातात. ॲप अनइन्स्टॉल केल्यावर त्या काढून टाकल्या जातात.</string>
+    <string name="legal_privacy_analytics_heading">ॲनालिटिक्स आणि क्रॅश रिपोर्ट</string>
+    <string name="legal_privacy_analytics_body">तुम्ही परवानगी दिली तरच Google Firebase ला क्रॅश आणि परफॉर्मन्स रिपोर्ट (डिव्हाइस मॉडेल, Android आणि ॲपची आवृत्ती) आणि वापराची आकडेवारी (कोणत्या स्क्रीन आणि फीचर वापरली जातात) मिळते. त्यात तुम्ही सेव्ह केलेले काहीही कधीही नसते. तुम्ही निवडेपर्यंत दोन्ही बंद असतात, आणि तुम्ही हे सेटिंग्ज › गोपनीयता पर्याय मध्ये कधीही बदलू शकता. PassKey जाहिरात आयडी वापरत नाही. अपडेटच्या सूचना आणि घोषणा दाखवण्यासाठी ॲप Google Firebase Remote Config मधून सेटिंग्ज आणते आणि अपडेटसाठी Google Play तपासते; या विनंत्यांमध्ये एक ॲप-इन्स्टॉलेशन ओळखकर्ता असतो, तुम्ही सेव्ह केलेले काहीही नसते.</string>
+    <string name="legal_privacy_backup_heading">बॅकअप</string>
+    <string name="legal_privacy_backup_body">एक्सपोर्ट केलेला बॅकअप तुम्ही निवडलेल्या पासवर्डने एन्क्रिप्ट (AES-256) केला जातो आणि तुम्ही निवडलेल्या ठिकाणी सेव्ह होतो. ज्याच्याकडे फाइल आणि तिचा पासवर्ड दोन्ही आहेत, तो ती वाचू शकतो. आम्ही कोणतीही प्रत ठेवत नाही आणि पासवर्ड परत मिळवू शकत नाही.</string>
+    <string name="legal_privacy_children_heading">मुले</string>
+    <string name="legal_privacy_children_body">हे ॲप 13 वर्षांखालील मुलांसाठी नाही आणि जाणूनबुजून त्यांची वैयक्तिक माहिती गोळा करत नाही.</string>
+    <string name="legal_privacy_deletion_heading">तुमचा डेटा हटवणे</string>
+    <string name="legal_privacy_deletion_body">अनइन्स्टॉल केल्याने तुमचा वॉल्ट आणि सेटिंग्ज या फोनवरून काढून टाकल्या जातात. आम्ही तुमच्या डेटाची कोणतीही प्रत कुठेही ठेवत नाही.</string>
+    <string name="legal_terms_use_heading">ॲप वापरणे</string>
+    <string name="legal_terms_use_body">PassKey वैयक्तिक वापरासाठी मोफत आहे. त्याचा गैरवापर करू नका किंवा इतरांच्या वापरात अडथळा आणण्याचा प्रयत्न करू नका.</string>
+    <string name="legal_terms_safety_heading">तुमचा वॉल्ट सुरक्षित ठेवणे</string>
+    <string name="legal_terms_safety_body">तुमचा फोन, त्याचे स्क्रीन लॉक आणि कोणत्याही बॅकअप फाइल्स व त्यांचे पासवर्ड यांची जबाबदारी तुमची आहे. तुमचा डेटा कधीही तुमच्या फोनबाहेर जात नाही, त्यामुळे फोन हरवल्यास किंवा ॲप काढून टाकल्यास तो कोणीही परत मिळवू शकत नाही. नियमितपणे एन्क्रिप्ट केलेला बॅकअप एक्सपोर्ट करा.</string>
+    <string name="legal_terms_content_heading">मजकूर आणि मालकी</string>
+    <string name="legal_terms_content_body">तुम्ही सेव्ह केलेल्या नोंदी तुमच्या आहेत. ॲपचा मूळ मजकूर आमचा आहे; ओपन-सोर्स घटक त्यांच्या स्वतःच्या परवान्यांनुसार वापरले जातात, ज्यांची यादी “ॲपबद्दल” मध्ये आहे.</string>
+    <string name="legal_terms_liability_heading">कोणतीही हमी नाही</string>
+    <string name="legal_terms_liability_body">ॲप जसे आहे तसे, कोणत्याही हमीशिवाय दिले जाते. कायदा परवानगी देतो त्या मर्यादेपर्यंत, त्याच्या वापरामुळे होणाऱ्या नुकसानीसाठी आम्ही जबाबदार नाही.</string>
+    <string name="legal_terms_changes_heading">बदल</string>
+    <string name="legal_terms_changes_body">आम्ही या अटी अपडेट करू शकतो. वरची तारीख नवीनतम आवृत्ती दाखवते; वापर सुरू ठेवणे म्हणजे तुम्ही ती स्वीकारता.</string>
 </resources>

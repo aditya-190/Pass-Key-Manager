@@ -15,7 +15,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.BottomSheetScaffold
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -25,7 +24,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
-import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -54,7 +52,6 @@ import com.bhardwaj.passkey.presentation.navigation.Routes
 import com.bhardwaj.passkey.presentation.screens.settings_screen.components.AnalysisBottomSheet
 import com.bhardwaj.passkey.presentation.screens.settings_screen.components.AutoLockDialog
 import com.bhardwaj.passkey.presentation.screens.settings_screen.components.BackupPasswordDialog
-import com.bhardwaj.passkey.presentation.screens.settings_screen.components.FaqItem
 import com.bhardwaj.passkey.presentation.screens.settings_screen.components.LanguageBottomSheet
 import com.bhardwaj.passkey.presentation.screens.settings_screen.components.SettingsText
 import com.bhardwaj.passkey.presentation.theme.BebasNeue
@@ -75,7 +72,6 @@ fun SettingsScreen(
 ) {
     val snackBarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
-    val scaffoldState = rememberBottomSheetScaffoldState()
 
     val context = LocalContext.current
     // Backup file selection. The password is collected only after a destination or source is
@@ -164,20 +160,8 @@ fun SettingsScreen(
     Scaffold(
         snackbarHost = { SnackbarHost(snackBarHostState) }
     ) { paddingValues ->
-        BottomSheetScaffold(
-            modifier = Modifier.padding(paddingValues),
-            scaffoldState = scaffoldState,
-            sheetPeekHeight = 0.dp,
-            sheetShape = RectangleShape,
-            sheetSwipeEnabled = true,
-            sheetDragHandle = {},
-            // Only the Privacy/Terms/About text lives in this sheet. The language picker is a ModalBottomSheet in
-            // its own window; hosting it here left this sheet expanded at 0 px, and Material3's overscroll scale
-            // divides by the sheet height, so a bouncing drag crashed with "scaleY = Infinity" (monkey seed 5521).
-            sheetContent = {
-                FaqItem(openedBy = viewModel.bottomSheetOpenedBy)
-            }
-        ) {
+        // Privacy, Terms and About are full screens now; no scaffold sheet (its 0 px state crashed, seed 5521).
+        Box(modifier = Modifier.padding(paddingValues)) {
             Box(
                 modifier = Modifier
                     .fillMaxSize()
@@ -236,19 +220,16 @@ fun SettingsScreen(
                                 exportLauncher.launch(defaultBackupFileName())
                             }
                             SettingsText(text = stringResource(id = R.string.privacy)) {
-                                viewModel.onEvent(SettingsEvents.OnPrivacyClick)
-                                scope.launch { scaffoldState.bottomSheetState.expand() }
+                                onNavigate(Routes.LEGAL_PAGE + "/PRIVACY")
                             }
                             SettingsText(text = stringResource(id = R.string.privacy_options)) {
                                 onNavigate(Routes.CONSENT_PAGE + "?${Routes.CONSENT_FROM_SETTINGS_ARG}=true")
                             }
                             SettingsText(text = stringResource(id = R.string.terms_n_condition)) {
-                                viewModel.onEvent(SettingsEvents.OnTermsAndConditionClick)
-                                scope.launch { scaffoldState.bottomSheetState.expand() }
+                                onNavigate(Routes.LEGAL_PAGE + "/TERMS")
                             }
                             SettingsText(text = stringResource(id = R.string.about)) {
-                                viewModel.onEvent(SettingsEvents.OnAboutClick)
-                                scope.launch { scaffoldState.bottomSheetState.expand() }
+                                onNavigate(Routes.ABOUT_PAGE)
                             }
                         }
                     }

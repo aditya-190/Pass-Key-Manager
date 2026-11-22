@@ -98,9 +98,6 @@
         <item quantity="one">%1$d సారి ఉపయోగించబడింది</item>
         <item quantity="other">%1$d సార్లు ఉపయోగించబడింది</item>
     </plurals>
-    <string name="about_message">PassKey ప్రకటనలు, ఖాతా లేని ఉచిత, ఓపెన్-సోర్స్ పాస్‌వర్డ్ మేనేజర్.\n\nమీ ఎంట్రీలు ఈ ఫోన్‌లోనే ఎన్‌క్రిప్ట్ చేయబడిన డేటాబేస్‌లో నిల్వ ఉంటాయి. వాటిని చూపే ముందు PassKey మీ వేలిముద్ర, ముఖం లేదా స్క్రీన్ లాక్ అడుగుతుంది, స్క్రీన్‌షాట్‌లను అడ్డుకుంటుంది, బలమైన పాస్‌వర్డ్‌లను రూపొందిస్తుంది, సేవ్ చేసిన పాస్‌వర్డ్‌లలో బలహీనమైనవి లేదా మళ్లీ వాడినవి ఉన్నాయా అని తనిఖీ చేస్తుంది.\n\nసోర్స్ కోడ్ GitHub లో బహిరంగంగా ఉంది: github.com/aditya-190/Pass-Key-Manager</string>
-    <string name="privacy_message">మీ వాల్ట్ మీ ఫోన్‌లోనే ఉంటుంది. PassKey కి ఖాతా, సింక్ లేదా సొంత సర్వర్ లేవు, మీరు సేవ్ చేసిన ఎంట్రీలను అది ఎప్పుడూ పంపదు.\n\nమీరు అనుమతిస్తేనే, యాప్ Google Firebase ద్వారా ఇవి పంపుతుంది:\n• క్రాష్ మరియు పనితీరు నివేదికలు: పరికర మోడల్, Android వెర్షన్, యాప్ వెర్షన్ వంటి సాంకేతిక వివరాలు.\n• వినియోగ గణాంకాలు: ఏ స్క్రీన్‌లు, ఫీచర్లు వాడబడతాయో; మీరు ఏమి నిల్వ చేస్తారో ఎప్పుడూ కాదు.\n\nమీరు ఎంచుకునే వరకు రెండూ ఆఫ్‌లో ఉంటాయి, సెట్టింగ్‌లు › గోప్యతా ఎంపికలలో ఎప్పుడైనా మీ ఎంపికను మార్చవచ్చు. PassKey ప్రకటన ID ని ఉపయోగించదు. యాప్ అప్‌డేట్‌ల కోసం Google Play ఉపయోగించబడుతుంది.\n\nఈ వెర్షన్‌లో ఎగుమతి చేసిన ఫైళ్లు ఎన్‌క్రిప్ట్ చేయబడవు. వాటిని సురక్షిత స్థలంలో ఉంచి, అవసరం లేనప్పుడు తొలగించండి.</string>
-    <string name="terms_n_condition_message">PassKey ఉచితంగా, ఉన్నది ఉన్నట్లుగా, ఎలాంటి వారంటీ లేకుండా అందించబడుతుంది.\n\nమీ ఫోన్, స్క్రీన్ లాక్, ఎగుమతి చేసిన ఫైళ్లను సురక్షితంగా ఉంచడం మీ బాధ్యత. మీ డేటా ఎప్పుడూ ఫోన్‌ను వదిలి వెళ్లదు, కాబట్టి ఫోన్ పోయినా లేదా యాప్ తొలగించినా ఎవరూ దాన్ని తిరిగి పొందలేరు. క్రమం తప్పకుండా బ్యాకప్ ఎగుమతి చేయండి.\n\nPassKey ని ఉపయోగించడం ద్వారా మీరు ఈ నిబంధనలకు, గోప్యతా విధానానికి అంగీకరిస్తున్నారు.</string>
     <string name="consent_title">PassKey ను మెరుగుపరచడంలో సహాయపడండి</string>
     <string name="consent_body">మీ పాస్‌వర్డ్‌లు ఎప్పుడూ ఈ ఫోన్‌ను వదిలి వెళ్లవు. మీ అనుమతితో, PassKey Google Firebase కి అనామక నివేదికలు పంపగలదు; అవి క్రాష్‌లను సరిచేయడానికి, ఏ ఫీచర్లు వాడబడతాయో తెలుసుకోవడానికి సహాయపడతాయి. మీరు సేవ్ చేసినది ఏదీ వాటిలో ఉండదు.</string>
     <string name="consent_crash_title">క్రాష్ మరియు పనితీరు నివేదికలు</string>
@@ -149,5 +146,57 @@
         <item>లాగిన్</item>
     </string-array>
     <string name="secret_field_toggle">రహస్యం (పాస్‌వర్డ్, పిన్, కోడ్)</string>
+    <string name="update_hard_title">అప్‌డేట్ చేసే సమయం</string>
+    <string name="update_hard_body">ఈ వెర్షన్‌కు ఇకపై మద్దతు లేదు. కొనసాగడానికి అప్‌డేట్ చేయండి; మీ వాల్ట్ ఈ ఫోన్‌లోనే ఉంటుంది, దానిపై ఎలాంటి ప్రభావం ఉండదు.</string>
+    <string name="update_soft_title">కొత్త వెర్షన్ సిద్ధంగా ఉంది</string>
+    <string name="update_soft_body">తాజా భద్రతా మెరుగుదలలు, పరిష్కారాల కోసం అప్‌డేట్ చేయండి.</string>
+    <string name="update_action">అప్‌డేట్ చేయి</string>
+    <string name="update_later">తర్వాత</string>
+    <string name="update_ready">అప్‌డేట్ డౌన్‌లోడ్ అయింది</string>
+    <string name="maintenance_title">త్వరలో తిరిగి వస్తాం</string>
+    <string name="maintenance_body">మేము చిన్న నిర్వహణ పని చేస్తున్నాం. కాసేపటి తర్వాత మళ్లీ చూడండి.</string>
+    <string name="announcement_dismiss">అనౌన్స్‌మెంట్‌ను తీసివేయి</string>
+    <string name="about_title">యాప్ గురించి</string>
+    <string name="about_version">వెర్షన్ %1$s (%2$d)</string>
+    <string name="about_studio_title">PassKey గురించి</string>
+    <string name="about_studio_blurb">PassKey ఉచిత, ఓపెన్-సోర్స్ పాస్‌వర్డ్ మేనేజర్; ఇందులో ప్రకటనలు లేవు, ఖాతా అవసరం లేదు. మీ వాల్ట్ ఈ ఫోన్‌లోనే ఎన్‌క్రిప్ట్ చేయబడి ఉంటుంది, ఎప్పటికీ ఫోన్ బయటకు వెళ్లదు. సోర్స్ కోడ్ GitHubలో బహిరంగంగా ఉంది.</string>
+    <string name="about_rate">యాప్‌కు రేటింగ్ ఇవ్వండి</string>
+    <string name="about_share">స్నేహితులతో షేర్ చేయండి</string>
+    <string name="about_share_chooser">దీని ద్వారా షేర్ చేయండి</string>
+    <string name="about_share_text">నేను నా పాస్‌వర్డ్‌లను %1$sతో సురక్షితంగా ఉంచుకుంటాను. Google Playలో పొందండి: %2$s</string>
+    <string name="about_contact">మమ్మల్ని సంప్రదించండి</string>
+    <string name="about_contact_subject">%1$s అభిప్రాయం (వెర్షన్ %2$s)</string>
+    <string name="about_more_apps">మా ఇతర యాప్‌లు</string>
+    <string name="about_licences">ఓపెన్-సోర్స్ లైసెన్స్‌లు</string>
+    <string name="about_footer">భారతదేశంలో శ్రద్ధతో తయారైంది</string>
+    <string name="legal_terms_title">సేవా నిబంధనలు</string>
+    <string name="legal_privacy_title">గోప్యతా విధానం</string>
+    <string name="legal_last_updated">చివరి అప్‌డేట్: %1$s</string>
+    <string name="legal_read_online">పూర్తి వెర్షన్‌ను ఆన్‌లైన్‌లో చదవండి</string>
+    <string name="legal_back">వెనుకకు</string>
+    <string name="legal_contact_heading">సంప్రదింపు</string>
+    <string name="legal_contact_body">ప్రశ్నలు లేదా అభ్యర్థనలు: “యాప్ గురించి”లో లేదా Google Playలోని యాప్ పేజీలో ఉన్న సంప్రదింపు ఈమెయిల్‌ను ఉపయోగించండి.</string>
+    <string name="legal_privacy_intro_heading">సారాంశం</string>
+    <string name="legal_privacy_intro_body">PassKeyకు ఖాతా, సింక్, సొంత సర్వర్ ఏవీ లేవు. మీరు సేవ్ చేసే ఎంట్రీలను మేము ఎప్పుడూ సేకరించం, పంపం, నిల్వ చేయం; వాటిని మేము చదవలేం, తిరిగి పొందలేం.</string>
+    <string name="legal_privacy_device_heading">మీ వాల్ట్</string>
+    <string name="legal_privacy_device_body">మీ ఎంట్రీలు ఈ ఫోన్‌లోని ఎన్‌క్రిప్ట్ చేసిన డేటాబేస్‌లో ఉంటాయి, Android క్లౌడ్ బ్యాకప్ నుండి మరియు ఒక పరికరం నుండి మరో పరికరానికి బదిలీ నుండి మినహాయించబడతాయి. యాప్‌ను అన్‌ఇన్‌స్టాల్ చేసినప్పుడు అవి తొలగించబడతాయి.</string>
+    <string name="legal_privacy_analytics_heading">అనలిటిక్స్, క్రాష్ నివేదికలు</string>
+    <string name="legal_privacy_analytics_body">మీరు అనుమతిస్తేనే, Google Firebase క్రాష్ మరియు పనితీరు నివేదికలను (పరికర మోడల్, Android మరియు యాప్ వెర్షన్), వినియోగ గణాంకాలను (ఏ స్క్రీన్‌లు, ఫీచర్‌లు వాడబడుతున్నాయి) అందుకుంటుంది. వాటిలో మీరు సేవ్ చేసినది ఏదీ ఎప్పుడూ ఉండదు. మీరు ఎంచుకునే వరకు రెండూ ఆఫ్‌లో ఉంటాయి, దీన్ని సెట్టింగ్‌లు › గోప్యతా ఎంపికలలో ఎప్పుడైనా మార్చవచ్చు. PassKey ప్రకటనల IDని ఉపయోగించదు. అప్‌డేట్ నోటీసులు, అనౌన్స్‌మెంట్‌లు చూపడానికి యాప్ Google Firebase Remote Config నుండి సెట్టింగ్‌లను తెచ్చుకుంటుంది, అప్‌డేట్‌ల కోసం Google Playను తనిఖీ చేస్తుంది; ఈ అభ్యర్థనల్లో ఒక యాప్-ఇన్‌స్టాలేషన్ ఐడెంటిఫైయర్ ఉంటుంది, మీరు సేవ్ చేసినది ఏదీ ఉండదు.</string>
+    <string name="legal_privacy_backup_heading">బ్యాకప్‌లు</string>
+    <string name="legal_privacy_backup_body">ఎగుమతి చేసిన బ్యాకప్ మీరు ఎంచుకున్న పాస్‌వర్డ్‌తో ఎన్‌క్రిప్ట్ (AES-256) చేయబడి, మీరు ఎంచుకున్న చోట సేవ్ అవుతుంది. ఫైల్, దాని పాస్‌వర్డ్ రెండూ ఉన్న ఎవరైనా దాన్ని చదవగలరు. మేము ఎలాంటి కాపీని ఉంచుకోం, పాస్‌వర్డ్‌ను తిరిగి పొందలేం.</string>
+    <string name="legal_privacy_children_heading">పిల్లలు</string>
+    <string name="legal_privacy_children_body">ఈ యాప్ 13 ఏళ్లలోపు పిల్లల కోసం ఉద్దేశించినది కాదు, తెలిసి వారి వ్యక్తిగత సమాచారాన్ని సేకరించదు.</string>
+    <string name="legal_privacy_deletion_heading">మీ డేటాను తొలగించడం</string>
+    <string name="legal_privacy_deletion_body">అన్‌ఇన్‌స్టాల్ చేస్తే మీ వాల్ట్, సెట్టింగ్‌లు ఈ ఫోన్ నుండి తొలగిపోతాయి. మీ డేటా కాపీ ఏదీ మేము ఎక్కడా ఉంచుకోం.</string>
+    <string name="legal_terms_use_heading">యాప్‌ను ఉపయోగించడం</string>
+    <string name="legal_terms_use_body">PassKey వ్యక్తిగత ఉపయోగానికి ఉచితం. దీన్ని దుర్వినియోగం చేయకండి, ఇతరులు దీన్ని ఉపయోగించడంలో జోక్యం చేసుకోవడానికి ప్రయత్నించకండి.</string>
+    <string name="legal_terms_safety_heading">మీ వాల్ట్‌ను సురక్షితంగా ఉంచడం</string>
+    <string name="legal_terms_safety_body">మీ ఫోన్, దాని స్క్రీన్ లాక్, ఏవైనా బ్యాకప్ ఫైల్‌లు, వాటి పాస్‌వర్డ్‌ల బాధ్యత మీదే. మీ డేటా ఎప్పుడూ మీ ఫోన్ నుండి బయటకు వెళ్లదు, కాబట్టి ఫోన్ పోయినా, యాప్ తొలగించబడినా దాన్ని ఎవరూ తిరిగి పొందలేరు. ఎన్‌క్రిప్ట్ చేసిన బ్యాకప్‌ను క్రమం తప్పకుండా ఎగుమతి చేయండి.</string>
+    <string name="legal_terms_content_heading">కంటెంట్, యాజమాన్యం</string>
+    <string name="legal_terms_content_body">మీరు సేవ్ చేసే ఎంట్రీలు మీవే. యాప్ యొక్క అసలు కంటెంట్ మాది; ఓపెన్-సోర్స్ భాగాలు వాటి సొంత లైసెన్స్‌ల కింద ఉపయోగించబడతాయి, వాటి జాబితా “యాప్ గురించి”లో ఉంది.</string>
+    <string name="legal_terms_liability_heading">వారంటీ లేదు</string>
+    <string name="legal_terms_liability_body">యాప్ ఉన్నది ఉన్నట్లుగా, ఎలాంటి వారంటీ లేకుండా అందించబడుతుంది. చట్టం అనుమతించిన మేరకు, దీని వినియోగం వల్ల కలిగే నష్టాలకు మేము బాధ్యులం కాదు.</string>
+    <string name="legal_terms_changes_heading">మార్పులు</string>
+    <string name="legal_terms_changes_body">మేము ఈ నిబంధనలను అప్‌డేట్ చేయవచ్చు. పైన ఉన్న తేదీ తాజా వెర్షన్‌ను చూపుతుంది; ఉపయోగాన్ని కొనసాగించడం అంటే మీరు దాన్ని అంగీకరిస్తున్నారని అర్థం.</string>
 </resources>
 

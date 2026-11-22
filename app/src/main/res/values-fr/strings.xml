@@ -99,9 +99,6 @@
         <item quantity="many">Utilisé %1$d fois</item>
         <item quantity="other">Utilisé %1$d fois</item>
     </plurals>
-    <string name="about_message">PassKey est un gestionnaire de mots de passe gratuit et open source, sans publicité et sans compte.\n\nVos entrées sont stockées dans une base de données chiffrée sur ce téléphone. PassKey demande votre empreinte, votre visage ou le verrouillage de l\'écran avant de les afficher, bloque les captures d\'écran, génère des mots de passe robustes et repère parmi vos mots de passe enregistrés ceux qui sont faibles ou réutilisés.\n\nLe code source est public sur GitHub : github.com/aditya-190/Pass-Key-Manager</string>
-    <string name="privacy_message">Votre coffre reste sur votre téléphone. PassKey n\'a ni compte, ni synchronisation, ni serveur propre, et n\'envoie jamais les entrées que vous enregistrez.\n\nUniquement avec votre accord, l\'application utilise Google Firebase pour envoyer :\n• Des rapports de plantage et de performances : des informations techniques comme le modèle de l\'appareil, la version d\'Android et la version de l\'application.\n• Des statistiques d\'utilisation : les écrans et fonctions utilisés, jamais ce que vous enregistrez.\n\nLes deux sont désactivés tant que vous n\'avez pas choisi, et vous pouvez modifier votre choix à tout moment dans Paramètres › Options de confidentialité. PassKey n\'utilise pas d\'identifiant publicitaire. Google Play sert à vérifier les mises à jour de l\'application.\n\nLes fichiers exportés ne sont pas chiffrés dans cette version. Conservez-les en lieu sûr et supprimez-les quand vous n\'en avez plus besoin.</string>
-    <string name="terms_n_condition_message">PassKey est fourni gratuitement, en l\'état, sans aucune garantie.\n\nVous êtes responsable de la protection de votre téléphone, de votre verrouillage d\'écran et des fichiers exportés. Vos données ne quittent jamais votre téléphone : personne ne peut donc les récupérer si le téléphone est perdu ou l\'application supprimée. Exportez régulièrement une sauvegarde.\n\nEn utilisant PassKey, vous acceptez ces conditions et la politique de confidentialité.</string>
     <string name="consent_title">Aidez-nous à améliorer PassKey</string>
     <string name="consent_body">Vos mots de passe ne quittent jamais ce téléphone. Avec votre accord, PassKey peut envoyer des rapports anonymes à Google Firebase pour corriger les plantages et savoir quelles fonctions sont utilisées. Ils ne contiennent jamais rien de ce que vous enregistrez.</string>
     <string name="consent_crash_title">Rapports de plantage et de performances</string>
@@ -151,4 +148,56 @@
         <item>connexion</item>
     </string-array>
     <string name="secret_field_toggle">Secret (mot de passe, code PIN, code)</string>
+    <string name="update_hard_title">Il est temps de mettre à jour</string>
+    <string name="update_hard_body">Cette version n\'est plus prise en charge. Mettez à jour pour continuer ; votre coffre reste sur ce téléphone et n\'est pas affecté.</string>
+    <string name="update_soft_title">Une nouvelle version est prête</string>
+    <string name="update_soft_body">Mettez à jour pour profiter des dernières améliorations de sécurité et corrections.</string>
+    <string name="update_action">Mettre à jour</string>
+    <string name="update_later">Plus tard</string>
+    <string name="update_ready">Mise à jour téléchargée</string>
+    <string name="maintenance_title">De retour très vite</string>
+    <string name="maintenance_body">Nous effectuons une courte maintenance. Revenez dans un petit moment.</string>
+    <string name="announcement_dismiss">Fermer l\'annonce</string>
+    <string name="about_title">À propos</string>
+    <string name="about_version">Version %1$s (%2$d)</string>
+    <string name="about_studio_title">À propos de PassKey</string>
+    <string name="about_studio_blurb">PassKey est un gestionnaire de mots de passe gratuit et open source, sans publicité et sans compte. Votre coffre est chiffré sur ce téléphone et ne le quitte jamais. Le code source est public sur GitHub.</string>
+    <string name="about_rate">Noter l\'application</string>
+    <string name="about_share">Partager avec des amis</string>
+    <string name="about_share_chooser">Partager via</string>
+    <string name="about_share_text">Je protège mes mots de passe avec %1$s. Disponible sur Google Play : %2$s</string>
+    <string name="about_contact">Nous contacter</string>
+    <string name="about_contact_subject">Avis sur %1$s (version %2$s)</string>
+    <string name="about_more_apps">Nos autres applications</string>
+    <string name="about_licences">Licences open source</string>
+    <string name="about_footer">Conçu avec soin en Inde</string>
+    <string name="legal_terms_title">Conditions d\'utilisation</string>
+    <string name="legal_privacy_title">Politique de confidentialité</string>
+    <string name="legal_last_updated">Dernière mise à jour : %1$s</string>
+    <string name="legal_read_online">Lire la version complète en ligne</string>
+    <string name="legal_back">Retour</string>
+    <string name="legal_contact_heading">Contact</string>
+    <string name="legal_contact_body">Questions ou demandes : utilisez l\'adresse e-mail de contact indiquée dans À propos ou sur la fiche de l\'application sur Google Play.</string>
+    <string name="legal_privacy_intro_heading">En bref</string>
+    <string name="legal_privacy_intro_body">PassKey n\'a ni compte, ni synchronisation, ni serveur propre. Nous ne collectons, ne transmettons ni ne stockons jamais les entrées que vous enregistrez, et nous ne pouvons ni les lire ni les récupérer.</string>
+    <string name="legal_privacy_device_heading">Votre coffre</string>
+    <string name="legal_privacy_device_body">Vos entrées sont conservées dans une base de données chiffrée sur ce téléphone et sont exclues de la sauvegarde cloud d\'Android et du transfert d\'appareil à appareil. Elles sont supprimées lorsque vous désinstallez l\'application.</string>
+    <string name="legal_privacy_analytics_heading">Statistiques et rapports de plantage</string>
+    <string name="legal_privacy_analytics_body">Uniquement si vous l\'autorisez, Google Firebase reçoit des rapports de plantage et de performances (modèle de l\'appareil, versions d\'Android et de l\'application) et des statistiques d\'utilisation (quels écrans et fonctionnalités sont utilisés). Ils n\'incluent jamais rien de ce que vous enregistrez. Les deux sont désactivés tant que vous n\'avez pas fait votre choix, et vous pouvez modifier ce choix à tout moment dans Paramètres › Options de confidentialité. PassKey n\'utilise pas d\'identifiant publicitaire. Pour afficher les avis de mise à jour et les annonces, l\'application récupère des paramètres depuis Google Firebase Remote Config et vérifie les mises à jour sur Google Play ; ces requêtes contiennent un identifiant d\'installation de l\'application et rien de ce que vous enregistrez.</string>
+    <string name="legal_privacy_backup_heading">Sauvegardes</string>
+    <string name="legal_privacy_backup_body">Une sauvegarde exportée est chiffrée (AES-256) avec un mot de passe que vous choisissez et enregistrée à l\'emplacement de votre choix. Toute personne disposant à la fois du fichier et de son mot de passe peut la lire. Nous n\'en gardons aucune copie et ne pouvons pas récupérer le mot de passe.</string>
+    <string name="legal_privacy_children_heading">Enfants</string>
+    <string name="legal_privacy_children_body">L\'application ne s\'adresse pas aux enfants de moins de 13 ans et ne collecte pas sciemment leurs informations personnelles.</string>
+    <string name="legal_privacy_deletion_heading">Supprimer vos données</string>
+    <string name="legal_privacy_deletion_body">La désinstallation supprime votre coffre et vos paramètres de ce téléphone. Nous ne détenons aucune copie de vos données, nulle part.</string>
+    <string name="legal_terms_use_heading">Utilisation de l\'application</string>
+    <string name="legal_terms_use_body">PassKey est gratuit pour un usage personnel. N\'en faites pas un usage abusif et n\'essayez pas d\'entraver son utilisation par d\'autres personnes.</string>
+    <string name="legal_terms_safety_heading">Protéger votre coffre</string>
+    <string name="legal_terms_safety_body">Vous êtes responsable de votre téléphone, de son verrouillage d\'écran ainsi que de tout fichier de sauvegarde et de son mot de passe. Vos données ne quittent jamais votre téléphone : personne ne peut donc les récupérer si le téléphone est perdu ou si l\'application est supprimée. Exportez régulièrement une sauvegarde chiffrée.</string>
+    <string name="legal_terms_content_heading">Contenu et propriété</string>
+    <string name="legal_terms_content_body">Les entrées que vous enregistrez vous appartiennent. Le contenu original de l\'application nous appartient ; les composants open source sont utilisés sous leurs propres licences, listées dans À propos.</string>
+    <string name="legal_terms_liability_heading">Aucune garantie</string>
+    <string name="legal_terms_liability_body">L\'application est fournie en l\'état, sans garantie. Dans la mesure permise par la loi, nous ne sommes pas responsables des pertes résultant de son utilisation.</string>
+    <string name="legal_terms_changes_heading">Modifications</string>
+    <string name="legal_terms_changes_body">Nous pouvons mettre à jour ces conditions. La date en haut indique la dernière version ; continuer à utiliser l\'application signifie que vous l\'acceptez.</string>
 </resources>

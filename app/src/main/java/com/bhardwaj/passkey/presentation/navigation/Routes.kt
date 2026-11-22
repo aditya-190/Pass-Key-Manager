@@ -8,6 +8,9 @@ object Routes {
     const val SETTINGS_PAGE = "settings_page"
     const val SECURITY_PAGE = "security_page"
     const val CONSENT_PAGE = "consent_page"
+    const val ABOUT_PAGE = "about_page"
+    const val LEGAL_PAGE = "legal_page"
+    const val LICENCES_PAGE = "licences_page"
 
     /** Consent opened from Settings pops back instead of continuing to unlock. */
     const val CONSENT_FROM_SETTINGS_ARG = "fromSettings"

@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.WindowManager
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -18,6 +17,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.bhardwaj.passkey.analytics.AnalyticsTracker
+import com.bhardwaj.passkey.config.RemoteConfigManager
 import com.bhardwaj.passkey.data.security.AppLockObserver
 import com.bhardwaj.passkey.data.security.LockPolicy
 import com.bhardwaj.passkey.data.security.VaultSession
@@ -26,13 +26,9 @@ import com.bhardwaj.passkey.presentation.navigation.NavGraph
 import com.bhardwaj.passkey.presentation.navigation.NavScreens
 import com.bhardwaj.passkey.presentation.navigation.Routes
 import com.bhardwaj.passkey.presentation.theme.PassKeyTheme
-import com.google.android.play.core.appupdate.AppUpdateManager
-import com.google.android.play.core.appupdate.AppUpdateManagerFactory
-import com.google.android.play.core.appupdate.AppUpdateOptions
-import com.google.android.play.core.install.model.AppUpdateType
-import com.google.android.play.core.install.model.UpdateAvailability
-import com.google.android.play.core.ktx.isFlexibleUpdateAllowed
-import com.google.android.play.core.ktx.isImmediateUpdateAllowed
+import com.bhardwaj.passkey.update.InAppUpdateController
+import com.bhardwaj.passkey.update.UpdateGateController
+import com.bhardwaj.passkey.update.UpdateHost
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 import kotlinx.coroutines.delay
@@ -57,51 +53,23 @@ class MainActivity : FragmentActivity() {
         vaultSession.touch()
     }
 
-    private lateinit var appUpdateManager: AppUpdateManager
-    private val updateType = AppUpdateType.IMMEDIATE
+    @Inject
+    lateinit var updateGate: UpdateGateController
 
-    private val activityResultLauncher =
-        registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) { _ ->
-        }
+    @Inject
+    lateinit var remoteConfig: RemoteConfigManager
 
-    private fun checkForAppUpdates() {
-        appUpdateManager.appUpdateInfo.addOnSuccessListener { info ->
-            val isUpdateAvailable = info.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
-            val isUpdateAllowed = when (updateType) {
-                AppUpdateType.FLEXIBLE -> info.isFlexibleUpdateAllowed
-                AppUpdateType.IMMEDIATE -> info.isImmediateUpdateAllowed
-                else -> false
-            }
-            if (isUpdateAvailable && isUpdateAllowed) {
-                appUpdateManager.startUpdateFlowForResult(
-                    info,
-                    activityResultLauncher,
-                    AppUpdateOptions.newBuilder(updateType).build()
-                )
-            }
-        }
-    }
+    private lateinit var inAppUpdates: InAppUpdateController
 
-    override fun onResume() {
-        super.onResume()
-        if (updateType == AppUpdateType.IMMEDIATE) {
-            appUpdateManager.appUpdateInfo.addOnSuccessListener { info ->
-                if (info.updateAvailability() == UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS) {
-                    appUpdateManager.startUpdateFlowForResult(
-                        info,
-                        activityResultLauncher,
-                        AppUpdateOptions.newBuilder(updateType).build()
-                    )
-                }
-            }
-        }
+    override fun onDestroy() {
+        inAppUpdates.release()
+        super.onDestroy()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        appUpdateManager = AppUpdateManagerFactory.create(this@MainActivity)
-        checkForAppUpdates()
+        inAppUpdates = InAppUpdateController.create(this)
         window?.setFlags(
             WindowManager.LayoutParams.FLAG_SECURE,
             WindowManager.LayoutParams.FLAG_SECURE
@@ -113,12 +81,24 @@ class MainActivity : FragmentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     val navController = rememberNavController()
+                    val route = navController.currentBackStackEntryAsState().value?.destination?.route
+                    val isUnlocked by vaultSession.isUnlocked.collectAsStateWithLifecycle()
                     VaultLockGate(navController)
-                    NavGraph(
-                        navController = navController,
-                        startDestination = NavScreens.SplashPage.route,
-                        analytics = analytics
-                    )
+                    UpdateHost(
+                        gateController = updateGate,
+                        config = remoteConfig.config,
+                        updateController = inAppUpdates,
+                        analytics = analytics,
+                        // Soft prompts only on the vault home, never during onboarding, unlock or editing.
+                        isMainScreen = isUnlocked && route?.startsWith(Routes.PREVIEW_PAGE) == true,
+                        packageName = packageName
+                    ) {
+                        NavGraph(
+                            navController = navController,
+                            startDestination = NavScreens.SplashPage.route,
+                            analytics = analytics
+                        )
+                    }
                 }
             }
         }

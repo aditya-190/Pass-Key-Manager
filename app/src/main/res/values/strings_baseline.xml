@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Studio baseline strings (update, banner, About, Legal), written for PassKey 5.6.0.
+  Translators: the Privacy and Terms texts must stay factually exact; every claim matches what the app does.
+-->
+<resources>
+    <!-- update/ -->
+    <string name="update_hard_title">Time to update</string>
+    <string name="update_hard_body">This version is no longer supported. Update to keep going; your vault stays on this phone and is not affected.</string>
+    <string name="update_soft_title">A new version is ready</string>
+    <string name="update_soft_body">Update for the latest security improvements and fixes.</string>
+    <string name="update_action">Update</string>
+    <string name="update_later">Later</string>
+    <string name="update_ready">Update downloaded</string>
+    <string name="maintenance_title">Back shortly</string>
+    <string name="maintenance_body">We\'re doing some quick maintenance. Please check back in a little while.</string>
+
+    <!-- banner/ -->
+    <string name="announcement_dismiss">Dismiss announcement</string>
+
+    <!-- about/ -->
+    <string name="about_title">About</string>
+    <string name="about_version">Version %1$s (%2$d)</string>
+    <string name="about_studio_title">About PassKey</string>
+    <string name="about_studio_blurb">PassKey is a free, open-source password manager with no ads and no account. Your vault is encrypted on this phone and never leaves it. The source code is public on GitHub.</string>
+    <string name="about_rate">Rate the app</string>
+    <string name="about_share">Share with friends</string>
+    <string name="about_share_chooser">Share via</string>
+    <string name="about_share_text">I keep my passwords safe with %1$s. Get it on Google Play: %2$s</string>
+    <string name="about_contact">Contact us</string>
+    <string name="about_contact_subject">%1$s feedback (version %2$s)</string>
+    <string name="about_more_apps">More apps from us</string>
+    <string name="about_licences">Open-source licences</string>
+    <string name="about_footer">Made with care in India</string>
+
+    <!-- legal/ -->
+    <string name="legal_terms_title">Terms of Service</string>
+    <string name="legal_privacy_title">Privacy Policy</string>
+    <string name="legal_last_updated">Last updated: %1$s</string>
+    <string name="legal_read_online">Read the full version online</string>
+    <string name="legal_back">Back</string>
+    <string name="legal_contact_heading">Contact</string>
+    <string name="legal_contact_body">Questions or requests: use the contact email in About or on the app\'s Google Play listing.</string>
+
+    <string name="legal_privacy_intro_heading">Overview</string>
+    <string name="legal_privacy_intro_body">PassKey has no account, no sync and no server of its own. We never collect, transmit or store the entries you save, and we cannot read or recover them.</string>
+    <string name="legal_privacy_device_heading">Your vault</string>
+    <string name="legal_privacy_device_body">Your entries are kept in an encrypted database on this phone and are excluded from Android cloud backup and device-to-device transfer. They are removed when you uninstall the app.</string>
+    <string name="legal_privacy_analytics_heading">Analytics and crash reports</string>
+    <string name="legal_privacy_analytics_body">Only if you allow it, Google Firebase receives crash and performance reports (device model, Android and app version) and usage statistics (which screens and features are used). They never include anything you save. Both are off until you choose, and you can change this at any time in Settings › Privacy options. PassKey does not use an advertising ID. To show update notices and announcements, the app fetches settings from Google Firebase Remote Config and checks Google Play for updates; those requests carry an app-installation identifier and nothing you save.</string>
+    <string name="legal_privacy_backup_heading">Backups</string>
+    <string name="legal_privacy_backup_body">An exported backup is encrypted (AES-256) with a password you choose and saved where you pick. Anyone who has both the file and its password can read it. We keep no copy and cannot recover the password.</string>
+    <string name="legal_privacy_children_heading">Children</string>
+    <string name="legal_privacy_children_body">The app is not directed at children under 13 and does not knowingly collect their personal information.</string>
+    <string name="legal_privacy_deletion_heading">Deleting your data</string>
+    <string name="legal_privacy_deletion_body">Uninstalling removes your vault and settings from this phone. We hold no copy of your data anywhere.</string>
+
+    <string name="legal_terms_use_heading">Using the app</string>
+    <string name="legal_terms_use_body">PassKey is free for personal use. Don\'t misuse it or try to interfere with other people\'s use of it.</string>
+    <string name="legal_terms_safety_heading">Keeping your vault safe</string>
+    <string name="legal_terms_safety_body">You are responsible for your phone, its screen lock and any backup files and their passwords. Your data never leaves your phone, so nobody can recover it if the phone is lost or the app is removed. Export an encrypted backup regularly.</string>
+    <string name="legal_terms_content_heading">Content and ownership</string>
+    <string name="legal_terms_content_body">The entries you save are yours. The app\'s original content belongs to us; open-source components are used under their own licences, listed in About.</string>
+    <string name="legal_terms_liability_heading">No warranty</string>
+    <string name="legal_terms_liability_body">The app is provided as is, without warranty. To the extent the law allows, we are not liable for losses arising from its use.</string>
+    <string name="legal_terms_changes_heading">Changes</string>
+    <string name="legal_terms_changes_body">We may update these terms. The date at the top shows the latest version; continued use means you accept it.</string>
+</resources>

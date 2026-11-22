@@ -99,9 +99,6 @@
         <item quantity="many">Usata %1$d volte</item>
         <item quantity="other">Usata %1$d volte</item>
     </plurals>
-    <string name="about_message">PassKey è un gestore di password gratuito e open source, senza pubblicità e senza account.\n\nLe tue voci sono salvate in un database crittografato su questo telefono. PassKey chiede impronta, volto o blocco schermo prima di mostrarle, blocca gli screenshot, genera password robuste e controlla quelle salvate per trovare password deboli o riutilizzate.\n\nIl codice sorgente è pubblico su GitHub: github.com/aditya-190/Pass-Key-Manager</string>
-    <string name="privacy_message">La tua cassaforte resta sul tuo telefono. PassKey non ha account, sincronizzazione o server propri e non invia mai le voci che salvi.\n\nSolo con il tuo permesso, l\'app usa Google Firebase per inviare:\n• Report di arresti anomali e prestazioni: dati tecnici come modello del dispositivo, versione di Android e versione dell\'app.\n• Statistiche di utilizzo: quali schermate e funzioni vengono usate, mai ciò che salvi.\n\nEntrambi restano disattivati finché non scegli, e puoi cambiare la tua scelta in qualsiasi momento in Impostazioni › Opzioni privacy. PassKey non usa un ID pubblicitario. Google Play viene usato per cercare aggiornamenti dell\'app.\n\nI file esportati non sono crittografati in questa versione. Conservali in un luogo sicuro ed eliminali quando non ti servono più.</string>
-    <string name="terms_n_condition_message">PassKey è fornito gratuitamente, così com\'è, senza alcuna garanzia.\n\nSei responsabile della protezione del tuo telefono, del blocco schermo e dei file esportati. I tuoi dati non lasciano mai il telefono, quindi nessuno può recuperarli se il telefono viene perso o l\'app rimossa. Esporta regolarmente un backup.\n\nUsando PassKey accetti questi termini e l\'informativa sulla privacy.</string>
     <string name="consent_title">Aiuta a migliorare PassKey</string>
     <string name="consent_body">Le tue password non lasciano mai questo telefono. Con il tuo permesso, PassKey può inviare report anonimi a Google Firebase che aiutano a correggere gli arresti anomali e a capire quali funzioni vengono usate. Non includono mai nulla di ciò che salvi.</string>
     <string name="consent_crash_title">Report di arresti anomali e prestazioni</string>
@@ -151,4 +148,56 @@
         <item>accesso</item>
     </string-array>
     <string name="secret_field_toggle">Segreto (password, PIN, codice)</string>
+    <string name="update_hard_title">È ora di aggiornare</string>
+    <string name="update_hard_body">Questa versione non è più supportata. Aggiorna per continuare; la tua cassaforte resta su questo telefono e non viene toccata.</string>
+    <string name="update_soft_title">È pronta una nuova versione</string>
+    <string name="update_soft_body">Aggiorna per avere gli ultimi miglioramenti di sicurezza e le correzioni.</string>
+    <string name="update_action">Aggiorna</string>
+    <string name="update_later">Più tardi</string>
+    <string name="update_ready">Aggiornamento scaricato</string>
+    <string name="maintenance_title">Torniamo a breve</string>
+    <string name="maintenance_body">Stiamo facendo una breve manutenzione. Ricontrolla tra poco.</string>
+    <string name="announcement_dismiss">Chiudi avviso</string>
+    <string name="about_title">Informazioni</string>
+    <string name="about_version">Versione %1$s (%2$d)</string>
+    <string name="about_studio_title">Informazioni su PassKey</string>
+    <string name="about_studio_blurb">PassKey è un gestore di password gratuito e open source, senza pubblicità e senza account. La tua cassaforte è crittografata su questo telefono e non lo lascia mai. Il codice sorgente è pubblico su GitHub.</string>
+    <string name="about_rate">Valuta l\'app</string>
+    <string name="about_share">Condividi con gli amici</string>
+    <string name="about_share_chooser">Condividi tramite</string>
+    <string name="about_share_text">Tengo al sicuro le mie password con %1$s. Scaricalo da Google Play: %2$s</string>
+    <string name="about_contact">Contattaci</string>
+    <string name="about_contact_subject">Feedback su %1$s (versione %2$s)</string>
+    <string name="about_more_apps">Altre nostre app</string>
+    <string name="about_licences">Licenze open source</string>
+    <string name="about_footer">Fatto con cura in India</string>
+    <string name="legal_terms_title">Termini di servizio</string>
+    <string name="legal_privacy_title">Informativa sulla privacy</string>
+    <string name="legal_last_updated">Ultimo aggiornamento: %1$s</string>
+    <string name="legal_read_online">Leggi la versione completa online</string>
+    <string name="legal_back">Indietro</string>
+    <string name="legal_contact_heading">Contatti</string>
+    <string name="legal_contact_body">Domande o richieste: usa l\'email di contatto indicata in Informazioni o nella scheda dell\'app su Google Play.</string>
+    <string name="legal_privacy_intro_heading">Panoramica</string>
+    <string name="legal_privacy_intro_body">PassKey non ha account, sincronizzazione né un proprio server. Non raccogliamo, trasmettiamo o conserviamo mai le voci che salvi, e non possiamo leggerle né recuperarle.</string>
+    <string name="legal_privacy_device_heading">La tua cassaforte</string>
+    <string name="legal_privacy_device_body">Le tue voci sono conservate in un database crittografato su questo telefono e sono escluse dal backup cloud di Android e dal trasferimento da dispositivo a dispositivo. Vengono rimosse quando disinstalli l\'app.</string>
+    <string name="legal_privacy_analytics_heading">Statistiche e segnalazioni di arresti anomali</string>
+    <string name="legal_privacy_analytics_body">Solo se lo consenti, Google Firebase riceve segnalazioni di arresti anomali e prestazioni (modello del dispositivo, versione di Android e dell\'app) e statistiche di utilizzo (quali schermate e funzioni vengono usate). Non includono mai nulla di ciò che salvi. Entrambe restano disattivate finché non scegli, e puoi cambiarlo in qualsiasi momento in Impostazioni › Opzioni privacy. PassKey non usa un ID pubblicità. Per mostrare avvisi di aggiornamento e annunci, l\'app scarica impostazioni da Google Firebase Remote Config e controlla Google Play per gli aggiornamenti; queste richieste contengono un identificativo di installazione dell\'app e nulla di ciò che salvi.</string>
+    <string name="legal_privacy_backup_heading">Backup</string>
+    <string name="legal_privacy_backup_body">Un backup esportato è crittografato (AES-256) con una password che scegli tu e salvato dove decidi. Chiunque abbia sia il file sia la sua password può leggerlo. Non ne conserviamo alcuna copia e non possiamo recuperare la password.</string>
+    <string name="legal_privacy_children_heading">Minori</string>
+    <string name="legal_privacy_children_body">L\'app non è rivolta ai minori di 13 anni e non raccoglie consapevolmente i loro dati personali.</string>
+    <string name="legal_privacy_deletion_heading">Eliminare i tuoi dati</string>
+    <string name="legal_privacy_deletion_body">Disinstallando l\'app rimuovi la tua cassaforte e le impostazioni da questo telefono. Non conserviamo copie dei tuoi dati da nessuna parte.</string>
+    <string name="legal_terms_use_heading">Uso dell\'app</string>
+    <string name="legal_terms_use_body">PassKey è gratuito per uso personale. Non usarlo in modo improprio e non cercare di interferire con l\'uso che ne fanno altre persone.</string>
+    <string name="legal_terms_safety_heading">Proteggere la tua cassaforte</string>
+    <string name="legal_terms_safety_body">Sei responsabile del tuo telefono, del suo blocco schermo e di eventuali file di backup e delle relative password. I tuoi dati non lasciano mai il telefono, quindi nessuno può recuperarli se il telefono viene perso o l\'app viene rimossa. Esporta regolarmente un backup crittografato.</string>
+    <string name="legal_terms_content_heading">Contenuti e proprietà</string>
+    <string name="legal_terms_content_body">Le voci che salvi sono tue. I contenuti originali dell\'app appartengono a noi; i componenti open source sono usati secondo le rispettive licenze, elencate in Informazioni.</string>
+    <string name="legal_terms_liability_heading">Nessuna garanzia</string>
+    <string name="legal_terms_liability_body">L\'app è fornita così com\'è, senza garanzia. Nei limiti consentiti dalla legge, non siamo responsabili per perdite derivanti dal suo utilizzo.</string>
+    <string name="legal_terms_changes_heading">Modifiche</string>
+    <string name="legal_terms_changes_body">Possiamo aggiornare questi termini. La data in alto indica la versione più recente; continuare a usare l\'app significa accettarla.</string>
 </resources>

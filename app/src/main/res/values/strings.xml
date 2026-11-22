@@ -23,14 +23,7 @@
     <string name="second_description">Store and manage all of your passwords from one place. Don’t remember hundreds of passwords, just remember one.</string>
     <string name="third_description">Your vault is encrypted on this phone and asks for your fingerprint, face or screen lock before it opens. No account, no cloud, no ads.</string>
 
-    <!--    About, Privacy and Terms    -->
-    <!--
-        Translators: these must stay factually exact. Every claim here is checked against what the
-        app actually does in this version. Do not add or soften claims.
-    -->
-    <string name="about_message">PassKey is a free, open-source password manager with no ads and no account.\n\nYour entries are stored in an encrypted database on this phone. PassKey asks for your fingerprint, face or screen lock before showing them, blocks screenshots, generates strong passwords and checks your saved passwords for weak or reused ones.\n\nThe source code is public on GitHub: github.com/aditya-190/Pass-Key-Manager</string>
-    <string name="privacy_message">Your vault stays on your phone. PassKey has no account, no sync and no server of its own, and it never sends the entries you save.\n\nOnly if you allow it, the app uses Google Firebase to send:\n• Crash and performance reports: technical details such as device model, Android version and app version.\n• Usage statistics: which screens and features are used, never what you store.\n\nBoth are off until you choose, and you can change your choice at any time in Settings › Privacy options. PassKey does not use an advertising ID. Google Play is used to check for app updates.\n\nExported files are not encrypted in this version. Keep them somewhere safe and delete them when you no longer need them.</string>
-    <string name="terms_n_condition_message">PassKey is provided free of charge, as is, without warranty of any kind.\n\nYou are responsible for keeping your phone, your screen lock and any exported files safe. Your data never leaves your phone, so nobody can recover it for you if the phone is lost or the app is removed. Export a backup regularly.\n\nBy using PassKey you agree to these terms and to the privacy policy.</string>
+    <!--    About, Privacy and Terms: see strings_baseline.xml    -->
 
     <!--    Consent    -->
     <string name="consent_title">Help make PassKey better</string>

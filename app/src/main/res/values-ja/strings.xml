@@ -97,9 +97,6 @@
     <plurals name="password_used_times">
         <item quantity="other">%1$d 回使用</item>
     </plurals>
-    <string name="about_message">PassKey は、広告もアカウントも不要な、無料のオープンソース パスワード マネージャーです。\n\nエントリはこのスマホ内の暗号化されたデータベースに保存されます。PassKey は表示する前に指紋・顔・画面ロックを求め、スクリーンショットをブロックし、強力なパスワードを生成し、保存したパスワードの中から弱いものや使い回しを見つけます。\n\nソースコードは GitHub で公開されています: github.com/aditya-190/Pass-Key-Manager</string>
-    <string name="privacy_message">保管庫はあなたのスマホから出ません。PassKey にはアカウントも同期も独自のサーバーもなく、保存したエントリを送信することは決してありません。\n\nあなたが許可した場合に限り、アプリは Google Firebase を通じて次の情報を送信します:\n• クラッシュとパフォーマンスのレポート: 端末モデル、Android バージョン、アプリ バージョンなどの技術情報。\n• 利用統計: どの画面や機能が使われたか。保存内容は決して含みません。\n\nどちらも選択するまではオフで、設定 › プライバシー オプションからいつでも変更できます。PassKey は広告 ID を使用しません。アプリの更新確認には Google Play を使用します。\n\nこのバージョンでは、エクスポートしたファイルは暗号化されません。安全な場所に保管し、不要になったら削除してください。</string>
-    <string name="terms_n_condition_message">PassKey は無料で、現状のまま、いかなる保証もなく提供されます。\n\nスマホ、画面ロック、エクスポートしたファイルの安全を守るのはあなたの責任です。データはスマホの外に出ないため、スマホを紛失したりアプリを削除したりすると、誰も復元できません。定期的にバックアップをエクスポートしてください。\n\nPassKey を使用することで、本規約とプライバシー ポリシーに同意したものとみなされます。</string>
     <string name="consent_title">PassKey の改善にご協力ください</string>
     <string name="consent_body">パスワードがこのスマホから出ることはありません。許可していただくと、PassKey はクラッシュの修正や利用機能の把握に役立つ匿名レポートを Google Firebase に送信できます。保存した内容が含まれることは決してありません。</string>
     <string name="consent_crash_title">クラッシュとパフォーマンスのレポート</string>
@@ -148,4 +145,56 @@
         <item>ログイン</item>
     </string-array>
     <string name="secret_field_toggle">秘密の値 (パスワード、PIN、コード)</string>
+    <string name="update_hard_title">アップデートのお願い</string>
+    <string name="update_hard_body">このバージョンはサポートが終了しました。引き続き使うにはアップデートしてください。保管庫はこのスマホに残り、影響はありません。</string>
+    <string name="update_soft_title">新しいバージョンがあります</string>
+    <string name="update_soft_body">最新のセキュリティ改善と修正を受け取るには、アップデートしてください。</string>
+    <string name="update_action">アップデート</string>
+    <string name="update_later">後で</string>
+    <string name="update_ready">アップデートをダウンロードしました</string>
+    <string name="maintenance_title">まもなく再開します</string>
+    <string name="maintenance_body">現在、短時間のメンテナンスを行っています。しばらくしてからもう一度ご確認ください。</string>
+    <string name="announcement_dismiss">お知らせを閉じる</string>
+    <string name="about_title">アプリについて</string>
+    <string name="about_version">バージョン %1$s (%2$d)</string>
+    <string name="about_studio_title">PassKey について</string>
+    <string name="about_studio_blurb">PassKey は広告もアカウントもない、無料のオープンソース パスワード マネージャーです。保管庫はこのスマホ内で暗号化され、外に出ることはありません。ソースコードは GitHub で公開しています。</string>
+    <string name="about_rate">アプリを評価</string>
+    <string name="about_share">友だちに共有</string>
+    <string name="about_share_chooser">共有方法</string>
+    <string name="about_share_text">%1$s でパスワードを安全に管理しています。Google Play で入手: %2$s</string>
+    <string name="about_contact">お問い合わせ</string>
+    <string name="about_contact_subject">%1$s へのフィードバック (バージョン %2$s)</string>
+    <string name="about_more_apps">ほかのアプリ</string>
+    <string name="about_licences">オープンソース ライセンス</string>
+    <string name="about_footer">インドで心を込めて開発</string>
+    <string name="legal_terms_title">利用規約</string>
+    <string name="legal_privacy_title">プライバシー ポリシー</string>
+    <string name="legal_last_updated">最終更新日: %1$s</string>
+    <string name="legal_read_online">全文をオンラインで読む</string>
+    <string name="legal_back">戻る</string>
+    <string name="legal_contact_heading">お問い合わせ</string>
+    <string name="legal_contact_body">ご質問やご要望は、「アプリについて」または Google Play のアプリページに記載の連絡先メールアドレスまでお寄せください。</string>
+    <string name="legal_privacy_intro_heading">概要</string>
+    <string name="legal_privacy_intro_body">PassKey にはアカウント、同期、独自のサーバーがありません。保存された項目を私たちが収集、送信、保存することは一切なく、読み取ったり復元したりすることもできません。</string>
+    <string name="legal_privacy_device_heading">保管庫</string>
+    <string name="legal_privacy_device_body">項目はこのスマホ上の暗号化されたデータベースに保存され、Android のクラウド バックアップとデバイス間の移行の対象外です。アプリをアンインストールすると削除されます。</string>
+    <string name="legal_privacy_analytics_heading">分析とクラッシュ レポート</string>
+    <string name="legal_privacy_analytics_body">許可した場合に限り、Google Firebase がクラッシュ・パフォーマンス レポート (デバイスのモデル、Android とアプリのバージョン) と利用統計 (どの画面や機能が使われたか) を受け取ります。保存した内容が含まれることはありません。どちらも選択するまではオフで、設定 › プライバシー オプションからいつでも変更できます。PassKey は広告 ID を使用しません。アップデートの通知やお知らせを表示するため、アプリは Google Firebase Remote Config から設定を取得し、Google Play でアップデートを確認します。これらのリクエストにはアプリのインストール識別子が含まれますが、保存した内容は含まれません。</string>
+    <string name="legal_privacy_backup_heading">バックアップ</string>
+    <string name="legal_privacy_backup_body">エクスポートしたバックアップは、選んだパスワードで暗号化 (AES-256) され、指定した場所に保存されます。ファイルとそのパスワードの両方を持っている人は誰でも内容を読めます。私たちはコピーを保持せず、パスワードを復元することもできません。</string>
+    <string name="legal_privacy_children_heading">お子様について</string>
+    <string name="legal_privacy_children_body">このアプリは 13 歳未満のお子様を対象としておらず、お子様の個人情報を故意に収集することはありません。</string>
+    <string name="legal_privacy_deletion_heading">データの削除</string>
+    <string name="legal_privacy_deletion_body">アンインストールすると、保管庫と設定がこのスマホから削除されます。私たちはあなたのデータのコピーをどこにも保持していません。</string>
+    <string name="legal_terms_use_heading">アプリの利用</string>
+    <string name="legal_terms_use_body">PassKey は個人利用であれば無料です。悪用したり、他の人の利用を妨げようとしたりしないでください。</string>
+    <string name="legal_terms_safety_heading">保管庫を安全に保つ</string>
+    <string name="legal_terms_safety_body">スマホとその画面ロック、およびバックアップ ファイルとそのパスワードの管理はご自身の責任です。データがスマホの外に出ることはないため、スマホを紛失したりアプリが削除されたりすると、誰にも復元できません。暗号化したバックアップを定期的にエクスポートしてください。</string>
+    <string name="legal_terms_content_heading">コンテンツと権利</string>
+    <string name="legal_terms_content_body">保存した項目はあなたのものです。アプリ独自のコンテンツは私たちに帰属します。オープンソース コンポーネントはそれぞれのライセンスに基づいて使用しており、「アプリについて」に一覧があります。</string>
+    <string name="legal_terms_liability_heading">無保証</string>
+    <string name="legal_terms_liability_body">このアプリは現状のまま、いかなる保証もなく提供されます。法律で認められる範囲において、その使用から生じた損失について私たちは責任を負いません。</string>
+    <string name="legal_terms_changes_heading">変更</string>
+    <string name="legal_terms_changes_body">本規約は更新されることがあります。上部の日付が最新版を示します。引き続き利用することで、最新版に同意したものとみなされます。</string>
 </resources>

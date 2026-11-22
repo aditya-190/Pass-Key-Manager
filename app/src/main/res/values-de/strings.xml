@@ -98,9 +98,6 @@
         <item quantity="one">%1$d Mal verwendet</item>
         <item quantity="other">%1$d Mal verwendet</item>
     </plurals>
-    <string name="about_message">PassKey ist ein kostenloser Open-Source-Passwortmanager ohne Werbung und ohne Konto.\n\nDeine Einträge liegen in einer verschlüsselten Datenbank auf diesem Handy. PassKey fragt vor dem Anzeigen nach Fingerabdruck, Gesicht oder Displaysperre, blockiert Screenshots, erzeugt starke Passwörter und prüft gespeicherte Passwörter auf schwache oder mehrfach verwendete.\n\nDer Quellcode ist öffentlich auf GitHub: github.com/aditya-190/Pass-Key-Manager</string>
-    <string name="privacy_message">Dein Tresor bleibt auf deinem Handy. PassKey hat kein Konto, keine Synchronisierung und keinen eigenen Server und sendet niemals die Einträge, die du speicherst.\n\nNur mit deiner Erlaubnis sendet die App über Google Firebase:\n• Absturz- und Leistungsberichte: technische Details wie Gerätemodell, Android-Version und App-Version.\n• Nutzungsstatistiken: welche Bildschirme und Funktionen genutzt werden, niemals, was du speicherst.\n\nBeides ist aus, bis du dich entscheidest, und du kannst deine Wahl jederzeit unter Einstellungen › Datenschutzoptionen ändern. PassKey verwendet keine Werbe-ID. Google Play wird genutzt, um nach App-Updates zu suchen.\n\nExportierte Dateien sind in dieser Version nicht verschlüsselt. Bewahre sie sicher auf und lösche sie, wenn du sie nicht mehr brauchst.</string>
-    <string name="terms_n_condition_message">PassKey wird kostenlos und ohne jede Gewährleistung bereitgestellt, so wie es ist.\n\nDu bist dafür verantwortlich, dein Handy, deine Displaysperre und exportierte Dateien zu schützen. Deine Daten verlassen nie dein Handy, daher kann sie niemand wiederherstellen, wenn das Handy verloren geht oder die App entfernt wird. Exportiere regelmäßig eine Sicherung.\n\nMit der Nutzung von PassKey stimmst du diesen Bedingungen und der Datenschutzerklärung zu.</string>
     <string name="consent_title">Hilf mit, PassKey zu verbessern</string>
     <string name="consent_body">Deine Passwörter verlassen nie dieses Handy. Mit deiner Erlaubnis kann PassKey anonyme Berichte an Google Firebase senden, die helfen, Abstürze zu beheben und zu sehen, welche Funktionen genutzt werden. Sie enthalten nie etwas, das du speicherst.</string>
     <string name="consent_crash_title">Absturz- und Leistungsberichte</string>
@@ -151,4 +148,56 @@
         <item>anmeldung</item>
     </string-array>
     <string name="secret_field_toggle">Geheim (Passwort, PIN, Code)</string>
+    <string name="update_hard_title">Zeit für ein Update</string>
+    <string name="update_hard_body">Diese Version wird nicht mehr unterstützt. Aktualisiere, um weiterzumachen; dein Tresor bleibt auf diesem Handy und ist nicht betroffen.</string>
+    <string name="update_soft_title">Eine neue Version ist da</string>
+    <string name="update_soft_body">Aktualisiere für die neuesten Sicherheitsverbesserungen und Fehlerbehebungen.</string>
+    <string name="update_action">Aktualisieren</string>
+    <string name="update_later">Später</string>
+    <string name="update_ready">Update heruntergeladen</string>
+    <string name="maintenance_title">Gleich wieder da</string>
+    <string name="maintenance_body">Wir führen gerade eine kurze Wartung durch. Bitte schau in Kürze wieder vorbei.</string>
+    <string name="announcement_dismiss">Mitteilung schließen</string>
+    <string name="about_title">Über die App</string>
+    <string name="about_version">Version %1$s (%2$d)</string>
+    <string name="about_studio_title">Über PassKey</string>
+    <string name="about_studio_blurb">PassKey ist ein kostenloser Open-Source-Passwortmanager ohne Werbung und ohne Konto. Dein Tresor ist auf diesem Handy verschlüsselt und verlässt es nie. Der Quellcode ist öffentlich auf GitHub.</string>
+    <string name="about_rate">App bewerten</string>
+    <string name="about_share">Mit Freunden teilen</string>
+    <string name="about_share_chooser">Teilen über</string>
+    <string name="about_share_text">Ich schütze meine Passwörter mit %1$s. Hol es dir bei Google Play: %2$s</string>
+    <string name="about_contact">Kontakt</string>
+    <string name="about_contact_subject">Feedback zu %1$s (Version %2$s)</string>
+    <string name="about_more_apps">Weitere Apps von uns</string>
+    <string name="about_licences">Open-Source-Lizenzen</string>
+    <string name="about_footer">Mit Sorgfalt in Indien gemacht</string>
+    <string name="legal_terms_title">Nutzungsbedingungen</string>
+    <string name="legal_privacy_title">Datenschutzerklärung</string>
+    <string name="legal_last_updated">Zuletzt aktualisiert: %1$s</string>
+    <string name="legal_read_online">Vollständige Fassung online lesen</string>
+    <string name="legal_back">Zurück</string>
+    <string name="legal_contact_heading">Kontakt</string>
+    <string name="legal_contact_body">Fragen oder Anliegen: Nutze die Kontakt-E-Mail unter „Über die App“ oder im Eintrag der App bei Google Play.</string>
+    <string name="legal_privacy_intro_heading">Überblick</string>
+    <string name="legal_privacy_intro_body">PassKey hat kein Konto, keine Synchronisierung und keinen eigenen Server. Wir erfassen, übertragen oder speichern die Einträge, die du sicherst, niemals und können sie weder lesen noch wiederherstellen.</string>
+    <string name="legal_privacy_device_heading">Dein Tresor</string>
+    <string name="legal_privacy_device_body">Deine Einträge liegen in einer verschlüsselten Datenbank auf diesem Handy und sind von der Cloud-Sicherung von Android und der Übertragung von Gerät zu Gerät ausgenommen. Sie werden gelöscht, wenn du die App deinstallierst.</string>
+    <string name="legal_privacy_analytics_heading">Analysen und Absturzberichte</string>
+    <string name="legal_privacy_analytics_body">Nur wenn du es erlaubst, erhält Google Firebase Absturz- und Leistungsberichte (Gerätemodell, Android- und App-Version) sowie Nutzungsstatistiken (welche Bildschirme und Funktionen genutzt werden). Sie enthalten nie etwas, das du speicherst. Beides ist aus, bis du dich entscheidest, und du kannst das jederzeit unter Einstellungen › Datenschutzoptionen ändern. PassKey verwendet keine Werbe-ID. Um Update-Hinweise und Mitteilungen anzuzeigen, ruft die App Einstellungen von Google Firebase Remote Config ab und prüft bei Google Play auf Updates; diese Anfragen enthalten eine App-Installations-ID und nichts, was du speicherst.</string>
+    <string name="legal_privacy_backup_heading">Backups</string>
+    <string name="legal_privacy_backup_body">Ein exportiertes Backup wird mit einem Passwort deiner Wahl verschlüsselt (AES-256) und dort gespeichert, wo du es festlegst. Wer sowohl die Datei als auch ihr Passwort hat, kann es lesen. Wir behalten keine Kopie und können das Passwort nicht wiederherstellen.</string>
+    <string name="legal_privacy_children_heading">Kinder</string>
+    <string name="legal_privacy_children_body">Die App richtet sich nicht an Kinder unter 13 Jahren und erhebt nicht wissentlich deren personenbezogene Daten.</string>
+    <string name="legal_privacy_deletion_heading">Deine Daten löschen</string>
+    <string name="legal_privacy_deletion_body">Beim Deinstallieren werden dein Tresor und deine Einstellungen von diesem Handy entfernt. Wir haben nirgendwo eine Kopie deiner Daten.</string>
+    <string name="legal_terms_use_heading">Nutzung der App</string>
+    <string name="legal_terms_use_body">PassKey ist für die private Nutzung kostenlos. Missbrauche es nicht und versuche nicht, andere bei der Nutzung zu stören.</string>
+    <string name="legal_terms_safety_heading">Deinen Tresor schützen</string>
+    <string name="legal_terms_safety_body">Du bist verantwortlich für dein Handy, seine Displaysperre sowie alle Backup-Dateien und deren Passwörter. Deine Daten verlassen dein Handy nie, deshalb kann niemand sie wiederherstellen, wenn das Handy verloren geht oder die App entfernt wird. Exportiere regelmäßig ein verschlüsseltes Backup.</string>
+    <string name="legal_terms_content_heading">Inhalte und Eigentum</string>
+    <string name="legal_terms_content_body">Die Einträge, die du speicherst, gehören dir. Die eigenen Inhalte der App gehören uns; Open-Source-Komponenten werden unter ihren eigenen Lizenzen verwendet, die unter „Über die App“ aufgeführt sind.</string>
+    <string name="legal_terms_liability_heading">Keine Gewährleistung</string>
+    <string name="legal_terms_liability_body">Die App wird so bereitgestellt, wie sie ist, ohne Gewährleistung. Soweit gesetzlich zulässig, haften wir nicht für Verluste, die aus ihrer Nutzung entstehen.</string>
+    <string name="legal_terms_changes_heading">Änderungen</string>
+    <string name="legal_terms_changes_body">Wir können diese Bedingungen aktualisieren. Das Datum oben zeigt die neueste Fassung; wenn du die App weiter nutzt, akzeptierst du sie.</string>
 </resources>

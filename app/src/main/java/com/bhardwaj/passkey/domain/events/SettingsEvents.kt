@@ -43,9 +43,6 @@ sealed interface SettingsEvents {
     data object OnLanguageClick : SettingsEvents
     data object OnDismissBottomSheet : SettingsEvents
     data object OnRateAppClick : SettingsEvents
-    data object OnPrivacyClick : SettingsEvents
-    data object OnTermsAndConditionClick : SettingsEvents
-    data object OnAboutClick : SettingsEvents
     data object OnAnalyzePasswordsClick : SettingsEvents
     data object OnDismissAnalysisSheet : SettingsEvents
     data object OnAutoLockClick : SettingsEvents

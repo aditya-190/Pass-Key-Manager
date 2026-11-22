@@ -1,0 +1,134 @@
+{
+  "conditions": [],
+  "parameters": {},
+  "parameterGroups": {
+    "Force update": {
+      "parameters": {
+        "min_supported_version_code": {
+          "defaultValue": {
+            "value": "1"
+          },
+          "valueType": "NUMBER",
+          "description": "Builds below this are hard-blocked when force_update_enabled is true"
+        },
+        "latest_version_code": {
+          "defaultValue": {
+            "value": "1"
+          },
+          "valueType": "NUMBER",
+          "description": "Builds below this are offered a soft update (Play FLEXIBLE or a dismissible sheet)"
+        },
+        "force_update_enabled": {
+          "defaultValue": {
+            "value": "false"
+          },
+          "valueType": "BOOLEAN",
+          "description": "Master switch for the hard update gate (Play IMMEDIATE update, else blocking screen)"
+        },
+        "in_app_update_enabled": {
+          "defaultValue": {
+            "value": "true"
+          },
+          "valueType": "BOOLEAN",
+          "description": "Kill switch for the Play In-App Update API; false = gate screen / soft sheet only"
+        },
+        "soft_update_interval_days": {
+          "defaultValue": {
+            "value": "3"
+          },
+          "valueType": "NUMBER",
+          "description": "Soft update prompt shows at most once per this many days per latest version"
+        },
+        "update_title": {
+          "defaultValue": {
+            "value": ""
+          },
+          "valueType": "STRING",
+          "description": "Optional update title override (empty = app string)"
+        },
+        "update_message": {
+          "defaultValue": {
+            "value": ""
+          },
+          "valueType": "STRING",
+          "description": "Optional update message override (empty = app string)"
+        },
+        "play_store_url": {
+          "defaultValue": {
+            "value": ""
+          },
+          "valueType": "STRING",
+          "description": "Store listing for Update/Rate/Share (empty = Play listing for the package)"
+        },
+        "maintenance_mode": {
+          "defaultValue": {
+            "value": "false"
+          },
+          "valueType": "BOOLEAN",
+          "description": "Blocks the app with a maintenance screen"
+        },
+        "maintenance_message": {
+          "defaultValue": {
+            "value": ""
+          },
+          "valueType": "STRING",
+          "description": "Optional maintenance message override"
+        }
+      }
+    },
+    "Announcement": {
+      "parameters": {
+        "announcement_json": {
+          "defaultValue": {
+            "value": ""
+          },
+          "valueType": "STRING",
+          "description": "Banner JSON (object or array): id, title, body, cta, url (https) or route, style info|promo|success|warning, start, end, min_version, max_version, dismissible. Empty = none"
+        }
+      }
+    },
+    "Legal and About": {
+      "parameters": {
+        "terms_url": {
+          "defaultValue": {
+            "value": ""
+          },
+          "valueType": "STRING",
+          "description": "Hosted Terms of Service (https)"
+        },
+        "privacy_url": {
+          "defaultValue": {
+            "value": "https://github.com/aditya-190/Pass-Key-Manager/blob/master/Privacy%20Policy.md"
+          },
+          "valueType": "STRING",
+          "description": "Hosted Privacy Policy (https)"
+        },
+        "support_email": {
+          "defaultValue": {
+            "value": "yrkkh.cclub@gmail.com"
+          },
+          "valueType": "STRING",
+          "description": "Contact email shown in About (empty hides the row)"
+        },
+        "more_apps_url": {
+          "defaultValue": {
+            "value": ""
+          },
+          "valueType": "STRING",
+          "description": "Play developer page for More apps (https; empty hides the row)"
+        }
+      }
+    },
+    "Meta": {
+      "parameters": {
+        "config_version": {
+          "defaultValue": {
+            "value": "0"
+          },
+          "valueType": "NUMBER",
+          "description": "Bump on every publish; reported to Crashlytics"
+        }
+      }
+    }
+  }
+}
