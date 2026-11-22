@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
@@ -27,7 +26,6 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.BottomAppBar
-import androidx.compose.material3.Button
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.Icon
@@ -264,13 +262,6 @@ fun PreviewScreen(onNavigate: (UiEvents.Navigate) -> Unit, viewModel: PreviewVie
                             style = MaterialTheme.typography.titleMedium,
                             color = MaterialTheme.colorScheme.onBackground
                         )
-                        // A clear first step for new users, not just an illustration.
-                        if (searchText.isBlank()) {
-                            Button(
-                                onClick = { viewModel.onEvent(PreviewEvents.OnAddPreviewClick) },
-                                modifier = Modifier.padding(top = 16.dp).heightIn(min = 48.dp)
-                            ) { Text(text = stringResource(R.string.cd_add_entry)) }
-                        }
                     }
                 } else {
                     LazyColumn(
