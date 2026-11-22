@@ -16,7 +16,18 @@ Done:
 - Tests: 69 unit tests (from 17), including a manifest test that pins every privacy default; simulation of 18,000 seeded cases, 0 failures.
 - Gates: `ktlintCheck detekt testDebugUnitTest lintDebug assembleRelease` all green.
 
-Not done: device E2E and `adb monkey`, because no emulator or device is available on this machine.
+### Device run (2026-11-22, emulator `PassKey_API28`, API 28 = minSdk, screen-lock PIN 1234)
+- Instrumented: 7/7 pass (launch flow, localisation in 17 locales, 3 migration tests). `VaultSeedTool` is opt-in.
+- First-run flow by hand: onboarding → consent (both off) → decline → PIN unlock → home. Pass.
+- Upgrade check (`scripts/e2e/upgrade_check.sh`): entry and secret readable in 5.5.2 → real 5.5.1 (versionCode 43,
+  built from `master`) → 5.5.2. Pass, so 5.5.2 uses the same vault key as the current Play build.
+- Monkey, 3 seeds × 7,000 events: 5522 and 5523 clean; **5521 crashed** after 5,475 events on Settings:
+  `IllegalArgumentException: Cannot set 'scaleY' to Infinity`. Not reproducible by replay (timing dependent).
+  Root cause: Material3 1.4.0 `BottomSheetScaffold.verticalScaleUp` divides by sheet height; Settings expands the
+  scaffold sheet for the language picker, whose only content is a separate-window ModalBottomSheet, so the
+  expanded sheet is 0 px tall and an overshooting drag gives Infinity. Pre-existing (same code in 5.5.1).
+  Status: fix waiting on owner choice. Repro attempt: `scripts/e2e/repro_settings_sheet_crash.sh`.
+- No ANRs. The API 37 emulator is shared with another session, so no results were taken from it.
 
 ## Carried into 5.6.0
 - Per-field secret keyboard (attack-pass finding #1), built on the `isSecret` column.
@@ -24,7 +35,8 @@ Not done: device E2E and `adb monkey`, because no emulator or device is availabl
 
 ## Owner actions
 - [x] 5.5.2 attack pass: fixed #2 (keep pre-consent crash reports until the user decides) and #3 (no automatic screen reporting). #1 (per-field secret keyboard) moved to 5.6.0.
-- [ ] Connect a device or create an emulator so on-device E2E can run, including an upgrade from the Play 5.5.1 build with a real vault.
+- [x] Emulators created (`PassKey_API28`, `PassKey_API37`); device run done (see above).
+- [ ] Choose a fix for the Settings sheet crash (monkey seed 5521).
 - [ ] Confirm `PASS_PHRASE` is set in `local.properties` before building the release (agents never read it).
 - [ ] Update the Play Data-safety form for 5.5.2: optional crash logs, app interactions and diagnostics, no ad ID,
       nothing shared, vault content never collected.
