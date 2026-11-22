@@ -227,4 +227,5 @@
     <string name="recovery_change_failed">Этот пароль неверен.</string>
     <string name="migration_export_first">Сначала выгрузить копию</string>
     <string name="migration_export_now">Выгрузить хранилище сейчас</string>
+    <string name="recovery_password_hint">Пароль восстановления</string>
 </resources>

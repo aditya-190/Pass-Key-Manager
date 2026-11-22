@@ -225,5 +225,6 @@
     <string name="recovery_change_failed">ఆ పాస్‌వర్డ్ సరైనది కాదు.</string>
     <string name="migration_export_first">ముందు బ్యాకప్ తీసుకోండి</string>
     <string name="migration_export_now">నా వాల్ట్‌ను ఇప్పుడే ఎగుమతి చేయి</string>
+    <string name="recovery_password_hint">రికవరీ పాస్‌వర్డ్</string>
 </resources>
 

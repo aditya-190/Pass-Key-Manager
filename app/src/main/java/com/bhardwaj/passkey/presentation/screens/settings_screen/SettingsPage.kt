@@ -110,6 +110,7 @@ fun SettingsScreen(
         false -> BackupPasswordDialog(
             confirmMode = false,
             titleRes = R.string.recovery_change_current_title,
+            hintRes = R.string.recovery_password_hint,
             messageRes = R.string.recovery_change_current_message,
             onDismiss = { viewModel.onEvent(SettingsEvents.OnDismissRecoveryChange) },
             onConfirm = { viewModel.onEvent(SettingsEvents.OnCurrentRecoveryPasswordEntered(it)) }
@@ -118,6 +119,7 @@ fun SettingsScreen(
         true -> BackupPasswordDialog(
             confirmMode = true,
             titleRes = R.string.recovery_change_new_title,
+            hintRes = R.string.recovery_password_hint,
             messageRes = R.string.recovery_change_new_message,
             onDismiss = { viewModel.onEvent(SettingsEvents.OnDismissRecoveryChange) },
             onConfirm = { viewModel.onEvent(SettingsEvents.OnNewRecoveryPasswordEntered(it)) }

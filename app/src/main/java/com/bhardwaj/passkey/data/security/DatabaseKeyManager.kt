@@ -141,24 +141,20 @@ class DatabaseKeyManager @Inject constructor(
         subtitle: String,
         negativeButton: String
     ): UnlockResult? {
-        val slot = file.slot(SlotId.BIO) as? KeySlot.Keystore ?: return null
+        val slot = file.slot(SlotId.BIO) as? KeySlot.Keystore ?: return null.also { lockTrace("bio slot absent") }
         val cipher = try {
             keyStore.initDecryptCipher(slot.alias)
         } catch (_: KeyPermanentlyInvalidatedException) {
+            lockTrace("bio slot invalidated by enrollment change")
             return null // enrollment changed - fall through to CRED
         } catch (_: Exception) {
             return null
         }
+        lockTrace("bio slot prompt")
 
-        return when (
-            val outcome = biometrics.authenticateWithCrypto(
-                activity,
-                cipher,
-                title,
-                subtitle,
-                negativeButton
-            )
-        ) {
+        val outcome = biometrics.authenticateWithCrypto(activity, cipher, title, subtitle, negativeButton)
+        lockTrace("bio slot outcome=${outcome.javaClass.simpleName}")
+        return when (outcome) {
             is BiometricAuthenticator.Outcome.Success -> runCatching {
                 val dek = outcome.cipher!!.doFinal(slot.wrappedKeyB64.decodeB64())
                 UnlockResult.Success(dek)
@@ -173,7 +169,8 @@ class DatabaseKeyManager @Inject constructor(
 
     // Each early return is a distinct, deliberate fall-through outcome of the credential slot (absent,
     // invalidated, cancelled, failed); kept explicit for review of the key path.
-    @Suppress("ReturnCount")
+    // TooGenericExceptionCaught: any unwrap failure must fall through to the recovery password, never crash.
+    @Suppress("ReturnCount", "TooGenericExceptionCaught")
     private suspend fun tryCredentialSlot(
         file: KeySlotFile,
         activity: FragmentActivity,
@@ -183,7 +180,9 @@ class DatabaseKeyManager @Inject constructor(
         val slot = file.slot(SlotId.CRED) as? KeySlot.Keystore ?: return null
         if (!keyStore.exists(slot.alias)) return null
 
-        when (biometrics.authenticateForTimeBoundKey(activity, title, subtitle)) {
+        val outcome = biometrics.authenticateForTimeBoundKey(activity, title, subtitle)
+        lockTrace("cred slot prompt outcome=${outcome.javaClass.simpleName}")
+        when (outcome) {
             is BiometricAuthenticator.Outcome.Success -> Unit
             BiometricAuthenticator.Outcome.UserCancelled -> return UnlockResult.Cancelled
             BiometricAuthenticator.Outcome.Lockout -> return UnlockResult.Lockout
@@ -197,8 +196,10 @@ class DatabaseKeyManager @Inject constructor(
             repairBiometricSlot(file, dek)
             UnlockResult.Success(dek)
         } catch (_: KeyPermanentlyInvalidatedException) {
+            lockTrace("cred slot key permanently invalidated")
             null
-        } catch (_: Exception) {
+        } catch (error: Exception) {
+            lockTrace("cred slot unwrap failed ${error.javaClass.simpleName}")
             null
         }
     }

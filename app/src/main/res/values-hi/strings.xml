@@ -226,4 +226,5 @@
     <string name="recovery_change_failed">वह पासवर्ड सही नहीं था।</string>
     <string name="migration_export_first">पहले बैकअप निर्यात करें</string>
     <string name="migration_export_now">मेरी वॉल्ट अभी निर्यात करें</string>
+    <string name="recovery_password_hint">रिकवरी पासवर्ड</string>
 </resources>

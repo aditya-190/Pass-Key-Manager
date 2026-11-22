@@ -38,6 +38,8 @@ fun BackupPasswordDialog(
     onDismiss: () -> Unit,
     onConfirm: (CharArray) -> Unit,
     @StringRes titleRes: Int? = null,
+    /** Field label; the vault gate passes the recovery-password label instead of "Backup password". */
+    @StringRes hintRes: Int = R.string.backup_password_hint,
     @StringRes messageRes: Int? = null,
     /** False for gate dialogs that the user must not be able to escape. */
     dismissible: Boolean = true
@@ -92,7 +94,7 @@ fun BackupPasswordDialog(
                     onValueChange = { password = it },
                     singleLine = true,
                     isError = error != null,
-                    label = { Text(stringResource(R.string.backup_password_hint)) },
+                    label = { Text(stringResource(hintRes)) },
                     visualTransformation = PasswordVisualTransformation(),
                     keyboardOptions = KeyboardOptions(
                         keyboardType = KeyboardType.Password,

@@ -230,4 +230,5 @@
     <string name="recovery_change_failed">كلمة المرور غير صحيحة.</string>
     <string name="migration_export_first">صدّر نسخة احتياطية أولًا</string>
     <string name="migration_export_now">صدّر خزنتي الآن</string>
+    <string name="recovery_password_hint">كلمة مرور الاسترداد</string>
 </resources>

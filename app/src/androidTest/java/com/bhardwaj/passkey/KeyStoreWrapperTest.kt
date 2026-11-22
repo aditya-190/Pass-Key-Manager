@@ -7,6 +7,7 @@ import androidx.test.platform.app.InstrumentationRegistry
 import com.bhardwaj.passkey.data.security.KeyStoreWrapper
 import com.google.common.truth.Truth.assertThat
 import org.junit.After
+import org.junit.Assume.assumeTrue
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -28,10 +29,18 @@ class KeyStoreWrapperTest {
         get() = context.getSystemService<KeyguardManager>()?.isDeviceSecure == true
 
     @Before
-    fun setUp() = cleanUp()
+    fun setUp() {
+        // DESTRUCTIVE: deletes this app's real vault database / Keystore keys. Opt-in only, and only on a
+        // throwaway emulator: -e destructiveVaultTests true. Never run against a phone with real data.
+        assumeTrue(destructiveAllowed())
+        cleanUp()
+    }
 
     @After
-    fun tearDown() = cleanUp()
+    fun tearDown() {
+        // JUnit runs @After even when the @Before assumption skipped the test: never delete then.
+        if (destructiveAllowed()) cleanUp()
+    }
 
     private fun cleanUp() {
         wrapper.delete(KeyStoreWrapper.ALIAS_BIO)
@@ -70,3 +79,6 @@ class KeyStoreWrapperTest {
         assertThat(wrapper.exists(KeyStoreWrapper.ALIAS_CRED)).isFalse()
     }
 }
+
+private fun destructiveAllowed(): Boolean =
+    InstrumentationRegistry.getArguments().getString("destructiveVaultTests") == "true"

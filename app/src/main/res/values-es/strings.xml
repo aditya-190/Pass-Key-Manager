@@ -227,4 +227,5 @@
     <string name="recovery_change_failed">Esa contraseña no era correcta.</string>
     <string name="migration_export_first">Exportar una copia primero</string>
     <string name="migration_export_now">Exportar mi caja fuerte ahora</string>
+    <string name="recovery_password_hint">Contraseña de recuperación</string>
 </resources>

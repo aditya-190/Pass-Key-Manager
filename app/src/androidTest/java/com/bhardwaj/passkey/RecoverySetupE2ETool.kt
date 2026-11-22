@@ -2,7 +2,6 @@ package com.bhardwaj.passkey
 
 import androidx.compose.ui.test.hasSetTextAction
 import androidx.compose.ui.test.hasText
-import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextInput
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -21,8 +20,12 @@ import org.junit.runner.RunWith
  */
 @RunWith(AndroidJUnit4::class)
 class RecoverySetupE2ETool {
+    // Only opt-in runs launch the app; a plain test run must not even start the vault gate.
     @get:Rule
-    val compose = createAndroidComposeRule<MainActivity>()
+    val compose = gateComposeRule(MainActivity::class.java) {
+        val args = InstrumentationRegistry.getArguments()
+        args.getString("recoveryPassword") != null || args.getString("recoveryUnlock") != null
+    }
 
     private fun text(id: Int) = compose.activity.getString(id)
 
@@ -45,5 +48,22 @@ class RecoverySetupE2ETool {
 
         // The host enters the device PIN; then the re-key runs and the vault home appears.
         compose.waitUntil(120_000) { visible(text(R.string.cd_add_entry)) }
+    }
+
+    /** `-e recoveryUnlock <pw>`: answers the "enter your recovery password" gate and waits for the vault. */
+    @Test
+    fun unlockWithRecoveryPassword() {
+        val password = InstrumentationRegistry.getArguments().getString("recoveryUnlock")
+        assumeTrue(!password.isNullOrBlank())
+
+        compose.waitUntil(20_000) { visible(text(R.string.recovery_unlock_title)) }
+        compose.waitUntil(10_000) {
+            runCatching {
+                compose.onAllNodes(hasSetTextAction()).fetchSemanticsNodes().isNotEmpty()
+            }.getOrDefault(false)
+        }
+        compose.onAllNodes(hasSetTextAction())[0].performTextInput(password!!)
+        compose.onAllNodes(hasText(text(R.string.backup_confirm)))[0].performClick()
+        compose.waitUntil(60_000) { visible(text(R.string.cd_add_entry)) }
     }
 }

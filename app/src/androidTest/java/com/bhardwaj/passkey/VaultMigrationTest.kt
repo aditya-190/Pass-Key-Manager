@@ -11,6 +11,7 @@ import java.security.SecureRandom
 import kotlinx.coroutines.runBlocking
 import net.zetetic.database.sqlcipher.SQLiteDatabase
 import org.junit.After
+import org.junit.Assume.assumeTrue
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -35,13 +36,19 @@ class VaultMigrationTest {
 
     @Before
     fun setUp() {
+        // DESTRUCTIVE: deletes this app's real vault database / Keystore keys. Opt-in only, and only on a
+        // throwaway emulator: -e destructiveVaultTests true. Never run against a phone with real data.
+        assumeTrue(destructiveAllowed())
         System.loadLibrary("sqlcipher")
         migration = VaultMigration(context)
         deleteDatabaseFiles()
     }
 
     @After
-    fun tearDown() = deleteDatabaseFiles()
+    fun tearDown() {
+        // JUnit runs @After even when the @Before assumption skipped the test: never delete then.
+        if (destructiveAllowed()) deleteDatabaseFiles()
+    }
 
     private fun deleteDatabaseFiles() {
         dbFile.parentFile?.listFiles()
@@ -193,3 +200,6 @@ class VaultMigrationTest {
             .isEqualTo(VaultMigration.Result.NotNeeded)
     }
 }
+
+private fun destructiveAllowed(): Boolean =
+    InstrumentationRegistry.getArguments().getString("destructiveVaultTests") == "true"

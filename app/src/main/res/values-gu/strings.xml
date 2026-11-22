@@ -225,4 +225,5 @@
     <string name="recovery_change_failed">એ પાસવર્ડ સાચો ન હતો.</string>
     <string name="migration_export_first">પહેલાં બૅકઅપ લો</string>
     <string name="migration_export_now">હમણાં મારી વૉલ્ટ નિકાસ કરો</string>
+    <string name="recovery_password_hint">રિકવરી પાસવર્ડ</string>
 </resources>

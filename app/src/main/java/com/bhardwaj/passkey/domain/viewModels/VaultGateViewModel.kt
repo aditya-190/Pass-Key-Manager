@@ -13,6 +13,7 @@ import com.bhardwaj.passkey.data.security.MigrationState
 import com.bhardwaj.passkey.data.security.UnlockPromptPolicy
 import com.bhardwaj.passkey.data.security.VaultMigration
 import com.bhardwaj.passkey.data.security.VaultSession
+import com.bhardwaj.passkey.data.security.lockTrace
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.util.Arrays
 import javax.inject.Inject
@@ -41,6 +42,7 @@ class VaultGateViewModel @Inject constructor(
      * [UnlockPromptPolicy] allows, so a cancelled PIN screen does not re-prompt forever.
      */
     fun onGateVisible(activity: FragmentActivity, title: String, subtitle: String, negativeButton: String) {
+        lockTrace("gate visible state=${_state.value.javaClass.simpleName}")
         if (promptPolicy.shouldPromptOnResume(isLocked = _state.value is State.Locked)) {
             onUnlockRequested(activity, title, subtitle, negativeButton)
         }
@@ -74,6 +76,11 @@ class VaultGateViewModel @Inject constructor(
 
     private val _state = MutableStateFlow<State>(State.Checking)
     val state: StateFlow<State> = _state.asStateFlow()
+
+    init {
+        // Debug-build breadcrumbs only (no vault data): every gate transition.
+        viewModelScope.launch { _state.collect { lockTrace("gate state ${it.javaClass.simpleName}") } }
+    }
 
     /** null = nothing to report, true/false = the outcome of a rescue export. */
     private val _exportResult = MutableStateFlow<Boolean?>(null)

@@ -225,4 +225,5 @@
     <string name="recovery_change_failed">அந்தக் கடவுச்சொல் சரியில்லை.</string>
     <string name="migration_export_first">முதலில் காப்புப்பிரதி எடு</string>
     <string name="migration_export_now">என் பெட்டகத்தை இப்போது ஏற்றுமதி செய்</string>
+    <string name="recovery_password_hint">மீட்பு கடவுச்சொல்</string>
 </resources>
