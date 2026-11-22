@@ -51,13 +51,32 @@ Done (each gated: ktlint, detekt, unit tests, lint, build; device checks on Pass
    that keep typed input; fixed an unlabeled-FAB TalkBack bug found on device.
 Unit tests: 179, all passing. Instrumented: 10/10 on API 28. All gates green incl. release build.
 
-Remaining for 5.6.0: owner choice on step 3–4 attack findings, version bump (5.6.0 / 45), seeded simulation for backup
-and lock policy, monkey rerun, health report.
+10. Remote policy `0cc129f`: maintenance mode ignored for an offline vault; announcement routes allowlisted.
+11. Release prep `31c747c`: version 5.6.0 (45); empty home shows illustration + text only (owner); Privacy Policy.md updated.
+
+### 5.6.0 health report (2026-11-23)
+| Area | Status | Evidence |
+|---|---|---|
+| Unit tests | 🟢 | 190 passing (17 at the start of 5.5.2) |
+| Integration / E2E | 🟢 | 10/10 instrumented on API 28; lock_check 5/5; real Play 5.5.1 vault migrates (schema 2→3) and decrypts |
+| Simulation | 🟢 | 17,370 seeded cases (Release560SimulationTest) + 18,000 from 5.5.2 |
+| Monkey | 🟠 | Skipped by owner partway: seed 5601 stopped at 243 events by a launcher ANR (not PassKey), 5602 partial; 0 PassKey crashes |
+| Security | 🟠 | Open Blocker: shared build-time DB key (scheduled 5.7.0). Accepted Lows: keyword false positives, Home during PIN prompt, Undo lost on lock |
+| Lint / ktlint / detekt | 🟢 | All clean; 16 pre-existing detekt findings baselined |
+| Performance | 🟠 | Not profiled yet (6.0.0 adds baseline profile + macrobenchmark) |
+| Size | 🟢 | Release APK 14 MB (28 MB in 5.5.1) |
+**Overall: 🟠 shippable** once the owner actions below are done; the DB-key Blocker is 5.7.0's job.
 
 
 ## Carried into 5.6.0
 - Per-field secret keyboard (attack-pass finding #1), built on the `isSecret` column.
 - A failed Android 10+ export is reported as success (`SettingsViewModel.kt:260`); replaced by the encrypted backup.
+
+## Owner actions for 5.6.0
+- [ ] Play Data-safety form: crash logs, diagnostics and app interactions are optional (consent); Remote Config request
+      with installation ID; no ad ID; nothing shared; vault content never collected; data encrypted in transit.
+- [ ] Native-speaker review of the machine-translated legal and About texts (17 languages).
+- [ ] Staged rollout (e.g. 10% → 50% → 100%) watching Crashlytics for users who opted in.
 
 ## Owner actions
 - [x] 5.5.2 attack pass: fixed #2 (keep pre-consent crash reports until the user decides) and #3 (no automatic screen reporting). #1 (per-field secret keyboard) moved to 5.6.0.
