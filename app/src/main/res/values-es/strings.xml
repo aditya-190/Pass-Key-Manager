@@ -200,4 +200,7 @@
     <string name="legal_terms_liability_body">La app se ofrece tal cual, sin garantía. En la medida en que la ley lo permita, no somos responsables de las pérdidas derivadas de su uso.</string>
     <string name="legal_terms_changes_heading">Cambios</string>
     <string name="legal_terms_changes_body">Podemos actualizar estos términos. La fecha de arriba indica la versión más reciente; si sigues usando la app, la aceptas.</string>
+    <string name="entry_deleted">Entrada eliminada</string>
+    <string name="field_deleted">Campo eliminado</string>
+    <string name="undo">Deshacer</string>
 </resources>

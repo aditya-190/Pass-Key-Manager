@@ -198,4 +198,7 @@
     <string name="legal_terms_liability_body">本应用按原样提供，不附带任何担保。在法律允许的范围内，我们不对因使用本应用而产生的损失承担责任。</string>
     <string name="legal_terms_changes_heading">变更</string>
     <string name="legal_terms_changes_body">我们可能会更新这些条款。顶部的日期显示最新版本；继续使用即表示你接受该版本。</string>
+    <string name="entry_deleted">条目已删除</string>
+    <string name="field_deleted">字段已删除</string>
+    <string name="undo">撤销</string>
 </resources>

@@ -200,4 +200,7 @@
     <string name="legal_terms_liability_body">Приложение предоставляется «как есть», без гарантий. В пределах, допускаемых законом, мы не несём ответственности за убытки, возникшие в результате его использования.</string>
     <string name="legal_terms_changes_heading">Изменения</string>
     <string name="legal_terms_changes_body">Мы можем обновлять эти условия. Дата вверху указывает последнюю версию; продолжая пользоваться приложением, вы её принимаете.</string>
+    <string name="entry_deleted">Запись удалена</string>
+    <string name="field_deleted">Поле удалено</string>
+    <string name="undo">Отменить</string>
 </resources>

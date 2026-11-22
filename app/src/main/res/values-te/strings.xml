@@ -198,5 +198,8 @@
     <string name="legal_terms_liability_body">యాప్ ఉన్నది ఉన్నట్లుగా, ఎలాంటి వారంటీ లేకుండా అందించబడుతుంది. చట్టం అనుమతించిన మేరకు, దీని వినియోగం వల్ల కలిగే నష్టాలకు మేము బాధ్యులం కాదు.</string>
     <string name="legal_terms_changes_heading">మార్పులు</string>
     <string name="legal_terms_changes_body">మేము ఈ నిబంధనలను అప్‌డేట్ చేయవచ్చు. పైన ఉన్న తేదీ తాజా వెర్షన్‌ను చూపుతుంది; ఉపయోగాన్ని కొనసాగించడం అంటే మీరు దాన్ని అంగీకరిస్తున్నారని అర్థం.</string>
+    <string name="entry_deleted">ఎంట్రీ తొలగించబడింది</string>
+    <string name="field_deleted">ఫీల్డ్ తొలగించబడింది</string>
+    <string name="undo">రద్దు చేయి</string>
 </resources>
 

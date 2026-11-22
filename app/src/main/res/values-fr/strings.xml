@@ -200,4 +200,7 @@
     <string name="legal_terms_liability_body">L\'application est fournie en l\'état, sans garantie. Dans la mesure permise par la loi, nous ne sommes pas responsables des pertes résultant de son utilisation.</string>
     <string name="legal_terms_changes_heading">Modifications</string>
     <string name="legal_terms_changes_body">Nous pouvons mettre à jour ces conditions. La date en haut indique la dernière version ; continuer à utiliser l\'application signifie que vous l\'acceptez.</string>
+    <string name="entry_deleted">Entrée supprimée</string>
+    <string name="field_deleted">Champ supprimé</string>
+    <string name="undo">Annuler</string>
 </resources>

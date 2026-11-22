@@ -200,4 +200,7 @@
     <string name="legal_terms_liability_body">Die App wird so bereitgestellt, wie sie ist, ohne Gewährleistung. Soweit gesetzlich zulässig, haften wir nicht für Verluste, die aus ihrer Nutzung entstehen.</string>
     <string name="legal_terms_changes_heading">Änderungen</string>
     <string name="legal_terms_changes_body">Wir können diese Bedingungen aktualisieren. Das Datum oben zeigt die neueste Fassung; wenn du die App weiter nutzt, akzeptierst du sie.</string>
+    <string name="entry_deleted">Eintrag gelöscht</string>
+    <string name="field_deleted">Feld gelöscht</string>
+    <string name="undo">Rückgängig</string>
 </resources>

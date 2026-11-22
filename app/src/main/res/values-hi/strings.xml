@@ -199,4 +199,7 @@
     <string name="legal_terms_liability_body">ऐप जैसा है वैसा ही, बिना किसी वारंटी के दिया जाता है। कानून जहाँ तक अनुमति देता है, इसके इस्तेमाल से होने वाले नुकसान के लिए हम ज़िम्मेदार नहीं हैं।</string>
     <string name="legal_terms_changes_heading">बदलाव</string>
     <string name="legal_terms_changes_body">हम इन शर्तों को अपडेट कर सकते हैं। ऊपर दी गई तारीख नवीनतम संस्करण दिखाती है; इस्तेमाल जारी रखने का मतलब है कि आप उसे स्वीकार करते हैं।</string>
+    <string name="entry_deleted">एंट्री हटाई गई</string>
+    <string name="field_deleted">फ़ील्ड हटाया गया</string>
+    <string name="undo">वापस लाएँ</string>
 </resources>

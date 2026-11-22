@@ -11,6 +11,7 @@ sealed interface DetailEvents {
     data object OnSaveClick : DetailEvents
     data object OnCancelClick : DetailEvents
     data object OnDeleteClick : DetailEvents
+    data object OnUndoDelete : DetailEvents
     data object OnDismissBottomSheet : DetailEvents
     data object OnDismissAlertDialog : DetailEvents
 

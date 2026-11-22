@@ -110,11 +110,17 @@ class DetailViewModel @Inject constructor(
     var includeSpecial by mutableStateOf(false)
         private set
 
-    private var deletedDetail: Details? = null
+    private var pendingDelete: Details? = null
+    private var lastDeleted: Details? = null
+
+    /** Shown inside the add/edit sheet; a failed save keeps the sheet and what was typed. */
+    var sheetError by mutableStateOf<UiText?>(null)
+        private set
 
     fun onEvent(event: DetailEvents) {
         when (event) {
             DetailEvents.OnAddDetailClick -> {
+                sheetError = null
                 resetSecretField()
                 savedStateHandle[BOTTOM_SHEET_HEADING] = false
                 isSheetOpen = true
@@ -122,6 +128,7 @@ class DetailViewModel @Inject constructor(
             }
 
             DetailEvents.OnDismissBottomSheet -> {
+                sheetError = null
                 resetSecretField()
                 _detailTitle.value = ""
                 _detailResponse.value = ""
@@ -148,6 +155,7 @@ class DetailViewModel @Inject constructor(
             }
 
             is DetailEvents.OnTitleChange -> {
+                sheetError = null
                 _detailTitle.value = event.newTitle
                 if (!secretSetByUser) {
                     _isSecretField.value = PasswordAnalyzer.looksSecret(event.newTitle, secretKeywords.all())
@@ -157,20 +165,14 @@ class DetailViewModel @Inject constructor(
             is DetailEvents.OnSecretToggle -> resetSecretField(isSecret = event.isSecret, setByUser = true)
 
             is DetailEvents.OnDescriptionChange -> {
+                sheetError = null
                 _detailResponse.value = event.newDescription
             }
 
             DetailEvents.OnSaveClick -> {
                 viewModelScope.launch {
                     if (detailTitle.value.isBlank() or detailResponse.value.isBlank()) {
-                        isSheetOpen = false
-                        _detailTitle.value = ""
-                        _detailResponse.value = ""
-                        sendUiEvents(
-                            UiEvents.ShowSnackBar(
-                                message = UiText.StringResource(R.string.enter_valid_title_n_response)
-                            )
-                        )
+                        sheetError = UiText.StringResource(R.string.enter_valid_title_n_response)
                         return@launch
                     }
                     if (previewId.toInt() == -1) {
@@ -215,33 +217,32 @@ class DetailViewModel @Inject constructor(
                 analytics.log(AppEvents.valueCopied(sensitive = true))
             }
 
+            // Nothing is written until the user confirms; a delete can be undone from the snackbar.
             is DetailEvents.OnSwipedLeft -> {
-                viewModelScope.launch {
-                    isAlertOpen = true
-                    repository.deleteDetail(event.details)
-                    deletedDetail = event.details
-                }
+                pendingDelete = event.details
+                isAlertOpen = true
             }
 
-            DetailEvents.OnDismissAlertDialog -> {
-                viewModelScope.launch {
-                    isAlertOpen = false
-                    deletedDetail?.let { repository.upsertDetails(it) }
-                    deletedDetail = null
-                }
-            }
-
-            DetailEvents.OnCancelClick -> {
-                viewModelScope.launch {
-                    isAlertOpen = false
-                    deletedDetail?.let { repository.upsertDetails(it) }
-                    deletedDetail = null
-                }
+            DetailEvents.OnDismissAlertDialog, DetailEvents.OnCancelClick -> {
+                pendingDelete = null
+                isAlertOpen = false
             }
 
             is DetailEvents.OnDeleteClick -> {
+                val detail = pendingDelete ?: return
+                pendingDelete = null
                 isAlertOpen = false
-                deletedDetail = null
+                viewModelScope.launch {
+                    repository.deleteDetail(detail)
+                    lastDeleted = detail
+                    sendUiEvents(UiEvents.ShowUndo(UiText.StringResource(R.string.field_deleted)))
+                }
+            }
+
+            DetailEvents.OnUndoDelete -> {
+                val detail = lastDeleted ?: return
+                lastDeleted = null
+                viewModelScope.launch { repository.upsertDetails(detail) }
             }
 
             is DetailEvents.OnSearchTextUpdate -> {

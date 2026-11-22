@@ -9,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.bhardwaj.passkey.R
 import com.bhardwaj.passkey.analytics.AnalyticsTracker
 import com.bhardwaj.passkey.analytics.AppEvents
+import com.bhardwaj.passkey.data.local.entity.Details
 import com.bhardwaj.passkey.data.local.entity.Preview
 import com.bhardwaj.passkey.data.repository.PasskeyRepository
 import com.bhardwaj.passkey.domain.events.PreviewEvents
@@ -27,6 +28,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -70,7 +72,12 @@ class PreviewViewModel @Inject constructor(
     var preview by mutableStateOf<Preview?>(null)
         private set
 
-    private var deletedPreview: Preview? = null
+    private var pendingDelete: Preview? = null
+    private var lastDeleted: Pair<Preview, List<Details>>? = null
+
+    /** Shown inside the add/edit sheet; a failed save keeps the sheet and what was typed. */
+    var sheetError by mutableStateOf<UiText?>(null)
+        private set
 
     fun onEvent(event: PreviewEvents) {
         when (event) {
@@ -82,12 +89,14 @@ class PreviewViewModel @Inject constructor(
             }
 
             PreviewEvents.OnAddPreviewClick -> {
+                sheetError = null
                 savedStateHandle[BOTTOM_SHEET_HEADING] = false
                 isSheetOpen = true
                 _searchText.value = ""
             }
 
             PreviewEvents.OnDismissBottomSheet -> {
+                sheetError = null
                 savedStateHandle[PREVIEW_HEADING] = ""
                 isSheetOpen = false
             }
@@ -105,18 +114,14 @@ class PreviewViewModel @Inject constructor(
             }
 
             is PreviewEvents.OnHeadingChange -> {
+                sheetError = null
                 savedStateHandle[PREVIEW_HEADING] = event.newHeading
             }
 
             is PreviewEvents.OnSaveClick -> {
                 viewModelScope.launch {
                     if (previewHeading.value.isBlank()) {
-                        isSheetOpen = false
-                        sendUiEvents(
-                            UiEvents.ShowSnackBar(
-                                message = UiText.StringResource(R.string.enter_valid_heading)
-                            )
-                        )
+                        sheetError = UiText.StringResource(R.string.enter_valid_heading)
                         return@launch
                     }
 
@@ -135,14 +140,7 @@ class PreviewViewModel @Inject constructor(
                     val isClashWithAnotherRow =
                         existingPreview != null && existingPreview.previewId != preview?.previewId
                     if (isClashWithAnotherRow) {
-                        preview = null
-                        savedStateHandle[PREVIEW_HEADING] = ""
-                        isSheetOpen = false
-                        sendUiEvents(
-                            UiEvents.ShowSnackBar(
-                                message = UiText.StringResource(R.string.heading_exists)
-                            )
-                        )
+                        sheetError = UiText.StringResource(R.string.heading_exists)
                         return@launch
                     }
 
@@ -179,35 +177,42 @@ class PreviewViewModel @Inject constructor(
                 sendUiEvents(UiEvents.Navigate(Routes.SETTINGS_PAGE))
             }
 
+            // Nothing is written until the user confirms. Deleting on swipe and re-inserting on Cancel lost the
+            // entry if the app died with the dialog open, and left its fields orphaned on Delete.
             is PreviewEvents.OnSwipedLeft -> {
-                viewModelScope.launch {
-                    isAlertOpen = true
-                    repository.deletePreview(event.preview)
-                    deletedPreview = event.preview
-                }
+                pendingDelete = event.preview
+                isAlertOpen = true
             }
 
-            PreviewEvents.OnDismissAlertDialog -> {
-                viewModelScope.launch {
-                    isAlertOpen = false
-                    deletedPreview?.let { repository.upsertPreview(it) }
-                    deletedPreview = null
-                }
-            }
-
-            PreviewEvents.OnCancelClick -> {
-                viewModelScope.launch {
-                    isAlertOpen = false
-                    deletedPreview?.let { repository.upsertPreview(it) }
-                    deletedPreview = null
-                }
+            PreviewEvents.OnDismissAlertDialog, PreviewEvents.OnCancelClick -> {
+                pendingDelete = null
+                isAlertOpen = false
             }
 
             is PreviewEvents.OnDeleteClick -> {
+                val preview = pendingDelete ?: return
+                pendingDelete = null
+                isAlertOpen = false
                 viewModelScope.launch {
-                    deletedPreview?.let { repository.deleteDetailByPreviewId(it.previewId!!) }
-                    isAlertOpen = false
-                    deletedPreview = null
+                    val previewId = preview.previewId ?: return@launch
+                    val details = repository.getDetailsByPreviewId(previewId).first()
+                    repository.runInTransaction {
+                        repository.deleteDetailByPreviewId(previewId)
+                        repository.deletePreview(preview)
+                    }
+                    lastDeleted = preview to details
+                    sendUiEvents(UiEvents.ShowUndo(UiText.StringResource(R.string.entry_deleted)))
+                }
+            }
+
+            PreviewEvents.OnUndoDelete -> {
+                val (preview, details) = lastDeleted ?: return
+                lastDeleted = null
+                viewModelScope.launch {
+                    repository.runInTransaction {
+                        repository.upsertPreview(preview)
+                        details.forEach { repository.upsertDetails(it) }
+                    }
                 }
             }
 

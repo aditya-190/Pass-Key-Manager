@@ -199,4 +199,7 @@
     <string name="legal_terms_liability_body">ॲप जसे आहे तसे, कोणत्याही हमीशिवाय दिले जाते. कायदा परवानगी देतो त्या मर्यादेपर्यंत, त्याच्या वापरामुळे होणाऱ्या नुकसानीसाठी आम्ही जबाबदार नाही.</string>
     <string name="legal_terms_changes_heading">बदल</string>
     <string name="legal_terms_changes_body">आम्ही या अटी अपडेट करू शकतो. वरची तारीख नवीनतम आवृत्ती दाखवते; वापर सुरू ठेवणे म्हणजे तुम्ही ती स्वीकारता.</string>
+    <string name="entry_deleted">नोंद हटवली</string>
+    <string name="field_deleted">फील्ड हटवले</string>
+    <string name="undo">पूर्ववत करा</string>
 </resources>

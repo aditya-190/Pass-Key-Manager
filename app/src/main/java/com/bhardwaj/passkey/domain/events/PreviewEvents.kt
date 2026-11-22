@@ -9,6 +9,7 @@ sealed interface PreviewEvents {
     data object OnSaveClick : PreviewEvents
     data object OnCancelClick : PreviewEvents
     data object OnDeleteClick : PreviewEvents
+    data object OnUndoDelete : PreviewEvents
     data object OnDismissBottomSheet : PreviewEvents
     data object OnDismissAlertDialog : PreviewEvents
 

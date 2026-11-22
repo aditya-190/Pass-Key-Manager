@@ -197,4 +197,7 @@
     <string name="legal_terms_liability_body">このアプリは現状のまま、いかなる保証もなく提供されます。法律で認められる範囲において、その使用から生じた損失について私たちは責任を負いません。</string>
     <string name="legal_terms_changes_heading">変更</string>
     <string name="legal_terms_changes_body">本規約は更新されることがあります。上部の日付が最新版を示します。引き続き利用することで、最新版に同意したものとみなされます。</string>
+    <string name="entry_deleted">エントリを削除しました</string>
+    <string name="field_deleted">項目を削除しました</string>
+    <string name="undo">元に戻す</string>
 </resources>

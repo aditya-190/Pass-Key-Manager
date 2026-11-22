@@ -11,14 +11,15 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -26,13 +27,16 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.BottomAppBar
+import androidx.compose.material3.Button
+import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.FabPosition
-import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.SwipeToDismissBox
 import androidx.compose.material3.SwipeToDismissBoxValue
 import androidx.compose.material3.Text
@@ -108,11 +112,23 @@ fun PreviewScreen(onNavigate: (UiEvents.Navigate) -> Unit, viewModel: PreviewVie
     }
 
     val context = LocalContext.current
+    val undoLabel = stringResource(R.string.undo)
 
     LaunchedEffect(key1 = true) {
         viewModel.uiEvents.collect { event ->
             when (event) {
                 is UiEvents.Navigate -> onNavigate(event)
+                is UiEvents.ShowUndo -> {
+                    scope.launch {
+                        val result = snackBarHostState.showSnackbar(
+                            message = event.message.asString(context),
+                            actionLabel = undoLabel,
+                            duration = SnackbarDuration.Long
+                        )
+                        if (result == SnackbarResult.ActionPerformed) viewModel.onEvent(PreviewEvents.OnUndoDelete)
+                    }
+                }
+
                 is UiEvents.ShowSnackBar -> {
                     scope.launch {
                         snackBarHostState.showSnackbar(
@@ -157,20 +173,20 @@ fun PreviewScreen(onNavigate: (UiEvents.Navigate) -> Unit, viewModel: PreviewVie
                 )
             }
         },
-        floatingActionButtonPosition = FabPosition.Center,
+        // A labelled button: reviewers could not find the old icon-only button docked in the tab bar.
+        floatingActionButtonPosition = FabPosition.End,
         floatingActionButton = {
-            FloatingActionButton(
-                modifier = Modifier.offset(y = 64.dp),
+            // Content-slot overload on purpose: the text/icon overload clears the label's semantics, which left
+            // TalkBack announcing an unlabeled button (found on device).
+            ExtendedFloatingActionButton(
                 onClick = { viewModel.onEvent(PreviewEvents.OnAddPreviewClick) },
-                shape = CircleShape,
                 containerColor = MaterialTheme.colorScheme.primary,
-                content = {
-                    Icon(
-                        imageVector = Icons.Default.Add,
-                        contentDescription = stringResource(R.string.cd_add_entry)
-                    )
-                }
-            )
+                contentColor = MaterialTheme.colorScheme.onPrimary
+            ) {
+                Icon(imageVector = Icons.Default.Add, contentDescription = null)
+                Spacer(modifier = Modifier.width(8.dp))
+                Text(text = stringResource(R.string.cd_add_entry))
+            }
         }
     ) { paddingValues ->
         Box(
@@ -229,14 +245,33 @@ fun PreviewScreen(onNavigate: (UiEvents.Navigate) -> Unit, viewModel: PreviewVie
                 }
 
                 if (previews.isEmpty()) {
-                    Image(
+                    Column(
                         modifier = Modifier
                             .weight(1F)
-                            .fillMaxWidth()
-                            .padding(16.dp),
-                        painter = painterResource(id = R.drawable.icon_empty_list),
-                        contentDescription = stringResource(id = R.string.no_previews_found)
-                    )
+                            .fillMaxWidth(),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Image(
+                            modifier = Modifier
+                                .weight(1F, fill = false)
+                                .fillMaxWidth()
+                                .padding(16.dp),
+                            painter = painterResource(id = R.drawable.icon_empty_list),
+                            contentDescription = null
+                        )
+                        Text(
+                            text = stringResource(id = R.string.no_previews_found),
+                            style = MaterialTheme.typography.titleMedium,
+                            color = MaterialTheme.colorScheme.onBackground
+                        )
+                        // A clear first step for new users, not just an illustration.
+                        if (searchText.isBlank()) {
+                            Button(
+                                onClick = { viewModel.onEvent(PreviewEvents.OnAddPreviewClick) },
+                                modifier = Modifier.padding(top = 16.dp).heightIn(min = 48.dp)
+                            ) { Text(text = stringResource(R.string.cd_add_entry)) }
+                        }
+                    }
                 } else {
                     LazyColumn(
                         state = lazyListState
@@ -305,6 +340,7 @@ fun PreviewScreen(onNavigate: (UiEvents.Navigate) -> Unit, viewModel: PreviewVie
                 PreviewBottomSheet(
                     bottomSheetHeading = bottomSheetHeading,
                     previewHeading = previewHeading,
+                    error = viewModel.sheetError?.asString(context),
                     onDismiss = {
                         viewModel.onEvent(PreviewEvents.OnDismissBottomSheet)
                     },

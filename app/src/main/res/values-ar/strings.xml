@@ -203,4 +203,7 @@
     <string name="legal_terms_liability_body">يُقدَّم التطبيق كما هو، دون أي ضمان. وفي الحدود التي يسمح بها القانون، لسنا مسؤولين عن الخسائر الناتجة عن استخدامه.</string>
     <string name="legal_terms_changes_heading">التغييرات</string>
     <string name="legal_terms_changes_body">قد نحدّث هذه الشروط. يوضح التاريخ في الأعلى أحدث نسخة؛ ومواصلة الاستخدام تعني قبولك لها.</string>
+    <string name="entry_deleted">تم حذف الإدخال</string>
+    <string name="field_deleted">تم حذف الحقل</string>
+    <string name="undo">تراجع</string>
 </resources>

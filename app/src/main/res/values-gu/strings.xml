@@ -198,4 +198,7 @@
     <string name="legal_terms_liability_body">ઍપ જેવી છે તેવી, કોઈ વૉરંટી વિના આપવામાં આવે છે. કાયદો મંજૂરી આપે તે હદ સુધી, તેના ઉપયોગથી થતા નુકસાન માટે અમે જવાબદાર નથી.</string>
     <string name="legal_terms_changes_heading">ફેરફારો</string>
     <string name="legal_terms_changes_body">અમે આ શરતો અપડેટ કરી શકીએ છીએ. ઉપરની તારીખ નવીનતમ સંસ્કરણ બતાવે છે; ઉપયોગ ચાલુ રાખવાનો અર્થ એ છે કે તમે તેને સ્વીકારો છો.</string>
+    <string name="entry_deleted">એન્ટ્રી કાઢી નાખી</string>
+    <string name="field_deleted">ફીલ્ડ કાઢી નાખ્યું</string>
+    <string name="undo">પાછું લાવો</string>
 </resources>

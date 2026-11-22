@@ -43,13 +43,6 @@ val bottomNavigationList = listOf(
         category = Categories.APPS,
         icon = Icons.Filled.Gamepad
     ),
-    // Invisible spacer that reserves room for the centre FAB notch. It is not a destination.
-    BottomNavigationItem(
-        category = Categories.BANKS,
-        icon = Icons.Filled.AccountBalance,
-        isVisible = false
-    ),
-
     BottomNavigationItem(
         category = Categories.MAILS,
         icon = Icons.Filled.Email

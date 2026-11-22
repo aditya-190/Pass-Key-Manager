@@ -200,4 +200,7 @@
     <string name="legal_terms_liability_body">O app é fornecido no estado em que se encontra, sem garantia. Na medida em que a lei permitir, não nos responsabilizamos por perdas decorrentes do seu uso.</string>
     <string name="legal_terms_changes_heading">Alterações</string>
     <string name="legal_terms_changes_body">Podemos atualizar estes termos. A data no topo mostra a versão mais recente; continuar usando o app significa que você a aceita.</string>
+    <string name="entry_deleted">Entrada excluída</string>
+    <string name="field_deleted">Campo excluído</string>
+    <string name="undo">Desfazer</string>
 </resources>

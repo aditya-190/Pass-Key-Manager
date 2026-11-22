@@ -92,6 +92,9 @@
     <string name="confirm_delete_description_question">Are you sure you want to delete question?</string>
     <string name="confirm_delete_description_heading">Are you sure you want to delete heading?</string>
     <string name="heading_exists">Similar heading already exists.</string>
+    <string name="entry_deleted">Entry deleted</string>
+    <string name="field_deleted">Field deleted</string>
+    <string name="undo">Undo</string>
 
     <!-- Password Health Report -->
     <string name="analyze_passwords">Safety Status</string>

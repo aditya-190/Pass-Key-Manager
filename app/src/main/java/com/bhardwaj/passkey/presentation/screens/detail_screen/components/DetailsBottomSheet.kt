@@ -33,7 +33,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.LiveRegionMode
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.liveRegion
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -55,6 +58,7 @@ fun DetailsBottomSheet(
     detailTitle: String,
     detailResponse: String,
     isSecret: Boolean,
+    error: String?,
     onSecretToggle: (Boolean) -> Unit,
     onTitleChange: (heading: String) -> Unit,
     onDescriptionChange: (description: String) -> Unit,
@@ -183,6 +187,17 @@ fun DetailsBottomSheet(
                         modifier = Modifier.weight(1f)
                     )
                     Switch(checked = isSecret, onCheckedChange = null)
+                }
+                // Validation stays in the sheet, so nothing the user typed is lost.
+                if (error != null) {
+                    Text(
+                        text = error,
+                        color = MaterialTheme.colorScheme.error,
+                        style = MaterialTheme.typography.bodyMedium,
+                        modifier = Modifier
+                            .padding(top = 8.dp)
+                            .semantics { liveRegion = LiveRegionMode.Polite }
+                    )
                 }
                 PassKeyButton(
                     modifier = Modifier

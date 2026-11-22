@@ -200,4 +200,7 @@
     <string name="legal_terms_liability_body">L\'app è fornita così com\'è, senza garanzia. Nei limiti consentiti dalla legge, non siamo responsabili per perdite derivanti dal suo utilizzo.</string>
     <string name="legal_terms_changes_heading">Modifiche</string>
     <string name="legal_terms_changes_body">Possiamo aggiornare questi termini. La data in alto indica la versione più recente; continuare a usare l\'app significa accettarla.</string>
+    <string name="entry_deleted">Voce eliminata</string>
+    <string name="field_deleted">Campo eliminato</string>
+    <string name="undo">Annulla</string>
 </resources>

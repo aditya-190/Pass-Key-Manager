@@ -199,4 +199,7 @@
     <string name="legal_terms_liability_body">অ্যাপটি যেমন আছে তেমনই, কোনো ওয়ারেন্টি ছাড়া দেওয়া হয়। আইন যতটা অনুমতি দেয়, ততটা পর্যন্ত এর ব্যবহার থেকে হওয়া ক্ষতির জন্য আমরা দায়ী নই।</string>
     <string name="legal_terms_changes_heading">পরিবর্তন</string>
     <string name="legal_terms_changes_body">আমরা এই শর্তাবলী আপডেট করতে পারি। উপরের তারিখটি সর্বশেষ সংস্করণ দেখায়; ব্যবহার চালিয়ে যাওয়ার অর্থ আপনি তা মেনে নিচ্ছেন।</string>
+    <string name="entry_deleted">এন্ট্রি মুছে ফেলা হয়েছে</string>
+    <string name="field_deleted">ফিল্ড মুছে ফেলা হয়েছে</string>
+    <string name="undo">ফিরিয়ে আনুন</string>
 </resources>

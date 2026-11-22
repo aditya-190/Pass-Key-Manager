@@ -198,4 +198,7 @@
     <string name="legal_terms_liability_body">ஆப்ஸ் உள்ளது உள்ளபடியே, எந்த உத்தரவாதமும் இல்லாமல் வழங்கப்படுகிறது. சட்டம் அனுமதிக்கும் அளவுக்கு, அதைப் பயன்படுத்துவதால் ஏற்படும் இழப்புகளுக்கு நாங்கள் பொறுப்பல்ல.</string>
     <string name="legal_terms_changes_heading">மாற்றங்கள்</string>
     <string name="legal_terms_changes_body">இந்த விதிமுறைகளை நாங்கள் புதுப்பிக்கலாம். மேலே உள்ள தேதி சமீபத்திய பதிப்பைக் காட்டுகிறது; தொடர்ந்து பயன்படுத்தினால் அதை ஏற்றுக்கொள்கிறீர்கள் என்று பொருள்.</string>
+    <string name="entry_deleted">பதிவு நீக்கப்பட்டது</string>
+    <string name="field_deleted">புலம் நீக்கப்பட்டது</string>
+    <string name="undo">செயல்தவிர்</string>
 </resources>
