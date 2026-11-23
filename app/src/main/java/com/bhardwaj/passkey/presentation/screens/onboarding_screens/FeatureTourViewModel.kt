@@ -5,6 +5,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bhardwaj.passkey.analytics.AnalyticsTracker
 import com.bhardwaj.passkey.analytics.AppEvents
+import com.bhardwaj.passkey.review.ReviewMoment
+import com.bhardwaj.passkey.review.ReviewPrompter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.channels.Channel
@@ -15,7 +17,8 @@ import kotlinx.coroutines.launch
 @HiltViewModel
 class FeatureTourViewModel @Inject constructor(
     private val analytics: AnalyticsTracker,
-    private val savedState: SavedStateHandle
+    private val savedState: SavedStateHandle,
+    private val reviewPrompter: ReviewPrompter
 ) : ViewModel() {
     // BUFFERED for the same reason as onboarding: a backgrounded screen must not suspend the sender.
     private val _effects = Channel<FeatureTourEffect>(Channel.BUFFERED)
@@ -39,7 +42,13 @@ class FeatureTourViewModel @Inject constructor(
             is FeatureTourEvent.Skip -> analytics.log(AppEvents.featureTourSkipped(event.page + 1))
             FeatureTourEvent.Complete -> analytics.log(AppEvents.featureTourCompleted())
         }
-        viewModelScope.launch { _effects.send(FeatureTourEffect.Close) }
+        viewModelScope.launch {
+            // Finishing (not skipping) is a good moment to ask for a review, under the shared pacing.
+            if (event == FeatureTourEvent.Complete && reviewPrompter.onMoment(ReviewMoment.TOUR_FINISHED)) {
+                _effects.send(FeatureTourEffect.RequestReview)
+            }
+            _effects.send(FeatureTourEffect.Close)
+        }
     }
 
     private companion object {
@@ -56,4 +65,7 @@ sealed interface FeatureTourEvent {
 
 sealed interface FeatureTourEffect {
     data object Close : FeatureTourEffect
+
+    /** Finishing the tour is a good moment to ask for a review (6.0.0). */
+    data object RequestReview : FeatureTourEffect
 }

@@ -31,6 +31,8 @@ object AppEventNames {
     const val FEATURE_TOUR_SKIPPED = "feature_tour_skipped"
     const val BACKUP_REMINDER_TAPPED = "backup_reminder_tapped"
     const val BACKUP_REMINDER_SNOOZED = "backup_reminder_snoozed"
+    const val REVIEW_REQUESTED = "review_requested"
+    const val APP_SHARED = "app_shared"
 }
 
 object AppParams {

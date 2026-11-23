@@ -48,6 +48,12 @@ object ConfigKeys {
     /** Play developer page ("More apps"). */
     val MORE_APPS_URL = ConfigKey.StringKey("more_apps_url", "")
 
+    // In-app review prompt (6.0.0): only after a good moment, never early, rarely. Play adds its own quota on top.
+    val REVIEW_PROMPT_ENABLED = ConfigKey.BoolKey("review_prompt_enabled", true)
+    val REVIEW_MIN_DAYS = ConfigKey.LongKey("review_min_days", 3)
+    val REVIEW_COOLDOWN_DAYS = ConfigKey.LongKey("review_cooldown_days", 120)
+    val REVIEW_AFTER_FILLS = ConfigKey.LongKey("review_after_fills", 3)
+
     /** Bumped by hand when the template is published; reported to Crashlytics. */
     val CONFIG_VERSION = ConfigKey.LongKey("config_version", 0)
 
@@ -68,6 +74,10 @@ object ConfigKeys {
             PRIVACY_URL,
             SUPPORT_EMAIL,
             MORE_APPS_URL,
+            REVIEW_PROMPT_ENABLED,
+            REVIEW_MIN_DAYS,
+            REVIEW_COOLDOWN_DAYS,
+            REVIEW_AFTER_FILLS,
             CONFIG_VERSION
         )
 

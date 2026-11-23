@@ -4,6 +4,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bhardwaj.passkey.BuildConfig
 import com.bhardwaj.passkey.R
+import com.bhardwaj.passkey.analytics.AnalyticsEvent
+import com.bhardwaj.passkey.analytics.AnalyticsTracker
+import com.bhardwaj.passkey.analytics.AppEventNames
+import com.bhardwaj.passkey.analytics.AppParams
 import com.bhardwaj.passkey.core.Clock
 import com.bhardwaj.passkey.data.backup.BackupCheck
 import com.bhardwaj.passkey.data.backup.BackupError
@@ -16,6 +20,8 @@ import com.bhardwaj.passkey.domain.repository.BackupReminderStore
 import com.bhardwaj.passkey.domain.repository.PasskeyRepository
 import com.bhardwaj.passkey.domain.repository.PreferencesRepository
 import com.bhardwaj.passkey.presentation.navigation.NavRoute
+import com.bhardwaj.passkey.review.ReviewMoment
+import com.bhardwaj.passkey.review.ReviewPrompter
 import com.bhardwaj.passkey.utils.FormattedDate
 import com.bhardwaj.passkey.utils.PasswordAnalyzer
 import com.bhardwaj.passkey.utils.SecretKeywords
@@ -47,6 +53,8 @@ class SettingsViewModel @Inject constructor(
     private val keyManager: DatabaseKeyManager,
     private val reminderStore: BackupReminderStore,
     private val clock: Clock,
+    private val analytics: AnalyticsTracker,
+    private val reviewPrompter: ReviewPrompter,
     @param:WorkDispatcher private val workDispatcher: CoroutineDispatcher
 ) : ViewModel() {
     private val _effects = Channel<SettingsEffect>(Channel.BUFFERED)
@@ -84,7 +92,14 @@ class SettingsViewModel @Inject constructor(
                 send(SettingsEffect.Navigate(NavRoute.Details(intent.detail.previewId)))
             }
 
-            SettingsIntent.RateClicked -> send(SettingsEffect.OpenUrl(PLAY_STORE_URL + BuildConfig.APPLICATION_ID))
+            SettingsIntent.ShareClicked -> {
+                analytics.log(AnalyticsEvent(AppEventNames.APP_SHARED, mapOf(AppParams.SOURCE to "settings")))
+                send(SettingsEffect.Share(PLAY_STORE_URL + BuildConfig.APPLICATION_ID))
+            }
+            SettingsIntent.RateClicked -> {
+                viewModelScope.launch { reviewPrompter.noteManualRate() }
+                send(SettingsEffect.OpenUrl(PLAY_STORE_URL + BuildConfig.APPLICATION_ID))
+            }
             SettingsIntent.AutofillClicked -> showDialog(SettingsDialog.AutofillHelp)
             SettingsIntent.AutofillHelpContinue -> {
                 showDialog(null)
@@ -117,6 +132,10 @@ class SettingsViewModel @Inject constructor(
                 Arrays.fill(intent.password, Char(0))
                 if (result.isSuccess) reminderStore.recordBackup(clock.nowMs())
                 snackbar(if (result.isSuccess) R.string.export_success else R.string.export_failed)
+                // A saved backup is a good moment to ask for a review (6.0.0), under the shared pacing.
+                if (result.isSuccess && reviewPrompter.onMoment(ReviewMoment.BACKUP_SAVED)) {
+                    send(SettingsEffect.RequestReview)
+                }
             }
 
             is SettingsIntent.VerifyChosen -> runBackup {

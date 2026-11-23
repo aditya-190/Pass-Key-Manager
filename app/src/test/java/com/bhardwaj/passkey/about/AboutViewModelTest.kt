@@ -24,7 +24,17 @@ class AboutViewModelTest {
         assertEquals("yrkkh.cclub@gmail.com", vm().state.value.contactEmail)
     }
 
-    private fun vm(overrides: Map<String, Any> = emptyMap()) = AboutViewModel(app, FakeConfig(overrides), analytics)
+    private fun vm(overrides: Map<String, Any> = emptyMap()) = AboutViewModel(
+        app,
+        FakeConfig(overrides),
+        analytics,
+        com.bhardwaj.passkey.review.ReviewPrompter(
+            com.bhardwaj.passkey.testing.FakeReviewPromptStore(),
+            com.bhardwaj.passkey.core.Clock { 0L },
+            FakeConfig(overrides),
+            analytics
+        )
+    )
 
     @Test
     fun `state exposes version and hides unset links`() {

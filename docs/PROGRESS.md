@@ -215,4 +215,11 @@ Owner direction (2026-11-23): no UI change; additive, update-safe features; goal
   long-passphrase hint; #8 layout test waits for the pager. TDD 4 red → green.
 
 ### 6d: import from other apps — not built (owner decision, 2026-11-23)
+### 6e: reviews and sharing, code-complete
+- Play in-app review after good moments only (backup saved, replayed tour finished, after 3 autofills on the next Home
+  open); never in the first 3 days, at most once per 120 days, Remote Config pacing and off switch. Manual Rate (Settings
+  or About) counts as an ask.
+- Settings › Share with friends.
+- TDD: 13 red → green (ReviewPromptTest 8, HomeReviewViewModelTest 2, Settings 2, FeatureTour 1). Simulation 2,000
+  seeds (clock jumps, manual rates, switched off) found seed 18 (last ask moved back): fixed, store keeps the later time.
 

@@ -48,6 +48,7 @@ sealed interface SettingsIntent {
     data object AnalyzeClicked : SettingsIntent
     data class AnalysisItemClicked(val detail: Detail) : SettingsIntent
     data object RateClicked : SettingsIntent
+    data object ShareClicked : SettingsIntent
     data object AutofillClicked : SettingsIntent
     data object AutofillHelpContinue : SettingsIntent
     data object ChangeRecoveryClicked : SettingsIntent
@@ -70,6 +71,12 @@ sealed interface SettingsEffect {
     data class ShowSnackbar(val message: UiText, val long: Boolean = false) : SettingsEffect
     data class Navigate(val route: NavRoute) : SettingsEffect
     data class OpenUrl(val url: String) : SettingsEffect
+
+    /** Share PassKey's store link through the system share sheet (6.0.0). */
+    data class Share(val storeUrl: String) : SettingsEffect
+
+    /** A good moment: start Play's in-app review (it may show nothing; Play decides). */
+    data object RequestReview : SettingsEffect
 
     /** Android owns the autofill-service picker; the app can only ask for it to be shown. */
     data object OpenAutofillSettings : SettingsEffect

@@ -5,6 +5,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import com.bhardwaj.passkey.data.datastore.BackupReminderStoreImpl
 import com.bhardwaj.passkey.data.datastore.PreferencesRepositoryImpl
+import com.bhardwaj.passkey.data.datastore.ReviewPromptStoreImpl
 import com.bhardwaj.passkey.data.datastore.passkeyDataStore
 import com.bhardwaj.passkey.data.local.VaultDatabaseProvider
 import com.bhardwaj.passkey.data.repository.AutofillTrustStoreImpl
@@ -15,6 +16,7 @@ import com.bhardwaj.passkey.domain.repository.AutofillTrustStore
 import com.bhardwaj.passkey.domain.repository.BackupReminderStore
 import com.bhardwaj.passkey.domain.repository.PasskeyRepository
 import com.bhardwaj.passkey.domain.repository.PreferencesRepository
+import com.bhardwaj.passkey.review.ReviewPromptStore
 import com.bhardwaj.passkey.utils.ResourceSecretKeywords
 import com.bhardwaj.passkey.utils.SecretKeywords
 import dagger.Module
@@ -56,6 +58,11 @@ object AppModule {
     @Singleton
     fun provideBackupReminderStore(dataStore: DataStore<Preferences>): BackupReminderStore =
         BackupReminderStoreImpl(dataStore)
+
+    @Provides
+    @Singleton
+    fun provideReviewPromptStore(dataStore: DataStore<Preferences>): ReviewPromptStore =
+        ReviewPromptStoreImpl(dataStore)
 
     @Provides
     @Singleton

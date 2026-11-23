@@ -3,6 +3,7 @@ package com.bhardwaj.passkey.viewmodels
 import android.net.Uri
 import com.bhardwaj.passkey.BuildConfig
 import com.bhardwaj.passkey.R
+import com.bhardwaj.passkey.analytics.AppEventNames
 import com.bhardwaj.passkey.core.Clock
 import com.bhardwaj.passkey.data.backup.BackupCheck
 import com.bhardwaj.passkey.data.backup.BackupError
@@ -21,9 +22,14 @@ import com.bhardwaj.passkey.presentation.screens.settings_screen.SettingsDialog
 import com.bhardwaj.passkey.presentation.screens.settings_screen.SettingsEffect
 import com.bhardwaj.passkey.presentation.screens.settings_screen.SettingsIntent
 import com.bhardwaj.passkey.presentation.screens.settings_screen.SettingsViewModel
+import com.bhardwaj.passkey.review.ReviewPromptState
+import com.bhardwaj.passkey.review.ReviewPrompter
 import com.bhardwaj.passkey.testing.FakeBackupReminderStore
 import com.bhardwaj.passkey.testing.FakePasskeyRepository
+import com.bhardwaj.passkey.testing.FakeReviewPromptStore
+import com.bhardwaj.passkey.testing.FixedConfigProvider
 import com.bhardwaj.passkey.testing.MainDispatcherRule
+import com.bhardwaj.passkey.testing.RecordingAnalyticsTracker
 import com.bhardwaj.passkey.utils.FormattedDate
 import com.bhardwaj.passkey.utils.UiText
 import io.mockk.coEvery
@@ -56,6 +62,8 @@ class SettingsViewModelTest {
     private val keyManager = mockk<DatabaseKeyManager>()
     private val uri = mockk<Uri>()
     private val reminders = FakeBackupReminderStore()
+    private val analytics = RecordingAnalyticsTracker()
+    private val reviewStore = FakeReviewPromptStore(ReviewPromptState(firstSeenAt = NOW - 30 * DAY))
 
     private fun TestScope.vm() = SettingsViewModel(
         repository = vault,
@@ -65,6 +73,8 @@ class SettingsViewModelTest {
         keyManager = keyManager,
         reminderStore = reminders,
         clock = Clock { NOW },
+        analytics = analytics,
+        reviewPrompter = ReviewPrompter(reviewStore, Clock { NOW }, FixedConfigProvider(), analytics),
         workDispatcher = UnconfinedTestDispatcher(testScheduler)
     ).also { vm -> backgroundScope.launch(UnconfinedTestDispatcher(testScheduler)) { vm.state.collect {} } }
 
@@ -278,6 +288,29 @@ class SettingsViewModelTest {
         vm.onIntent(SettingsIntent.VerifyChosen(uri, "p".toCharArray()))
         vm.effects.first()
         assertEquals("an older file never replaces a newer backup", NOW - 5 * DAY, reminders.flow.value.lastBackupAt)
+    }
+
+    @Test
+    fun `share sends the store link and is counted`() = runTest {
+        val vm = vm()
+        vm.onIntent(SettingsIntent.ShareClicked)
+        val effect = vm.effects.first() as SettingsEffect.Share
+        assertTrue(effect.storeUrl.endsWith("id=${BuildConfig.APPLICATION_ID}"))
+        assertTrue(AppEventNames.APP_SHARED in analytics.names)
+    }
+
+    @Test
+    fun `a saved backup is a good moment to ask for a review, once`() = runTest {
+        coEvery { backups.export(any(), any()) } returns Result.success(Unit)
+        val vm = vm()
+        vm.onIntent(SettingsIntent.ExportChosen(uri, "p".toCharArray()))
+        assertEquals(SettingsEffect.ShowSnackbar(UiText.StringResource(R.string.export_success)), vm.effects.first())
+        assertEquals(SettingsEffect.RequestReview, vm.effects.first())
+
+        vm.onIntent(SettingsIntent.ExportChosen(uri, "p".toCharArray()))
+        assertEquals(SettingsEffect.ShowSnackbar(UiText.StringResource(R.string.export_success)), vm.effects.first())
+        vm.onIntent(SettingsIntent.RateClicked)
+        assertTrue("no second ask inside the cooldown", vm.effects.first() is SettingsEffect.OpenUrl)
     }
 
     @Test

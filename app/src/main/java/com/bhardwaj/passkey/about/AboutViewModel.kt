@@ -1,11 +1,13 @@
 package com.bhardwaj.passkey.about
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.bhardwaj.passkey.analytics.AnalyticsTracker
 import com.bhardwaj.passkey.analytics.BaselineEvents
 import com.bhardwaj.passkey.config.ConfigKeys
 import com.bhardwaj.passkey.config.ConfigProvider
 import com.bhardwaj.passkey.core.SafeUrl
+import com.bhardwaj.passkey.review.ReviewPrompter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.channels.Channel
@@ -14,6 +16,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.launch
 
 /** Build facts, passed from BuildConfig by the app (`BuildConfig.VERSION_NAME`, `VERSION_CODE`, `APPLICATION_ID`). */
 data class AppInfo(val appName: String, val versionName: String, val versionCode: Long, val packageName: String)
@@ -69,7 +72,8 @@ sealed interface AboutEffect {
 class AboutViewModel @Inject constructor(
     app: AppInfo,
     config: ConfigProvider,
-    private val analytics: AnalyticsTracker
+    private val analytics: AnalyticsTracker,
+    private val reviewPrompter: ReviewPrompter
 ) : ViewModel() {
     private val _state =
         MutableStateFlow(
@@ -98,13 +102,15 @@ class AboutViewModel @Inject constructor(
         val s = _state.value
         val effect =
             when (action) {
-                AboutAction.RATE ->
+                AboutAction.RATE -> {
+                    viewModelScope.launch { reviewPrompter.noteManualRate() }
                     if (reviewRequested) {
                         AboutEffect.OpenUrl(s.storeUrl)
                     } else {
                         reviewRequested = true
                         AboutEffect.LaunchInAppReview
                     }
+                }
                 AboutAction.SHARE -> AboutEffect.Share(s.storeUrl)
                 AboutAction.CONTACT -> s.contactEmail?.let { AboutEffect.Email(it) }
                 AboutAction.MORE_APPS -> s.moreAppsUrl?.let { AboutEffect.OpenUrl(it) }

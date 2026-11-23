@@ -60,7 +60,19 @@ class FeatureTourTest {
 
     @Test
     fun `opening the tour is counted once, finishing closes it once`() = runTest {
-        val vm = FeatureTourViewModel(analytics, SavedStateHandle())
+        val vm =
+            FeatureTourViewModel(
+                analytics,
+                SavedStateHandle(),
+                com.bhardwaj.passkey.review.ReviewPrompter(
+                    com.bhardwaj.passkey.testing.FakeReviewPromptStore(),
+                    com.bhardwaj.passkey.core.Clock {
+                        0L
+                    },
+                    com.bhardwaj.passkey.testing.FixedConfigProvider(),
+                    RecordingAnalyticsTracker()
+                )
+            )
         vm.onEvent(FeatureTourEvent.Complete)
         vm.onEvent(FeatureTourEvent.Complete)
         assertEquals(FeatureTourEffect.Close, vm.effects.first())
@@ -72,7 +84,19 @@ class FeatureTourTest {
 
     @Test
     fun `skipping closes the tour and logs the 1-based page`() = runTest {
-        val vm = FeatureTourViewModel(analytics, SavedStateHandle())
+        val vm =
+            FeatureTourViewModel(
+                analytics,
+                SavedStateHandle(),
+                com.bhardwaj.passkey.review.ReviewPrompter(
+                    com.bhardwaj.passkey.testing.FakeReviewPromptStore(),
+                    com.bhardwaj.passkey.core.Clock {
+                        0L
+                    },
+                    com.bhardwaj.passkey.testing.FixedConfigProvider(),
+                    RecordingAnalyticsTracker()
+                )
+            )
         vm.onEvent(FeatureTourEvent.Skip(page = 2))
         vm.onEvent(FeatureTourEvent.Complete)
         assertEquals(FeatureTourEffect.Close, vm.effects.first())
@@ -84,8 +108,34 @@ class FeatureTourTest {
     fun `a tour restored after process death is not counted as a new one`() {
         // Attack-pass #4: Android recreates the ViewModel from saved state; the opening was already counted.
         val handle = SavedStateHandle()
-        FeatureTourViewModel(analytics, handle)
-        FeatureTourViewModel(analytics, SavedStateHandle(handle.keys().associateWith { handle.get<Any>(it) }))
+        FeatureTourViewModel(
+            analytics,
+            handle,
+            com.bhardwaj.passkey.review.ReviewPrompter(
+                com.bhardwaj.passkey.testing.FakeReviewPromptStore(),
+                com.bhardwaj.passkey.core.Clock {
+                    0L
+                },
+                com.bhardwaj.passkey.testing.FixedConfigProvider(),
+                RecordingAnalyticsTracker()
+            )
+        )
+        FeatureTourViewModel(
+            analytics,
+            SavedStateHandle(
+                handle.keys().associateWith {
+                    handle.get<Any>(it)
+                }
+            ),
+            com.bhardwaj.passkey.review.ReviewPrompter(
+                com.bhardwaj.passkey.testing.FakeReviewPromptStore(),
+                com.bhardwaj.passkey.core.Clock {
+                    0L
+                },
+                com.bhardwaj.passkey.testing.FixedConfigProvider(),
+                RecordingAnalyticsTracker()
+            )
+        )
         assertEquals(listOf(AppEventNames.FEATURE_TOUR_STARTED), analytics.names)
     }
 
@@ -122,4 +172,27 @@ class FeatureTourTest {
     }
 
     private val OnboardingPage.key: String get() = name.removePrefix("TOUR_").lowercase()
+
+    @Test
+    fun `finishing the replayed tour may ask for a review, then closes`() = runTest {
+        // 6.0.0: a good moment, under the same pacing as every other.
+        val now = 1_800_000_000_000L
+        val store = com.bhardwaj.passkey.testing.FakeReviewPromptStore(
+            com.bhardwaj.passkey.review.ReviewPromptState(firstSeenAt = now - 10 * 86_400_000L)
+        )
+        val prompter = com.bhardwaj.passkey.review.ReviewPrompter(
+            store,
+            com.bhardwaj.passkey.core.Clock {
+                now
+            },
+            com.bhardwaj.passkey.testing.FixedConfigProvider(),
+            analytics
+        )
+        val vm = FeatureTourViewModel(analytics, SavedStateHandle(), prompter)
+        vm.onIntent2Complete()
+        assertEquals(FeatureTourEffect.RequestReview, vm.effects.first())
+        assertEquals(FeatureTourEffect.Close, vm.effects.first())
+    }
+
+    private fun FeatureTourViewModel.onIntent2Complete() = onEvent(FeatureTourEvent.Complete)
 }

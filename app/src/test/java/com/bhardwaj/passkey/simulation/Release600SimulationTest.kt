@@ -52,7 +52,19 @@ class Release600SimulationTest {
         repeat(SEEDS) { seed ->
             val random = Random(seed)
             val analytics = RecordingAnalyticsTracker()
-            val vm = FeatureTourViewModel(analytics, SavedStateHandle())
+            val vm =
+                FeatureTourViewModel(
+                    analytics,
+                    SavedStateHandle(),
+                    com.bhardwaj.passkey.review.ReviewPrompter(
+                        com.bhardwaj.passkey.testing.FakeReviewPromptStore(),
+                        com.bhardwaj.passkey.core.Clock {
+                            0L
+                        },
+                        com.bhardwaj.passkey.testing.FixedConfigProvider(),
+                        RecordingAnalyticsTracker()
+                    )
+                )
             val effects = mutableListOf<FeatureTourEffect>()
             val collector = backgroundScope.launch(UnconfinedTestDispatcher(testScheduler)) {
                 vm.effects.toList(effects)
@@ -238,6 +250,51 @@ class Release600SimulationTest {
         }
     }
 
+    @Test
+    fun `the review prompt never asks early, never twice within its cooldown, never when switched off`() = runTest {
+        val day = 86_400_000L
+        repeat(REVIEW_SEEDS) { seed ->
+            val rnd = Random(seed)
+            val enabled = rnd.nextInt(10) > 0
+            val minDays = rnd.nextLong(0, 10)
+            val cooldown = rnd.nextLong(1, 200)
+            val config = com.bhardwaj.passkey.testing.FixedConfigProvider(
+                mapOf(
+                    "review_prompt_enabled" to enabled,
+                    "review_min_days" to minDays,
+                    "review_cooldown_days" to cooldown,
+                    "review_after_fills" to rnd.nextLong(0, 5)
+                )
+            )
+            val store = com.bhardwaj.passkey.testing.FakeReviewPromptStore()
+            var now = 1_700_000_000_000L
+            val prompter = com.bhardwaj.passkey.review.ReviewPrompter(
+                store,
+                com.bhardwaj.passkey.core.Clock { now },
+                config,
+                RecordingAnalyticsTracker()
+            )
+            prompter.markFirstSeen()
+            val firstSeen = now
+            val asks = mutableListOf<Long>()
+            repeat(rnd.nextInt(5, 40)) {
+                // Mostly forward, sometimes the clock jumps back.
+                now += if (rnd.nextInt(8) == 0) -rnd.nextLong(0, 60 * day) else rnd.nextLong(0, 40 * day)
+                when (rnd.nextInt(4)) {
+                    0 -> prompter.recordFill()
+                    1 -> prompter.noteManualRate()
+                    else -> if (prompter.onMoment(com.bhardwaj.passkey.review.ReviewMoment.entries.random(rnd))) {
+                        asks +=
+                            now
+                    }
+                }
+            }
+            if (!enabled) assertTrue("seed $seed: switched off", asks.isEmpty())
+            asks.forEach { assertTrue("seed $seed: too early", it - firstSeen >= minDays * day) }
+            asks.zipWithNext().forEach { (a, b) -> assertTrue("seed $seed: inside cooldown", b - a >= cooldown * day) }
+        }
+    }
+
     private companion object {
         const val SEEDS = 1_000
         const val REMINDER_SEEDS = 2_000
@@ -246,5 +303,6 @@ class Release600SimulationTest {
         const val PASSPHRASE_SEEDS = 2_000
         const val SEARCH_SEEDS = 1_000
         const val MISC_SEEDS = 1_000
+        const val REVIEW_SEEDS = 2_000
     }
 }

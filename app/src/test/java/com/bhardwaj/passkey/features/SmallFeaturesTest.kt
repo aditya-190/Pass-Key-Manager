@@ -110,4 +110,14 @@ class SmallFeaturesTest {
         )
         assertEquals(false, ShortcutAction.needsHome(null, unlocked = true, onHome = false))
     }
+
+    @Test
+    fun `the review store never moves the last ask backwards`() = runTest {
+        // Found by Release600SimulationTest seed 18: clock back, then Rate, shortened the cooldown.
+        val store = com.bhardwaj.passkey.data.datastore.ReviewPromptStoreImpl(testDataStore(tmp.root))
+        store.recordAsked(200L)
+        store.recordAsked(100L)
+        assertEquals(200L, store.state.first().lastAskedAt)
+    }
 }
+

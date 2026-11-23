@@ -268,3 +268,29 @@ class FakeBackupReminderStore(
         flow.value = flow.value.copy(snoozedUntil = until)
     }
 }
+
+/** In-memory review prompt store (6.0.0). */
+class FakeReviewPromptStore(
+    initial: com.bhardwaj.passkey.review.ReviewPromptState =
+        com.bhardwaj.passkey.review.ReviewPromptState()
+) : com.bhardwaj.passkey.review.ReviewPromptStore {
+    val flow = kotlinx.coroutines.flow.MutableStateFlow(initial)
+    override val state: kotlinx.coroutines.flow.Flow<com.bhardwaj.passkey.review.ReviewPromptState> = flow
+
+    override suspend fun markFirstSeen(at: Long) {
+        if (flow.value.firstSeenAt == null) flow.value = flow.value.copy(firstSeenAt = at)
+    }
+
+    override suspend fun recordAsked(at: Long) {
+        flow.value = flow.value.copy(lastAskedAt = maxOf(flow.value.lastAskedAt ?: at, at))
+    }
+
+    override suspend fun recordFill() {
+        flow.value = flow.value.copy(autofillFills = flow.value.autofillFills + 1)
+    }
+}
+
+/** A config provider over a fixed map (6.0.0 review pacing tests). */
+class FixedConfigProvider(values: Map<String, Any> = emptyMap()) : com.bhardwaj.passkey.config.ConfigProvider {
+    override val current = com.bhardwaj.passkey.config.AppConfig(com.bhardwaj.passkey.config.MapConfigReader(values))
+}

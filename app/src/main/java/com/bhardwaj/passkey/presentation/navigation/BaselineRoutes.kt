@@ -1,5 +1,6 @@
 package com.bhardwaj.passkey.presentation.navigation
 
+import androidx.activity.compose.LocalActivity
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
@@ -32,6 +33,8 @@ import com.bhardwaj.passkey.legal.LegalDocument
 import com.bhardwaj.passkey.legal.LegalEffect
 import com.bhardwaj.passkey.legal.LegalScreen
 import com.bhardwaj.passkey.legal.LegalViewModel
+import com.bhardwaj.passkey.review.HomeReviewViewModel
+import com.bhardwaj.passkey.review.requestInAppReview
 
 /** Everything PassKey ships besides the baseline set. Keep docs/ASSET_LICENSES.md in step. */
 val passKeyLibraries = baselineLibraries + listOf(
@@ -89,6 +92,11 @@ fun HomeAnnouncement(onNavigate: (NavRoute) -> Unit, modifier: Modifier = Modifi
             }
         }
     }
+    // Home's review moment (6.0.0): after enough autofills. No UI; Play decides whether anything shows.
+    val reviewViewModel: HomeReviewViewModel = hiltViewModel()
+    val activity = LocalActivity.current
+    LaunchedEffect(reviewViewModel) { reviewViewModel.requests.collect { requestInAppReview(activity) } }
+
     // The backup reminder (6.0.0) uses the same card. It shows under a live announcement rather than waiting
     // for it to end: a long announcement must not hold back a missing backup.
     val reminderViewModel: BackupReminderViewModel = hiltViewModel()

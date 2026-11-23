@@ -8,6 +8,7 @@ import android.os.Build
 import android.os.LocaleList
 import android.provider.Settings
 import android.view.autofill.AutofillManager
+import androidx.activity.compose.LocalActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatDelegate
@@ -74,6 +75,7 @@ import com.bhardwaj.passkey.presentation.screens.settings_screen.components.Sett
 import com.bhardwaj.passkey.presentation.screens.settings_screen.components.ThemeDialog
 import com.bhardwaj.passkey.presentation.theme.BebasNeue
 import com.bhardwaj.passkey.presentation.theme.Poppins
+import com.bhardwaj.passkey.review.requestInAppReview
 import com.bhardwaj.passkey.utils.asString
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -224,6 +226,11 @@ fun SettingsScreen(
         )
     }
 
+    val activity = LocalActivity.current
+    val appName = stringResource(R.string.app_name)
+    val shareTemplate = stringResource(R.string.about_share_text)
+    val shareChooser = stringResource(R.string.about_share_chooser)
+    val shareText = { url: String -> String.format(shareTemplate, appName, url) }
     val storeUnavailable = stringResource(R.string.store_unavailable)
     val autofillUnsupported = stringResource(R.string.autofill_unsupported)
     ObserveAsEvents(viewModel.effects) { event ->
@@ -251,6 +258,8 @@ fun SettingsScreen(
                 }
             }
             is SettingsEffect.ApplyLanguage -> applyAppLanguage(context, event.languageTag)
+            is SettingsEffect.Share -> ExternalLinks.share(context, shareText(event.storeUrl), shareChooser)
+            SettingsEffect.RequestReview -> requestInAppReview(activity)
             is SettingsEffect.ShowSnackbar -> {
                 scope.launch {
                     snackBarHostState.showSnackbar(
@@ -316,6 +325,9 @@ fun SettingsScreen(
                             }
                             SettingsText(text = stringResource(id = R.string.rate_app)) {
                                 onIntent(SettingsIntent.RateClicked)
+                            }
+                            SettingsText(text = stringResource(id = R.string.about_share)) {
+                                onIntent(SettingsIntent.ShareClicked)
                             }
                             SettingsText(text = stringResource(id = R.string.autofill)) {
                                 onIntent(SettingsIntent.AutofillClicked)

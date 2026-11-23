@@ -44,6 +44,7 @@ import com.bhardwaj.passkey.domain.repository.PasskeyRepository
 import com.bhardwaj.passkey.domain.repository.PreferencesRepository
 import com.bhardwaj.passkey.presentation.screens.security_screen.VaultGateViewModel
 import com.bhardwaj.passkey.presentation.theme.PassKeyAppTheme
+import com.bhardwaj.passkey.review.ReviewPrompter
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -75,6 +76,9 @@ class AutofillUnlockActivity : FragmentActivity() {
 
     @Inject
     lateinit var preferences: PreferencesRepository
+
+    @Inject
+    lateinit var reviewPrompter: ReviewPrompter
 
     @Inject
     lateinit var trustStore: AutofillTrustStore
@@ -168,6 +172,8 @@ class AutofillUnlockActivity : FragmentActivity() {
                 trustStore.rememberSigner(trustedPackage, signer)
             }
             analytics.log(AppEvents.autofillFilled(matches = credentials.size))
+            // Counted toward Home's review moment (6.0.0); the ask never happens here, inside another app.
+            if (credentials.isNotEmpty()) reviewPrompter.recordFill()
             val response = responseBuilder.fillResponse(fields, credentials)
             setResult(RESULT_OK, Intent().putExtra(AutofillManager.EXTRA_AUTHENTICATION_RESULT, response))
             finish()

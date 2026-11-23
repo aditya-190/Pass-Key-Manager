@@ -1,5 +1,6 @@
 package com.bhardwaj.passkey.presentation.screens.onboarding_screens
 
+import androidx.activity.compose.LocalActivity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -25,6 +26,7 @@ import com.bhardwaj.passkey.presentation.screens.onboarding_screens.OnBoardingEv
 import com.bhardwaj.passkey.presentation.screens.onboarding_screens.OnBoardingViewModel
 import com.bhardwaj.passkey.presentation.screens.onboarding_screens.components.OnBoardingItem
 import com.bhardwaj.passkey.presentation.screens.onboarding_screens.components.OnBoardingPageIndicator
+import com.bhardwaj.passkey.review.requestInAppReview
 import kotlinx.coroutines.launch
 
 data class OnBoardingScreen(val title: String, val description: String)
@@ -47,9 +49,11 @@ fun OnBoardingScreen(onNavigate: (NavRoute) -> Unit, viewModel: OnBoardingViewMo
 /** Settings › Feature tour: the tour pages alone, in the onboarding pager. Skip or finishing returns. */
 @Composable
 fun FeatureTourScreen(onClose: () -> Unit, viewModel: FeatureTourViewModel = hiltViewModel()) {
+    val activity = LocalActivity.current
     ObserveAsEvents(viewModel.effects) { event ->
         when (event) {
             FeatureTourEffect.Close -> onClose()
+            FeatureTourEffect.RequestReview -> requestInAppReview(activity)
         }
     }
     OnBoardingPager(

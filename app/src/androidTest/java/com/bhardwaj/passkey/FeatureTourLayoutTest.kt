@@ -24,10 +24,16 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import com.bhardwaj.passkey.analytics.NoOpAnalyticsTracker
+import com.bhardwaj.passkey.config.AppConfig
+import com.bhardwaj.passkey.config.ConfigProvider
+import com.bhardwaj.passkey.core.Clock
 import com.bhardwaj.passkey.presentation.screens.onboarding_screens.FeatureTourScreen
 import com.bhardwaj.passkey.presentation.screens.onboarding_screens.FeatureTourViewModel
 import com.bhardwaj.passkey.presentation.screens.onboarding_screens.OnboardingPages
 import com.bhardwaj.passkey.presentation.theme.PassKeyTheme
+import com.bhardwaj.passkey.review.ReviewPromptState
+import com.bhardwaj.passkey.review.ReviewPromptStore
+import com.bhardwaj.passkey.review.ReviewPrompter
 import com.google.common.truth.Truth.assertWithMessage
 import java.util.Locale
 import org.junit.Rule
@@ -59,7 +65,18 @@ class FeatureTourLayoutTest {
     @Test
     fun everyTourPageCanBeReadToTheEndAtDoubleFontSizeInEveryLanguage() {
         var localized by mutableStateOf(contextFor("en"))
-        val viewModel = FeatureTourViewModel(NoOpAnalyticsTracker, SavedStateHandle())
+        val viewModel = FeatureTourViewModel(
+            NoOpAnalyticsTracker,
+            SavedStateHandle(),
+            ReviewPrompter(
+                NoReviewStore,
+                Clock { 0L },
+                object : ConfigProvider {
+                    override val current = AppConfig()
+                },
+                NoOpAnalyticsTracker
+            )
+        )
         compose.setContent {
             val density = LocalDensity.current
             key(localized) {
@@ -111,4 +128,12 @@ class FeatureTourLayoutTest {
         const val SWIPES = 4
         const val PAGE_TIMEOUT_MS = 10_000L
     }
+}
+
+/** Never asks: the layout test only reads pages. */
+private object NoReviewStore : ReviewPromptStore {
+    override val state = kotlinx.coroutines.flow.flowOf(ReviewPromptState())
+    override suspend fun markFirstSeen(at: Long) = Unit
+    override suspend fun recordAsked(at: Long) = Unit
+    override suspend fun recordFill() = Unit
 }
