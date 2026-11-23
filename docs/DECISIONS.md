@@ -41,3 +41,7 @@
 | 2026-11-23 | Type-safe routes: Remote Config announcements keep their existing strings, mapped to NavRoute through the allowlist; screen_view keeps the old screen names | No console or dashboard change; a remote value is never parsed into a route |
 | 2026-11-23 | detekt TooManyFunctions ignores overridden functions | A repository implementation is already counted through its interface (threshold 25) |
 | 2026-11-23 | Settings analysis runs on an injected @WorkDispatcher (Dispatchers.Default) | Testable without real threads; same behaviour as Dispatchers.IO before, on the right pool for CPU work |
+| 2026-11-23 | Autofill matching: web pages by registrable name + full host, apps by publisher label (only when no page address), headings by whole word | PR #4 matched substrings both ways, so com.fakegoogle.login and google.evil.com were offered Google logins. Trade-off: an entry named "Gmail" no longer matches the Gmail app (com.google…); "Google" does. A URL field (6.0.0 templates) will allow exact matching |
+| 2026-11-23 | Removing an authenticator needs confirmation | Losing a TOTP secret can lock the user out of the account; PR #4 deleted on one tap |
+| 2026-11-23 | Robolectric not added (PR #4 used it for one backup test) | Outside the stack; BackupCodecTest and the simulation cover the same round trip without a ContentResolver |
+| 2026-11-23 | A test-only login form (androidTest AutofillTargetActivity) for on-device autofill checks | The emulators have no browser or app with a login screen; never shipped in the app APK |

@@ -103,6 +103,18 @@ Owner: 5.7.0 → 100% rollout (owner sets it in Play Console); physical checks o
   mutex); #4 saving an edit of a vanished entry dropped it (saved as new). 5 tests red → green; 232 unit tests;
   #1 re-checked on device (double-tap Delete → Undo → entry and field back). #5 (schema folder case) is local only.
 
+### 4b: daily-use features, code-complete
+- Autofill (`e171c11`): matcher hardened against look-alike apps and sites (4 phishing tests red → green); unlock screen
+  on the 5.7.0 prompt policy. Room 3→4 with TOTP and password history (`6712f0b`); backup carries authenticators
+  (account now included, no duplicates on re-import). Entry screen shows codes, confirm-before-remove, history
+  (`f5311c5`). 5.8.0 (47), autofill privacy text in 17 languages, AppLanguage single list, SecureModalBottomSheet guard
+  on `check` (`1dbdac9`).
+- Tests: 276 unit, 31 instrumented (API 28). Simulation: 6,000 seeded matcher/TOTP runs + 30 encrypted backup round
+  trips, 0 failures.
+- Device (API 28): real vault migrated 3→4 with data intact; locked autofill shows only "Unlock to fill" (no entry
+  names); unlock → fingerprint → back to the form; cancel shows a button instead of re-prompting.
+- Not taken from PR #4: Robolectric backup test (new dependency), its update-controller tests (code replaced in 5.6.0).
+
 ## Carried into 5.6.0
 - Per-field secret keyboard (attack-pass finding #1), built on the `isSecret` column.
 - A failed Android 10+ export is reported as success (`SettingsViewModel.kt:260`); replaced by the encrypted backup.
