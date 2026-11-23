@@ -30,8 +30,6 @@
     <string name="response">応答</string>
     <string name="rate_app">アプリを評価</string>
     <string name="change_language">言語を変更</string>
-    <string name="privacy">プライバシー</string>
-    <string name="terms_n_condition">利用規約</string>
     <string name="about">について</string>
     <string name="import_data">データをインポート</string>
     <string name="export_data">データをエクスポート</string>
@@ -251,4 +249,41 @@
     <string name="legal_privacy_autofill_body">PassKey を自動入力サービスとして有効にすると、Android は入力中のフォームを PassKey に見せます。各欄の種類と、そのフォームが属するアプリまたはウェブアドレスで、一致するエントリを提案するためです。これはスマートフォン内だけで行われ、フォーム、サイト、提案したエントリについての情報が送信、記録、保存されることはありません。保管庫がロックされている間は、「ロック解除」の候補を 1 つだけ表示し、エントリ名は表示しません。自動入力は Android の設定で有効にするまでオフのままで、いつでもそこでオフにできます。</string>
     <string name="autofill_untrusted_app">これは PassKey が以前この名前で入力したアプリではないため、何も入力しませんでした。別のストアから再インストールした場合は、PassKey でログイン情報を削除してから追加し直してください。</string>
     <string name="autofill_setup_help">次の画面で、Android の自動入力サービスとして PassKey を選んでください。Chrome にも独自の設定があります。Chrome › 設定 › 自動入力サービス を開き、「別のサービスを使用して自動入力」を選んでください。</string>
+
+    <!-- 6.0.0 feature tour (onboarding pages 4-9, and Settings > Feature tour) -->
+    <string name="feature_tour">機能ツアー</string>
+    <string name="tour_entries_heading">すべてを\n[[ひとつ]]の\n場所に。</string>
+    <string name="tour_entries_description">「追加」をタップして、ログイン、PIN、メモを「銀行」「メール」「アプリ」「その他」に保存できます。名前で検索し、ハンドルをドラッグして並べ替え、左にスワイプして削除（元に戻せます）。</string>
+    <string name="tour_autofill_heading">ログインを\n[[数秒]]で\n入力。</string>
+    <string name="tour_autofill_description">「設定」で「自動入力」をオンにします。指紋または PIN の確認後、PassKey がアプリと Chrome でログインを入力し、サインイン時に新しいログインの保存も提案します。</string>
+    <string name="tour_codes_heading">[[2FA]] コードも\nここに。</string>
+    <string name="tour_codes_description">エントリを開いて「認証アプリを追加」をタップし、サイトに表示される設定リンクやキーを貼り付けます。コードをタップするとコピーできます。</string>
+    <string name="tour_generator_heading">強力で\n[[固有]]の\nパスワード。</string>
+    <string name="tour_generator_description">パスワードを保存するときに鍵ボタンをタップすると、選んだ長さと文字種で生成できます。「設定」の「安全性ステータス」で弱いパスワードや使い回しを見つけられます。</string>
+    <string name="tour_backup_heading">保管庫を\n[[なくさない]]。</string>
+    <string name="tour_backup_description">「データをエクスポート」で自分で決めたパスワード付きの暗号化バックアップを作成し、「データをインポート」でどのスマートフォンにも復元できます。画面ロックが変わっても、復旧用パスワードで保管庫を開けます。</string>
+    <string name="tour_privacy_heading">離れたら\n[[すぐロック]]。</string>
+    <string name="tour_privacy_description">「設定」で「自動ロック」の時間を選べます。スクリーンショットはブロックされ、コピーしたパスワードは自動で消え、保存した内容がこのスマートフォンの外に出ることはありません。</string>
+
+    <!-- 6.0.0 backup confidence -->
+    <string name="verify_backup">バックアップを確認</string>
+    <string name="verify_backup_ok">バックアップは正常です: エントリ %1$d 件、認証システム %2$d 件、%3$s に保存。何もインポートしていません。</string>
+    <string name="verify_backup_ok_legacy">バックアップを読み取れます: エントリ %1$d 件。暗号化されていない古いファイルのため、新しい暗号化バックアップをエクスポートしてください。</string>
+    <string name="backup_reminder_title">保管庫をバックアップ</string>
+    <string name="backup_reminder_body">このスマートフォンを紛失したりリセットしたりした場合、パスワードを取り戻す方法はバックアップだけです。</string>
+    <string name="backup_reminder_cta">今すぐバックアップ</string>
+    <string name="import_not_a_backup">PassKey のバックアップファイルではありません。エクスポートした .pkbak ファイルか、以前の PassKey CSV を選んでください。</string>
+
+    <!-- 6.0.0 theme, passphrase and icon shortcuts -->
+    <string name="theme">テーマ</string>
+    <string name="theme_system">端末の設定に従う</string>
+    <string name="theme_light">ライト</string>
+    <string name="theme_dark">ダーク</string>
+    <string name="passphrase">単語を使う（パスフレーズ）</string>
+    <string name="passphrase_words">単語数: %d</string>
+    <string name="passphrase_hint">パスフレーズは長くなります。文字数に制限があるサイトでは、単語をオフにしてください。</string>
+    <string name="shortcut_add_short">追加</string>
+    <string name="shortcut_add_long">エントリを追加</string>
+    <string name="shortcut_search_short">検索</string>
+    <string name="shortcut_search_long">保管庫を検索</string>
 </resources>

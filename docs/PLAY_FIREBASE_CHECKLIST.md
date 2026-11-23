@@ -90,3 +90,33 @@ was ticked for the track, which is still paused.
 - [ ] Crashlytics: watch the crash-free users rate, and any `VaultMigration` or `DatabaseKeyManager` stack.
 - [ ] Analytics: watch `vault_migration_failed` by `reason`. Any spike means setting the kill switch and stopping.
 - [ ] Reply to 1–2★ reviews about "can't find add" (now a labelled Add button) and autofill ("now supported").
+
+---
+
+# 6.0.0 (versionCode 48)
+
+## Before the owner builds
+- [x] Version 6.0.0 (48); release notes in 17 languages in `docs/RELEASE_6.0.0.md` (Gujarati tag `gu`).
+- [x] All gates and the on-device suite on the Moto G34; `release/6.0.0` merged into `master`.
+
+## Firebase › Remote Config (publish as version 2)
+| Key | Value |
+|---|---|
+| `latest_version_code` | `48` |
+| `review_prompt_enabled` | `true` (group Reviews) |
+| `review_min_days` | `3` |
+| `review_cooldown_days` | `120` |
+| `review_after_fills` | `3` |
+| `config_version` | `2` |
+- [ ] Published
+
+## Firebase › Analytics
+- [ ] Custom dimension `source` already exists (used by `review_requested`, `app_shared`).
+- [ ] Key events from 5.8.0 still pending until received: `recovery_setup_completed`, `autofill_filled`, `backup_exported`.
+
+## Play Console
+- [ ] Internal testing: upload the AAB (48), What's new in 17 languages, testers list (owner's 2 accounts), resume the track.
+- [ ] Real update on the Moto: 47 (Play) → 48 (internal testing); vault, theme, settings intact; tour not shown.
+- [ ] Production: promote 48 at 100% after the update check (owner's standing decision), What's new in 17 languages.
+- [ ] Data safety: unchanged (no new data collected; review and share events are app interactions, already declared).
+

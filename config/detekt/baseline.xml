@@ -13,8 +13,6 @@
     <ID>MaxLineLength:MigrationTester.kt$MigrationTester$"INSERT INTO $DETAILS_TABLE (question, answer, priority, headingName, categoryName) VALUES ('Sample Question', 'Sample Answer', 1, 'Sample Heading', 'BANKS')"</ID>
     <ID>PrintStackTrace:SettingsPage.kt$e</ID>
     <ID>PrintStackTrace:SettingsViewModel.kt$SettingsViewModel$e</ID>
-    <ID>SpreadOperator:UiText.kt$(resId, *args.toTypedArray())</ID>
-    <ID>SpreadOperator:UiText.kt$(resId, count, *args.toTypedArray())</ID>
     <ID>TooGenericExceptionCaught:SettingsPage.kt$e: Exception</ID>
     <ID>TooGenericExceptionCaught:SettingsViewModel.kt$SettingsViewModel$e: Exception</ID>
     <ID>UtilityClassWithPublicConstructor:Constants.kt$Constants</ID>

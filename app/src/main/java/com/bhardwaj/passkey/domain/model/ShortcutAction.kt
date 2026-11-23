@@ -1,0 +1,16 @@
+package com.bhardwaj.passkey.domain.model
+
+/** Home-screen icon shortcuts (6.0.0). They only ask Home to do something after the vault is unlocked. */
+enum class ShortcutAction(val intentAction: String) {
+    ADD_ENTRY("com.bhardwaj.passkey.action.ADD_ENTRY"),
+    SEARCH("com.bhardwaj.passkey.action.SEARCH");
+
+    companion object {
+        /** A pending shortcut on an open vault brings the user back to Home, where it runs. */
+        fun needsHome(pending: ShortcutAction?, unlocked: Boolean, onHome: Boolean): Boolean =
+            pending != null && unlocked && !onHome
+
+        /** Only our own actions: anything else (including the launcher's MAIN) is no shortcut. */
+        fun fromIntentAction(action: String?): ShortcutAction? = entries.firstOrNull { it.intentAction == action }
+    }
+}

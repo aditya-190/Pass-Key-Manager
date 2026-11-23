@@ -38,7 +38,13 @@ class VaultAnalyticsTest {
 
     @Test
     fun `creating an entry logs its category only`() = runTest {
-        val vm = PreviewViewModel(repository, SavedStateHandle(), analytics)
+        val vm =
+            PreviewViewModel(
+                repository,
+                SavedStateHandle(),
+                analytics,
+                com.bhardwaj.passkey.domain.model.PendingShortcut()
+            )
         vm.onIntent(PreviewIntent.CategorySelected(Category.MAILS))
         vm.onIntent(PreviewIntent.AddClicked)
         vm.onIntent(PreviewIntent.HeadingChanged("my-secret-bank"))
@@ -57,7 +63,13 @@ class VaultAnalyticsTest {
             heading = "Old",
             category = Category.BANKS
         )
-        val vm = PreviewViewModel(repository, SavedStateHandle(), analytics)
+        val vm =
+            PreviewViewModel(
+                repository,
+                SavedStateHandle(),
+                analytics,
+                com.bhardwaj.passkey.domain.model.PendingShortcut()
+            )
         vm.onIntent(PreviewIntent.EditClicked(repository.getPreviewById(id)!!))
         vm.onIntent(PreviewIntent.HeadingChanged("New"))
         vm.onIntent(PreviewIntent.SaveClicked)

@@ -21,8 +21,8 @@ android {
         applicationId = "com.bhardwaj.passkey"
         minSdk = 28
         targetSdk = 36
-        versionCode = 47
-        versionName = "5.8.0"
+        versionCode = 48
+        versionName = "6.0.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
@@ -184,6 +184,8 @@ dependencies {
 
     // In-app review (About > Rate). The base artifact, not review-ktx, which breaks R8.
     implementation(libs.play.review)
+    // Android 14+ sign-in sheet provider (6.0.0); see docs/DECISIONS.md.
+    implementation(libs.androidx.credentials)
 
     // In App Updates
     implementation(libs.app.update)

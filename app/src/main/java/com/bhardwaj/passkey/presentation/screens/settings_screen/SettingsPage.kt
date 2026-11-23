@@ -8,6 +8,7 @@ import android.os.Build
 import android.os.LocaleList
 import android.provider.Settings
 import android.view.autofill.AutofillManager
+import androidx.activity.compose.LocalActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatDelegate
@@ -31,16 +32,19 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
@@ -59,7 +63,6 @@ import com.bhardwaj.passkey.R
 import com.bhardwaj.passkey.about.ExternalLinks
 import com.bhardwaj.passkey.data.backup.BackupFormat
 import com.bhardwaj.passkey.data.backup.ImportMode
-import com.bhardwaj.passkey.legal.LegalDocument
 import com.bhardwaj.passkey.presentation.navigation.NavRoute
 import com.bhardwaj.passkey.presentation.screens.common.ObserveAsEvents
 import com.bhardwaj.passkey.presentation.screens.common.SecureModalBottomSheet
@@ -69,8 +72,10 @@ import com.bhardwaj.passkey.presentation.screens.settings_screen.components.Auto
 import com.bhardwaj.passkey.presentation.screens.settings_screen.components.BackupPasswordDialog
 import com.bhardwaj.passkey.presentation.screens.settings_screen.components.LanguageBottomSheet
 import com.bhardwaj.passkey.presentation.screens.settings_screen.components.SettingsText
+import com.bhardwaj.passkey.presentation.screens.settings_screen.components.ThemeDialog
 import com.bhardwaj.passkey.presentation.theme.BebasNeue
 import com.bhardwaj.passkey.presentation.theme.Poppins
+import com.bhardwaj.passkey.review.requestInAppReview
 import com.bhardwaj.passkey.utils.asString
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -82,6 +87,7 @@ import kotlinx.coroutines.launch
 fun SettingsScreen(
     onPopBackStack: () -> Unit,
     onNavigate: (NavRoute) -> Unit,
+    startExport: Boolean = false,
     viewModel: SettingsViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.state.collectAsStateWithLifecycle()
@@ -92,12 +98,22 @@ fun SettingsScreen(
     val context = LocalContext.current
     // Backup file selection. The password is collected only after a destination or source is
     // chosen, so the user is never asked for one and then cancels out of the picker.
-    var pendingExportUri by remember { mutableStateOf<Uri?>(null) }
-    var pendingImportUri by remember { mutableStateOf<Uri?>(null) }
+    var pendingExportUri by rememberSaveable { mutableStateOf<Uri?>(null) }
+    var pendingImportUri by rememberSaveable { mutableStateOf<Uri?>(null) }
+    var pendingVerifyUri by rememberSaveable { mutableStateOf<Uri?>(null) }
 
     val exportLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.CreateDocument("application/octet-stream")
     ) { uri -> pendingExportUri = uri }
+
+    // Home's backup reminder opens Settings with the export picker already up; once, even across rotation.
+    var exportStarted by rememberSaveable { mutableStateOf(false) }
+    LaunchedEffect(startExport) {
+        if (startExport && !exportStarted) {
+            exportStarted = true
+            exportLauncher.launch(defaultBackupFileName())
+        }
+    }
 
     val importLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.OpenDocument()
@@ -108,6 +124,18 @@ fun SettingsScreen(
             } else {
                 // A legacy plaintext .passkey CSV needs no password; restore it directly.
                 onIntent(SettingsIntent.ImportChosen(uri = it, password = null, mode = ImportMode.MERGE))
+            }
+        }
+    }
+
+    val verifyLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.OpenDocument()
+    ) { uri ->
+        uri?.let {
+            if (isEncryptedBackup(it, context)) {
+                pendingVerifyUri = it
+            } else {
+                onIntent(SettingsIntent.VerifyChosen(uri = it, password = null))
             }
         }
     }
@@ -156,6 +184,12 @@ fun SettingsScreen(
             onSelect = { onIntent(SettingsIntent.AutoLockChosen(it)) }
         )
 
+        SettingsDialog.Theme -> ThemeDialog(
+            current = uiState.themeMode,
+            onDismiss = { onIntent(SettingsIntent.DialogDismissed) },
+            onSelect = { onIntent(SettingsIntent.ThemeChosen(it)) }
+        )
+
         else -> Unit
     }
 
@@ -166,6 +200,17 @@ fun SettingsScreen(
             onConfirm = { password ->
                 pendingExportUri = null
                 onIntent(SettingsIntent.ExportChosen(uri, password))
+            }
+        )
+    }
+
+    pendingVerifyUri?.let { uri ->
+        BackupPasswordDialog(
+            confirmMode = false,
+            onDismiss = { pendingVerifyUri = null },
+            onConfirm = { password ->
+                pendingVerifyUri = null
+                onIntent(SettingsIntent.VerifyChosen(uri, password))
             }
         )
     }
@@ -181,6 +226,11 @@ fun SettingsScreen(
         )
     }
 
+    val activity = LocalActivity.current
+    val appName = stringResource(R.string.app_name)
+    val shareTemplate = stringResource(R.string.about_share_text)
+    val shareChooser = stringResource(R.string.about_share_chooser)
+    val shareText = { url: String -> String.format(shareTemplate, appName, url) }
     val storeUnavailable = stringResource(R.string.store_unavailable)
     val autofillUnsupported = stringResource(R.string.autofill_unsupported)
     ObserveAsEvents(viewModel.effects) { event ->
@@ -208,8 +258,15 @@ fun SettingsScreen(
                 }
             }
             is SettingsEffect.ApplyLanguage -> applyAppLanguage(context, event.languageTag)
+            is SettingsEffect.Share -> ExternalLinks.share(context, shareText(event.storeUrl), shareChooser)
+            SettingsEffect.RequestReview -> requestInAppReview(activity)
             is SettingsEffect.ShowSnackbar -> {
-                scope.launch { snackBarHostState.showSnackbar(message = event.message.asString(context)) }
+                scope.launch {
+                    snackBarHostState.showSnackbar(
+                        message = event.message.asString(context),
+                        duration = if (event.long) SnackbarDuration.Long else SnackbarDuration.Short
+                    )
+                }
             }
         }
     }
@@ -269,11 +326,17 @@ fun SettingsScreen(
                             SettingsText(text = stringResource(id = R.string.rate_app)) {
                                 onIntent(SettingsIntent.RateClicked)
                             }
+                            SettingsText(text = stringResource(id = R.string.about_share)) {
+                                onIntent(SettingsIntent.ShareClicked)
+                            }
                             SettingsText(text = stringResource(id = R.string.autofill)) {
                                 onIntent(SettingsIntent.AutofillClicked)
                             }
                             SettingsText(text = stringResource(id = R.string.auto_lock)) {
                                 onIntent(SettingsIntent.AutoLockClicked)
+                            }
+                            SettingsText(text = stringResource(id = R.string.theme)) {
+                                onIntent(SettingsIntent.ThemeClicked)
                             }
                             SettingsText(
                                 text = stringResource(id = R.string.change_recovery_password)
@@ -286,14 +349,14 @@ fun SettingsScreen(
                             SettingsText(text = stringResource(id = R.string.export_data)) {
                                 exportLauncher.launch(defaultBackupFileName())
                             }
-                            SettingsText(text = stringResource(id = R.string.privacy)) {
-                                onNavigate(NavRoute.Legal(LegalDocument.PRIVACY.name))
+                            SettingsText(text = stringResource(id = R.string.verify_backup)) {
+                                verifyLauncher.launch(arrayOf("*/*"))
                             }
                             SettingsText(text = stringResource(id = R.string.privacy_options)) {
                                 onNavigate(NavRoute.Consent(fromSettings = true))
                             }
-                            SettingsText(text = stringResource(id = R.string.terms_n_condition)) {
-                                onNavigate(NavRoute.Legal(LegalDocument.TERMS.name))
+                            SettingsText(text = stringResource(id = R.string.feature_tour)) {
+                                onNavigate(NavRoute.FeatureTour)
                             }
                             SettingsText(text = stringResource(id = R.string.about)) {
                                 onNavigate(NavRoute.About)

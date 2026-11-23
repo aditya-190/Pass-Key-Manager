@@ -4,15 +4,25 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bhardwaj.passkey.BuildConfig
 import com.bhardwaj.passkey.R
+import com.bhardwaj.passkey.analytics.AnalyticsEvent
+import com.bhardwaj.passkey.analytics.AnalyticsTracker
+import com.bhardwaj.passkey.analytics.AppEventNames
+import com.bhardwaj.passkey.analytics.AppParams
+import com.bhardwaj.passkey.core.Clock
+import com.bhardwaj.passkey.data.backup.BackupCheck
 import com.bhardwaj.passkey.data.backup.BackupError
 import com.bhardwaj.passkey.data.backup.BackupException
 import com.bhardwaj.passkey.data.backup.BackupRepository
 import com.bhardwaj.passkey.data.security.DatabaseKeyManager
 import com.bhardwaj.passkey.di.WorkDispatcher
 import com.bhardwaj.passkey.domain.model.AutoLockTimeout
+import com.bhardwaj.passkey.domain.repository.BackupReminderStore
 import com.bhardwaj.passkey.domain.repository.PasskeyRepository
 import com.bhardwaj.passkey.domain.repository.PreferencesRepository
 import com.bhardwaj.passkey.presentation.navigation.NavRoute
+import com.bhardwaj.passkey.review.ReviewMoment
+import com.bhardwaj.passkey.review.ReviewPrompter
+import com.bhardwaj.passkey.utils.FormattedDate
 import com.bhardwaj.passkey.utils.PasswordAnalyzer
 import com.bhardwaj.passkey.utils.SecretKeywords
 import com.bhardwaj.passkey.utils.UiText
@@ -41,6 +51,10 @@ class SettingsViewModel @Inject constructor(
     private val backupRepository: BackupRepository,
     private val secretKeywords: SecretKeywords,
     private val keyManager: DatabaseKeyManager,
+    private val reminderStore: BackupReminderStore,
+    private val clock: Clock,
+    private val analytics: AnalyticsTracker,
+    private val reviewPrompter: ReviewPrompter,
     @param:WorkDispatcher private val workDispatcher: CoroutineDispatcher
 ) : ViewModel() {
     private val _effects = Channel<SettingsEffect>(Channel.BUFFERED)
@@ -53,8 +67,12 @@ class SettingsViewModel @Inject constructor(
 
     private val backupMutex = Mutex()
 
-    val state: StateFlow<SettingsState> = combine(local, preferences.autoLockTimeout) { ui, timeout ->
-        ui.copy(autoLockTimeout = timeout)
+    val state: StateFlow<SettingsState> = combine(
+        local,
+        preferences.autoLockTimeout,
+        preferences.themeMode
+    ) { ui, timeout, theme ->
+        ui.copy(autoLockTimeout = timeout, themeMode = theme)
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(STOP_TIMEOUT_MS), SettingsState())
 
     fun onIntent(intent: SettingsIntent) {
@@ -63,13 +81,25 @@ class SettingsViewModel @Inject constructor(
             is SettingsIntent.LanguageChosen -> chooseLanguage(intent)
             SettingsIntent.AutoLockClicked -> showDialog(SettingsDialog.AutoLock)
             is SettingsIntent.AutoLockChosen -> chooseAutoLock(intent.timeout)
+            SettingsIntent.ThemeClicked -> showDialog(SettingsDialog.Theme)
+            is SettingsIntent.ThemeChosen -> {
+                showDialog(null)
+                viewModelScope.launch { preferences.setThemeMode(intent.mode) }
+            }
             SettingsIntent.AnalyzeClicked -> analyze()
             is SettingsIntent.AnalysisItemClicked -> {
                 showDialog(null)
                 send(SettingsEffect.Navigate(NavRoute.Details(intent.detail.previewId)))
             }
 
-            SettingsIntent.RateClicked -> send(SettingsEffect.OpenUrl(PLAY_STORE_URL + BuildConfig.APPLICATION_ID))
+            SettingsIntent.ShareClicked -> {
+                analytics.log(AnalyticsEvent(AppEventNames.APP_SHARED, mapOf(AppParams.SOURCE to "settings")))
+                send(SettingsEffect.Share(PLAY_STORE_URL + BuildConfig.APPLICATION_ID))
+            }
+            SettingsIntent.RateClicked -> {
+                viewModelScope.launch { reviewPrompter.noteManualRate() }
+                send(SettingsEffect.OpenUrl(PLAY_STORE_URL + BuildConfig.APPLICATION_ID))
+            }
             SettingsIntent.AutofillClicked -> showDialog(SettingsDialog.AutofillHelp)
             SettingsIntent.AutofillHelpContinue -> {
                 showDialog(null)
@@ -88,10 +118,36 @@ class SettingsViewModel @Inject constructor(
                 showDialog(null)
             }
 
+            is SettingsIntent.ExportChosen,
+            is SettingsIntent.VerifyChosen,
+            is SettingsIntent.ImportChosen -> onBackupIntent(intent)
+        }
+    }
+
+    /** Export, verify and import: one at a time, passwords always wiped. */
+    private fun onBackupIntent(intent: SettingsIntent) {
+        when (intent) {
             is SettingsIntent.ExportChosen -> runBackup {
                 val result = backupRepository.export(intent.uri, intent.password)
                 Arrays.fill(intent.password, Char(0))
+                if (result.isSuccess) reminderStore.recordBackup(clock.nowMs())
                 snackbar(if (result.isSuccess) R.string.export_success else R.string.export_failed)
+                // A saved backup is a good moment to ask for a review (6.0.0), under the shared pacing.
+                if (result.isSuccess && reviewPrompter.onMoment(ReviewMoment.BACKUP_SAVED)) {
+                    send(SettingsEffect.RequestReview)
+                }
+            }
+
+            is SettingsIntent.VerifyChosen -> runBackup {
+                val result = backupRepository.verify(intent.uri, intent.password)
+                intent.password?.let { Arrays.fill(it, Char(0)) }
+                result.fold(
+                    onSuccess = { check ->
+                        rememberVerifiedBackup(check)
+                        send(SettingsEffect.ShowSnackbar(verifyMessage(check), long = true))
+                    },
+                    onFailure = { error -> snackbar(importFailureMessage(error)) }
+                )
             }
 
             is SettingsIntent.ImportChosen -> runBackup {
@@ -111,6 +167,7 @@ class SettingsViewModel @Inject constructor(
                     onFailure = { error -> snackbar(importFailureMessage(error)) }
                 )
             }
+            else -> Unit
         }
     }
 
@@ -178,8 +235,29 @@ class SettingsViewModel @Inject constructor(
     private fun importFailureMessage(error: Throwable): Int = when ((error as? BackupException)?.error) {
         BackupError.WrongPasswordOrCorrupt -> R.string.import_wrong_password
         BackupError.FileTooLarge -> R.string.import_file_too_large
+        BackupError.NotABackup -> R.string.import_not_a_backup
         is BackupError.UnsupportedVersion -> R.string.import_unsupported_version
         else -> R.string.import_failed
+    }
+
+    private fun verifyMessage(check: BackupCheck): UiText = if (check.legacyFormat) {
+        UiText.StringResource(R.string.verify_backup_ok_legacy, listOf(check.entries))
+    } else {
+        // Formatted when shown, in the app's language (the phone's may differ).
+        val date: Any = check.exportedAt?.let(::FormattedDate) ?: "?"
+        UiText.StringResource(R.string.verify_backup_ok, listOf(check.entries, check.authenticators, date))
+    }
+
+    /**
+     * A verified encrypted backup is proof of a backup, so the reminder can rest: people who exported before 6.0.0
+     * started recording exports would otherwise be reminded anyway. A file dated in the future is not trusted, and an
+     * older file never replaces a newer record.
+     */
+    private suspend fun rememberVerifiedBackup(check: BackupCheck) {
+        val exportedAt = check.exportedAt ?: return
+        if (check.legacyFormat || exportedAt > clock.nowMs() + CLOCK_SKEW_MS) return
+        val known = reminderStore.state.first().lastBackupAt
+        if (known == null || exportedAt > known) reminderStore.recordBackup(exportedAt)
     }
 
     private fun snackbar(message: Int) = send(SettingsEffect.ShowSnackbar(UiText.StringResource(message)))
@@ -191,5 +269,6 @@ class SettingsViewModel @Inject constructor(
     private companion object {
         const val STOP_TIMEOUT_MS = 5_000L
         const val PLAY_STORE_URL = "https://play.google.com/store/apps/details?id="
+        const val CLOCK_SKEW_MS = 86_400_000L
     }
 }

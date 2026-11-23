@@ -1,6 +1,7 @@
 package com.bhardwaj.passkey.domain.repository
 
 import com.bhardwaj.passkey.domain.model.AutoLockTimeout
+import com.bhardwaj.passkey.domain.model.ThemeMode
 import kotlinx.coroutines.flow.Flow
 
 /**
@@ -20,4 +21,7 @@ interface PreferencesRepository {
 
     val autoLockTimeout: Flow<AutoLockTimeout>
     suspend fun setAutoLockTimeout(timeout: AutoLockTimeout)
+
+    val themeMode: Flow<ThemeMode>
+    suspend fun setThemeMode(mode: ThemeMode)
 }

@@ -304,7 +304,9 @@ fun DetailScreen(onPopBackStack: () -> Unit, viewModel: DetailViewModel = hiltVi
                 onDismissPasswordSettings = { onIntent(DetailIntent.PolicyDismissed) },
                 onToggle = { characterClass, checked ->
                     onIntent(DetailIntent.CharacterClassToggled(characterClass, checked))
-                }
+                },
+                onPassphraseToggle = { onIntent(DetailIntent.PassphraseToggled(it)) },
+                onWordsChange = { onIntent(DetailIntent.WordsChanged(it)) }
             )
         }
         uiState.totpEditor?.let { editor ->

@@ -3,6 +3,9 @@ package com.bhardwaj.passkey.viewmodels
 import android.net.Uri
 import com.bhardwaj.passkey.BuildConfig
 import com.bhardwaj.passkey.R
+import com.bhardwaj.passkey.analytics.AppEventNames
+import com.bhardwaj.passkey.core.Clock
+import com.bhardwaj.passkey.data.backup.BackupCheck
 import com.bhardwaj.passkey.data.backup.BackupError
 import com.bhardwaj.passkey.data.backup.BackupException
 import com.bhardwaj.passkey.data.backup.BackupRepository
@@ -12,14 +15,22 @@ import com.bhardwaj.passkey.data.security.DatabaseKeyManager
 import com.bhardwaj.passkey.domain.model.AppLanguage
 import com.bhardwaj.passkey.domain.model.AutoLockTimeout
 import com.bhardwaj.passkey.domain.model.Category
+import com.bhardwaj.passkey.domain.model.ThemeMode
 import com.bhardwaj.passkey.domain.repository.PreferencesRepository
 import com.bhardwaj.passkey.presentation.navigation.NavRoute
 import com.bhardwaj.passkey.presentation.screens.settings_screen.SettingsDialog
 import com.bhardwaj.passkey.presentation.screens.settings_screen.SettingsEffect
 import com.bhardwaj.passkey.presentation.screens.settings_screen.SettingsIntent
 import com.bhardwaj.passkey.presentation.screens.settings_screen.SettingsViewModel
+import com.bhardwaj.passkey.review.ReviewPromptState
+import com.bhardwaj.passkey.review.ReviewPrompter
+import com.bhardwaj.passkey.testing.FakeBackupReminderStore
 import com.bhardwaj.passkey.testing.FakePasskeyRepository
+import com.bhardwaj.passkey.testing.FakeReviewPromptStore
+import com.bhardwaj.passkey.testing.FixedConfigProvider
 import com.bhardwaj.passkey.testing.MainDispatcherRule
+import com.bhardwaj.passkey.testing.RecordingAnalyticsTracker
+import com.bhardwaj.passkey.utils.FormattedDate
 import com.bhardwaj.passkey.utils.UiText
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -50,6 +61,9 @@ class SettingsViewModelTest {
     private val backups = mockk<BackupRepository>()
     private val keyManager = mockk<DatabaseKeyManager>()
     private val uri = mockk<Uri>()
+    private val reminders = FakeBackupReminderStore()
+    private val analytics = RecordingAnalyticsTracker()
+    private val reviewStore = FakeReviewPromptStore(ReviewPromptState(firstSeenAt = NOW - 30 * DAY))
 
     private fun TestScope.vm() = SettingsViewModel(
         repository = vault,
@@ -57,6 +71,10 @@ class SettingsViewModelTest {
         backupRepository = backups,
         secretKeywords = { setOf("pin") },
         keyManager = keyManager,
+        reminderStore = reminders,
+        clock = Clock { NOW },
+        analytics = analytics,
+        reviewPrompter = ReviewPrompter(reviewStore, Clock { NOW }, FixedConfigProvider(), analytics),
         workDispatcher = UnconfinedTestDispatcher(testScheduler)
     ).also { vm -> backgroundScope.launch(UnconfinedTestDispatcher(testScheduler)) { vm.state.collect {} } }
 
@@ -156,6 +174,146 @@ class SettingsViewModelTest {
     }
 
     @Test
+    fun `the theme choice opens, saves, closes and shows the saved mode`() = runTest {
+        val vm = vm()
+        vm.onIntent(SettingsIntent.ThemeClicked)
+        assertEquals(SettingsDialog.Theme, vm.state.value.dialog)
+        vm.onIntent(SettingsIntent.ThemeChosen(ThemeMode.DARK))
+        assertNull(vm.state.value.dialog)
+        assertEquals(ThemeMode.DARK, prefs.theme.value)
+        assertEquals(ThemeMode.DARK, vm.state.value.themeMode)
+    }
+
+    @Test
+    fun `a successful export is remembered for the backup reminder, a failed one is not`() = runTest {
+        coEvery { backups.export(any(), any()) } returns Result.failure(BackupException(BackupError.WriteFailed))
+        val vm = vm()
+        vm.onIntent(SettingsIntent.ExportChosen(uri, "p".toCharArray()))
+        vm.effects.first()
+        assertNull(reminders.flow.value.lastBackupAt)
+
+        coEvery { backups.export(any(), any()) } returns Result.success(Unit)
+        vm.onIntent(SettingsIntent.ExportChosen(uri, "p".toCharArray()))
+        vm.effects.first()
+        assertEquals(NOW, reminders.flow.value.lastBackupAt)
+    }
+
+    @Test
+    fun `verifying a backup reports what it holds, imports nothing and wipes the password`() = runTest {
+        coEvery { backups.verify(any(), any()) } returns
+            Result.success(
+                BackupCheck(entries = 12, fields = 30, authenticators = 2, exportedAt = NOW, legacyFormat = false)
+            )
+        val vm = vm()
+        val password = "backup pass".toCharArray()
+        vm.onIntent(SettingsIntent.VerifyChosen(uri, password))
+        val message = (vm.effects.first() as SettingsEffect.ShowSnackbar).message as UiText.StringResource
+        assertEquals(R.string.verify_backup_ok, message.resId)
+        assertEquals(listOf(12, 2), message.args.take(2))
+        assertTrue(password.all { it == Char(0) })
+        coVerify(exactly = 0) { backups.import(any(), any(), any()) }
+
+        coEvery { backups.verify(any(), any()) } returns
+            Result.success(
+                BackupCheck(entries = 4, fields = 4, authenticators = 0, exportedAt = null, legacyFormat = true)
+            )
+        vm.onIntent(SettingsIntent.VerifyChosen(uri, null))
+        assertEquals(
+            SettingsEffect.ShowSnackbar(
+                UiText.StringResource(R.string.verify_backup_ok_legacy, listOf(4)),
+                long = true
+            ),
+            vm.effects.first()
+        )
+
+        coEvery { backups.verify(any(), any()) } returns
+            Result.failure(BackupException(BackupError.WrongPasswordOrCorrupt))
+        vm.onIntent(SettingsIntent.VerifyChosen(uri, "x".toCharArray()))
+        assertEquals(
+            SettingsEffect.ShowSnackbar(UiText.StringResource(R.string.import_wrong_password)),
+            vm.effects.first()
+        )
+    }
+
+    @Test
+    fun `a file that is not a backup gets its own message, in import and in verify`() = runTest {
+        coEvery { backups.import(any(), any(), any()) } returns Result.failure(BackupException(BackupError.NotABackup))
+        coEvery { backups.verify(any(), any()) } returns Result.failure(BackupException(BackupError.NotABackup))
+        val vm = vm()
+        val expected = SettingsEffect.ShowSnackbar(UiText.StringResource(R.string.import_not_a_backup))
+        vm.onIntent(SettingsIntent.ImportChosen(uri, null, ImportMode.MERGE))
+        assertEquals(expected, vm.effects.first())
+        vm.onIntent(SettingsIntent.VerifyChosen(uri, null))
+        assertEquals(expected, vm.effects.first())
+    }
+
+    @Test
+    fun `a verified backup stays on screen longer and shows its date in the app's language`() = runTest {
+        // 6.0.0b attack-pass #2 and #3.
+        val made = NOW - 2 * DAY
+        coEvery { backups.verify(any(), any()) } returns
+            Result.success(
+                BackupCheck(entries = 3, fields = 3, authenticators = 0, exportedAt = made, legacyFormat = false)
+            )
+        val vm = vm()
+        vm.onIntent(SettingsIntent.VerifyChosen(uri, "p".toCharArray()))
+        val effect = vm.effects.first() as SettingsEffect.ShowSnackbar
+        assertTrue(effect.long)
+        assertEquals(FormattedDate(made), (effect.message as UiText.StringResource).args[2])
+    }
+
+    @Test
+    fun `verifying a recent backup counts as having one, a future or old CSV one does not`() = runTest {
+        // 6.0.0b attack-pass #7: people who exported in 5.8.0 were reminded anyway.
+        val vm = vm()
+        fun check(exportedAt: Long?, legacy: Boolean = false) =
+            Result.success(BackupCheck(1, 1, 0, exportedAt = exportedAt, legacyFormat = legacy))
+
+        coEvery { backups.verify(any(), any()) } returns check(NOW + 3 * DAY)
+        vm.onIntent(SettingsIntent.VerifyChosen(uri, "p".toCharArray()))
+        vm.effects.first()
+        assertNull("a date in the future is not trusted", reminders.flow.value.lastBackupAt)
+
+        coEvery { backups.verify(any(), any()) } returns check(null, legacy = true)
+        vm.onIntent(SettingsIntent.VerifyChosen(uri, null))
+        vm.effects.first()
+        assertNull("an unencrypted CSV is not a backup to rely on", reminders.flow.value.lastBackupAt)
+
+        coEvery { backups.verify(any(), any()) } returns check(NOW - 5 * DAY)
+        vm.onIntent(SettingsIntent.VerifyChosen(uri, "p".toCharArray()))
+        vm.effects.first()
+        assertEquals(NOW - 5 * DAY, reminders.flow.value.lastBackupAt)
+
+        coEvery { backups.verify(any(), any()) } returns check(NOW - 9 * DAY)
+        vm.onIntent(SettingsIntent.VerifyChosen(uri, "p".toCharArray()))
+        vm.effects.first()
+        assertEquals("an older file never replaces a newer backup", NOW - 5 * DAY, reminders.flow.value.lastBackupAt)
+    }
+
+    @Test
+    fun `share sends the store link and is counted`() = runTest {
+        val vm = vm()
+        vm.onIntent(SettingsIntent.ShareClicked)
+        val effect = vm.effects.first() as SettingsEffect.Share
+        assertTrue(effect.storeUrl.endsWith("id=${BuildConfig.APPLICATION_ID}"))
+        assertTrue(AppEventNames.APP_SHARED in analytics.names)
+    }
+
+    @Test
+    fun `a saved backup is a good moment to ask for a review, once`() = runTest {
+        coEvery { backups.export(any(), any()) } returns Result.success(Unit)
+        val vm = vm()
+        vm.onIntent(SettingsIntent.ExportChosen(uri, "p".toCharArray()))
+        assertEquals(SettingsEffect.ShowSnackbar(UiText.StringResource(R.string.export_success)), vm.effects.first())
+        assertEquals(SettingsEffect.RequestReview, vm.effects.first())
+
+        vm.onIntent(SettingsIntent.ExportChosen(uri, "p".toCharArray()))
+        assertEquals(SettingsEffect.ShowSnackbar(UiText.StringResource(R.string.export_success)), vm.effects.first())
+        vm.onIntent(SettingsIntent.RateClicked)
+        assertTrue("no second ask inside the cooldown", vm.effects.first() is SettingsEffect.OpenUrl)
+    }
+
+    @Test
     fun `import maps each failure to a message the user can act on`() = runTest {
         coEvery { backups.import(any(), any(), any()) } returns
             Result.failure(BackupException(BackupError.WrongPasswordOrCorrupt))
@@ -218,6 +376,11 @@ class SettingsViewModelTest {
         assertEquals(SettingsEffect.OpenAutofillSettings, vm.effects.first())
     }
 
+    private companion object {
+        const val NOW = 1_800_000_000_000L
+        const val DAY = 86_400_000L
+    }
+
     private class FakePreferences : PreferencesRepository {
         val timeout = MutableStateFlow(AutoLockTimeout.DEFAULT)
         val language = MutableStateFlow<String?>(null)
@@ -230,6 +393,11 @@ class SettingsViewModelTest {
         override val autoLockTimeout: Flow<AutoLockTimeout> = timeout
         override suspend fun setAutoLockTimeout(timeout: AutoLockTimeout) {
             this.timeout.value = timeout
+        }
+        val theme = MutableStateFlow(ThemeMode.SYSTEM)
+        override val themeMode: Flow<ThemeMode> = theme
+        override suspend fun setThemeMode(mode: ThemeMode) {
+            theme.value = mode
         }
     }
 }

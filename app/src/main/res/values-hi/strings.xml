@@ -30,8 +30,6 @@
     <string name="response">उत्तर</string>
     <string name="rate_app">ऐप रेटिंग</string>
     <string name="change_language">भाषा बदलें</string>
-    <string name="privacy">प्राइवेसी</string>
-    <string name="terms_n_condition">नियम एवं शर्तें</string>
     <string name="about">एबाउट</string>
     <string name="import_data">फ़ाइलें आयात करें</string>
     <string name="export_data">फ़ाइलें निर्यात करें</string>
@@ -254,4 +252,41 @@
     <string name="legal_privacy_autofill_body">अगर आप PassKey को ऑटोफ़िल सेवा के रूप में चालू करते हैं, तो Android उसे वह फ़ॉर्म दिखाता है जिसे आप भर रहे हैं: हर फ़ील्ड का प्रकार और वह ऐप या वेब पता जिससे वह जुड़ा है, ताकि मेल खाती एंट्री सुझाई जा सकें। यह सब सिर्फ़ आपके फ़ोन पर होता है; फ़ॉर्म, साइट या सुझाई गई एंट्री के बारे में कुछ भी भेजा, लॉग या सेव नहीं किया जाता। वॉल्ट लॉक होने पर PassKey सिर्फ़ एक \"अनलॉक\" सुझाव दिखाता है, किसी एंट्री का नाम नहीं। ऑटोफ़िल तब तक बंद रहता है जब तक आप उसे Android की सेटिंग में चालू नहीं करते, और आप उसे वहीं कभी भी बंद कर सकते हैं।</string>
     <string name="autofill_untrusted_app">यह वह ऐप नहीं है जिसमें PassKey ने पहले इसी नाम से भरा था, इसलिए कुछ नहीं भरा गया। अगर आपने इसे किसी दूसरे स्टोर से दोबारा इंस्टॉल किया है, तो PassKey में लॉगिन हटाकर फिर जोड़ें।</string>
     <string name="autofill_setup_help">अगली स्क्रीन पर PassKey को Android की ऑटोफ़िल सेवा चुनें। Chrome की अपनी सेटिंग भी है: Chrome › सेटिंग › ऑटोफ़िल सेवाएँ खोलें और \"किसी दूसरी सेवा से ऑटोफ़िल करें\" चुनें।</string>
+
+    <!-- 6.0.0 feature tour (onboarding pages 4-9, and Settings > Feature tour) -->
+    <string name="feature_tour">फ़ीचर टूर</string>
+    <string name="tour_entries_heading">सब कुछ\n[[एक]]\nजगह।</string>
+    <string name="tour_entries_description">लॉगिन, PIN या नोट सहेजने के लिए जोड़ें दबाएँ और उसे बैंक, मेल, ऐप्स या अन्य में रखें। नाम से खोजें, क्रम बदलने के लिए हैंडल खींचें, और मिटाने के लिए बाईं ओर स्वाइप करें; Undo से वापस लाएँ।</string>
+    <string name="tour_autofill_heading">लॉगिन\n[[सेकंडों]] में\nभरें।</string>
+    <string name="tour_autofill_description">सेटिंग्स में ऑटोफ़िल चालू करें। आपके फ़िंगरप्रिंट या PIN के बाद PassKey ऐप्स और Chrome में आपके लॉगिन भरता है, और साइन इन करते समय नए लॉगिन सहेजने का विकल्प देता है।</string>
+    <string name="tour_codes_heading">आपके [[2FA]]\nकोड भी\nयहीं।</string>
+    <string name="tour_codes_description">कोई एंट्री खोलें और ऑथेंटिकेटर जोड़ें दबाएँ, फिर वेबसाइट का सेटअप लिंक या की पेस्ट करें। कोड कॉपी करने के लिए उस पर टैप करें।</string>
+    <string name="tour_generator_heading">मज़बूत,\n[[अनोखे]]\nपासवर्ड।</string>
+    <string name="tour_generator_description">पासवर्ड सहेजते समय चाबी वाला बटन दबाएँ और अपनी चुनी लंबाई और अक्षरों वाला पासवर्ड बनाएँ। सेटिंग्स में सुरक्षा स्थिति कमज़ोर और दोहराए गए पासवर्ड ढूँढता है।</string>
+    <string name="tour_backup_heading">अपना वॉल्ट\nकभी [[न खोएँ]]।</string>
+    <string name="tour_backup_description">फ़ाइलें निर्यात करें आपके चुने पासवर्ड से एन्क्रिप्टेड बैकअप बनाता है, और फ़ाइलें आयात करें उसे किसी भी फ़ोन पर वापस लाता है। स्क्रीन लॉक बदलने पर आपका रिकवरी पासवर्ड वॉल्ट खोलता है।</string>
+    <string name="tour_privacy_heading">ऐप छोड़ते ही\n[[लॉक]]।</string>
+    <string name="tour_privacy_description">सेटिंग्स में अपने आप लॉक का समय चुनें। स्क्रीनशॉट ब्लॉक रहते हैं, कॉपी किए पासवर्ड अपने-आप हट जाते हैं, और आपका सहेजा कुछ भी इस फ़ोन से बाहर नहीं जाता।</string>
+
+    <!-- 6.0.0 backup confidence -->
+    <string name="verify_backup">बैकअप जाँचें</string>
+    <string name="verify_backup_ok">बैकअप ठीक है: %1$d एंट्री और %2$d ऑथेंटिकेटर, %3$s को सहेजा गया। कुछ भी इम्पोर्ट नहीं हुआ।</string>
+    <string name="verify_backup_ok_legacy">बैकअप पढ़ा जा सकता है: %1$d एंट्री। यह पुरानी बिना एन्क्रिप्शन वाली फ़ाइल है, इसलिए नया एन्क्रिप्टेड बैकअप एक्सपोर्ट करें।</string>
+    <string name="backup_reminder_title">अपने वॉल्ट का बैकअप लें</string>
+    <string name="backup_reminder_body">अगर यह फ़ोन खो जाए या रीसेट हो जाए, तो बैकअप ही आपके पासवर्ड वापस पाने का एकमात्र तरीका है।</string>
+    <string name="backup_reminder_cta">अभी बैकअप लें</string>
+    <string name="import_not_a_backup">यह PassKey बैकअप फ़ाइल नहीं है। अपनी एक्सपोर्ट की हुई .pkbak फ़ाइल या पुरानी PassKey CSV चुनें।</string>
+
+    <!-- 6.0.0 theme, passphrase and icon shortcuts -->
+    <string name="theme">थीम</string>
+    <string name="theme_system">फ़ोन जैसा</string>
+    <string name="theme_light">लाइट</string>
+    <string name="theme_dark">डार्क</string>
+    <string name="passphrase">शब्दों का उपयोग करें (पासफ़्रेज़)</string>
+    <string name="passphrase_words">शब्द: %d</string>
+    <string name="passphrase_hint">पासफ़्रेज़ लंबे होते हैं। अगर कोई साइट लंबाई सीमित करती है, तो शब्द बंद कर दें।</string>
+    <string name="shortcut_add_short">एंट्री जोड़ें</string>
+    <string name="shortcut_add_long">नई एंट्री जोड़ें</string>
+    <string name="shortcut_search_short">खोजें</string>
+    <string name="shortcut_search_long">अपने वॉल्ट में खोजें</string>
 </resources>

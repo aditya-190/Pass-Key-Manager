@@ -36,7 +36,7 @@ class LocalizationCoverageTest {
         R.string.skip,
         R.string.next,
         R.string.change_language,
-        R.string.privacy,
+        R.string.export_data,
         R.string.delete
     )
 
@@ -46,7 +46,7 @@ class LocalizationCoverageTest {
      * Kept as an explicit list rather than by weakening the assertion: a new coincidence should
      * make someone look at it and decide, not pass silently.
      */
-    private val sameAsEnglish = setOf(AppLanguage.ITALIAN to R.string.privacy)
+    private val sameAsEnglish = emptySet<Pair<AppLanguage, Int>>()
 
     private fun resourcesFor(language: AppLanguage) = context
         .createConfigurationContext(

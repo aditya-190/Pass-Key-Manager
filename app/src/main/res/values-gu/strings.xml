@@ -30,8 +30,6 @@
     <string name="response">જવાબ</string>
     <string name="rate_app">એપ્લિકેશન રેટ કરો</string>
     <string name="change_language">ભાષા બદલો</string>
-    <string name="privacy">ગોપનીયતા</string>
-    <string name="terms_n_condition">નિયમો અને શરતો</string>
     <string name="about">વિશે</string>
     <string name="import_data">ડેટા આયાત કરો</string>
     <string name="export_data">ડેટા નિર્યાત કરો</string>
@@ -253,4 +251,41 @@
     <string name="legal_privacy_autofill_body">જો તમે PassKey ને ઑટોફિલ સેવા તરીકે ચાલુ કરો, તો Android તેને તમે ભરી રહ્યા છો તે ફૉર્મ બતાવે છે: દરેક ફીલ્ડનો પ્રકાર અને તે કઈ ઍપ કે વેબ સરનામાનું છે, જેથી મેળ ખાતી એન્ટ્રી સૂચવી શકાય. આ ફક્ત તમારા ફોન પર થાય છે; ફૉર્મ, સાઇટ કે સૂચવેલી એન્ટ્રી વિશે કંઈ મોકલાતું, લૉગ થતું કે સાચવાતું નથી. વૉલ્ટ લૉક હોય ત્યારે PassKey ફક્ત એક \"અનલૉક\" સૂચન બતાવે છે, કોઈ એન્ટ્રીનું નામ નહીં. Android સેટિંગમાં ચાલુ ન કરો ત્યાં સુધી ઑટોફિલ બંધ રહે છે, અને ત્યાંથી ગમે ત્યારે બંધ કરી શકાય છે.</string>
     <string name="autofill_untrusted_app">આ એ ઍપ નથી જેમાં PassKey એ પહેલાં આ નામે ભર્યું હતું, તેથી કંઈ ભરાયું નથી. જો તમે તેને બીજા સ્ટોરમાંથી ફરી ઇન્સ્ટૉલ કરી હોય, તો PassKey માં લૉગિન કાઢીને ફરી ઉમેરો.</string>
     <string name="autofill_setup_help">આગલી સ્ક્રીન પર PassKey ને Android ની ઑટોફિલ સેવા તરીકે પસંદ કરો. Chrome નું પોતાનું સેટિંગ પણ છે: Chrome › સેટિંગ › ઑટોફિલ સેવાઓ ખોલો અને \"બીજી સેવાથી ઑટોફિલ કરો\" પસંદ કરો.</string>
+
+    <!-- 6.0.0 feature tour (onboarding pages 4-9, and Settings > Feature tour) -->
+    <string name="feature_tour">ફીચર ટૂર</string>
+    <string name="tour_entries_heading">બધું\n[[એક]]\nજગ્યાએ.</string>
+    <string name="tour_entries_description">લૉગિન, PIN કે નોંધ સાચવવા ઉમેરો દબાવો અને તેને બેંકો, મેલ, એપ્લિકેશન્સ કે અન્ય માં રાખો. નામથી શોધો, ક્રમ બદલવા હેન્ડલ ખેંચો, અને કાઢી નાખવા ડાબી બાજુ સ્વાઇપ કરો; Undo થી પાછું લાવો.</string>
+    <string name="tour_autofill_heading">લૉગિન\n[[સેકન્ડોમાં]]\nભરો.</string>
+    <string name="tour_autofill_description">સેટિંગ્સ માં ઑટોફિલ ચાલુ કરો. તમારા ફિંગરપ્રિન્ટ કે PIN પછી PassKey ઍપ અને Chrome માં લૉગિન ભરે છે, અને સાઇન ઇન કરતી વખતે નવા લૉગિન સાચવવાનું પૂછે છે.</string>
+    <string name="tour_codes_heading">તમારા [[2FA]]\nકોડ પણ\nઅહીં.</string>
+    <string name="tour_codes_description">કોઈ એન્ટ્રી ખોલો અને ઑથેન્ટિકેટર ઉમેરો દબાવો, પછી વેબસાઇટની સેટઅપ લિંક કે કી પેસ્ટ કરો. કોડ કૉપિ કરવા તેના પર ટૅપ કરો.</string>
+    <string name="tour_generator_heading">મજબૂત,\n[[અનોખા]]\nપાસવર્ડ.</string>
+    <string name="tour_generator_description">પાસવર્ડ સાચવતી વખતે ચાવીનું બટન દબાવો અને તમારી પસંદની લંબાઈ અને અક્ષરોવાળો પાસવર્ડ બનાવો. સેટિંગ્સ માં સુરક્ષા સ્થિતિ નબળા અને ફરી વપરાયેલા પાસવર્ડ શોધે છે.</string>
+    <string name="tour_backup_heading">વૉલ્ટ ક્યારેય\n[[ન ગુમાવો]].</string>
+    <string name="tour_backup_description">ડેટા નિર્યાત કરો તમારા પસંદ કરેલા પાસવર્ડથી એન્ક્રિપ્ટેડ બૅકઅપ બનાવે છે, અને ડેટા આયાત કરો તેને કોઈપણ ફોન પર પાછું લાવે છે. સ્ક્રીન લૉક બદલાય તો તમારો રિકવરી પાસવર્ડ વૉલ્ટ ખોલે છે.</string>
+    <string name="tour_privacy_heading">બહાર જતાં જ\n[[લૉક]].</string>
+    <string name="tour_privacy_description">સેટિંગ્સ માં ઑટો-લૉક નો સમય પસંદ કરો. સ્ક્રીનશૉટ બંધ રહે છે, કૉપિ કરેલા પાસવર્ડ જાતે ભૂંસાઈ જાય છે, અને તમે સાચવેલું કશું આ ફોનની બહાર જતું નથી.</string>
+
+    <!-- 6.0.0 backup confidence -->
+    <string name="verify_backup">બૅકઅપ ચકાસો</string>
+    <string name="verify_backup_ok">બૅકઅપ બરાબર છે: %1$d એન્ટ્રી અને %2$d ઑથેન્ટિકેટર, %3$s ના રોજ સાચવેલ. કશું ઇમ્પોર્ટ થયું નથી.</string>
+    <string name="verify_backup_ok_legacy">બૅકઅપ વાંચી શકાય છે: %1$d એન્ટ્રી. આ જૂની એન્ક્રિપ્શન વગરની ફાઇલ છે, તેથી નવો એન્ક્રિપ્ટેડ બૅકઅપ એક્સપોર્ટ કરો.</string>
+    <string name="backup_reminder_title">તમારા વૉલ્ટનો બૅકઅપ લો</string>
+    <string name="backup_reminder_body">આ ફોન ખોવાય કે રીસેટ થાય, તો બૅકઅપ જ તમારા પાસવર્ડ પાછા મેળવવાનો એકમાત્ર રસ્તો છે.</string>
+    <string name="backup_reminder_cta">હમણાં બૅકઅપ લો</string>
+    <string name="import_not_a_backup">આ PassKey બૅકઅપ ફાઇલ નથી. તમે એક્સપોર્ટ કરેલી .pkbak ફાઇલ કે જૂની PassKey CSV પસંદ કરો.</string>
+
+    <!-- 6.0.0 theme, passphrase and icon shortcuts -->
+    <string name="theme">થીમ</string>
+    <string name="theme_system">ફોન જેવી</string>
+    <string name="theme_light">લાઇટ</string>
+    <string name="theme_dark">ડાર્ક</string>
+    <string name="passphrase">શબ્દો વાપરો (પાસફ્રેઝ)</string>
+    <string name="passphrase_words">શબ્દો: %d</string>
+    <string name="passphrase_hint">પાસફ્રેઝ લાંબા હોય છે. કોઈ સાઇટ લંબાઈ મર્યાદિત કરે, તો શબ્દો બંધ કરો.</string>
+    <string name="shortcut_add_short">એન્ટ્રી ઉમેરો</string>
+    <string name="shortcut_add_long">નવી એન્ટ્રી ઉમેરો</string>
+    <string name="shortcut_search_short">શોધો</string>
+    <string name="shortcut_search_long">તમારા વૉલ્ટમાં શોધો</string>
 </resources>

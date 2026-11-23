@@ -30,8 +30,6 @@
     <string name="response">Ответ</string>
     <string name="rate_app">Оценить приложение</string>
     <string name="change_language">Изменить язык</string>
-    <string name="privacy">Конфиденциальность</string>
-    <string name="terms_n_condition">Условия использования</string>
     <string name="about">О приложении</string>
     <string name="import_data">Импортировать данные</string>
     <string name="export_data">Экспортировать данные</string>
@@ -257,4 +255,41 @@
     <string name="legal_privacy_autofill_body">Если вы включите PassKey как службу автозаполнения, Android покажет ему заполняемую форму: тип каждого поля и приложение или веб-адрес, к которому она относится, чтобы он мог предложить подходящие записи. Это происходит только на вашем телефоне; ничего о форме, сайте или предложенных записях не отправляется, не записывается в журналы и не сохраняется. Пока хранилище заблокировано, PassKey показывает только одну подсказку «Разблокировать» и никаких названий записей. Автозаполнение выключено, пока вы не включите его в настройках Android, и там же его можно выключить в любой момент.</string>
     <string name="autofill_untrusted_app">Это не то приложение, которое PassKey раньше заполнял под этим названием, поэтому ничего не заполнено. Если вы переустановили его из другого магазина, удалите вход в PassKey и добавьте снова.</string>
     <string name="autofill_setup_help">На следующем экране выберите PassKey службой автозаполнения Android. У Chrome есть и собственная настройка: откройте Chrome › Настройки › Сервисы автозаполнения и выберите «Автозаполнение через другой сервис».</string>
+
+    <!-- 6.0.0 feature tour (onboarding pages 4-9, and Settings > Feature tour) -->
+    <string name="feature_tour">Обзор возможностей</string>
+    <string name="tour_entries_heading">Всё в\n[[одном]]\nместе.</string>
+    <string name="tour_entries_description">Нажмите «Добавить», чтобы сохранить логин, PIN или заметку в разделе «Банки», «Почта», «Приложения» или «Прочее». Ищите по названию, перетаскивайте за маркер для сортировки и смахивайте влево для удаления — с возможностью отмены.</string>
+    <string name="tour_autofill_heading">Вход за\n[[секунды]].</string>
+    <string name="tour_autofill_description">Включите «Автозаполнение» в разделе «Настройки». После отпечатка или PIN PassKey заполняет логины в приложениях и Chrome и предлагает сохранить новые при входе.</string>
+    <string name="tour_codes_heading">И ваши\nкоды\n[[2FA]].</string>
+    <string name="tour_codes_description">Откройте запись и нажмите «Добавить аутентификатор», затем вставьте ссылку настройки или ключ, который показывает сайт. Нажмите на код, чтобы скопировать его.</string>
+    <string name="tour_generator_heading">Надёжные\n[[уникальные]]\nпароли.</string>
+    <string name="tour_generator_description">При сохранении пароля нажмите кнопку с ключом, чтобы создать пароль нужной длины и из нужных символов. «Состояние безопасности» в разделе «Настройки» находит слабые и повторяющиеся пароли.</string>
+    <string name="tour_backup_heading">Хранилище\nне [[потеряется]].</string>
+    <string name="tour_backup_description">«Экспортировать данные» создаёт зашифрованную копию с выбранным вами паролем, а «Импортировать данные» восстанавливает её на любом телефоне. Если сменится блокировка экрана, хранилище откроет пароль восстановления.</string>
+    <string name="tour_privacy_heading">Блокировка,\nкогда вы\n[[уходите]].</string>
+    <string name="tour_privacy_description">Задайте время для «Автоблокировка» в разделе «Настройки». Скриншоты запрещены, скопированные пароли стираются сами, и ничто сохранённое не покидает этот телефон.</string>
+
+    <!-- 6.0.0 backup confidence -->
+    <string name="verify_backup">Проверить резервную копию</string>
+    <string name="verify_backup_ok">Копия в порядке: записей — %1$d, аутентификаторов — %2$d, сохранена %3$s. Ничего не импортировано.</string>
+    <string name="verify_backup_ok_legacy">Копию можно прочитать: записей — %1$d. Это старый незашифрованный файл, поэтому экспортируйте новую зашифрованную копию.</string>
+    <string name="backup_reminder_title">Сделайте резервную копию</string>
+    <string name="backup_reminder_body">Если телефон потеряется или будет сброшен, только резервная копия вернёт ваши пароли.</string>
+    <string name="backup_reminder_cta">Сделать копию</string>
+    <string name="import_not_a_backup">Это не файл резервной копии PassKey. Выберите экспортированный файл .pkbak или старый CSV-файл PassKey.</string>
+
+    <!-- 6.0.0 theme, passphrase and icon shortcuts -->
+    <string name="theme">Тема</string>
+    <string name="theme_system">Как в телефоне</string>
+    <string name="theme_light">Светлая</string>
+    <string name="theme_dark">Тёмная</string>
+    <string name="passphrase">Использовать слова (парольная фраза)</string>
+    <string name="passphrase_words">Слов: %d</string>
+    <string name="passphrase_hint">Парольные фразы длинные. Если сайт ограничивает длину, отключите слова.</string>
+    <string name="shortcut_add_short">Добавить</string>
+    <string name="shortcut_add_long">Добавить запись</string>
+    <string name="shortcut_search_short">Поиск</string>
+    <string name="shortcut_search_long">Поиск в хранилище</string>
 </resources>

@@ -30,8 +30,6 @@
     <string name="response">Resposta</string>
     <string name="rate_app">Avaliar Aplicativo</string>
     <string name="change_language">Alterar Idioma</string>
-    <string name="privacy">Privacidade</string>
-    <string name="terms_n_condition">Termos e Condições</string>
     <string name="about">Sobre</string>
     <string name="import_data">Importar Dados</string>
     <string name="export_data">Exportar Dados</string>
@@ -256,4 +254,41 @@
     <string name="legal_privacy_autofill_body">Se você ativar o PassKey como serviço de preenchimento automático, o Android mostra a ele o formulário que você está preenchendo: o tipo de cada campo e o app ou endereço web a que pertence, para que ele sugira entradas correspondentes. Isso acontece só no seu telefone; nada sobre o formulário, o site ou as entradas sugeridas é enviado, registrado ou guardado. Enquanto o cofre está bloqueado, o PassKey oferece uma única sugestão \"Desbloquear\" e nenhum nome de entrada. O preenchimento automático fica desativado até você ativá-lo nas configurações do Android, onde pode desativá-lo a qualquer momento.</string>
     <string name="autofill_untrusted_app">Este não é o app que o PassKey preencheu antes com este nome, então nada foi preenchido. Se você o reinstalou de outra loja, remova o login no PassKey e adicione-o novamente.</string>
     <string name="autofill_setup_help">Na próxima tela, escolha o PassKey como serviço de preenchimento automático do Android. O Chrome também tem sua própria configuração: abra Chrome › Configurações › Serviços de preenchimento automático e escolha \"Preencher automaticamente com outro serviço\".</string>
+
+    <!-- 6.0.0 feature tour (onboarding pages 4-9, and Settings > Feature tour) -->
+    <string name="feature_tour">Tour pelos recursos</string>
+    <string name="tour_entries_heading">Tudo em\num [[só]]\nlugar.</string>
+    <string name="tour_entries_description">Toque em Adicionar para salvar um login, PIN ou nota em Bancos, Correios, Aplicativos ou Outros. Pesquise pelo nome, arraste a alça para reordenar e deslize para a esquerda para excluir, com Desfazer.</string>
+    <string name="tour_autofill_heading">Login em\n[[segundos]].</string>
+    <string name="tour_autofill_description">Ative Preenchimento automático em Configurações. O PassKey preenche seus logins em apps e no Chrome após sua digital ou PIN, e oferece salvar os novos quando você entra.</string>
+    <string name="tour_codes_heading">Seus códigos\n[[2FA]]\ntambém.</string>
+    <string name="tour_codes_description">Abra uma entrada e toque em Adicionar autenticador; depois cole o link de configuração ou a chave que o site mostra. Toque em um código para copiá-lo.</string>
+    <string name="tour_generator_heading">Senhas\nfortes e\n[[únicas]].</string>
+    <string name="tour_generator_description">Ao salvar uma senha, toque no botão de chave para gerar uma com o tamanho e os caracteres que você escolher. Status de Segurança em Configurações encontra senhas fracas e repetidas.</string>
+    <string name="tour_backup_heading">Nunca\n[[perca]]\nseu cofre.</string>
+    <string name="tour_backup_description">Exportar Dados cria um backup criptografado com uma senha que você escolhe, e Importar Dados o restaura em qualquer celular. Sua senha de recuperação abre o cofre se o bloqueio de tela mudar.</string>
+    <string name="tour_privacy_heading">Bloqueado\nquando você\n[[sai]].</string>
+    <string name="tour_privacy_description">Escolha o tempo de Bloqueio automático em Configurações. Capturas de tela são bloqueadas, senhas copiadas se apagam sozinhas e nada do que você salva sai deste celular.</string>
+
+    <!-- 6.0.0 backup confidence -->
+    <string name="verify_backup">Verificar um backup</string>
+    <string name="verify_backup_ok">O backup está ok: %1$d entradas e %2$d autenticadores, salvo em %3$s. Nada foi importado.</string>
+    <string name="verify_backup_ok_legacy">O backup pode ser lido: %1$d entradas. É um arquivo antigo sem criptografia, então exporte um novo backup criptografado.</string>
+    <string name="backup_reminder_title">Faça backup do seu cofre</string>
+    <string name="backup_reminder_body">Se este celular for perdido ou redefinido, um backup é a única forma de recuperar suas senhas.</string>
+    <string name="backup_reminder_cta">Fazer backup agora</string>
+    <string name="import_not_a_backup">Este não é um arquivo de backup do PassKey. Escolha um arquivo .pkbak que você exportou ou um CSV antigo do PassKey.</string>
+
+    <!-- 6.0.0 theme, passphrase and icon shortcuts -->
+    <string name="theme">Tema</string>
+    <string name="theme_system">Igual ao celular</string>
+    <string name="theme_light">Claro</string>
+    <string name="theme_dark">Escuro</string>
+    <string name="passphrase">Usar palavras (frase-senha)</string>
+    <string name="passphrase_words">Palavras: %d</string>
+    <string name="passphrase_hint">Frases-senha são longas. Se um site limitar o tamanho, desative as palavras.</string>
+    <string name="shortcut_add_short">Adicionar</string>
+    <string name="shortcut_add_long">Adicionar uma entrada</string>
+    <string name="shortcut_search_short">Buscar</string>
+    <string name="shortcut_search_long">Buscar no seu cofre</string>
 </resources>

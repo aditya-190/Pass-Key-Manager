@@ -3,7 +3,7 @@
 ## Phase 0: research and spec (2026-11-21) ✅
 - `docs/research/{BRIEF,COMPETITORS,FEATURE_MATRIX,PAIN_POINTS}.md`, `docs/SPEC.md`, `docs/DECISIONS.md`, app `CLAUDE.md`.
 
-## Phase 1: release 5.5.2 "Correct and honest" (branch `release/5.5.2`) ✅ code and device checks done; release needs the owner actions below
+## Phase 1: release 5.5.2 "Correct and honest" ✅ shipped inside 5.8.0 (47)
 Done:
 - PR #1 cherry-picked: localised onboarding without the crash trap, SecureRandom generator, 17-locale parity
   (Arabic in `locales_config`), duplicate-heading and edit-trim fixes, TalkBack labels.
@@ -31,7 +31,7 @@ Done:
   0 crashes, 0 ANRs. Vault still opens and decrypts afterwards. Monkey deleted the seeded detail (expected data churn).
 - No ANRs. The API 37 emulator is shared with another session, so no results were taken from it.
 
-## Phase 2: release 5.6.0 (branch `release/5.6.0`), in progress ⏸
+## Phase 2: release 5.6.0 ✅ shipped inside 5.8.0 (47)
 Done (each gated: ktlint, detekt, unit tests, lint, build; device checks on PassKey_API28):
 1. Toolchain `afacb64`: Gradle 9.7.1, AGP 9.4.0, Kotlin 2.4.20, KSP 2.3.14; release APK 28 → 13 MB; release build refuses
    to package without PASS_PHRASE; upgrade check against real 5.5.1 passes.
@@ -68,7 +68,7 @@ Unit tests: 179, all passing. Instrumented: 10/10 on API 28. All gates green inc
 **Overall: 🟠 shippable** once the owner actions below are done; the DB-key Blocker is 5.7.0's job.
 
 
-## Phase 3: release 5.7.0 "Per-install key" (branch `release/5.7.0`), in progress ⏸
+## Phase 3: release 5.7.0 "Per-install key" ✅ shipped inside 5.8.0 (47)
 Owner decisions: PBKDF2 recovery slot (no argon2kt), mandatory one-time recovery password.
 - PR #3 ported (`e9e1a4a`, `f4b6c66`) and integrated with the 5.6.0 lock work (`847c88a`): UnlockPromptPolicy (6 tests)
   restores prompt-on-resume / no-loop rules the PR's gate had lost; PBKDF2 replaces Argon2 with reference-vector tests.
@@ -102,7 +102,7 @@ Owner decisions: PBKDF2 recovery slot (no argon2kt), mandatory one-time recovery
 Open: the real Play 5.5.1 → 5.7.0 upgrade needs a Play internal testing track (a debug build cannot replace a
 Play-signed install without uninstalling). Rollout set by the owner (100%).
 
-## Phase 4: release 5.8.0 "Daily-use features" (branch `release/5.8.0`), in progress ⏸
+## Phase 4: release 5.8.0 "Daily-use features" ✅ shipped as 5.8.0 (47)
 Owner: 5.7.0 → 100% rollout (owner sets it in Play Console); physical checks on the Moto G34 (not yet connected).
 ### 4a: architecture (no user-visible change), code-complete
 - Layering fixed, typed PreferencesRepository (`c823935`); domain models, entities confined to data (`ebd0d94`);
@@ -136,24 +136,96 @@ Owner: 5.7.0 → 100% rollout (owner sets it in Play Console); physical checks o
   13 tests red → green; 289 unit, 34 instrumented. Simulation +3,000 seeds (saves, trust, delete/undo), 0 failures.
   Device: real vault v4→v5 intact; with the vault unlocked the form still shows only "Unlock to fill".
 
-## Carried into 5.6.0
-- Per-field secret keyboard (attack-pass finding #1), built on the `isSecret` column.
+## Carried into 5.6.0 ✅
+- Per-field secret keyboard (attack-pass finding #1), built on the `isSecret` column. Done: secret fields use a
+  password keyboard (`vaultKeyboardOptions`).
 - A failed Android 10+ export is reported as success (`SettingsViewModel.kt:260`); replaced by the encrypted backup.
 
 ## Owner actions for 5.6.0
-- [ ] Play Data-safety form: crash logs, diagnostics and app interactions are optional (consent); Remote Config request
+- [x] (2026-11-23) Play Data-safety form: crash logs, diagnostics and app interactions are optional (consent); Remote Config request
       with installation ID; no ad ID; nothing shared; vault content never collected; data encrypted in transit.
-- [ ] Native-speaker review of the machine-translated legal and About texts (17 languages).
-- [ ] Staged rollout (e.g. 10% → 50% → 100%) watching Crashlytics for users who opted in.
+- [ ] Native-speaker review of the machine-translated legal and About texts (17 languages), plus the 6.0.0 tour text.
+- [x] Rollout: owner chose production at 100% for 47 (no staged rollout, no internal test).
 
 ## Owner actions
 - [x] 5.5.2 attack pass: fixed #2 (keep pre-consent crash reports until the user decides) and #3 (no automatic screen reporting). #1 (per-field secret keyboard) moved to 5.6.0.
 - [x] Emulators created (`PassKey_API28`, `PassKey_API37`); device run done (see above).
 - [x] Settings sheet crash: option A applied and verified.
-- [ ] Confirm `PASS_PHRASE` is set in `local.properties` before building the release (agents never read it).
-- [ ] Update the Play Data-safety form for 5.5.2: optional crash logs, app interactions and diagnostics, no ad ID,
+- [x] Confirm `PASS_PHRASE` is set in `local.properties` before building the release (agents never read it).
+- [x] (2026-11-23) Update the Play Data-safety form for 5.5.2: optional crash logs, app interactions and diagnostics, no ad ID,
       nothing shared, vault content never collected.
 - [ ] Get a native-speaker review of the machine-translated legal texts (at least hi, es, pt, de, fr).
 - [ ] Share Play Console retention (D1/D7/D30), uninstall data and vitals so the success metrics in `SPEC.md` have a baseline.
 - [x] Before 5.7.0: fingerprint checks on a physical device (Moto G34, done 2026-11-23).
-- [ ] Before 5.7.0 ships: Play 5.5.1 → 5.7.0 upgrade through an internal testing track, with sample data.
+- [x] ~~Before 5.7.0 ships: Play 5.5.1 → 5.7.0 upgrade through internal testing~~ skipped by the owner; 47 went straight
+      to production. Do it for 6.0.0 (47 → 6.0.0).
+
+## Release 5.8.0 (47): sent to Play review 2026-11-23
+- One production release at 100% carrying 5.5.2–5.8.0, with the new listing, Data safety, category Productivity and
+  Advertising ID = No. Details in `docs/PLAY_FIREBASE_CHECKLIST.md`.
+- Next 7 days after it goes live: Crashlytics crash-free users and `vault_migration_failed` by reason; GA key events
+  once received.
+
+## Phase 6: release 6.0.0 "Same UI, more features" (branch `release/6.0.0`), in progress
+Owner direction (2026-11-23): no UI change; additive, update-safe features; goal is more users. Scope and order in
+`docs/SPEC.md` and `/Users/bhardwaj/.claude/plans/this-is-my-project-crystalline-boot.md`.
+
+### 6a: feature tour, code-complete
+- First run: 3 intro pages + 6 tour pages (entries, autofill, 2FA codes, generator and Safety Status, backup and
+  recovery, auto-lock and privacy), Skip on every page. Settings › Feature tour (above About) replays the 6 tour pages
+  and returns. Same pager and look (`OnBoardingPager`, `OnBoardingItem`); existing users are never interrupted.
+- `NavRoute.FeatureTour` (screen `feature_tour_page`, allowed for announcements), behind the lock like any vault screen.
+- Text in all 17 languages; button names filled from each locale's own UI strings.
+- Events: `feature_tour_started`, `feature_tour_completed`, `feature_tour_skipped(page)`.
+- TDD: 8 red → green (`FeatureTourTest` 7, `NavRouteTest` 2 updated). Simulation `Release600SimulationTest`: 1,000
+  seeds of random Skip/Next/double taps, 0 failures.
+- Attack pass (owner: fix them): #1 long tour text cut off at 200% font on narrow phones → pages scroll
+  (`FeatureTourLayoutTest`, on the Moto G34: red on en TOUR_GENERATOR without the fix, green in all 17 languages with
+  it; a 1280 dp tablet emulator could not show the bug). #2 a late Skip/Next after Back could also close Settings →
+  pops only the tour route. #3 9-page first run lowers `tutorial_complete` → documented in ANALYTICS_EVENTS. #4
+  process death re-counted `feature_tour_started` → flag in SavedStateHandle (red → green). #5 translations → native
+  review list.
+- Gates green (307 unit); instrumented 35/35 on the Moto G34 (via `am instrument`, app data kept).
+
+### 6b: backup confidence, code-complete
+- Settings › "Verify a backup" (after Export Data): same file picker and password dialog as Import; reports entries,
+  authenticators and the backup's date, or the same error messages as Import. Nothing is imported.
+- Home backup reminder in the existing announcement card (only when no announcement is live): 3 days after the first
+  look if never backed up, 30 days after the last successful export. "Back up now" opens Settings (rests 1 day);
+  dismiss = 7 days. Never for an empty vault. Clock-safe.
+- 6 strings in 17 languages. Events `backup_reminder_tapped`, `backup_reminder_snoozed`.
+- TDD: 10 red → green (`BackupReminderTest` 6 of 7, `BackupCodecTest` 2, `SettingsViewModelTest` 2). Simulation:
+  2,000 reminder seeds (empty vault, snooze, fresh backup, liveness) and 40 encrypted verify runs with tampered,
+  truncated and wrong-password files, 0 failures.
+- Attack pass (owner: fix all): #1 not-a-backup message; #2 long message; #3 date in app language; #4 chosen file
+  survives rotation (rememberSaveable); #5 "Back up now" opens export; #6 reminder shows under an announcement; #7 a
+  verified recent backup counts. TDD 5 red → green; simulation +1,000 junk files. Owner: Privacy and Terms rows
+  removed from Settings (in About). Gates green (326 unit); instrumented 35/35 on the Moto G34.
+
+### 6c: small additions, code-complete
+- Settings › Theme: System / Light / Dark (same colours), applied before the first frame; bar icons follow it.
+- Generator: "Use words (passphrase)" switch; word count 3–10 (default 5); A-Z capitalises, 0-9 adds a digit.
+- Home search also matches field names (never values).
+- Icon shortcuts: Add entry, Search (run after unlock, once; also when Home is already open).
+- Dropped: "old passwords" (no field ages exist until history is a year old). 10 strings in 17 languages.
+- TDD: 10 red → green (SmallFeaturesTest 6, Settings 1, Detail 1, Preview 2). Simulation: 2,000 passphrases,
+  1,000 search vaults (values never match), 1,000 theme/shortcut inputs, 0 failures.
+- Attack pass (owner: fix all): #1/#5/#6 shared `PassKeyAppTheme` (no blocking read; Android 12+ tells the system so
+  launch screen and autofill prompt match); #2 min 4 words; #3 name matches first; #4 shortcut returns to Home; #7
+  long-passphrase hint; #8 layout test waits for the pager. TDD 4 red → green.
+
+### 6d: import from other apps — not built (owner decision, 2026-11-23)
+### 6e: reviews and sharing, code-complete
+- Play in-app review after good moments only (backup saved, replayed tour finished, after 3 autofills on the next Home
+  open); never in the first 3 days, at most once per 120 days, Remote Config pacing and off switch. Manual Rate (Settings
+  or About) counts as an ask.
+- Settings › Share with friends.
+- TDD: 13 red → green (ReviewPromptTest 8, HomeReviewViewModelTest 2, Settings 2, FeatureTour 1). Simulation 2,000
+  seeds (clock jumps, manual rates, switched off) found seed 18 (last ask moved back): fixed, store keeps the later time.
+### 6f: Android 14+ sign-in sheet (Credential Manager provider), code-complete
+- `PasskeyCredentialProviderService` + `CredentialUnlockActivity` (API 34+): "Unlock to fill" → fingerprint → matching
+  app logins → the picked password returns. Signer checked against the autofill trust store; nothing secret in intents.
+- TDD: 4 red → green (`CredentialProviderPolicyTest`), simulation 1,000 seeds (pick, fingerprint order), 0 failures.
+- Moto G34 (Android 15): PassKey listed by `pm query-services` as an enabled credential provider behind
+  BIND_CREDENTIAL_PROVIDER_SERVICE; instrumented 35/35. Attack pass: browser-for-website and no-username cases fixed.
+

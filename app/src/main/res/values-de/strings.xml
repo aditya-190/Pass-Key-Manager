@@ -30,8 +30,6 @@
     <string name="response">Antwort</string>
     <string name="rate_app">App bewerten</string>
     <string name="change_language">Sprache ändern</string>
-    <string name="privacy">Datenschutz</string>
-    <string name="terms_n_condition">Nutzungsbedingungen</string>
     <string name="about">Über uns</string>
     <string name="import_data">Daten importieren</string>
     <string name="export_data">Daten exportieren</string>
@@ -255,4 +253,41 @@
     <string name="legal_privacy_autofill_body">Wenn du PassKey als Autofill-Dienst einschaltest, zeigt Android ihm das Formular, das du ausfüllst: die Art jedes Feldes und die App oder Webadresse, zu der es gehört, damit passende Einträge vorgeschlagen werden können. Das geschieht nur auf deinem Telefon; über das Formular, die Website oder die vorgeschlagenen Einträge wird nichts gesendet, protokolliert oder gespeichert. Solange der Tresor gesperrt ist, zeigt PassKey nur einen Vorschlag „Entsperren“ und keine Eintragsnamen. Autofill bleibt aus, bis du es in den Android-Einstellungen einschaltest, und lässt sich dort jederzeit wieder ausschalten.</string>
     <string name="autofill_untrusted_app">Das ist nicht die App, die PassKey unter diesem Namen zuvor ausgefüllt hat, daher wurde nichts ausgefüllt. Wenn du sie aus einem anderen Store neu installiert hast, entferne den Login in PassKey und füge ihn neu hinzu.</string>
     <string name="autofill_setup_help">Wähle auf dem nächsten Bildschirm PassKey als Autofill-Dienst von Android. Chrome hat zusätzlich eine eigene Einstellung: Öffne Chrome › Einstellungen › Autofill-Dienste und wähle „Autofill mit einem anderen Dienst“.</string>
+
+    <!-- 6.0.0 feature tour (onboarding pages 4-9, and Settings > Feature tour) -->
+    <string name="feature_tour">Funktionstour</string>
+    <string name="tour_entries_heading">Alles an\n[[einem]]\nOrt.</string>
+    <string name="tour_entries_description">Tippe auf Hinzufügen, um ein Login, eine PIN oder Notiz unter Banken, E-Mails, Apps oder Andere zu speichern. Suche nach Namen, ziehe am Griff zum Sortieren und wische nach links zum Löschen, mit Rückgängig.</string>
+    <string name="tour_autofill_heading">Logins in\n[[Sekunden]]\nausfüllen.</string>
+    <string name="tour_autofill_description">Schalte Automatisches Ausfüllen in den Einstellungen ein. PassKey füllt deine Logins in Apps und Chrome nach Fingerabdruck oder PIN aus und bietet beim Anmelden an, neue zu speichern.</string>
+    <string name="tour_codes_heading">Auch deine\n[[2FA]]-Codes.</string>
+    <string name="tour_codes_description">Öffne einen Eintrag, tippe auf Authenticator hinzufügen und füge den Einrichtungslink oder Schlüssel der Website ein. Tippe auf einen Code, um ihn zu kopieren.</string>
+    <string name="tour_generator_heading">Starke,\n[[einzigartige]]\nPasswörter.</string>
+    <string name="tour_generator_description">Tippe beim Speichern eines Passworts auf die Schlüssel-Taste, um eines mit Länge und Zeichen deiner Wahl zu erzeugen. Sicherheitsstatus in den Einstellungen findet schwache und doppelte Passwörter.</string>
+    <string name="tour_backup_heading">Nie wieder\nden Tresor\n[[verlieren]].</string>
+    <string name="tour_backup_description">Daten exportieren erstellt ein verschlüsseltes Backup mit einem Passwort deiner Wahl, Daten importieren stellt es auf jedem Telefon wieder her. Ändert sich deine Displaysperre, öffnet dein Wiederherstellungspasswort den Tresor.</string>
+    <string name="tour_privacy_heading">Gesperrt,\nsobald du\n[[gehst]].</string>
+    <string name="tour_privacy_description">Lege die Zeit für Automatisch sperren in den Einstellungen fest. Screenshots sind blockiert, kopierte Passwörter werden automatisch gelöscht, und nichts, was du speicherst, verlässt dieses Telefon.</string>
+
+    <!-- 6.0.0 backup confidence -->
+    <string name="verify_backup">Backup prüfen</string>
+    <string name="verify_backup_ok">Backup ist in Ordnung: %1$d Einträge und %2$d Authenticatoren, gespeichert am %3$s. Es wurde nichts importiert.</string>
+    <string name="verify_backup_ok_legacy">Backup ist lesbar: %1$d Einträge. Es ist eine alte unverschlüsselte Datei, exportiere daher ein neues verschlüsseltes Backup.</string>
+    <string name="backup_reminder_title">Sichere deinen Tresor</string>
+    <string name="backup_reminder_body">Geht dieses Telefon verloren oder wird es zurückgesetzt, ist ein Backup der einzige Weg zurück zu deinen Passwörtern.</string>
+    <string name="backup_reminder_cta">Jetzt sichern</string>
+    <string name="import_not_a_backup">Das ist keine PassKey-Backupdatei. Wähle eine exportierte .pkbak-Datei oder eine alte PassKey-CSV.</string>
+
+    <!-- 6.0.0 theme, passphrase and icon shortcuts -->
+    <string name="theme">Design</string>
+    <string name="theme_system">Wie Telefon</string>
+    <string name="theme_light">Hell</string>
+    <string name="theme_dark">Dunkel</string>
+    <string name="passphrase">Wörter verwenden (Passphrase)</string>
+    <string name="passphrase_words">Wörter: %d</string>
+    <string name="passphrase_hint">Passphrasen sind lang. Wenn eine Website die Länge begrenzt, schalte Wörter aus.</string>
+    <string name="shortcut_add_short">Hinzufügen</string>
+    <string name="shortcut_add_long">Neuen Eintrag hinzufügen</string>
+    <string name="shortcut_search_short">Suchen</string>
+    <string name="shortcut_search_long">Im Tresor suchen</string>
 </resources>

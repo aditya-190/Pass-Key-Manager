@@ -160,7 +160,13 @@ class Release560SimulationTest {
             val rnd = Random(seed.toLong())
             val repo = randomVault(rnd)
             val original = repo.snapshot()
-            val vm = PreviewViewModel(repo, SavedStateHandle(), RecordingAnalyticsTracker())
+            val vm =
+                PreviewViewModel(
+                    repo,
+                    SavedStateHandle(),
+                    RecordingAnalyticsTracker(),
+                    com.bhardwaj.passkey.domain.model.PendingShortcut()
+                )
             val subscriber = backgroundScope.launch(UnconfinedTestDispatcher(testScheduler)) { vm.state.collect {} }
             var confirmedDeletes = 0
             repeat(rnd.nextInt(15)) {

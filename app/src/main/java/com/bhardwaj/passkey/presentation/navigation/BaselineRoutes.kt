@@ -1,12 +1,18 @@
 package com.bhardwaj.passkey.presentation.navigation
 
+import androidx.activity.compose.LocalActivity
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.bhardwaj.passkey.R
 import com.bhardwaj.passkey.about.AboutEffectsHandler
 import com.bhardwaj.passkey.about.AboutScreen
 import com.bhardwaj.passkey.about.AboutViewModel
@@ -14,15 +20,21 @@ import com.bhardwaj.passkey.about.ExternalLinks
 import com.bhardwaj.passkey.about.LicencesScreen
 import com.bhardwaj.passkey.about.OssLibrary
 import com.bhardwaj.passkey.about.baselineLibraries
+import com.bhardwaj.passkey.backupreminder.BackupReminderIntent
+import com.bhardwaj.passkey.backupreminder.BackupReminderViewModel
+import com.bhardwaj.passkey.banner.Announcement
 import com.bhardwaj.passkey.banner.AnnouncementBanner
 import com.bhardwaj.passkey.banner.AnnouncementEffect
 import com.bhardwaj.passkey.banner.AnnouncementIntent
 import com.bhardwaj.passkey.banner.AnnouncementRoutes
+import com.bhardwaj.passkey.banner.AnnouncementStyle
 import com.bhardwaj.passkey.banner.AnnouncementViewModel
 import com.bhardwaj.passkey.legal.LegalDocument
 import com.bhardwaj.passkey.legal.LegalEffect
 import com.bhardwaj.passkey.legal.LegalScreen
 import com.bhardwaj.passkey.legal.LegalViewModel
+import com.bhardwaj.passkey.review.HomeReviewViewModel
+import com.bhardwaj.passkey.review.requestInAppReview
 
 /** Everything PassKey ships besides the baseline set. Keep docs/ASSET_LICENSES.md in step. */
 val passKeyLibraries = baselineLibraries + listOf(
@@ -80,10 +92,46 @@ fun HomeAnnouncement(onNavigate: (NavRoute) -> Unit, modifier: Modifier = Modifi
             }
         }
     }
-    AnnouncementBanner(
-        announcement = announcement,
-        onCta = { viewModel.onIntent(AnnouncementIntent.CtaClicked(it)) },
-        onDismiss = { viewModel.onIntent(AnnouncementIntent.Dismissed(it)) },
-        modifier = modifier
-    )
+    // Home's review moment (6.0.0): after enough autofills. No UI; Play decides whether anything shows.
+    val reviewViewModel: HomeReviewViewModel = hiltViewModel()
+    val activity = LocalActivity.current
+    LaunchedEffect(reviewViewModel) { reviewViewModel.requests.collect { requestInAppReview(activity) } }
+
+    // The backup reminder (6.0.0) uses the same card. It shows under a live announcement rather than waiting
+    // for it to end: a long announcement must not hold back a missing backup.
+    val reminderViewModel: BackupReminderViewModel = hiltViewModel()
+    val reminderDue by reminderViewModel.isDue.collectAsStateWithLifecycle()
+    val reminder = if (reminderDue) {
+        Announcement(
+            id = BACKUP_REMINDER_ID,
+            title = stringResource(R.string.backup_reminder_title),
+            body = stringResource(R.string.backup_reminder_body),
+            ctaLabel = stringResource(R.string.backup_reminder_cta),
+            route = BACKUP_REMINDER_ROUTE,
+            style = AnnouncementStyle.INFO
+        )
+    } else {
+        null
+    }
+    Column(modifier) {
+        AnnouncementBanner(
+            announcement = announcement,
+            onCta = { viewModel.onIntent(AnnouncementIntent.CtaClicked(it)) },
+            onDismiss = { viewModel.onIntent(AnnouncementIntent.Dismissed(it)) }
+        )
+        AnnouncementBanner(
+            announcement = reminder,
+            onCta = {
+                reminderViewModel.onIntent(BackupReminderIntent.BackUpNow)
+                onNavigate(NavRoute.Settings(startExport = true))
+            },
+            onDismiss = { reminderViewModel.onIntent(BackupReminderIntent.Later) },
+            // Space only when both cards show; a hidden card takes none.
+            contentPadding = PaddingValues(top = if (announcement != null) 8.dp else 0.dp)
+        )
+    }
 }
+
+/** Local id: Remote Config ids are free text, so this one is prefixed to never collide with them. */
+private const val BACKUP_REMINDER_ID = "local_backup_reminder"
+private const val BACKUP_REMINDER_ROUTE = "settings_page"

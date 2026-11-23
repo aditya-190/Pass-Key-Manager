@@ -21,6 +21,9 @@ sealed interface BackupError {
     data class UnsupportedVersion(val reason: String) : BackupError
     data object FileTooLarge : BackupError
     data object SchemaInvalid : BackupError
+
+    /** Nothing in the file is a PassKey backup (a photo, a random document). */
+    data object NotABackup : BackupError
     data object ReadFailed : BackupError
     data object WriteFailed : BackupError
 }
@@ -71,6 +74,13 @@ class BackupRepository @Inject constructor(
                     .getOrElse { throw BackupException(BackupError.SchemaInvalid) }
             }
         }
+
+    /** Reads and decrypts a backup the same way import does, but only reports what it holds (6.0.0). */
+    suspend fun verify(uri: Uri, password: CharArray?): Result<BackupCheck> = withContext(Dispatchers.IO) {
+        val bytes = readLimited(uri)
+            ?: return@withContext Result.failure(BackupException(BackupError.ReadFailed))
+        codec.decode(bytes, password).map(codec::check)
+    }
 
     private fun readLimited(uri: Uri): ByteArray? = runCatching {
         context.contentResolver.openInputStream(uri)?.use { input ->

@@ -10,9 +10,16 @@ Nothing is sent unless the user allowed "Usage statistics" (`ConsentApplier`; th
 |---|---|---|---|
 | `screen_view` | `screen_name`, `screen_class`: the route name with arguments stripped | Every navigation destination | 5.5.2 |
 | `consent_updated` | `analytics` (bool), `crash` (bool) | The consent screen is saved | 5.5.2 |
-| `onboarding_page_view` | `page` (1-based) | An onboarding page is shown | 5.5.2 |
+| `onboarding_page_view` | `page` (1-based; 1–3 intro, 4–9 feature tour from 6.0.0) | An onboarding page is shown | 5.5.2 |
 | `onboarding_skipped` | `page` (1-based) | Skip is tapped | 5.5.2 |
-| `tutorial_complete` | — | The last onboarding page's Next | 5.5.2 |
+| `tutorial_complete` | — | The last onboarding page's Next (page 9 from 6.0.0, so the completion rate drops: compare `onboarding_skipped` with page ≥ 4 instead) | 5.5.2 |
+| `feature_tour_started` | — | Settings › Feature tour (or an announcement) opens the tour on its own | 6.0.0 |
+| `feature_tour_completed` | — | The last tour page's Next | 6.0.0 |
+| `feature_tour_skipped` | `page` (1-based, tour pages only) | Skip in the replayed tour | 6.0.0 |
+| `backup_reminder_tapped` | — | "Back up now" on Home's backup reminder (opens Settings; the card rests a day) | 6.0.0 |
+| `backup_reminder_snoozed` | — | The backup reminder dismissed (back in 7 days) | 6.0.0 |
+| `review_requested` | `source`: backup / autofill / tour | PassKey started Play's review flow at a good moment (Play decides whether it shows) | 6.0.0 |
+| `app_shared` | `source`: settings | Share with friends in Settings | 6.0.0 |
 | `entry_created` | `category`: banks / mails / apps / others | A new entry (heading) is saved; renames don't count | 5.5.2 |
 | `field_saved` | `is_edit` (bool) | A detail field is saved | 5.5.2 |
 | `password_generated` | `length_bucket`: 0, 1-7, 8-11, 12-15, 16-23, 24+ | The generator button | 5.5.2 |

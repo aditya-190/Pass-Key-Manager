@@ -14,7 +14,22 @@ import kotlinx.coroutines.flow.first
 import kotlinx.serialization.json.Json
 
 /** A decoded backup, validated and ready to restore. */
-internal data class ParsedBackup(val previews: List<BackupPreview>, val skipped: Int, val legacyFormat: Boolean)
+internal data class ParsedBackup(
+    val previews: List<BackupPreview>,
+    val skipped: Int,
+    val legacyFormat: Boolean,
+    /** When the file was made; old CSV backups don't say. */
+    val exportedAt: Long? = null
+)
+
+/** What a backup file holds, read without importing anything (6.0.0 "Verify a backup"). */
+data class BackupCheck(
+    val entries: Int,
+    val fields: Int,
+    val authenticators: Int,
+    val exportedAt: Long?,
+    val legacyFormat: Boolean
+)
 
 /**
  * The backup format with no Android I/O: vault → encrypted bytes, and bytes → validated entries → vault.
@@ -71,7 +86,12 @@ internal class BackupCodec(
         BackupFormat.hasMagic(bytes) -> decodeEncrypted(bytes, password)
         bytes.size > MAX_LEGACY_CHARS -> failure(BackupError.FileTooLarge)
         else -> LegacyCsvBackup.parse(bytes.toString(Charsets.UTF_8)).let {
-            Result.success(ParsedBackup(it.previews, it.skippedRows, legacyFormat = true))
+            // Nothing readable as a PassKey CSV: a photo or document picked by mistake, not an empty backup.
+            if (it.previews.isEmpty()) {
+                failure(BackupError.NotABackup)
+            } else {
+                Result.success(ParsedBackup(it.previews, it.skippedRows, legacyFormat = true))
+            }
         }
     }
 
@@ -92,13 +112,29 @@ internal class BackupCodec(
                     payload.schema <= BackupPayload.SCHEMA_VERSION &&
                     payload.previews.size <= BackupPayload.MAX_PREVIEWS
                 if (valid) {
-                    Result.success(ParsedBackup(payload.previews, skipped = 0, legacyFormat = false))
+                    Result.success(
+                        ParsedBackup(
+                            payload.previews,
+                            skipped = 0,
+                            legacyFormat = false,
+                            exportedAt = payload.exportedAt
+                        )
+                    )
                 } else {
                     failure(BackupError.SchemaInvalid)
                 }
             }
         }
     }
+
+    /** Counts only: no field value leaves this function, and nothing is written. */
+    fun check(parsed: ParsedBackup): BackupCheck = BackupCheck(
+        entries = parsed.previews.size,
+        fields = parsed.previews.sumOf { it.details.size },
+        authenticators = parsed.previews.sumOf { it.totp.size },
+        exportedAt = parsed.exportedAt,
+        legacyFormat = parsed.legacyFormat
+    )
 
     /** One transaction: a bad row part-way through must not leave a half-restored vault. */
     suspend fun restore(parsed: ParsedBackup, mode: ImportMode): ImportSummary {

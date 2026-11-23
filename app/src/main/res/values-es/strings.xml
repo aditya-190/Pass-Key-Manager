@@ -30,8 +30,6 @@
     <string name="response">Respuesta</string>
     <string name="rate_app">Calificar App</string>
     <string name="change_language">Cambiar Idioma</string>
-    <string name="privacy">Privacidad</string>
-    <string name="terms_n_condition">Términos y Condiciones</string>
     <string name="about">Acerca de</string>
     <string name="import_data">Importar Datos</string>
     <string name="export_data">Exportar Datos</string>
@@ -256,4 +254,41 @@
     <string name="legal_privacy_autofill_body">Si activas PassKey como servicio de autocompletar, Android le muestra el formulario que estás rellenando: el tipo de cada campo y la app o dirección web a la que pertenece, para que pueda sugerir entradas que coincidan. Esto ocurre solo en tu teléfono; no se envía, registra ni guarda nada sobre el formulario, el sitio o las entradas sugeridas. Mientras la bóveda está bloqueada, PassKey ofrece una única sugerencia «Desbloquear» y ningún nombre de entrada. Autocompletar está desactivado hasta que lo activas en los ajustes de Android, y puedes desactivarlo allí cuando quieras.</string>
     <string name="autofill_untrusted_app">Esta no es la app que PassKey rellenó antes con este nombre, así que no se ha rellenado nada. Si la reinstalaste desde otra tienda, quita el inicio de sesión en PassKey y vuelve a añadirlo.</string>
     <string name="autofill_setup_help">En la siguiente pantalla, elige PassKey como servicio de autocompletar de Android. Chrome también tiene su propio ajuste: abre Chrome › Configuración › Servicios de autocompletar y elige «Autocompletar con otro servicio».</string>
+
+    <!-- 6.0.0 feature tour (onboarding pages 4-9, and Settings > Feature tour) -->
+    <string name="feature_tour">Recorrido por las funciones</string>
+    <string name="tour_entries_heading">Todo en\nun [[solo]]\nlugar.</string>
+    <string name="tour_entries_description">Toca Agregar para guardar un inicio de sesión, PIN o nota en Bancos, Correos, Aplicaciones o Otros. Busca por nombre, arrastra el asa para reordenar y desliza a la izquierda para borrar, con Deshacer.</string>
+    <string name="tour_autofill_heading">Inicia sesión\nen [[segundos]].</string>
+    <string name="tour_autofill_description">Activa Autocompletar en Ajustes. PassKey rellena tus inicios de sesión en apps y Chrome tras tu huella o PIN, y ofrece guardar los nuevos al iniciar sesión.</string>
+    <string name="tour_codes_heading">Tus códigos\n[[2FA]],\ntambién.</string>
+    <string name="tour_codes_description">Abre una entrada y toca Añadir autenticador; luego pega el enlace de configuración o la clave que te muestra el sitio. Toca un código para copiarlo.</string>
+    <string name="tour_generator_heading">Contraseñas\nfuertes y\n[[únicas]].</string>
+    <string name="tour_generator_description">Al guardar una contraseña, toca el botón de la llave para generar una con la longitud y los caracteres que elijas. Estado de seguridad en Ajustes encuentra contraseñas débiles y repetidas.</string>
+    <string name="tour_backup_heading">Nunca\n[[pierdas]]\ntu bóveda.</string>
+    <string name="tour_backup_description">Exportar Datos crea una copia cifrada con una contraseña que tú eliges, e Importar Datos la restaura en cualquier teléfono. Tu contraseña de recuperación abre la bóveda si cambia el bloqueo de pantalla.</string>
+    <string name="tour_privacy_heading">Se bloquea\ncuando te\n[[vas]].</string>
+    <string name="tour_privacy_description">Elige el tiempo de Bloqueo automático en Ajustes. Las capturas de pantalla están bloqueadas, las contraseñas copiadas se borran solas y nada de lo que guardas sale de este teléfono.</string>
+
+    <!-- 6.0.0 backup confidence -->
+    <string name="verify_backup">Verificar una copia</string>
+    <string name="verify_backup_ok">La copia está bien: %1$d entradas y %2$d autenticadores, guardada el %3$s. No se importó nada.</string>
+    <string name="verify_backup_ok_legacy">La copia se puede leer: %1$d entradas. Es un archivo antiguo sin cifrar, así que exporta una copia cifrada nueva.</string>
+    <string name="backup_reminder_title">Haz una copia de tu bóveda</string>
+    <string name="backup_reminder_body">Si pierdes o restableces este teléfono, una copia es la única forma de recuperar tus contraseñas.</string>
+    <string name="backup_reminder_cta">Hacer copia ahora</string>
+    <string name="import_not_a_backup">Este no es un archivo de copia de PassKey. Elige un archivo .pkbak que exportaste o un CSV antiguo de PassKey.</string>
+
+    <!-- 6.0.0 theme, passphrase and icon shortcuts -->
+    <string name="theme">Tema</string>
+    <string name="theme_system">Igual que el teléfono</string>
+    <string name="theme_light">Claro</string>
+    <string name="theme_dark">Oscuro</string>
+    <string name="passphrase">Usar palabras (frase de contraseña)</string>
+    <string name="passphrase_words">Palabras: %d</string>
+    <string name="passphrase_hint">Las frases de contraseña son largas. Si un sitio limita la longitud, desactiva las palabras.</string>
+    <string name="shortcut_add_short">Añadir</string>
+    <string name="shortcut_add_long">Añadir una entrada</string>
+    <string name="shortcut_search_short">Buscar</string>
+    <string name="shortcut_search_long">Buscar en tu bóveda</string>
 </resources>

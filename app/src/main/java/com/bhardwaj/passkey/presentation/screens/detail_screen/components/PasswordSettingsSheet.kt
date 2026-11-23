@@ -38,7 +38,9 @@ fun PasswordSettingsSheet(
     policy: PasswordPolicy,
     onDismissPasswordSettings: () -> Unit,
     onPasswordLengthChange: (length: Int) -> Unit,
-    onToggle: (PasswordCharacterClass, checked: Boolean) -> Unit
+    onToggle: (PasswordCharacterClass, checked: Boolean) -> Unit,
+    onPassphraseToggle: (enabled: Boolean) -> Unit = {},
+    onWordsChange: (words: Int) -> Unit = {}
 ) {
     val sheetState = rememberModalBottomSheetState()
 
@@ -63,17 +65,46 @@ fun PasswordSettingsSheet(
                 modifier = Modifier.padding(bottom = 16.dp)
             )
 
+            // 6.0.0: words instead of characters. A-Z capitalises the words and 0-9 adds a digit; a-z and !@#
+            // don't apply to words, so they step aside in this mode.
+            PasswordToggleRow(stringResource(R.string.passphrase), policy.passphrase, onPassphraseToggle)
+            if (policy.passphrase) {
+                // Some sites cap length well below a passphrase's ~30 characters.
+                Text(
+                    text = stringResource(R.string.passphrase_hint),
+                    fontFamily = Poppins,
+                    fontSize = 13.sp,
+                    color = MaterialTheme.colorScheme.outline
+                )
+            }
+            Spacer(modifier = Modifier.height(8.dp))
+
+            val (label, value, range) = if (policy.passphrase) {
+                Triple(
+                    stringResource(R.string.passphrase_words, policy.words),
+                    policy.words,
+                    PasswordPolicy.MIN_WORDS..PasswordPolicy.MAX_WORDS
+                )
+            } else {
+                Triple(
+                    stringResource(R.string.password_length, policy.length),
+                    policy.length,
+                    PasswordPolicy.MIN_LENGTH..PasswordPolicy.MAX_LENGTH
+                )
+            }
             Text(
-                text = stringResource(R.string.password_length, policy.length),
+                text = label,
                 fontFamily = Poppins,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.onBackground
             )
             Slider(
-                value = policy.length.toFloat(),
-                onValueChange = { onPasswordLengthChange(it.roundToInt()) },
-                valueRange = PasswordPolicy.MIN_LENGTH.toFloat()..PasswordPolicy.MAX_LENGTH.toFloat(),
-                steps = PasswordPolicy.MAX_LENGTH - PasswordPolicy.MIN_LENGTH - 1,
+                value = value.toFloat(),
+                onValueChange = {
+                    if (policy.passphrase) onWordsChange(it.roundToInt()) else onPasswordLengthChange(it.roundToInt())
+                },
+                valueRange = range.first.toFloat()..range.last.toFloat(),
+                steps = range.last - range.first - 1,
                 colors = SliderDefaults.colors(
                     thumbColor = MaterialTheme.colorScheme.primary,
                     activeTrackColor = MaterialTheme.colorScheme.primary
@@ -86,18 +117,22 @@ fun PasswordSettingsSheet(
                 "A-Z",
                 policy.includeUppercase
             ) { onToggle(PasswordCharacterClass.UPPERCASE, it) }
-            PasswordToggleRow(
-                "a-z",
-                policy.includeLowercase
-            ) { onToggle(PasswordCharacterClass.LOWERCASE, it) }
+            if (!policy.passphrase) {
+                PasswordToggleRow(
+                    "a-z",
+                    policy.includeLowercase
+                ) { onToggle(PasswordCharacterClass.LOWERCASE, it) }
+            }
             PasswordToggleRow(
                 "0-9",
                 policy.includeDigits
             ) { onToggle(PasswordCharacterClass.DIGITS, it) }
-            PasswordToggleRow(
-                "!@#",
-                policy.includeSymbols
-            ) { onToggle(PasswordCharacterClass.SYMBOLS, it) }
+            if (!policy.passphrase) {
+                PasswordToggleRow(
+                    "!@#",
+                    policy.includeSymbols
+                ) { onToggle(PasswordCharacterClass.SYMBOLS, it) }
+            }
         }
     }
 }

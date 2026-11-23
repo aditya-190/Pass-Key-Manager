@@ -30,8 +30,6 @@
     <string name="response">సమాధానం</string>
     <string name="rate_app">అనువర్తనం రేట్ చేయండి</string>
     <string name="change_language">భాషను మార్చు</string>
-    <string name="privacy">గౌప్యం</string>
-    <string name="terms_n_condition">షరతులు మరియు పారామెటర్లు</string>
     <string name="about">గురించి</string>
     <string name="import_data">డేటా దిగుమతి</string>
     <string name="export_data">డేటా ఎగురుతున్నది</string>
@@ -253,5 +251,41 @@
     <string name="legal_privacy_autofill_body">PassKeyను ఆటోఫిల్ సేవగా ఆన్ చేస్తే, మీరు నింపుతున్న ఫారమ్‌ను Android దానికి చూపిస్తుంది: ప్రతి ఫీల్డ్ రకం, అది ఏ యాప్ లేదా వెబ్ చిరునామాకు చెందినదో, సరిపోలే ఎంట్రీలను సూచించడానికి. ఇది మీ ఫోన్‌లోనే జరుగుతుంది; ఫారమ్, సైట్ లేదా సూచించిన ఎంట్రీల గురించి ఏదీ పంపబడదు, లాగ్ చేయబడదు, నిల్వ చేయబడదు. వాల్ట్ లాక్ అయి ఉన్నప్పుడు PassKey ఒకే ఒక \"అన్‌లాక్\" సూచనను చూపిస్తుంది, ఏ ఎంట్రీ పేరునూ కాదు. Android సెట్టింగ్‌లలో ఆన్ చేసే వరకు ఆటోఫిల్ ఆఫ్‌లో ఉంటుంది, అక్కడే ఎప్పుడైనా ఆఫ్ చేయవచ్చు.</string>
     <string name="autofill_untrusted_app">ఈ పేరుతో PassKey ఇంతకు ముందు నింపిన యాప్ ఇది కాదు, కాబట్టి ఏమీ నింపలేదు. వేరే స్టోర్ నుండి మళ్లీ ఇన్‌స్టాల్ చేసి ఉంటే, PassKeyలో లాగిన్‌ను తీసివేసి మళ్లీ జోడించండి.</string>
     <string name="autofill_setup_help">తర్వాతి స్క్రీన్‌లో PassKeyను Android ఆటోఫిల్ సేవగా ఎంచుకోండి. Chromeకు దాని స్వంత సెట్టింగ్ కూడా ఉంది: Chrome › సెట్టింగ్‌లు › ఆటోఫిల్ సేవలు తెరిచి \"వేరే సేవతో ఆటోఫిల్ చేయి\" ఎంచుకోండి.</string>
-</resources>
 
+    <!-- 6.0.0 feature tour (onboarding pages 4-9, and Settings > Feature tour) -->
+    <string name="feature_tour">ఫీచర్ టూర్</string>
+    <string name="tour_entries_heading">అన్నీ\n[[ఒకే]]\nచోట.</string>
+    <string name="tour_entries_description">లాగిన్, PIN లేదా నోట్ సేవ్ చేయడానికి జోడించు నొక్కి, దాన్ని బ్యాంకులు, మెయిల్‌లు, అనువర్తనాలు లేదా ఇతర లో ఉంచండి. పేరుతో వెతకండి, క్రమం మార్చడానికి హ్యాండిల్‌ను లాగండి, తొలగించడానికి ఎడమవైపు స్వైప్ చేయండి; Undo తో తిరిగి తేవచ్చు.</string>
+    <string name="tour_autofill_heading">లాగిన్‌లు\n[[క్షణాల్లో]]\nనిండుతాయి.</string>
+    <string name="tour_autofill_description">సెట్టింగ్‌లు లో ఆటోఫిల్ ఆన్ చేయండి. మీ వేలిముద్ర లేదా PIN తర్వాత PassKey యాప్‌లలో, Chromeలో లాగిన్‌లను నింపుతుంది, మీరు సైన్ ఇన్ చేసినప్పుడు కొత్తవాటిని సేవ్ చేయమని అడుగుతుంది.</string>
+    <string name="tour_codes_heading">మీ [[2FA]]\nకోడ్‌లు కూడా\nఇక్కడే.</string>
+    <string name="tour_codes_description">ఒక ఎంట్రీ తెరిచి ప్రామాణీకరణిని జోడించు నొక్కండి, తర్వాత వెబ్‌సైట్ చూపే సెటప్ లింక్ లేదా కీని పేస్ట్ చేయండి. కోడ్ కాపీ చేయడానికి దానిపై ట్యాప్ చేయండి.</string>
+    <string name="tour_generator_heading">బలమైన,\n[[ప్రత్యేకమైన]]\nపాస్‌వర్డ్‌లు.</string>
+    <string name="tour_generator_description">పాస్‌వర్డ్ సేవ్ చేసేటప్పుడు తాళంచెవి బటన్ నొక్కి, మీరు ఎంచుకున్న పొడవు, అక్షరాలతో పాస్‌వర్డ్ తయారు చేయండి. సెట్టింగ్‌లు లోని భద్రతా స్థితి బలహీనమైన, మళ్లీ వాడిన పాస్‌వర్డ్‌లను కనుగొంటుంది.</string>
+    <string name="tour_backup_heading">వాల్ట్‌ను\nఎప్పుడూ\n[[కోల్పోకండి]].</string>
+    <string name="tour_backup_description">డేటా ఎగురుతున్నది మీరు ఎంచుకున్న పాస్‌వర్డ్‌తో ఎన్‌క్రిప్టెడ్ బ్యాకప్ చేస్తుంది, డేటా దిగుమతి దాన్ని ఏ ఫోన్‌లోనైనా తిరిగి తెస్తుంది. స్క్రీన్ లాక్ మారితే మీ రికవరీ పాస్‌వర్డ్ వాల్ట్‌ను తెరుస్తుంది.</string>
+    <string name="tour_privacy_heading">బయటకు వెళ్లగానే\n[[లాక్]].</string>
+    <string name="tour_privacy_description">సెట్టింగ్‌లు లో ఆటో-లాక్ సమయాన్ని ఎంచుకోండి. స్క్రీన్‌షాట్‌లు నిరోధించబడతాయి, కాపీ చేసిన పాస్‌వర్డ్‌లు వాటంతట అవే తొలగిపోతాయి, మీరు సేవ్ చేసినదేదీ ఈ ఫోన్ దాటి వెళ్లదు.</string>
+
+    <!-- 6.0.0 backup confidence -->
+    <string name="verify_backup">బ్యాకప్‌ను తనిఖీ చేయండి</string>
+    <string name="verify_backup_ok">బ్యాకప్ సరిగ్గా ఉంది: %1$d ఎంట్రీలు, %2$d ఆథెంటికేటర్‌లు, %3$s న సేవ్ చేయబడింది. ఏదీ ఇంపోర్ట్ కాలేదు.</string>
+    <string name="verify_backup_ok_legacy">బ్యాకప్ చదవగలుగుతున్నాం: %1$d ఎంట్రీలు. ఇది పాత ఎన్‌క్రిప్ట్ చేయని ఫైల్, కాబట్టి కొత్త ఎన్‌క్రిప్టెడ్ బ్యాకప్‌ను ఎక్స్‌పోర్ట్ చేయండి.</string>
+    <string name="backup_reminder_title">మీ వాల్ట్‌ను బ్యాకప్ చేయండి</string>
+    <string name="backup_reminder_body">ఈ ఫోన్ పోయినా లేదా రీసెట్ అయినా, మీ పాస్‌వర్డ్‌లను తిరిగి పొందడానికి బ్యాకప్ ఒక్కటే మార్గం.</string>
+    <string name="backup_reminder_cta">ఇప్పుడే బ్యాకప్ చేయండి</string>
+    <string name="import_not_a_backup">ఇది PassKey బ్యాకప్ ఫైల్ కాదు. మీరు ఎక్స్‌పోర్ట్ చేసిన .pkbak ఫైల్ లేదా పాత PassKey CSV ని ఎంచుకోండి.</string>
+
+    <!-- 6.0.0 theme, passphrase and icon shortcuts -->
+    <string name="theme">థీమ్</string>
+    <string name="theme_system">ఫోన్‌లాగే</string>
+    <string name="theme_light">లైట్</string>
+    <string name="theme_dark">డార్క్</string>
+    <string name="passphrase">పదాలు వాడండి (పాస్‌ఫ్రేజ్)</string>
+    <string name="passphrase_words">పదాలు: %d</string>
+    <string name="passphrase_hint">పాస్‌ఫ్రేజ్‌లు పొడవుగా ఉంటాయి. ఏదైనా సైట్ పొడవును పరిమితం చేస్తే, పదాలను ఆఫ్ చేయండి.</string>
+    <string name="shortcut_add_short">ఎంట్రీ జోడించు</string>
+    <string name="shortcut_add_long">కొత్త ఎంట్రీ జోడించండి</string>
+    <string name="shortcut_search_short">వెతుకు</string>
+    <string name="shortcut_search_long">మీ వాల్ట్‌లో వెతకండి</string>
+</resources>

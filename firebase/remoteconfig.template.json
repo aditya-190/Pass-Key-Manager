@@ -119,6 +119,38 @@
         }
       }
     },
+    "Reviews": {
+      "parameters": {
+        "review_prompt_enabled": {
+          "defaultValue": {
+            "value": "true"
+          },
+          "valueType": "BOOLEAN",
+          "description": "Ask for a Play review after a good moment (backup made, 3rd autofill, tour finished); off = never ask"
+        },
+        "review_min_days": {
+          "defaultValue": {
+            "value": "3"
+          },
+          "valueType": "NUMBER",
+          "description": "Never ask before this many days after the first launch of 6.0.0+"
+        },
+        "review_cooldown_days": {
+          "defaultValue": {
+            "value": "120"
+          },
+          "valueType": "NUMBER",
+          "description": "At most one ask per this many days (Play also applies its own quota)"
+        },
+        "review_after_fills": {
+          "defaultValue": {
+            "value": "3"
+          },
+          "valueType": "NUMBER",
+          "description": "Successful autofills before the autofill moment counts"
+        }
+      }
+    },
     "Meta": {
       "parameters": {
         "config_version": {

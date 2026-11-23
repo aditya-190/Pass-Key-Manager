@@ -32,8 +32,12 @@ class AutofillResponseBuilder @Inject constructor(
     private val secretKeywords: SecretKeywords
 ) {
 
-    suspend fun credentialsFor(fields: AutofillFields, packageName: String?): List<AutofillCredential> {
-        val tokens = AutofillMatcher.tokensOf(packageName, fields.webDomain)
+    suspend fun credentialsFor(fields: AutofillFields, packageName: String?): List<AutofillCredential> =
+        credentialsFor(packageName, fields.webDomain)
+
+    /** The same matching for callers that are not a form (Android 14's sign-in sheet, 6.0.0). */
+    suspend fun credentialsFor(packageName: String?, webDomain: String?): List<AutofillCredential> {
+        val tokens = AutofillMatcher.tokensOf(packageName, webDomain)
         if (tokens.isEmpty()) return emptyList()
         val previews = repository.getPreviews().first()
         val details = repository.getDetails().first().groupBy { it.previewId }

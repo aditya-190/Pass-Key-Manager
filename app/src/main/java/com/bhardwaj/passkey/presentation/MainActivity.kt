@@ -1,8 +1,11 @@
 package com.bhardwaj.passkey.presentation
 
+import android.content.Intent
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.view.WindowManager
+import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
@@ -24,9 +27,12 @@ import com.bhardwaj.passkey.data.security.AppLockObserver
 import com.bhardwaj.passkey.data.security.LockPolicy
 import com.bhardwaj.passkey.data.security.VaultSession
 import com.bhardwaj.passkey.data.security.lockTrace
+import com.bhardwaj.passkey.domain.model.PendingShortcut
+import com.bhardwaj.passkey.domain.model.ShortcutAction
+import com.bhardwaj.passkey.domain.repository.PreferencesRepository
 import com.bhardwaj.passkey.presentation.navigation.NavGraph
 import com.bhardwaj.passkey.presentation.navigation.NavRoute
-import com.bhardwaj.passkey.presentation.theme.PassKeyTheme
+import com.bhardwaj.passkey.presentation.theme.PassKeyAppTheme
 import com.bhardwaj.passkey.update.InAppUpdateController
 import com.bhardwaj.passkey.update.UpdateGateController
 import com.bhardwaj.passkey.update.UpdateHost
@@ -38,6 +44,12 @@ import kotlinx.coroutines.delay
 class MainActivity : FragmentActivity() {
     @Inject
     lateinit var analytics: AnalyticsTracker
+
+    @Inject
+    lateinit var preferences: PreferencesRepository
+
+    @Inject
+    lateinit var pendingShortcut: PendingShortcut
 
     @Inject
     lateinit var vaultSession: VaultSession
@@ -67,9 +79,20 @@ class MainActivity : FragmentActivity() {
         super.onDestroy()
     }
 
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        offerShortcut(intent)
+    }
+
+    /** Icon shortcuts only ask Home to act; Home runs them after the vault is unlocked. */
+    private fun offerShortcut(intent: Intent?) {
+        ShortcutAction.fromIntentAction(intent?.action)?.let(pendingShortcut::offer)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        if (savedInstanceState == null) offerShortcut(intent)
         inAppUpdates = InAppUpdateController.create(this)
         window?.setFlags(
             WindowManager.LayoutParams.FLAG_SECURE,
@@ -79,7 +102,8 @@ class MainActivity : FragmentActivity() {
         // so explicitly, so the two survive independently.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) setRecentsScreenshotEnabled(false)
         setContent {
-            PassKeyTheme {
+            // Status and navigation bar icons follow the app's scheme, not the phone's, or they vanish.
+            PassKeyAppTheme(themeMode = preferences.themeMode, onDarkChanged = ::styleSystemBars) {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
@@ -88,6 +112,14 @@ class MainActivity : FragmentActivity() {
                     val destination = navController.currentBackStackEntryAsState().value?.destination
                     val isUnlocked by vaultSession.isUnlocked.collectAsStateWithLifecycle()
                     VaultLockGate(navController)
+                    // An icon shortcut on an open vault returns to Home, where it runs (not behind another screen).
+                    val shortcut by pendingShortcut.requests.collectAsStateWithLifecycle()
+                    val onHome = destination?.hasRoute<NavRoute.Previews>() == true
+                    LaunchedEffect(shortcut, isUnlocked, onHome) {
+                        if (ShortcutAction.needsHome(shortcut, isUnlocked, onHome)) {
+                            navController.popBackStack<NavRoute.Previews>(inclusive = false)
+                        }
+                    }
                     UpdateHost(
                         gateController = updateGate,
                         config = remoteConfig.config,
@@ -132,6 +164,15 @@ class MainActivity : FragmentActivity() {
                 navController.navigate(NavRoute.Security) { popUpTo(0) { inclusive = true } }
             }
         }
+    }
+
+    private fun styleSystemBars(dark: Boolean) {
+        val bars = if (dark) {
+            SystemBarStyle.dark(Color.TRANSPARENT)
+        } else {
+            SystemBarStyle.light(Color.TRANSPARENT, Color.TRANSPARENT)
+        }
+        enableEdgeToEdge(statusBarStyle = bars, navigationBarStyle = bars)
     }
 
     private companion object {

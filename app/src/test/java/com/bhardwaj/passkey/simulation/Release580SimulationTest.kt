@@ -56,7 +56,13 @@ class Release580SimulationTest {
                 val id = repo.createPreview("Seed $i", Category.entries[rnd.nextInt(4)], i.toLong())
                 repeat(rnd.nextInt(3)) { repo.createDetail(id, "q$it", "a$it") }
             }
-            val vm = PreviewViewModel(repo, SavedStateHandle(), RecordingAnalyticsTracker())
+            val vm =
+                PreviewViewModel(
+                    repo,
+                    SavedStateHandle(),
+                    RecordingAnalyticsTracker(),
+                    com.bhardwaj.passkey.domain.model.PendingShortcut()
+                )
             val job = subscribe(vm.state)
             var confirmed = false
             val originalIds = repo.allPreviews.map { it.id }.toSet()

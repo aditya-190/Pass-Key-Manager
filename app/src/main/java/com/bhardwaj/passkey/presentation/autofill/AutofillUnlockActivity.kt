@@ -41,8 +41,10 @@ import com.bhardwaj.passkey.data.autofill.AutofillStructureParser
 import com.bhardwaj.passkey.domain.autofill.AppTrust
 import com.bhardwaj.passkey.domain.repository.AutofillTrustStore
 import com.bhardwaj.passkey.domain.repository.PasskeyRepository
+import com.bhardwaj.passkey.domain.repository.PreferencesRepository
 import com.bhardwaj.passkey.presentation.screens.security_screen.VaultGateViewModel
-import com.bhardwaj.passkey.presentation.theme.PassKeyTheme
+import com.bhardwaj.passkey.presentation.theme.PassKeyAppTheme
+import com.bhardwaj.passkey.review.ReviewPrompter
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -71,6 +73,12 @@ class AutofillUnlockActivity : FragmentActivity() {
 
     @Inject
     lateinit var analytics: AnalyticsTracker
+
+    @Inject
+    lateinit var preferences: PreferencesRepository
+
+    @Inject
+    lateinit var reviewPrompter: ReviewPrompter
 
     @Inject
     lateinit var trustStore: AutofillTrustStore
@@ -102,7 +110,8 @@ class AutofillUnlockActivity : FragmentActivity() {
         }
 
         setContent {
-            PassKeyTheme {
+            // The user's theme choice, like the app itself (6.0.0).
+            PassKeyAppTheme(themeMode = preferences.themeMode) {
                 val state by viewModel.state.collectAsStateWithLifecycle()
                 val isUntrusted by untrusted.collectAsStateWithLifecycle()
                 // Same prompt rules as the vault gate: prompt when the screen is really in front, never again
@@ -163,6 +172,8 @@ class AutofillUnlockActivity : FragmentActivity() {
                 trustStore.rememberSigner(trustedPackage, signer)
             }
             analytics.log(AppEvents.autofillFilled(matches = credentials.size))
+            // Counted toward Home's review moment (6.0.0); the ask never happens here, inside another app.
+            if (credentials.isNotEmpty()) reviewPrompter.recordFill()
             val response = responseBuilder.fillResponse(fields, credentials)
             setResult(RESULT_OK, Intent().putExtra(AutofillManager.EXTRA_AUTHENTICATION_RESULT, response))
             finish()
@@ -170,8 +181,9 @@ class AutofillUnlockActivity : FragmentActivity() {
     }
 }
 
+/** Shared with the sign-in sheet's unlock screen (6.0.0). */
 @Composable
-private fun UnlockContent(
+internal fun UnlockContent(
     state: VaultGateViewModel.State,
     isUntrusted: Boolean,
     onAuthenticate: () -> Unit,
