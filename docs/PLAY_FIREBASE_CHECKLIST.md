@@ -108,15 +108,21 @@ was ticked for the track, which is still paused.
 | `review_cooldown_days` | `120` |
 | `review_after_fills` | `3` |
 | `config_version` | `2` |
-- [ ] Published
+- [x] Published 2026-11-23 as Remote Config **version 2** (Reviews group added, `config_version` 2).
+      `latest_version_code` deliberately kept at **47** until 48 is live; then raise it to 48 (version 3).
 
 ## Firebase › Analytics
 - [ ] Custom dimension `source` already exists (used by `review_requested`, `app_shared`).
 - [ ] Key events from 5.8.0 still pending until received: `recovery_setup_completed`, `autofill_filled`, `backup_exported`.
 
 ## Play Console
-- [ ] Internal testing: upload the AAB (48), What's new in 17 languages, testers list (owner's 2 accounts), resume the track.
-- [ ] Real update on the Moto: 47 (Play) → 48 (internal testing); vault, theme, settings intact; tour not shown.
-- [ ] Production: promote 48 at 100% after the update check (owner's standing decision), What's new in 17 languages.
+- [x] Internal testing: skipped (owner's decision, 2026-11-23); 48 went straight to production.
+- [ ] Real update on the Moto 47 → 48: do it from Play once 48 is live (vault, theme, settings intact; tour not shown).
+- [x] 2026-11-23: 48 (6.0.0) uploaded to **Production at 100%** (AAB verified: upload key, 6.0.0/48, not debuggable,
+      no AD_ID), What's new in 17 languages, sent for review with the store listing (19 changes). 47 was already live.
+- [x] Store listing (same submission): English short and full description refreshed for 6.0.0; **16 new listing
+      languages** (title, short, full): ar, bn-BD, zh-CN, fr-FR, de-DE, gu, hi-IN, it-IT, ja-JP, ko-KR, mr-IN, pt-BR,
+      ru-RU, es-ES, ta-IN, te-IN. Texts in `docs/store_listing_6.0.0.json`. "No ads" removed from every short
+      description (Play flags price/promotion words there). Tags unchanged (no better tag exists).
 - [ ] Data safety: unchanged (no new data collected; review and share events are app interactions, already declared).
 
