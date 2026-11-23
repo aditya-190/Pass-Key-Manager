@@ -1,41 +1,34 @@
 package com.bhardwaj.passkey.presentation.screens.settings_screen
 
-import android.app.Application
-import android.app.LocaleManager
-import android.content.Intent
-import android.os.Build
-import android.os.LocaleList
-import androidx.appcompat.app.AppCompatDelegate
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
-import androidx.core.net.toUri
-import androidx.core.os.LocaleListCompat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.bhardwaj.passkey.BuildConfig
 import com.bhardwaj.passkey.R
 import com.bhardwaj.passkey.data.backup.BackupError
 import com.bhardwaj.passkey.data.backup.BackupException
 import com.bhardwaj.passkey.data.backup.BackupRepository
 import com.bhardwaj.passkey.data.security.DatabaseKeyManager
+import com.bhardwaj.passkey.di.WorkDispatcher
 import com.bhardwaj.passkey.domain.model.AutoLockTimeout
 import com.bhardwaj.passkey.domain.repository.PasskeyRepository
 import com.bhardwaj.passkey.domain.repository.PreferencesRepository
 import com.bhardwaj.passkey.presentation.navigation.NavRoute
-import com.bhardwaj.passkey.utils.PasswordAnalysisResult
 import com.bhardwaj.passkey.utils.PasswordAnalyzer
 import com.bhardwaj.passkey.utils.SecretKeywords
-import com.bhardwaj.passkey.utils.UiEvents
 import com.bhardwaj.passkey.utils.UiText
 import dagger.hilt.android.lifecycle.HiltViewModel
+import java.util.Arrays
 import javax.inject.Inject
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -46,219 +39,141 @@ class SettingsViewModel @Inject constructor(
     private val backupRepository: BackupRepository,
     private val secretKeywords: SecretKeywords,
     private val keyManager: DatabaseKeyManager,
-    private val appContext: Application
+    @param:WorkDispatcher private val workDispatcher: CoroutineDispatcher
 ) : ViewModel() {
-    // BUFFERED, not the RENDEZVOUS default: with lifecycle-aware collection a backgrounded
-    // screen has no active collector, and a rendezvous channel would suspend the coroutine
-    // that emitted the effect until the user came back.
-    private val _uiEvents = Channel<UiEvents>(Channel.BUFFERED)
-    val uiEvents = _uiEvents.receiveAsFlow()
+    private val _effects = Channel<SettingsEffect>(Channel.BUFFERED)
+    val effects = _effects.receiveAsFlow()
 
-    var appVersion: String by mutableStateOf(
-        appContext.packageManager.getPackageInfo(
-            appContext.packageName,
-            0
-        ).versionName ?: "1.0.0"
-    )
-        private set
+    private val local = MutableStateFlow(SettingsState())
 
-    var isSheetOpen by mutableStateOf(false)
-        private set
-
-    var isAnalysisSheetOpen by mutableStateOf(false)
-        private set
-
-    var analysisResult by mutableStateOf(PasswordAnalysisResult())
-        private set
-
-    var isAutoLockDialogOpen by mutableStateOf(false)
-        private set
-
-    /** null = closed, false = asking for the current password, true = asking for the new one. */
-    var recoveryChangeStep by mutableStateOf<Boolean?>(null)
-        private set
-
-    /** Held only between the two dialog steps, then zeroed. */
+    /** Held only between the two recovery-change steps, then zeroed. */
     private var pendingCurrentRecoveryPassword: CharArray? = null
 
-    val autoLockTimeout: StateFlow<AutoLockTimeout> = preferences.autoLockTimeout
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), AutoLockTimeout.DEFAULT)
+    val state: StateFlow<SettingsState> = combine(local, preferences.autoLockTimeout) { ui, timeout ->
+        ui.copy(autoLockTimeout = timeout)
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(STOP_TIMEOUT_MS), SettingsState())
 
-    fun onEvent(event: SettingsEvents) {
-        when (event) {
-            SettingsEvents.OnLanguageClick -> {
-                isSheetOpen = true
+    fun onIntent(intent: SettingsIntent) {
+        when (intent) {
+            SettingsIntent.LanguageClicked -> showDialog(SettingsDialog.Language)
+            is SettingsIntent.LanguageChosen -> chooseLanguage(intent)
+            SettingsIntent.AutoLockClicked -> showDialog(SettingsDialog.AutoLock)
+            is SettingsIntent.AutoLockChosen -> chooseAutoLock(intent.timeout)
+            SettingsIntent.AnalyzeClicked -> analyze()
+            is SettingsIntent.AnalysisItemClicked -> {
+                showDialog(null)
+                send(SettingsEffect.Navigate(NavRoute.Details(intent.detail.previewId)))
             }
 
-            SettingsEvents.OnDismissBottomSheet -> {
-                isSheetOpen = false
+            SettingsIntent.RateClicked -> send(SettingsEffect.OpenUrl(PLAY_STORE_URL + BuildConfig.APPLICATION_ID))
+            SettingsIntent.ChangeRecoveryClicked -> showDialog(SettingsDialog.RecoveryCurrent)
+            is SettingsIntent.CurrentRecoveryEntered -> {
+                wipePendingRecovery()
+                pendingCurrentRecoveryPassword = intent.password
+                showDialog(SettingsDialog.RecoveryNew)
             }
 
-            SettingsEvents.OnRateAppClick -> {
-                val appPackageName = appContext.packageName
-                val intent =
-                    Intent(
-                        Intent.ACTION_VIEW,
-                        "https://play.google.com/store/apps/details?id=$appPackageName".toUri()
-                    )
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                appContext.startActivity(intent)
+            is SettingsIntent.NewRecoveryEntered -> changeRecovery(intent.password)
+            SettingsIntent.DialogDismissed -> {
+                wipePendingRecovery()
+                showDialog(null)
             }
 
-            is SettingsEvents.OnLanguageChange -> {
-                isSheetOpen = false
-                if (event.newLanguage.comingSoon) {
-                    sendUiEvents(
-                        UiEvents.ShowSnackBar(
-                            message = UiText.StringResource(R.string.coming_soon)
-                        )
-                    )
-                } else {
-                    viewModelScope.launch {
-                        preferences.setSelectedLanguageTag(event.newLanguage.languageId)
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                            appContext.getSystemService(LocaleManager::class.java).applicationLocales =
-                                LocaleList.forLanguageTags(event.newLanguage.languageId)
-                        } else {
-                            AppCompatDelegate.setApplicationLocales(
-                                LocaleListCompat.forLanguageTags(
-                                    event.newLanguage.languageId
+            is SettingsIntent.ExportChosen -> runWork {
+                val result = backupRepository.export(intent.uri, intent.password)
+                Arrays.fill(intent.password, Char(0))
+                snackbar(if (result.isSuccess) R.string.export_success else R.string.export_failed)
+            }
+
+            is SettingsIntent.ImportChosen -> runWork {
+                val result = backupRepository.import(intent.uri, intent.password, intent.mode)
+                intent.password?.let { Arrays.fill(it, Char(0)) }
+                result.fold(
+                    onSuccess = { summary ->
+                        send(
+                            SettingsEffect.ShowSnackbar(
+                                UiText.StringResource(
+                                    R.string.import_summary,
+                                    listOf(summary.previewsAdded, summary.detailsAdded)
                                 )
                             )
-                        }
-                    }
-                }
-            }
-
-            is SettingsEvents.OnExportFileChosen -> {
-                viewModelScope.launch {
-                    val result = backupRepository.export(event.uri, event.password)
-                    java.util.Arrays.fill(event.password, '\u0000')
-                    sendUiEvents(
-                        UiEvents.ShowSnackBar(
-                            message = UiText.StringResource(
-                                if (result.isSuccess) {
-                                    R.string.export_success
-                                } else {
-                                    R.string.export_failed
-                                }
-                            )
                         )
-                    )
-                }
-            }
-
-            is SettingsEvents.OnImportFileChosen -> {
-                viewModelScope.launch {
-                    val result = backupRepository.import(event.uri, event.password, event.mode)
-                    event.password?.let { java.util.Arrays.fill(it, '\u0000') }
-                    result.fold(
-                        onSuccess = { summary ->
-                            sendUiEvents(
-                                UiEvents.ShowSnackBar(
-                                    message = UiText.StringResource(
-                                        R.string.import_summary,
-                                        listOf(summary.previewsAdded, summary.detailsAdded)
-                                    )
-                                )
-                            )
-                        },
-                        onFailure = { error ->
-                            val message = when ((error as? BackupException)?.error) {
-                                BackupError.WrongPasswordOrCorrupt -> R.string.import_wrong_password
-                                BackupError.FileTooLarge -> R.string.import_file_too_large
-                                is BackupError.UnsupportedVersion -> R.string.import_unsupported_version
-                                else -> R.string.import_failed
-                            }
-                            sendUiEvents(UiEvents.ShowSnackBar(UiText.StringResource(message)))
-                        }
-                    )
-                }
-            }
-
-            SettingsEvents.OnAnalyzePasswordsClick -> {
-                viewModelScope.launch {
-                    val allDetails = repository.getDetails().first()
-                    val keywords = secretKeywords.all()
-                    val result = withContext(Dispatchers.IO) {
-                        PasswordAnalyzer.analyze(allDetails, keywords)
-                    }
-                    analysisResult = result
-                    isAnalysisSheetOpen = true
-                }
-            }
-
-            SettingsEvents.OnChangeRecoveryPasswordClick -> {
-                recoveryChangeStep = false
-            }
-
-            SettingsEvents.OnDismissRecoveryChange -> {
-                pendingCurrentRecoveryPassword?.let { java.util.Arrays.fill(it, Char(0)) }
-                pendingCurrentRecoveryPassword = null
-                recoveryChangeStep = null
-            }
-
-            is SettingsEvents.OnCurrentRecoveryPasswordEntered -> {
-                pendingCurrentRecoveryPassword = event.password
-                recoveryChangeStep = true
-            }
-
-            is SettingsEvents.OnNewRecoveryPasswordEntered -> {
-                val current = pendingCurrentRecoveryPassword
-                pendingCurrentRecoveryPassword = null
-                recoveryChangeStep = null
-                viewModelScope.launch {
-                    val changed = current != null &&
-                        keyManager.changeRecoveryPassword(current, event.password)
-                    current?.let { java.util.Arrays.fill(it, Char(0)) }
-                    java.util.Arrays.fill(event.password, Char(0))
-                    sendUiEvents(
-                        UiEvents.ShowSnackBar(
-                            UiText.StringResource(
-                                if (changed) {
-                                    R.string.recovery_change_done
-                                } else {
-                                    R.string.recovery_change_failed
-                                }
-                            )
-                        )
-                    )
-                }
-            }
-
-            SettingsEvents.OnAutoLockClick -> {
-                isAutoLockDialogOpen = true
-            }
-
-            SettingsEvents.OnDismissAutoLockDialog -> {
-                isAutoLockDialogOpen = false
-            }
-
-            is SettingsEvents.OnAutoLockTimeoutChange -> {
-                isAutoLockDialogOpen = false
-                viewModelScope.launch {
-                    preferences.setAutoLockTimeout(event.timeout)
-                }
-            }
-
-            SettingsEvents.OnDismissAnalysisSheet -> {
-                isAnalysisSheetOpen = false
-            }
-
-            is SettingsEvents.OnAnalysisItemClick -> {
-                isAnalysisSheetOpen = false
-                sendUiEvents(
-                    UiEvents.Navigate(
-                        NavRoute.Details(event.detail.previewId)
-                    )
+                    },
+                    onFailure = { error -> snackbar(importFailureMessage(error)) }
                 )
             }
         }
     }
 
-    private fun sendUiEvents(events: UiEvents) {
+    private fun showDialog(dialog: SettingsDialog?) = local.update { it.copy(dialog = dialog) }
+
+    private fun chooseLanguage(intent: SettingsIntent.LanguageChosen) {
+        showDialog(null)
+        if (intent.language.comingSoon) return snackbar(R.string.coming_soon)
         viewModelScope.launch {
-            _uiEvents.send(events)
+            preferences.setSelectedLanguageTag(intent.language.languageId)
+            send(SettingsEffect.ApplyLanguage(intent.language.languageId))
         }
+    }
+
+    private fun chooseAutoLock(timeout: AutoLockTimeout) {
+        showDialog(null)
+        viewModelScope.launch { preferences.setAutoLockTimeout(timeout) }
+    }
+
+    private fun analyze() = runWork {
+        val details = repository.getDetails().first()
+        val keywords = secretKeywords.all()
+        // Off the main thread: a large vault takes noticeable time to digest and compare.
+        val result = withContext(workDispatcher) { PasswordAnalyzer.analyze(details, keywords) }
+        showDialog(SettingsDialog.Analysis(result))
+    }
+
+    private fun changeRecovery(newPassword: CharArray) {
+        val current = pendingCurrentRecoveryPassword
+        pendingCurrentRecoveryPassword = null
+        showDialog(null)
+        viewModelScope.launch {
+            val changed = current != null && keyManager.changeRecoveryPassword(current, newPassword)
+            current?.let { Arrays.fill(it, Char(0)) }
+            Arrays.fill(newPassword, Char(0))
+            snackbar(if (changed) R.string.recovery_change_done else R.string.recovery_change_failed)
+        }
+    }
+
+    private fun wipePendingRecovery() {
+        pendingCurrentRecoveryPassword?.let { Arrays.fill(it, Char(0)) }
+        pendingCurrentRecoveryPassword = null
+    }
+
+    /** One long operation at a time: rapid taps on Export or Safety check used to start several. */
+    private fun runWork(block: suspend () -> Unit) {
+        if (local.value.isWorking) return
+        local.update { it.copy(isWorking = true) }
+        viewModelScope.launch {
+            try {
+                block()
+            } finally {
+                local.update { it.copy(isWorking = false) }
+            }
+        }
+    }
+
+    private fun importFailureMessage(error: Throwable): Int = when ((error as? BackupException)?.error) {
+        BackupError.WrongPasswordOrCorrupt -> R.string.import_wrong_password
+        BackupError.FileTooLarge -> R.string.import_file_too_large
+        is BackupError.UnsupportedVersion -> R.string.import_unsupported_version
+        else -> R.string.import_failed
+    }
+
+    private fun snackbar(message: Int) = send(SettingsEffect.ShowSnackbar(UiText.StringResource(message)))
+
+    private fun send(effect: SettingsEffect) {
+        viewModelScope.launch { _effects.send(effect) }
+    }
+
+    private companion object {
+        const val STOP_TIMEOUT_MS = 5_000L
+        const val PLAY_STORE_URL = "https://play.google.com/store/apps/details?id="
     }
 }

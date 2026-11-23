@@ -19,6 +19,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Qualifier
 import javax.inject.Singleton
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -27,6 +28,11 @@ import kotlinx.coroutines.SupervisorJob
 @Retention(AnnotationRetention.BINARY)
 annotation class ApplicationScope
 
+/** CPU-bound work kept off the main thread (password analysis); a test passes its own dispatcher. */
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class WorkDispatcher
+
 @Module
 @InstallIn(SingletonComponent::class)
 object AnalyticsModule {
@@ -34,6 +40,10 @@ object AnalyticsModule {
     @Singleton
     @ApplicationScope
     fun provideApplicationScope(): CoroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
+
+    @Provides
+    @WorkDispatcher
+    fun provideWorkDispatcher(): CoroutineDispatcher = Dispatchers.Default
 
     @Provides
     @Singleton
