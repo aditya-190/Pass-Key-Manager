@@ -33,7 +33,7 @@ fun NavGraph(navController: NavHostController, analytics: AnalyticsTracker) {
             SplashPage(
                 onNavigate = {
                     navController.popBackStack()
-                    navController.navigate(it.route)
+                    navController.navigate(it)
                 }
             )
         }
@@ -41,7 +41,7 @@ fun NavGraph(navController: NavHostController, analytics: AnalyticsTracker) {
             OnBoardingScreen(
                 onNavigate = {
                     navController.popBackStack()
-                    navController.navigate(it.route)
+                    navController.navigate(it)
                 }
             )
         }

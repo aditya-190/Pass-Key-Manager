@@ -5,9 +5,9 @@ import androidx.lifecycle.viewModelScope
 import com.bhardwaj.passkey.consent.ConsentStore
 import com.bhardwaj.passkey.domain.repository.PreferencesRepository
 import com.bhardwaj.passkey.launch.LaunchRouter
+import com.bhardwaj.passkey.presentation.navigation.NavRoute
 import com.bhardwaj.passkey.presentation.navigation.route
 import com.bhardwaj.passkey.presentation.screens.splash_screen.SplashEvents
-import com.bhardwaj.passkey.utils.UiEvents
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.channels.Channel
@@ -24,8 +24,8 @@ class SplashViewModel @Inject constructor(
     // BUFFERED, not the RENDEZVOUS default: with lifecycle-aware collection a backgrounded
     // screen has no active collector, and a rendezvous channel would suspend the coroutine
     // that emitted the effect until the user came back.
-    private val _uiEvents = Channel<UiEvents>(Channel.BUFFERED)
-    val uiEvents = _uiEvents.receiveAsFlow()
+    private val _effects = Channel<SplashEffect>(Channel.BUFFERED)
+    val effects = _effects.receiveAsFlow()
 
     private var routed = false
 
@@ -40,9 +40,13 @@ class SplashViewModel @Inject constructor(
                     val onboardingDone = preferences.onboardingCompleted.first()
                     val consentDecided = consentStore.consent.first().decided
                     val step = LaunchRouter.atStart(onboardingDone = onboardingDone, consentDecided = consentDecided)
-                    _uiEvents.send(UiEvents.Navigate(step.route))
+                    _effects.send(SplashEffect.Navigate(step.route))
                 }
             }
         }
     }
+}
+
+sealed interface SplashEffect {
+    data class Navigate(val route: NavRoute) : SplashEffect
 }

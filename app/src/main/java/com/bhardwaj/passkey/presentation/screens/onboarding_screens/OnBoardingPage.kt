@@ -18,18 +18,18 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.bhardwaj.passkey.R
+import com.bhardwaj.passkey.presentation.navigation.NavRoute
 import com.bhardwaj.passkey.presentation.screens.common.ObserveAsEvents
 import com.bhardwaj.passkey.presentation.screens.onboarding_screens.OnBoardingEvents
 import com.bhardwaj.passkey.presentation.screens.onboarding_screens.OnBoardingViewModel
 import com.bhardwaj.passkey.presentation.screens.onboarding_screens.components.OnBoardingItem
 import com.bhardwaj.passkey.presentation.screens.onboarding_screens.components.OnBoardingPageIndicator
-import com.bhardwaj.passkey.utils.UiEvents
 import kotlinx.coroutines.launch
 
 data class OnBoardingScreen(val title: String, val description: String)
 
 @Composable
-fun OnBoardingScreen(onNavigate: (UiEvents.Navigate) -> Unit, viewModel: OnBoardingViewModel = hiltViewModel()) {
+fun OnBoardingScreen(onNavigate: (NavRoute) -> Unit, viewModel: OnBoardingViewModel = hiltViewModel()) {
     // The emphasised word is marked with [[ ]] inside each heading string resource, so each
     // translation controls which of its own words is highlighted.
     val pages = listOf(
@@ -47,10 +47,9 @@ fun OnBoardingScreen(onNavigate: (UiEvents.Navigate) -> Unit, viewModel: OnBoard
         )
     )
 
-    ObserveAsEvents(viewModel.uiEvents) { event ->
+    ObserveAsEvents(viewModel.effects) { event ->
         when (event) {
-            is UiEvents.Navigate -> onNavigate(event)
-            else -> Unit
+            is OnBoardingEffect.Navigate -> onNavigate(event.route)
         }
     }
     Column(

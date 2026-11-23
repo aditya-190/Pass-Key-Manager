@@ -7,9 +7,9 @@ import com.bhardwaj.passkey.analytics.AppEvents
 import com.bhardwaj.passkey.consent.ConsentStore
 import com.bhardwaj.passkey.domain.repository.PreferencesRepository
 import com.bhardwaj.passkey.launch.LaunchRouter
+import com.bhardwaj.passkey.presentation.navigation.NavRoute
 import com.bhardwaj.passkey.presentation.navigation.route
 import com.bhardwaj.passkey.presentation.screens.onboarding_screens.OnBoardingEvents
-import com.bhardwaj.passkey.utils.UiEvents
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.channels.Channel
@@ -27,8 +27,8 @@ class OnBoardingViewModel @Inject constructor(
     // BUFFERED, not the RENDEZVOUS default: with lifecycle-aware collection a backgrounded
     // screen has no active collector, and a rendezvous channel would suspend the coroutine
     // that emitted the effect until the user came back.
-    private val _uiEvents = Channel<UiEvents>(Channel.BUFFERED)
-    val uiEvents = _uiEvents.receiveAsFlow()
+    private val _effects = Channel<OnBoardingEffect>(Channel.BUFFERED)
+    val effects = _effects.receiveAsFlow()
 
     private var finished = false
 
@@ -54,7 +54,11 @@ class OnBoardingViewModel @Inject constructor(
         viewModelScope.launch {
             preferences.setOnboardingCompleted(true)
             val step = LaunchRouter.afterOnboarding(consentDecided = consentStore.consent.first().decided)
-            _uiEvents.send(UiEvents.Navigate(step.route))
+            _effects.send(OnBoardingEffect.Navigate(step.route))
         }
     }
+}
+
+sealed interface OnBoardingEffect {
+    data class Navigate(val route: NavRoute) : OnBoardingEffect
 }

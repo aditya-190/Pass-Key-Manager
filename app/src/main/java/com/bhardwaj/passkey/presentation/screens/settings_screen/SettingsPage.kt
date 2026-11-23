@@ -166,8 +166,6 @@ fun SettingsScreen(
             is SettingsEffect.ShowSnackbar -> {
                 scope.launch { snackBarHostState.showSnackbar(message = event.message.asString(context)) }
             }
-
-            else -> Unit
         }
     }
 

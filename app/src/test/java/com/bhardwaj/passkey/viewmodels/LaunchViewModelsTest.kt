@@ -5,14 +5,15 @@ import com.bhardwaj.passkey.analytics.ConsentState
 import com.bhardwaj.passkey.consent.FakeConsentStore
 import com.bhardwaj.passkey.data.datastore.PreferencesRepositoryImpl
 import com.bhardwaj.passkey.presentation.navigation.NavRoute
+import com.bhardwaj.passkey.presentation.screens.onboarding_screens.OnBoardingEffect
 import com.bhardwaj.passkey.presentation.screens.onboarding_screens.OnBoardingEvents
 import com.bhardwaj.passkey.presentation.screens.onboarding_screens.OnBoardingViewModel
+import com.bhardwaj.passkey.presentation.screens.splash_screen.SplashEffect
 import com.bhardwaj.passkey.presentation.screens.splash_screen.SplashEvents
 import com.bhardwaj.passkey.presentation.screens.splash_screen.SplashViewModel
 import com.bhardwaj.passkey.testing.MainDispatcherRule
 import com.bhardwaj.passkey.testing.RecordingAnalyticsTracker
 import com.bhardwaj.passkey.testing.testDataStore
-import com.bhardwaj.passkey.utils.UiEvents
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.toList
@@ -40,7 +41,7 @@ class LaunchViewModelsTest {
     fun `splash sends a new user to onboarding`() = runTest {
         val vm = SplashViewModel(prefs(), FakeConsentStore())
         vm.onEvent(SplashEvents.OnLoadingComplete)
-        assertEquals(UiEvents.Navigate(NavRoute.Onboarding), vm.uiEvents.first())
+        assertEquals(SplashEffect.Navigate(NavRoute.Onboarding), vm.effects.first())
     }
 
     @Test
@@ -48,7 +49,7 @@ class LaunchViewModelsTest {
         val prefs = prefs().apply { setOnboardingCompleted(true) }
         val vm = SplashViewModel(prefs, FakeConsentStore())
         vm.onEvent(SplashEvents.OnLoadingComplete)
-        assertEquals(UiEvents.Navigate(NavRoute.Consent()), vm.uiEvents.first())
+        assertEquals(SplashEffect.Navigate(NavRoute.Consent()), vm.effects.first())
     }
 
     @Test
@@ -56,13 +57,13 @@ class LaunchViewModelsTest {
         val prefs = prefs().apply { setOnboardingCompleted(true) }
         val consent = FakeConsentStore(ConsentState(true, analytics = false, crash = false))
         val vm = SplashViewModel(prefs, consent)
-        val received = mutableListOf<UiEvents>()
-        val job = backgroundScope.launch { vm.uiEvents.toList(received) }
+        val received = mutableListOf<SplashEffect>()
+        val job = backgroundScope.launch { vm.effects.toList(received) }
         vm.onEvent(SplashEvents.OnLoadingComplete)
         // Before 5.5.2 the splash kept collecting DataStore and re-navigated on every write.
         prefs.setOnboardingCompleted(false)
         consent.save(analytics = true, crash = true)
-        assertEquals(listOf<UiEvents>(UiEvents.Navigate(NavRoute.Security)), received)
+        assertEquals(listOf<SplashEffect>(SplashEffect.Navigate(NavRoute.Security)), received)
         job.cancel()
     }
 
@@ -71,7 +72,7 @@ class LaunchViewModelsTest {
         val prefs = prefs()
         val vm = OnBoardingViewModel(prefs, FakeConsentStore(), analytics)
         vm.onEvent(OnBoardingEvents.OnBoardingComplete)
-        assertEquals(UiEvents.Navigate(NavRoute.Consent()), vm.uiEvents.first())
+        assertEquals(OnBoardingEffect.Navigate(NavRoute.Consent()), vm.effects.first())
         assertTrue(prefs.onboardingCompleted.first())
         assertTrue(AppEventNames.ONBOARDING_COMPLETE in analytics.names)
     }
@@ -81,7 +82,7 @@ class LaunchViewModelsTest {
         val vm = OnBoardingViewModel(prefs(), FakeConsentStore(ConsentState(true, true, true)), analytics)
         vm.onEvent(OnBoardingEvents.OnPageViewed(page = 1))
         vm.onEvent(OnBoardingEvents.OnSkip(page = 1))
-        assertEquals(UiEvents.Navigate(NavRoute.Security), vm.uiEvents.first())
+        assertEquals(OnBoardingEffect.Navigate(NavRoute.Security), vm.effects.first())
         assertEquals(
             listOf(AppEventNames.ONBOARDING_PAGE_VIEW, AppEventNames.ONBOARDING_SKIPPED),
             analytics.names
