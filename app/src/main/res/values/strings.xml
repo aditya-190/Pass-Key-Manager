@@ -189,6 +189,14 @@
     <!--    Vault key setup, recovery and migration    -->
     <string name="recovery_setup_title">Set a recovery password</string>
     <string name="recovery_password_hint">Recovery password</string>
+    <string name="recovery_password_too_weak">This password is easy to guess. Use a longer one, or a few unrelated words.</string>
+    <string name="password_strength_weak">Strength: weak</string>
+    <string name="password_strength_fair">Strength: fair</string>
+    <string name="password_strength_strong">Strength: strong</string>
+    <plurals name="password_min_length">
+        <item quantity="one">Use at least %1$d character.</item>
+        <item quantity="other">Use at least %1$d characters.</item>
+    </plurals>
     <string name="recovery_setup_message_new">PassKey unlocks with your fingerprint or screen lock. This recovery password is the backup way in — you will need it if you change your fingerprints or remove your device lock. It cannot be reset, so store it somewhere safe.</string>
     <string name="recovery_setup_message_upgrade">This update re-encrypts your vault with a key unique to this device. Set a recovery password first: it is the only way back in if you change your fingerprints or remove your device lock. It cannot be reset, so store it somewhere safe.</string>
     <string name="recovery_unlock_title">Enter your recovery password</string>

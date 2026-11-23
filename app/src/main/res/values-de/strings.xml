@@ -228,4 +228,12 @@
     <string name="migration_export_first">Zuerst ein Backup exportieren</string>
     <string name="migration_export_now">Tresor jetzt exportieren</string>
     <string name="recovery_password_hint">Wiederherstellungspasswort</string>
+    <string name="recovery_password_too_weak">Dieses Passwort ist leicht zu erraten. Nimm ein längeres oder ein paar Wörter, die nichts miteinander zu tun haben.</string>
+    <string name="password_strength_weak">Stärke: schwach</string>
+    <string name="password_strength_fair">Stärke: mittel</string>
+    <string name="password_strength_strong">Stärke: stark</string>
+    <plurals name="password_min_length">
+        <item quantity="one">Verwende mindestens %1$d Zeichen.</item>
+        <item quantity="other">Verwende mindestens %1$d Zeichen.</item>
+    </plurals>
 </resources>

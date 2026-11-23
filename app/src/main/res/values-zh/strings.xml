@@ -226,4 +226,11 @@
     <string name="migration_export_first">先导出备份</string>
     <string name="migration_export_now">立即导出我的密码库</string>
     <string name="recovery_password_hint">恢复密码</string>
+    <string name="recovery_password_too_weak">这个密码很容易被猜到。请使用更长的密码，或几个互不相关的词。</string>
+    <string name="password_strength_weak">强度：弱</string>
+    <string name="password_strength_fair">强度：一般</string>
+    <string name="password_strength_strong">强度：强</string>
+    <plurals name="password_min_length">
+        <item quantity="other">请至少使用 %1$d 个字符。</item>
+    </plurals>
 </resources>

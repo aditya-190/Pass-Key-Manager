@@ -226,4 +226,12 @@
     <string name="migration_export_first">முதலில் காப்புப்பிரதி எடு</string>
     <string name="migration_export_now">என் பெட்டகத்தை இப்போது ஏற்றுமதி செய்</string>
     <string name="recovery_password_hint">மீட்பு கடவுச்சொல்</string>
+    <string name="recovery_password_too_weak">இந்தக் கடவுச்சொல்லை எளிதில் ஊகிக்கலாம். நீளமான கடவுச்சொல் அல்லது தொடர்பில்லாத சில சொற்களைப் பயன்படுத்தவும்.</string>
+    <string name="password_strength_weak">வலிமை: பலவீனம்</string>
+    <string name="password_strength_fair">வலிமை: பரவாயில்லை</string>
+    <string name="password_strength_strong">வலிமை: வலுவானது</string>
+    <plurals name="password_min_length">
+        <item quantity="one">குறைந்தது %1$d எழுத்துகளைப் பயன்படுத்தவும்.</item>
+        <item quantity="other">குறைந்தது %1$d எழுத்துகளைப் பயன்படுத்தவும்.</item>
+    </plurals>
 </resources>

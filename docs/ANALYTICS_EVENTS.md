@@ -23,12 +23,16 @@ Nothing is sent unless the user allowed "Usage statistics" (`ConsentApplier`; th
 | `backup_imported` | `success`, `count_bucket` | Defined; wired in 5.6.0 | 5.6.0 |
 | `safety_check_viewed` | `score_bucket`: 0-49, 50-79, 80-100 | Defined; wired in 5.6.0 | 5.6.0 |
 | `language_changed` | `language` (BCP-47 tag) | Defined; wired in 5.6.0 | 5.6.0 |
+| `recovery_setup_shown` | `existing_vault` (bool) | The mandatory recovery-password step is shown (upgrade = true, new install = false) | 5.7.0 |
+| `recovery_setup_completed` | `existing_vault` (bool) | The vault key is provisioned after the recovery password is set | 5.7.0 |
+| `vault_migration_failed` | `reason`: failure enum, lowercase (for example `export_failed`) | The 5.7.0 re-key fails; the original database is kept | 5.7.0 |
 
 User property: `consent_analytics` (`true` / `false`).
 
 ## Key funnels to build in the Firebase console
 - Activation: `tutorial_complete` → `consent_updated` → `vault_unlocked` → first `entry_created` → first `field_saved`.
 - Habit: users with `vault_unlocked` on 3+ distinct days in their first 7 (the D7 proxy).
+- 5.7.0 upgrade: `recovery_setup_shown{existing_vault=true}` → `recovery_setup_completed` → `vault_unlocked`; any `vault_migration_failed` by `reason` halts the staged rollout.
 - Value moments: `password_generated` and `value_copied{sensitive=true}` per active user.
 
 ## Studio baseline events (5.6.0, `analytics/BaselineEvents.kt`)

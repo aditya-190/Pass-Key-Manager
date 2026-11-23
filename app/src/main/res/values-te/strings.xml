@@ -226,5 +226,13 @@
     <string name="migration_export_first">ముందు బ్యాకప్ తీసుకోండి</string>
     <string name="migration_export_now">నా వాల్ట్‌ను ఇప్పుడే ఎగుమతి చేయి</string>
     <string name="recovery_password_hint">రికవరీ పాస్‌వర్డ్</string>
+    <string name="recovery_password_too_weak">ఈ పాస్‌వర్డ్‌ను సులభంగా ఊహించవచ్చు. పొడవైన పాస్‌వర్డ్ లేదా సంబంధం లేని కొన్ని పదాలు వాడండి.</string>
+    <string name="password_strength_weak">బలం: బలహీనం</string>
+    <string name="password_strength_fair">బలం: పర్వాలేదు</string>
+    <string name="password_strength_strong">బలం: బలమైనది</string>
+    <plurals name="password_min_length">
+        <item quantity="one">కనీసం %1$d అక్షరాలు వాడండి.</item>
+        <item quantity="other">కనీసం %1$d అక్షరాలు వాడండి.</item>
+    </plurals>
 </resources>
 

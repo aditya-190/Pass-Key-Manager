@@ -120,6 +120,7 @@ fun VaultGateScreen(onUnlocked: () -> Unit, viewModel: VaultGateViewModel = hilt
                 BackupPasswordDialog(
                     confirmMode = true,
                     titleRes = R.string.recovery_setup_title,
+                    recoveryRules = true,
                     hintRes = R.string.recovery_password_hint,
                     messageRes = if (current.isExistingVault) {
                         R.string.recovery_setup_message_upgrade

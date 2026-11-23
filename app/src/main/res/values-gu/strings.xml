@@ -226,4 +226,12 @@
     <string name="migration_export_first">પહેલાં બૅકઅપ લો</string>
     <string name="migration_export_now">હમણાં મારી વૉલ્ટ નિકાસ કરો</string>
     <string name="recovery_password_hint">રિકવરી પાસવર્ડ</string>
+    <string name="recovery_password_too_weak">આ પાસવર્ડ સહેલાઈથી ધારી શકાય છે. લાંબો પાસવર્ડ અથવા થોડા અસંબંધિત શબ્દો વાપરો.</string>
+    <string name="password_strength_weak">મજબૂતી: નબળો</string>
+    <string name="password_strength_fair">મજબૂતી: ઠીક</string>
+    <string name="password_strength_strong">મજબૂતી: મજબૂત</string>
+    <plurals name="password_min_length">
+        <item quantity="one">ઓછામાં ઓછા %1$d અક્ષર વાપરો.</item>
+        <item quantity="other">ઓછામાં ઓછા %1$d અક્ષર વાપરો.</item>
+    </plurals>
 </resources>

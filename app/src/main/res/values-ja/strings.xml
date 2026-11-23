@@ -225,4 +225,11 @@
     <string name="migration_export_first">先にバックアップを書き出す</string>
     <string name="migration_export_now">今すぐ保管庫を書き出す</string>
     <string name="recovery_password_hint">復元用パスワード</string>
+    <string name="recovery_password_too_weak">このパスワードは推測されやすいです。もっと長いパスワードか、関連のない単語をいくつか組み合わせてください。</string>
+    <string name="password_strength_weak">強度: 弱い</string>
+    <string name="password_strength_fair">強度: 普通</string>
+    <string name="password_strength_strong">強度: 強い</string>
+    <plurals name="password_min_length">
+        <item quantity="other">%1$d 文字以上にしてください。</item>
+    </plurals>
 </resources>

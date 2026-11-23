@@ -78,7 +78,12 @@ Owner decisions: PBKDF2 recovery slot (no argon2kt), mandatory one-time recovery
   (wrong refused, right opens); lock re-added → slots rebuilt → PIN alone; fingerprint enrolled → BIO slot → fingerprint
   unlock through CryptoObject. Default device suite OK (26), vault untouched.
 - PR #3's destructive device tests made opt-in; running them was blocked by the safety classifier (deletes app data).
-Open: invalidation on enrollment change (emulator cannot enforce), destructive VaultMigrationTest run, attack-pass choices.
+- Attack pass, owner chose #1 and #2: recovery password now 10+ characters, not "weak", with a strength meter
+  (PasswordStrength + RecoveryPasswordTest, 5 tests, red → green); upgrade-funnel events recovery_setup_shown /
+  recovery_setup_completed / vault_migration_failed. New strings translated into 16 locales (machine, pending review).
+- Destructive VaultMigrationTest / KeyStoreWrapperTest skipped by owner decision (they stay opt-in).
+- Gates green: ktlint, detekt, 196 unit tests, lint, release build.
+Open: invalidation on enrollment change (needs a physical device), staged rollout.
 
 ## Carried into 5.6.0
 - Per-field secret keyboard (attack-pass finding #1), built on the `isSecret` column.

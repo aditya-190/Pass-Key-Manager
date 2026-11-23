@@ -93,7 +93,9 @@ class VaultGateViewModel @Inject constructor(
     fun start() {
         viewModelScope.launch {
             _state.value = if (!keyManager.isProvisioned()) {
-                State.SetUpRecovery(isExistingVault = migration.databaseExists())
+                val existing = migration.databaseExists()
+                analytics.log(AppEvents.recoverySetupShown(existingVault = existing))
+                State.SetUpRecovery(isExistingVault = existing)
             } else {
                 // A PENDING migration state is also just Locked: the re-key is resumable
                 // because the original database is untouched until the final rename.
@@ -112,6 +114,7 @@ class VaultGateViewModel @Inject constructor(
 
                 is DatabaseKeyManager.ProvisionResult.Success -> {
                     Arrays.fill(password, NUL)
+                    analytics.log(AppEvents.recoverySetupCompleted(existingVault = migration.databaseExists()))
                     runMigrationThenOpen(result.dek)
                 }
             }
@@ -189,6 +192,7 @@ class VaultGateViewModel @Inject constructor(
             _state.value = State.Migrating
             val result = migration.migrate(dek)
             if (result is VaultMigration.Result.Failed) {
+                analytics.log(AppEvents.vaultMigrationFailed(reason = result.reason.name))
                 _state.value = State.MigrationFailed(
                     reason = result.reason.name,
                     canExportVault = migration.canOpenWithLegacyKey()

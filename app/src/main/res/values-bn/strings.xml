@@ -227,4 +227,12 @@
     <string name="migration_export_first">আগে ব্যাকআপ নিন</string>
     <string name="migration_export_now">এখনই আমার ভল্ট রপ্তানি করুন</string>
     <string name="recovery_password_hint">রিকভারি পাসওয়ার্ড</string>
+    <string name="recovery_password_too_weak">এই পাসওয়ার্ড সহজে অনুমান করা যায়। আরও লম্বা পাসওয়ার্ড বা কয়েকটি অসম্পর্কিত শব্দ ব্যবহার করুন।</string>
+    <string name="password_strength_weak">শক্তি: দুর্বল</string>
+    <string name="password_strength_fair">শক্তি: মাঝারি</string>
+    <string name="password_strength_strong">শক্তি: শক্তিশালী</string>
+    <plurals name="password_min_length">
+        <item quantity="one">কমপক্ষে %1$d অক্ষর ব্যবহার করুন।</item>
+        <item quantity="other">কমপক্ষে %1$d অক্ষর ব্যবহার করুন।</item>
+    </plurals>
 </resources>

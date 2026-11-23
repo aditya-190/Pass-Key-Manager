@@ -228,4 +228,13 @@
     <string name="migration_export_first">Exportar una copia primero</string>
     <string name="migration_export_now">Exportar mi caja fuerte ahora</string>
     <string name="recovery_password_hint">Contraseña de recuperación</string>
+    <string name="recovery_password_too_weak">Esta contraseña es fácil de adivinar. Usa una más larga o varias palabras sin relación entre sí.</string>
+    <string name="password_strength_weak">Seguridad: débil</string>
+    <string name="password_strength_fair">Seguridad: aceptable</string>
+    <string name="password_strength_strong">Seguridad: fuerte</string>
+    <plurals name="password_min_length">
+        <item quantity="one">Usa al menos %1$d caracteres.</item>
+        <item quantity="many">Usa al menos %1$d caracteres.</item>
+        <item quantity="other">Usa al menos %1$d caracteres.</item>
+    </plurals>
 </resources>

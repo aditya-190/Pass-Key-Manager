@@ -228,4 +228,13 @@
     <string name="migration_export_first">Exporter une sauvegarde d\'abord</string>
     <string name="migration_export_now">Exporter mon coffre maintenant</string>
     <string name="recovery_password_hint">Mot de passe de récupération</string>
+    <string name="recovery_password_too_weak">Ce mot de passe est facile à deviner. Utilisez-en un plus long ou quelques mots sans rapport entre eux.</string>
+    <string name="password_strength_weak">Robustesse : faible</string>
+    <string name="password_strength_fair">Robustesse : moyenne</string>
+    <string name="password_strength_strong">Robustesse : élevée</string>
+    <plurals name="password_min_length">
+        <item quantity="one">Utilisez au moins %1$d caractères.</item>
+        <item quantity="many">Utilisez au moins %1$d caractères.</item>
+        <item quantity="other">Utilisez au moins %1$d caractères.</item>
+    </plurals>
 </resources>

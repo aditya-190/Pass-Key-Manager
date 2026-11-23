@@ -19,6 +19,9 @@ object AppEventNames {
     const val BACKUP_IMPORTED = "backup_imported"
     const val SAFETY_CHECK_VIEWED = "safety_check_viewed"
     const val LANGUAGE_CHANGED = "language_changed"
+    const val RECOVERY_SETUP_SHOWN = "recovery_setup_shown"
+    const val RECOVERY_SETUP_COMPLETED = "recovery_setup_completed"
+    const val VAULT_MIGRATION_FAILED = "vault_migration_failed"
 }
 
 object AppParams {
@@ -35,6 +38,8 @@ object AppParams {
     const val COUNT_BUCKET = "count_bucket"
     const val SCORE_BUCKET = "score_bucket"
     const val LANGUAGE = "language"
+    const val EXISTING_VAULT = "existing_vault"
+    const val REASON = "reason"
 }
 
 object AppUserProps {
@@ -97,6 +102,19 @@ object AppEvents {
     fun languageChanged(languageTag: String) = AnalyticsEvent(
         AppEventNames.LANGUAGE_CHANGED,
         mapOf(AppParams.LANGUAGE to languageTag.take(EventValidator.MAX_VALUE_LENGTH))
+    )
+
+    /** The one-time 5.7.0 step; [existingVault] separates upgrading users from new installs. */
+    fun recoverySetupShown(existingVault: Boolean) =
+        AnalyticsEvent(AppEventNames.RECOVERY_SETUP_SHOWN, mapOf(AppParams.EXISTING_VAULT to existingVault))
+
+    fun recoverySetupCompleted(existingVault: Boolean) =
+        AnalyticsEvent(AppEventNames.RECOVERY_SETUP_COMPLETED, mapOf(AppParams.EXISTING_VAULT to existingVault))
+
+    /** [reason] is a VaultMigration failure enum name; nothing from the vault. */
+    fun vaultMigrationFailed(reason: String) = AnalyticsEvent(
+        AppEventNames.VAULT_MIGRATION_FAILED,
+        mapOf(AppParams.REASON to reason.lowercase().take(EventValidator.MAX_VALUE_LENGTH))
     )
 
     fun lengthBucket(length: Int): String = when {

@@ -228,4 +228,13 @@
     <string name="migration_export_first">Exportar um backup antes</string>
     <string name="migration_export_now">Exportar meu cofre agora</string>
     <string name="recovery_password_hint">Senha de recuperação</string>
+    <string name="recovery_password_too_weak">Esta senha é fácil de adivinhar. Use uma mais longa ou algumas palavras sem relação entre si.</string>
+    <string name="password_strength_weak">Força: fraca</string>
+    <string name="password_strength_fair">Força: razoável</string>
+    <string name="password_strength_strong">Força: forte</string>
+    <plurals name="password_min_length">
+        <item quantity="one">Use pelo menos %1$d caracteres.</item>
+        <item quantity="many">Use pelo menos %1$d caracteres.</item>
+        <item quantity="other">Use pelo menos %1$d caracteres.</item>
+    </plurals>
 </resources>

@@ -227,4 +227,12 @@
     <string name="migration_export_first">आधी बॅकअप घ्या</string>
     <string name="migration_export_now">माझी व्हॉल्ट आता निर्यात करा</string>
     <string name="recovery_password_hint">रिकव्हरी पासवर्ड</string>
+    <string name="recovery_password_too_weak">हा पासवर्ड सहज ओळखता येतो. मोठा पासवर्ड किंवा काही असंबंधित शब्द वापरा.</string>
+    <string name="password_strength_weak">मजबुती: कमकुवत</string>
+    <string name="password_strength_fair">मजबुती: ठीक</string>
+    <string name="password_strength_strong">मजबुती: मजबूत</string>
+    <plurals name="password_min_length">
+        <item quantity="one">किमान %1$d अक्षरे वापरा.</item>
+        <item quantity="other">किमान %1$d अक्षरे वापरा.</item>
+    </plurals>
 </resources>

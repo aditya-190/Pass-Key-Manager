@@ -228,4 +228,14 @@
     <string name="migration_export_first">Сначала выгрузить копию</string>
     <string name="migration_export_now">Выгрузить хранилище сейчас</string>
     <string name="recovery_password_hint">Пароль восстановления</string>
+    <string name="recovery_password_too_weak">Этот пароль легко угадать. Используйте более длинный или несколько не связанных между собой слов.</string>
+    <string name="password_strength_weak">Надёжность: низкая</string>
+    <string name="password_strength_fair">Надёжность: средняя</string>
+    <string name="password_strength_strong">Надёжность: высокая</string>
+    <plurals name="password_min_length">
+        <item quantity="one">Используйте не менее %1$d символов.</item>
+        <item quantity="few">Используйте не менее %1$d символов.</item>
+        <item quantity="many">Используйте не менее %1$d символов.</item>
+        <item quantity="other">Используйте не менее %1$d символов.</item>
+    </plurals>
 </resources>

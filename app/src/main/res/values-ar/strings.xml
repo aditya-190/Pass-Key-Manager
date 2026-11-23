@@ -231,4 +231,16 @@
     <string name="migration_export_first">صدّر نسخة احتياطية أولًا</string>
     <string name="migration_export_now">صدّر خزنتي الآن</string>
     <string name="recovery_password_hint">كلمة مرور الاسترداد</string>
+    <string name="recovery_password_too_weak">من السهل تخمين كلمة المرور هذه. استخدم كلمة أطول أو بضع كلمات غير مترابطة.</string>
+    <string name="password_strength_weak">القوة: ضعيفة</string>
+    <string name="password_strength_fair">القوة: مقبولة</string>
+    <string name="password_strength_strong">القوة: قوية</string>
+    <plurals name="password_min_length">
+        <item quantity="zero">استخدم %1$d أحرف على الأقل.</item>
+        <item quantity="one">استخدم %1$d أحرف على الأقل.</item>
+        <item quantity="two">استخدم %1$d أحرف على الأقل.</item>
+        <item quantity="few">استخدم %1$d أحرف على الأقل.</item>
+        <item quantity="many">استخدم %1$d أحرف على الأقل.</item>
+        <item quantity="other">استخدم %1$d أحرف على الأقل.</item>
+    </plurals>
 </resources>

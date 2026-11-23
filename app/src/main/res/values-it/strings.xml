@@ -228,4 +228,13 @@
     <string name="migration_export_first">Esporta prima un backup</string>
     <string name="migration_export_now">Esporta la mia cassaforte ora</string>
     <string name="recovery_password_hint">Password di recupero</string>
+    <string name="recovery_password_too_weak">Questa password è facile da indovinare. Usane una più lunga o alcune parole scollegate tra loro.</string>
+    <string name="password_strength_weak">Sicurezza: debole</string>
+    <string name="password_strength_fair">Sicurezza: discreta</string>
+    <string name="password_strength_strong">Sicurezza: forte</string>
+    <plurals name="password_min_length">
+        <item quantity="one">Usa almeno %1$d caratteri.</item>
+        <item quantity="many">Usa almeno %1$d caratteri.</item>
+        <item quantity="other">Usa almeno %1$d caratteri.</item>
+    </plurals>
 </resources>
