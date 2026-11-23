@@ -11,6 +11,7 @@ import com.bhardwaj.passkey.analytics.AnalyticsTracker
 import com.bhardwaj.passkey.analytics.AppEvents
 import com.bhardwaj.passkey.consent.ConsentRoute
 import com.bhardwaj.passkey.presentation.screens.detail_screen.DetailScreen
+import com.bhardwaj.passkey.presentation.screens.onboarding_screens.FeatureTourScreen
 import com.bhardwaj.passkey.presentation.screens.onboarding_screens.OnBoardingScreen
 import com.bhardwaj.passkey.presentation.screens.preview_screen.PreviewScreen
 import com.bhardwaj.passkey.presentation.screens.security_screen.VaultGateScreen
@@ -44,6 +45,9 @@ fun NavGraph(navController: NavHostController, analytics: AnalyticsTracker) {
                     navController.navigate(it)
                 }
             )
+        }
+        composable<NavRoute.FeatureTour> {
+            FeatureTourScreen(onClose = { navController.popBackStack() })
         }
         composable<NavRoute.Previews> {
             PreviewScreen(onNavigate = { navController.navigate(it) })

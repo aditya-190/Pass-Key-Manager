@@ -16,7 +16,8 @@ object AnnouncementRoutes {
         "about_page" to NavRoute.About,
         "legal_page/PRIVACY" to NavRoute.Legal("PRIVACY"),
         "legal_page/TERMS" to NavRoute.Legal("TERMS"),
-        "consent_page?fromSettings=true" to NavRoute.Consent(fromSettings = true)
+        "consent_page?fromSettings=true" to NavRoute.Consent(fromSettings = true),
+        "feature_tour_page" to NavRoute.FeatureTour
     )
 
     fun safeRoute(route: String): NavRoute? = allowed[route.trim()]

@@ -295,6 +295,9 @@ fun SettingsScreen(
                             SettingsText(text = stringResource(id = R.string.terms_n_condition)) {
                                 onNavigate(NavRoute.Legal(LegalDocument.TERMS.name))
                             }
+                            SettingsText(text = stringResource(id = R.string.feature_tour)) {
+                                onNavigate(NavRoute.FeatureTour)
+                            }
                             SettingsText(text = stringResource(id = R.string.about)) {
                                 onNavigate(NavRoute.About)
                             }

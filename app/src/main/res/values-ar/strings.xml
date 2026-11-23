@@ -262,4 +262,19 @@
     <string name="legal_privacy_autofill_body">إذا شغّلت PassKey كخدمة للملء التلقائي، يعرض عليه Android النموذج الذي تملؤه: نوع كل حقل والتطبيق أو عنوان الويب الذي ينتمي إليه، حتى يقترح الإدخالات المطابقة. يحدث هذا على هاتفك فقط؛ لا يُرسل أو يُسجَّل أو يُخزَّن أي شيء عن النموذج أو الموقع أو الإدخالات المقترحة. وعندما تكون الخزنة مقفلة، يعرض PassKey اقتراحًا واحدًا \"فتح القفل\" دون أي أسماء إدخالات. يبقى الملء التلقائي متوقفًا حتى تشغّله من إعدادات Android، ويمكنك إيقافه من هناك في أي وقت.</string>
     <string name="autofill_untrusted_app">هذا ليس التطبيق الذي ملأه PassKey سابقًا بهذا الاسم، لذا لم يُملأ شيء. إذا أعدت تثبيته من متجر آخر، فاحذف تسجيل الدخول من PassKey وأضفه مجددًا.</string>
     <string name="autofill_setup_help">في الشاشة التالية، اختر PassKey خدمةً للملء التلقائي في Android. ولـ Chrome إعداده الخاص أيضًا: افتح Chrome › الإعدادات › خدمات الملء التلقائي واختر \"الملء التلقائي باستخدام خدمة أخرى\".</string>
+
+    <!-- 6.0.0 feature tour (onboarding pages 4-9, and Settings > Feature tour) -->
+    <string name="feature_tour">جولة في الميزات</string>
+    <string name="tour_entries_heading">كل شيء\nفي مكان\n[[واحد]].</string>
+    <string name="tour_entries_description">اضغط إضافة لحفظ تسجيل دخول أو رمز PIN أو ملاحظة ضمن البنوك أو البريد أو التطبيقات أو آخرى. ابحث بالاسم، واسحب المقبض لإعادة الترتيب، واسحب العنصر جانبًا لحذفه مع إمكانية التراجع.</string>
+    <string name="tour_autofill_heading">املأ بيانات\nالدخول في\n[[ثوانٍ]].</string>
+    <string name="tour_autofill_description">فعّل الملء التلقائي من الإعدادات. يملأ PassKey بيانات دخولك في التطبيقات وChrome بعد بصمتك أو رمز PIN، ويعرض حفظ البيانات الجديدة عند تسجيل الدخول.</string>
+    <string name="tour_codes_heading">رموز\n[[2FA]]\nأيضًا.</string>
+    <string name="tour_codes_description">افتح أي إدخال واضغط إضافة مصادقة، ثم الصق رابط الإعداد أو المفتاح الذي يعرضه الموقع. اضغط على الرمز لنسخه.</string>
+    <string name="tour_generator_heading">كلمات مرور\nقوية\n[[فريدة]].</string>
+    <string name="tour_generator_description">عند حفظ كلمة مرور، اضغط زر المفتاح لإنشاء واحدة بالطول والأحرف التي تختارها. ويكشف حالة الأمان في الإعدادات كلمات المرور الضعيفة والمكررة.</string>
+    <string name="tour_backup_heading">لن تفقد\n[[خزنتك]]\nأبدًا.</string>
+    <string name="tour_backup_description">ينشئ تصدير البيانات نسخة احتياطية مشفّرة بكلمة مرور تختارها، ويستعيدها استيراد البيانات على أي هاتف. وتفتح كلمة مرور الاسترداد الخزنة إذا تغيّر قفل الشاشة.</string>
+    <string name="tour_privacy_heading">تُقفل\nعندما\n[[تغادر]].</string>
+    <string name="tour_privacy_description">اختر وقت القفل التلقائي من الإعدادات. لقطات الشاشة محظورة، وكلمات المرور المنسوخة تُمسح تلقائيًا، ولا يغادر أي شيء تحفظه هذا الهاتف.</string>
 </resources>

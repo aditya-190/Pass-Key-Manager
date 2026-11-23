@@ -32,7 +32,8 @@ class NavRouteTest {
             routeName<NavRoute.Settings>() to "settings_page",
             routeName<NavRoute.About>() to "about_page",
             legal to "legal_page",
-            routeName<NavRoute.Licences>() to "licences_page"
+            routeName<NavRoute.Licences>() to "licences_page",
+            routeName<NavRoute.FeatureTour>() to "feature_tour_page"
         ).forEach { (route, name) -> assertEquals(route, name, RouteNames.screenName(route)) }
     }
 
@@ -54,7 +55,8 @@ class NavRouteTest {
             "about_page" to NavRoute.About,
             "legal_page/PRIVACY" to NavRoute.Legal("PRIVACY"),
             "legal_page/TERMS" to NavRoute.Legal("TERMS"),
-            " consent_page?fromSettings=true " to NavRoute.Consent(fromSettings = true)
+            " consent_page?fromSettings=true " to NavRoute.Consent(fromSettings = true),
+            "feature_tour_page" to NavRoute.FeatureTour
         ).forEach { (text, route) -> assertEquals(text, route, AnnouncementRoutes.safeRoute(text)) }
     }
 

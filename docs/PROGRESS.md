@@ -3,7 +3,7 @@
 ## Phase 0: research and spec (2026-11-21) ✅
 - `docs/research/{BRIEF,COMPETITORS,FEATURE_MATRIX,PAIN_POINTS}.md`, `docs/SPEC.md`, `docs/DECISIONS.md`, app `CLAUDE.md`.
 
-## Phase 1: release 5.5.2 "Correct and honest" (branch `release/5.5.2`) ✅ code and device checks done; release needs the owner actions below
+## Phase 1: release 5.5.2 "Correct and honest" ✅ shipped inside 5.8.0 (47)
 Done:
 - PR #1 cherry-picked: localised onboarding without the crash trap, SecureRandom generator, 17-locale parity
   (Arabic in `locales_config`), duplicate-heading and edit-trim fixes, TalkBack labels.
@@ -31,7 +31,7 @@ Done:
   0 crashes, 0 ANRs. Vault still opens and decrypts afterwards. Monkey deleted the seeded detail (expected data churn).
 - No ANRs. The API 37 emulator is shared with another session, so no results were taken from it.
 
-## Phase 2: release 5.6.0 (branch `release/5.6.0`), in progress ⏸
+## Phase 2: release 5.6.0 ✅ shipped inside 5.8.0 (47)
 Done (each gated: ktlint, detekt, unit tests, lint, build; device checks on PassKey_API28):
 1. Toolchain `afacb64`: Gradle 9.7.1, AGP 9.4.0, Kotlin 2.4.20, KSP 2.3.14; release APK 28 → 13 MB; release build refuses
    to package without PASS_PHRASE; upgrade check against real 5.5.1 passes.
@@ -68,7 +68,7 @@ Unit tests: 179, all passing. Instrumented: 10/10 on API 28. All gates green inc
 **Overall: 🟠 shippable** once the owner actions below are done; the DB-key Blocker is 5.7.0's job.
 
 
-## Phase 3: release 5.7.0 "Per-install key" (branch `release/5.7.0`), in progress ⏸
+## Phase 3: release 5.7.0 "Per-install key" ✅ shipped inside 5.8.0 (47)
 Owner decisions: PBKDF2 recovery slot (no argon2kt), mandatory one-time recovery password.
 - PR #3 ported (`e9e1a4a`, `f4b6c66`) and integrated with the 5.6.0 lock work (`847c88a`): UnlockPromptPolicy (6 tests)
   restores prompt-on-resume / no-loop rules the PR's gate had lost; PBKDF2 replaces Argon2 with reference-vector tests.
@@ -102,7 +102,7 @@ Owner decisions: PBKDF2 recovery slot (no argon2kt), mandatory one-time recovery
 Open: the real Play 5.5.1 → 5.7.0 upgrade needs a Play internal testing track (a debug build cannot replace a
 Play-signed install without uninstalling). Rollout set by the owner (100%).
 
-## Phase 4: release 5.8.0 "Daily-use features" (branch `release/5.8.0`), in progress ⏸
+## Phase 4: release 5.8.0 "Daily-use features" ✅ shipped as 5.8.0 (47)
 Owner: 5.7.0 → 100% rollout (owner sets it in Play Console); physical checks on the Moto G34 (not yet connected).
 ### 4a: architecture (no user-visible change), code-complete
 - Layering fixed, typed PreferencesRepository (`c823935`); domain models, entities confined to data (`ebd0d94`);
@@ -136,24 +136,46 @@ Owner: 5.7.0 → 100% rollout (owner sets it in Play Console); physical checks o
   13 tests red → green; 289 unit, 34 instrumented. Simulation +3,000 seeds (saves, trust, delete/undo), 0 failures.
   Device: real vault v4→v5 intact; with the vault unlocked the form still shows only "Unlock to fill".
 
-## Carried into 5.6.0
-- Per-field secret keyboard (attack-pass finding #1), built on the `isSecret` column.
+## Carried into 5.6.0 ✅
+- Per-field secret keyboard (attack-pass finding #1), built on the `isSecret` column. Done: secret fields use a
+  password keyboard (`vaultKeyboardOptions`).
 - A failed Android 10+ export is reported as success (`SettingsViewModel.kt:260`); replaced by the encrypted backup.
 
 ## Owner actions for 5.6.0
-- [ ] Play Data-safety form: crash logs, diagnostics and app interactions are optional (consent); Remote Config request
+- [x] (2026-11-23) Play Data-safety form: crash logs, diagnostics and app interactions are optional (consent); Remote Config request
       with installation ID; no ad ID; nothing shared; vault content never collected; data encrypted in transit.
-- [ ] Native-speaker review of the machine-translated legal and About texts (17 languages).
-- [ ] Staged rollout (e.g. 10% → 50% → 100%) watching Crashlytics for users who opted in.
+- [ ] Native-speaker review of the machine-translated legal and About texts (17 languages), plus the 6.0.0 tour text.
+- [x] Rollout: owner chose production at 100% for 47 (no staged rollout, no internal test).
 
 ## Owner actions
 - [x] 5.5.2 attack pass: fixed #2 (keep pre-consent crash reports until the user decides) and #3 (no automatic screen reporting). #1 (per-field secret keyboard) moved to 5.6.0.
 - [x] Emulators created (`PassKey_API28`, `PassKey_API37`); device run done (see above).
 - [x] Settings sheet crash: option A applied and verified.
-- [ ] Confirm `PASS_PHRASE` is set in `local.properties` before building the release (agents never read it).
-- [ ] Update the Play Data-safety form for 5.5.2: optional crash logs, app interactions and diagnostics, no ad ID,
+- [x] Confirm `PASS_PHRASE` is set in `local.properties` before building the release (agents never read it).
+- [x] (2026-11-23) Update the Play Data-safety form for 5.5.2: optional crash logs, app interactions and diagnostics, no ad ID,
       nothing shared, vault content never collected.
 - [ ] Get a native-speaker review of the machine-translated legal texts (at least hi, es, pt, de, fr).
 - [ ] Share Play Console retention (D1/D7/D30), uninstall data and vitals so the success metrics in `SPEC.md` have a baseline.
 - [x] Before 5.7.0: fingerprint checks on a physical device (Moto G34, done 2026-11-23).
-- [ ] Before 5.7.0 ships: Play 5.5.1 → 5.7.0 upgrade through an internal testing track, with sample data.
+- [x] ~~Before 5.7.0 ships: Play 5.5.1 → 5.7.0 upgrade through internal testing~~ skipped by the owner; 47 went straight
+      to production. Do it for 6.0.0 (47 → 6.0.0).
+
+## Release 5.8.0 (47): sent to Play review 2026-11-23
+- One production release at 100% carrying 5.5.2–5.8.0, with the new listing, Data safety, category Productivity and
+  Advertising ID = No. Details in `docs/PLAY_FIREBASE_CHECKLIST.md`.
+- Next 7 days after it goes live: Crashlytics crash-free users and `vault_migration_failed` by reason; GA key events
+  once received.
+
+## Phase 6: release 6.0.0 "Same UI, more features" (branch `release/6.0.0`), in progress
+Owner direction (2026-11-23): no UI change; additive, update-safe features; goal is more users. Scope and order in
+`docs/SPEC.md` and `/Users/bhardwaj/.claude/plans/this-is-my-project-crystalline-boot.md`.
+
+### 6a: feature tour, code-complete
+- First run: 3 intro pages + 6 tour pages (entries, autofill, 2FA codes, generator and Safety Status, backup and
+  recovery, auto-lock and privacy), Skip on every page. Settings › Feature tour (above About) replays the 6 tour pages
+  and returns. Same pager and look (`OnBoardingPager`, `OnBoardingItem`); existing users are never interrupted.
+- `NavRoute.FeatureTour` (screen `feature_tour_page`, allowed for announcements), behind the lock like any vault screen.
+- Text in all 17 languages; button names filled from each locale's own UI strings.
+- Events: `feature_tour_started`, `feature_tour_completed`, `feature_tour_skipped(page)`.
+- TDD: 8 red → green (`FeatureTourTest` 7, `NavRouteTest` 2 updated). Simulation `Release600SimulationTest`: 1,000
+  seeds of random Skip/Next/double taps, 0 failures.

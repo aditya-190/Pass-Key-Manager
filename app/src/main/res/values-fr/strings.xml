@@ -256,4 +256,19 @@
     <string name="legal_privacy_autofill_body">Si vous activez PassKey comme service de saisie automatique, Android lui montre le formulaire que vous remplissez : le type de chaque champ et l\'application ou l\'adresse web à laquelle il appartient, afin de proposer les entrées correspondantes. Cela se passe uniquement sur votre téléphone ; rien sur le formulaire, le site ou les entrées proposées n\'est envoyé, journalisé ni conservé. Tant que le coffre est verrouillé, PassKey ne propose qu\'une suggestion « Déverrouiller » et aucun nom d\'entrée. La saisie automatique reste désactivée tant que vous ne l\'activez pas dans les paramètres d\'Android, où vous pouvez la désactiver à tout moment.</string>
     <string name="autofill_untrusted_app">Ce n\'est pas l\'application que PassKey a déjà remplie sous ce nom, donc rien n\'a été rempli. Si vous l\'avez réinstallée depuis une autre boutique, supprimez l\'identifiant dans PassKey puis ajoutez-le à nouveau.</string>
     <string name="autofill_setup_help">Sur l\'écran suivant, choisissez PassKey comme service de saisie automatique d\'Android. Chrome a aussi son propre réglage : ouvrez Chrome › Paramètres › Services de saisie automatique et choisissez « Saisie automatique avec un autre service ».</string>
+
+    <!-- 6.0.0 feature tour (onboarding pages 4-9, and Settings > Feature tour) -->
+    <string name="feature_tour">Visite guidée</string>
+    <string name="tour_entries_heading">Tout au\n[[même]]\nendroit.</string>
+    <string name="tour_entries_description">Touchez Ajouter pour enregistrer un identifiant, un code PIN ou une note dans Banques, Courriels, Applications ou Autres. Cherchez par nom, faites glisser la poignée pour réordonner et balayez vers la gauche pour supprimer, avec Annuler.</string>
+    <string name="tour_autofill_heading">Connexion\nen quelques\n[[secondes]].</string>
+    <string name="tour_autofill_description">Activez Saisie automatique dans Paramètres. PassKey remplit vos identifiants dans les apps et Chrome après votre empreinte ou votre code, et propose d\'enregistrer les nouveaux à la connexion.</string>
+    <string name="tour_codes_heading">Vos codes\n[[2FA]]\naussi.</string>
+    <string name="tour_codes_description">Ouvrez une entrée et touchez Ajouter un authentificateur, puis collez le lien de configuration ou la clé affichée par le site. Touchez un code pour le copier.</string>
+    <string name="tour_generator_heading">Mots de passe\nforts et\n[[uniques]].</string>
+    <string name="tour_generator_description">En enregistrant un mot de passe, touchez le bouton clé pour en générer un avec la longueur et les caractères choisis. État de sécurité dans Paramètres repère les mots de passe faibles ou réutilisés.</string>
+    <string name="tour_backup_heading">Ne perdez\njamais votre\n[[coffre]].</string>
+    <string name="tour_backup_description">Exporter les données crée une sauvegarde chiffrée avec le mot de passe de votre choix, et Importer les données la restaure sur n\'importe quel téléphone. Votre mot de passe de récupération ouvre le coffre si le verrouillage de l\'écran change.</string>
+    <string name="tour_privacy_heading">Verrouillé\ndès que vous\n[[partez]].</string>
+    <string name="tour_privacy_description">Réglez le délai de Verrouillage auto dans Paramètres. Les captures d\'écran sont bloquées, les mots de passe copiés s\'effacent seuls et rien de ce que vous enregistrez ne quitte ce téléphone.</string>
 </resources>

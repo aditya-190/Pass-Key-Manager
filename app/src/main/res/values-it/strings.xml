@@ -256,4 +256,19 @@
     <string name="legal_privacy_autofill_body">Se attivi PassKey come servizio di compilazione automatica, Android gli mostra il modulo che stai compilando: il tipo di ogni campo e l\'app o l\'indirizzo web a cui appartiene, così può suggerire le voci corrispondenti. Tutto avviene solo sul tuo telefono; nulla del modulo, del sito o delle voci suggerite viene inviato, registrato o conservato. Quando la cassaforte è bloccata, PassKey mostra un solo suggerimento «Sblocca» e nessun nome di voce. La compilazione automatica resta disattivata finché non la attivi nelle impostazioni di Android, dove puoi disattivarla in qualsiasi momento.</string>
     <string name="autofill_untrusted_app">Questa non è l\'app che PassKey ha compilato in precedenza con questo nome, quindi non è stato compilato nulla. Se l\'hai reinstallata da un altro store, rimuovi l\'accesso in PassKey e aggiungilo di nuovo.</string>
     <string name="autofill_setup_help">Nella schermata successiva scegli PassKey come servizio di compilazione automatica di Android. Anche Chrome ha una sua impostazione: apri Chrome › Impostazioni › Servizi di compilazione automatica e scegli «Compilazione automatica con un altro servizio».</string>
+
+    <!-- 6.0.0 feature tour (onboarding pages 4-9, and Settings > Feature tour) -->
+    <string name="feature_tour">Tour delle funzioni</string>
+    <string name="tour_entries_heading">Tutto in\nun [[solo]]\nposto.</string>
+    <string name="tour_entries_description">Tocca Aggiungi per salvare un accesso, un PIN o una nota in Banche, Email, Applicazioni o Altri. Cerca per nome, trascina la maniglia per riordinare e scorri a sinistra per eliminare, con Annulla.</string>
+    <string name="tour_autofill_heading">Accedi\nin pochi\n[[secondi]].</string>
+    <string name="tour_autofill_description">Attiva Compilazione automatica in Impostazioni. PassKey compila i tuoi accessi nelle app e in Chrome dopo l\'impronta o il PIN, e propone di salvare quelli nuovi quando accedi.</string>
+    <string name="tour_codes_heading">Anche i\ncodici\n[[2FA]].</string>
+    <string name="tour_codes_description">Apri una voce e tocca Aggiungi autenticatore, poi incolla il link di configurazione o la chiave che ti mostra il sito. Tocca un codice per copiarlo.</string>
+    <string name="tour_generator_heading">Password\nforti e\n[[uniche]].</string>
+    <string name="tour_generator_description">Quando salvi una password, tocca il pulsante a forma di chiave per generarne una con lunghezza e caratteri a tua scelta. Stato di Sicurezza in Impostazioni trova le password deboli e ripetute.</string>
+    <string name="tour_backup_heading">Non perdere\nmai la tua\n[[cassaforte]].</string>
+    <string name="tour_backup_description">Esporta Dati crea un backup crittografato con una password scelta da te, e Importa Dati lo ripristina su qualsiasi telefono. La password di recupero apre la cassaforte se cambia il blocco schermo.</string>
+    <string name="tour_privacy_heading">Bloccata\nquando\n[[esci]].</string>
+    <string name="tour_privacy_description">Scegli il tempo di Blocco automatico in Impostazioni. Gli screenshot sono bloccati, le password copiate si cancellano da sole e niente di ciò che salvi lascia questo telefono.</string>
 </resources>

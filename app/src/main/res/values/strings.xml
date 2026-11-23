@@ -239,4 +239,19 @@
     <string name="remove_authenticator_confirm">Remove this authenticator? Its codes will stop here, and you may need the account\'s recovery codes to sign in.</string>
     <string name="autofill_untrusted_app">This app isn\'t the one PassKey filled before under this name, so nothing was filled. If you reinstalled it from a different store, remove and re-add the login in PassKey.</string>
     <string name="autofill_setup_help">On the next screen, choose PassKey as Android\'s autofill service. Chrome also has its own setting: open Chrome › Settings › Autofill services and choose \"Autofill using another service\".</string>
+
+    <!-- 6.0.0 feature tour (onboarding pages 4-9, and Settings > Feature tour) -->
+    <string name="feature_tour">Feature tour</string>
+    <string name="tour_entries_heading">Everything\nIn [[One]]\nPlace.</string>
+    <string name="tour_entries_description">Tap Add to save a login, PIN or note under Banks, Mails, Apps or Others. Search by name, drag the handle to reorder, and swipe left to delete, with Undo.</string>
+    <string name="tour_autofill_heading">Fill Logins\nIn [[Seconds]].</string>
+    <string name="tour_autofill_description">Turn on Autofill in Settings. PassKey fills your logins in apps and Chrome after your fingerprint or PIN, and offers to save new ones when you sign in.</string>
+    <string name="tour_codes_heading">Your [[2FA]]\nCodes,\nToo.</string>
+    <string name="tour_codes_description">Open an entry and tap Add authenticator, then paste the setup link or the key a website shows you. Tap a code to copy it.</string>
+    <string name="tour_generator_heading">Strong,\n[[Unique]]\nPasswords.</string>
+    <string name="tour_generator_description">When you save a password, tap the key button to generate one with the length and characters you choose. Safety Status in Settings finds weak and reused passwords.</string>
+    <string name="tour_backup_heading">Never\n[[Lose]]\nYour Vault.</string>
+    <string name="tour_backup_description">Export Data makes an encrypted backup with a password you choose, and Import Data restores it on any phone. Your recovery password opens the vault if your screen lock changes.</string>
+    <string name="tour_privacy_heading">Locked\nWhen You\n[[Leave]].</string>
+    <string name="tour_privacy_description">Set your Auto-lock time in Settings. Screenshots are blocked, copied passwords clear themselves, and nothing you save leaves this phone.</string>
 </resources>

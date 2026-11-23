@@ -252,4 +252,19 @@
     <string name="legal_privacy_autofill_body">如果你将 PassKey 设为自动填充服务，Android 会把你正在填写的表单提供给它：每个字段的类型以及所属的应用或网址，以便推荐匹配的条目。这一切只在你的手机上进行；关于表单、网站或推荐条目的任何信息都不会被发送、记录或存储。保险库锁定时，PassKey 只显示一个“解锁”建议，不显示任何条目名称。自动填充默认关闭，需在 Android 设置中开启，也可随时在那里关闭。</string>
     <string name="autofill_untrusted_app">这不是 PassKey 之前以此名称填充过的应用，因此未填充任何内容。如果你从其他应用商店重新安装了它，请在 PassKey 中删除该登录信息后重新添加。</string>
     <string name="autofill_setup_help">在下一个界面中，将 PassKey 选为 Android 的自动填充服务。Chrome 还有自己的设置：打开 Chrome › 设置 › 自动填充服务，然后选择“使用其他服务自动填充”。</string>
+
+    <!-- 6.0.0 feature tour (onboarding pages 4-9, and Settings > Feature tour) -->
+    <string name="feature_tour">功能导览</string>
+    <string name="tour_entries_heading">一切都在\n[[同一]]\n个地方。</string>
+    <string name="tour_entries_description">点按“添加”即可把登录信息、PIN 或备注保存到“银行”“邮件”“应用”或“其他”。可按名称搜索，拖动手柄调整顺序，向左滑动删除，并可撤销。</string>
+    <string name="tour_autofill_heading">[[几秒]]内\n完成登录。</string>
+    <string name="tour_autofill_description">在“设置”中开启“自动填充”。验证指纹或 PIN 后，PassKey 会在应用和 Chrome 中填写登录信息，并在你登录时提示保存新的登录信息。</string>
+    <string name="tour_codes_heading">[[两步验证]]码\n也在这里。</string>
+    <string name="tour_codes_description">打开一个条目并点按“添加身份验证器”，然后粘贴网站提供的设置链接或密钥。点按验证码即可复制。</string>
+    <string name="tour_generator_heading">强大且\n[[独一无二]]\n的密码。</string>
+    <string name="tour_generator_description">保存密码时点按钥匙按钮，即可按你选择的长度和字符生成密码。“设置”中的“安全状态”可找出弱密码和重复使用的密码。</string>
+    <string name="tour_backup_heading">永不\n[[丢失]]\n保险库。</string>
+    <string name="tour_backup_description">“导出数据”会用你设定的密码创建加密备份，“导入数据”可在任何手机上恢复。即使屏幕锁定方式改变，恢复密码也能打开保险库。</string>
+    <string name="tour_privacy_heading">离开即\n[[锁定]]。</string>
+    <string name="tour_privacy_description">在“设置”中设置“自动锁定”时间。截屏被阻止，复制的密码会自动清除，你保存的任何内容都不会离开这部手机。</string>
 </resources>

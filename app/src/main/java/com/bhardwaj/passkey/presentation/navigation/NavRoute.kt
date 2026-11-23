@@ -17,6 +17,10 @@ sealed interface NavRoute {
     @Serializable
     data object Onboarding : NavRoute
 
+    /** The feature tour on its own, replayed from Settings (or an announcement); it pops back when done. */
+    @Serializable
+    data object FeatureTour : NavRoute
+
     /** Opened from Settings it pops back instead of continuing to unlock. */
     @Serializable
     data class Consent(val fromSettings: Boolean = false) : NavRoute
@@ -62,7 +66,8 @@ object RouteNames {
         routeName<NavRoute.Settings>() to "settings_page",
         routeName<NavRoute.About>() to "about_page",
         routeName<NavRoute.Legal>() to "legal_page",
-        routeName<NavRoute.Licences>() to "licences_page"
+        routeName<NavRoute.Licences>() to "licences_page",
+        routeName<NavRoute.FeatureTour>() to "feature_tour_page"
     )
 
     /** A destination route without its argument pattern or values. */

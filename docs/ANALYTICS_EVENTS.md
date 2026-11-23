@@ -13,6 +13,9 @@ Nothing is sent unless the user allowed "Usage statistics" (`ConsentApplier`; th
 | `onboarding_page_view` | `page` (1-based) | An onboarding page is shown | 5.5.2 |
 | `onboarding_skipped` | `page` (1-based) | Skip is tapped | 5.5.2 |
 | `tutorial_complete` | — | The last onboarding page's Next | 5.5.2 |
+| `feature_tour_started` | — | Settings › Feature tour (or an announcement) opens the tour on its own | 6.0.0 |
+| `feature_tour_completed` | — | The last tour page's Next | 6.0.0 |
+| `feature_tour_skipped` | `page` (1-based, tour pages only) | Skip in the replayed tour | 6.0.0 |
 | `entry_created` | `category`: banks / mails / apps / others | A new entry (heading) is saved; renames don't count | 5.5.2 |
 | `field_saved` | `is_edit` (bool) | A detail field is saved | 5.5.2 |
 | `password_generated` | `length_bucket`: 0, 1-7, 8-11, 12-15, 16-23, 24+ | The generator button | 5.5.2 |

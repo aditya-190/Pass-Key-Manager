@@ -26,6 +26,9 @@ object AppEventNames {
     const val AUTOFILL_FILLED = "autofill_filled"
     const val AUTOFILL_SAVED = "autofill_saved"
     const val AUTHENTICATOR_ADDED = "authenticator_added"
+    const val FEATURE_TOUR_STARTED = "feature_tour_started"
+    const val FEATURE_TOUR_COMPLETED = "feature_tour_completed"
+    const val FEATURE_TOUR_SKIPPED = "feature_tour_skipped"
 }
 
 object AppParams {
@@ -79,6 +82,14 @@ object AppEvents {
     fun onboardingSkipped(page: Int) = AnalyticsEvent(AppEventNames.ONBOARDING_SKIPPED, mapOf(AppParams.PAGE to page))
 
     fun onboardingComplete() = AnalyticsEvent(AppEventNames.ONBOARDING_COMPLETE)
+
+    fun featureTourStarted() = AnalyticsEvent(AppEventNames.FEATURE_TOUR_STARTED)
+
+    fun featureTourCompleted() = AnalyticsEvent(AppEventNames.FEATURE_TOUR_COMPLETED)
+
+    /** [page] is 1-based. */
+    fun featureTourSkipped(page: Int) =
+        AnalyticsEvent(AppEventNames.FEATURE_TOUR_SKIPPED, mapOf(AppParams.PAGE to page))
 
     fun entryCreated(category: Category) =
         AnalyticsEvent(AppEventNames.ENTRY_CREATED, mapOf(AppParams.CATEGORY to category.name.lowercase()))
