@@ -120,4 +120,3 @@ class SmallFeaturesTest {
         assertEquals(200L, store.state.first().lastAskedAt)
     }
 }
-

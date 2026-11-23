@@ -2,8 +2,7 @@ package com.bhardwaj.passkey.data.autofill
 
 import android.content.Context
 import android.content.pm.PackageManager
-import com.bhardwaj.passkey.domain.autofill.AppTrust
-import java.security.MessageDigest
+import com.bhardwaj.passkey.domain.credentials.CredentialProviderPolicy
 
 /**
  * Reads the signing certificate of the app asking to be filled, for [AppTrust]. Null when it cannot be read, which
@@ -14,10 +13,7 @@ object AppSigner {
     fun fingerprintOf(context: Context, packageName: String): String? = runCatching {
         val info = context.packageManager.getPackageInfo(packageName, PackageManager.GET_SIGNING_CERTIFICATES)
         val signers = info.signingInfo?.apkContentsSigners.orEmpty()
-        AppTrust.fingerprint(
-            signers.map { cert ->
-                MessageDigest.getInstance("SHA-256").digest(cert.toByteArray()).joinToString("") { "%02x".format(it) }
-            }
-        )
+        // One definition for autofill and the sign-in sheet (6.0.0), so the two can never disagree.
+        CredentialProviderPolicy.signerFingerprint(signers.map { it.toByteArray() })
     }.getOrNull()
 }

@@ -181,8 +181,9 @@ class AutofillUnlockActivity : FragmentActivity() {
     }
 }
 
+/** Shared with the sign-in sheet's unlock screen (6.0.0). */
 @Composable
-private fun UnlockContent(
+internal fun UnlockContent(
     state: VaultGateViewModel.State,
     isUntrusted: Boolean,
     onAuthenticate: () -> Unit,

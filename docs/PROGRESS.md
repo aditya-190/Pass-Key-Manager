@@ -222,4 +222,10 @@ Owner direction (2026-11-23): no UI change; additive, update-safe features; goal
 - Settings › Share with friends.
 - TDD: 13 red → green (ReviewPromptTest 8, HomeReviewViewModelTest 2, Settings 2, FeatureTour 1). Simulation 2,000
   seeds (clock jumps, manual rates, switched off) found seed 18 (last ask moved back): fixed, store keeps the later time.
+### 6f: Android 14+ sign-in sheet (Credential Manager provider), code-complete
+- `PasskeyCredentialProviderService` + `CredentialUnlockActivity` (API 34+): "Unlock to fill" → fingerprint → matching
+  app logins → the picked password returns. Signer checked against the autofill trust store; nothing secret in intents.
+- TDD: 4 red → green (`CredentialProviderPolicyTest`), simulation 1,000 seeds (pick, fingerprint order), 0 failures.
+- Moto G34 (Android 15): PassKey listed by `pm query-services` as an enabled credential provider behind
+  BIND_CREDENTIAL_PROVIDER_SERVICE; instrumented 35/35. Attack pass: browser-for-website and no-username cases fixed.
 

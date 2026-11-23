@@ -23,6 +23,7 @@ data class ReviewPromptState(val firstSeenAt: Long? = null, val lastAskedAt: Lon
 interface ReviewPromptStore {
     val state: Flow<ReviewPromptState>
     suspend fun markFirstSeen(at: Long)
+
     /** Keeps the later of the stored and the given time. */
     suspend fun recordAsked(at: Long)
     suspend fun recordFill()

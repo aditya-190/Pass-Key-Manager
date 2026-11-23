@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- The sign-in sheet provider (6.0.0) exists from Android 14 (API 34). -->
+    <bool name="credential_provider_enabled">false</bool>
+</resources>

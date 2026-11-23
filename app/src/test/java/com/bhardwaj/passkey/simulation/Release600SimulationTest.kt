@@ -295,6 +295,39 @@ class Release600SimulationTest {
         }
     }
 
+    @Test
+    fun `the sign-in sheet returns exactly the login that was picked, or nothing`() {
+        repeat(CREDENTIAL_SEEDS) { seed ->
+            val rnd = Random(seed)
+            val credentials = List(rnd.nextInt(0, 8)) {
+                com.bhardwaj.passkey.domain.autofill.AutofillCredential(
+                    previewId = rnd.nextLong(1, 4),
+                    label = "entry",
+                    username = if (rnd.nextBoolean()) "user${rnd.nextInt(3)}" else null,
+                    password = "pw${rnd.nextInt()}"
+                )
+            }
+            val previewId = rnd.nextLong(0, 5)
+            val username = if (rnd.nextBoolean()) "user${rnd.nextInt(4)}" else null
+            val picked = com.bhardwaj.passkey.domain.credentials.CredentialProviderPolicy.pick(
+                credentials,
+                previewId,
+                username
+            )
+            val expected = credentials.firstOrNull { it.previewId == previewId && it.username == username }
+            assertEquals("seed $seed", expected, picked)
+            val certs = List(rnd.nextInt(0, 3)) { rnd.nextBytes(rnd.nextInt(1, 64)) }
+            val print = com.bhardwaj.passkey.domain.credentials.CredentialProviderPolicy.signerFingerprint(certs)
+            assertEquals("seed $seed", certs.isEmpty(), print == null)
+            // Order of certificates never changes the identity.
+            assertEquals(
+                "seed $seed",
+                print,
+                com.bhardwaj.passkey.domain.credentials.CredentialProviderPolicy.signerFingerprint(certs.reversed())
+            )
+        }
+    }
+
     private companion object {
         const val SEEDS = 1_000
         const val REMINDER_SEEDS = 2_000
@@ -304,5 +337,6 @@ class Release600SimulationTest {
         const val SEARCH_SEEDS = 1_000
         const val MISC_SEEDS = 1_000
         const val REVIEW_SEEDS = 2_000
+        const val CREDENTIAL_SEEDS = 1_000
     }
 }

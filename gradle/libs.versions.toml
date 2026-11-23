@@ -52,6 +52,7 @@ firebase_bom = "34.19.0"
 # In App Updates
 inAppUpdate = "2.1.0"
 play_review = "2.0.2"
+credentials = "1.6.0"
 
 # Testing & Debugging
 junit = "4.13.2"
@@ -139,6 +140,7 @@ firebase_perf = { module = "com.google.firebase:firebase-perf" }
 firebase_config = { module = "com.google.firebase:firebase-config" }
 kotlinx_coroutines_play_services = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-play-services", version.ref = "coroutines_core" }
 play_review = { module = "com.google.android.play:review", version.ref = "play_review" }
+androidx_credentials = { module = "androidx.credentials:credentials", version.ref = "credentials" }
 
 # In App Updates
 app-update = { module = "com.google.android.play:app-update", version.ref = "inAppUpdate" }
