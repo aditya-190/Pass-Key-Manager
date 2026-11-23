@@ -30,8 +30,6 @@
     <string name="response">الرد</string>
     <string name="rate_app">تقييم التطبيق</string>
     <string name="change_language">تغيير اللغة</string>
-    <string name="privacy">الخصوصية</string>
-    <string name="terms_n_condition">الشروط والأحكام</string>
     <string name="about">حول</string>
     <string name="import_data">استيراد البيانات</string>
     <string name="export_data">تصدير البيانات</string>
@@ -285,4 +283,5 @@
     <string name="backup_reminder_title">احفظ نسخة احتياطية من خزنتك</string>
     <string name="backup_reminder_body">إذا فُقد هذا الهاتف أو أُعيد ضبطه، فالنسخة الاحتياطية هي الطريقة الوحيدة لاستعادة كلمات مرورك.</string>
     <string name="backup_reminder_cta">نسخ احتياطي الآن</string>
+    <string name="import_not_a_backup">هذا ليس ملف نسخة احتياطية من PassKey. اختر ملف ‎.pkbak الذي صدّرته، أو ملف CSV قديمًا من PassKey.</string>
 </resources>

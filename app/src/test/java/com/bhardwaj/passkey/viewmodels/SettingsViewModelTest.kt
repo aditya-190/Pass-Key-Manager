@@ -23,6 +23,7 @@ import com.bhardwaj.passkey.presentation.screens.settings_screen.SettingsViewMod
 import com.bhardwaj.passkey.testing.FakeBackupReminderStore
 import com.bhardwaj.passkey.testing.FakePasskeyRepository
 import com.bhardwaj.passkey.testing.MainDispatcherRule
+import com.bhardwaj.passkey.utils.FormattedDate
 import com.bhardwaj.passkey.utils.UiText
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -196,7 +197,10 @@ class SettingsViewModelTest {
             )
         vm.onIntent(SettingsIntent.VerifyChosen(uri, null))
         assertEquals(
-            SettingsEffect.ShowSnackbar(UiText.StringResource(R.string.verify_backup_ok_legacy, listOf(4))),
+            SettingsEffect.ShowSnackbar(
+                UiText.StringResource(R.string.verify_backup_ok_legacy, listOf(4)),
+                long = true
+            ),
             vm.effects.first()
         )
 
@@ -207,6 +211,61 @@ class SettingsViewModelTest {
             SettingsEffect.ShowSnackbar(UiText.StringResource(R.string.import_wrong_password)),
             vm.effects.first()
         )
+    }
+
+    @Test
+    fun `a file that is not a backup gets its own message, in import and in verify`() = runTest {
+        coEvery { backups.import(any(), any(), any()) } returns Result.failure(BackupException(BackupError.NotABackup))
+        coEvery { backups.verify(any(), any()) } returns Result.failure(BackupException(BackupError.NotABackup))
+        val vm = vm()
+        val expected = SettingsEffect.ShowSnackbar(UiText.StringResource(R.string.import_not_a_backup))
+        vm.onIntent(SettingsIntent.ImportChosen(uri, null, ImportMode.MERGE))
+        assertEquals(expected, vm.effects.first())
+        vm.onIntent(SettingsIntent.VerifyChosen(uri, null))
+        assertEquals(expected, vm.effects.first())
+    }
+
+    @Test
+    fun `a verified backup stays on screen longer and shows its date in the app's language`() = runTest {
+        // 6.0.0b attack-pass #2 and #3.
+        val made = NOW - 2 * DAY
+        coEvery { backups.verify(any(), any()) } returns
+            Result.success(
+                BackupCheck(entries = 3, fields = 3, authenticators = 0, exportedAt = made, legacyFormat = false)
+            )
+        val vm = vm()
+        vm.onIntent(SettingsIntent.VerifyChosen(uri, "p".toCharArray()))
+        val effect = vm.effects.first() as SettingsEffect.ShowSnackbar
+        assertTrue(effect.long)
+        assertEquals(FormattedDate(made), (effect.message as UiText.StringResource).args[2])
+    }
+
+    @Test
+    fun `verifying a recent backup counts as having one, a future or old CSV one does not`() = runTest {
+        // 6.0.0b attack-pass #7: people who exported in 5.8.0 were reminded anyway.
+        val vm = vm()
+        fun check(exportedAt: Long?, legacy: Boolean = false) =
+            Result.success(BackupCheck(1, 1, 0, exportedAt = exportedAt, legacyFormat = legacy))
+
+        coEvery { backups.verify(any(), any()) } returns check(NOW + 3 * DAY)
+        vm.onIntent(SettingsIntent.VerifyChosen(uri, "p".toCharArray()))
+        vm.effects.first()
+        assertNull("a date in the future is not trusted", reminders.flow.value.lastBackupAt)
+
+        coEvery { backups.verify(any(), any()) } returns check(null, legacy = true)
+        vm.onIntent(SettingsIntent.VerifyChosen(uri, null))
+        vm.effects.first()
+        assertNull("an unencrypted CSV is not a backup to rely on", reminders.flow.value.lastBackupAt)
+
+        coEvery { backups.verify(any(), any()) } returns check(NOW - 5 * DAY)
+        vm.onIntent(SettingsIntent.VerifyChosen(uri, "p".toCharArray()))
+        vm.effects.first()
+        assertEquals(NOW - 5 * DAY, reminders.flow.value.lastBackupAt)
+
+        coEvery { backups.verify(any(), any()) } returns check(NOW - 9 * DAY)
+        vm.onIntent(SettingsIntent.VerifyChosen(uri, "p".toCharArray()))
+        vm.effects.first()
+        assertEquals("an older file never replaces a newer backup", NOW - 5 * DAY, reminders.flow.value.lastBackupAt)
     }
 
     @Test
@@ -274,6 +333,7 @@ class SettingsViewModelTest {
 
     private companion object {
         const val NOW = 1_800_000_000_000L
+        const val DAY = 86_400_000L
     }
 
     private class FakePreferences : PreferencesRepository {

@@ -30,8 +30,6 @@
     <string name="response">उत्तर</string>
     <string name="rate_app">ऐप रेटिंग</string>
     <string name="change_language">भाषा बदलें</string>
-    <string name="privacy">प्राइवेसी</string>
-    <string name="terms_n_condition">नियम एवं शर्तें</string>
     <string name="about">एबाउट</string>
     <string name="import_data">फ़ाइलें आयात करें</string>
     <string name="export_data">फ़ाइलें निर्यात करें</string>
@@ -277,4 +275,5 @@
     <string name="backup_reminder_title">अपने वॉल्ट का बैकअप लें</string>
     <string name="backup_reminder_body">अगर यह फ़ोन खो जाए या रीसेट हो जाए, तो बैकअप ही आपके पासवर्ड वापस पाने का एकमात्र तरीका है।</string>
     <string name="backup_reminder_cta">अभी बैकअप लें</string>
+    <string name="import_not_a_backup">यह PassKey बैकअप फ़ाइल नहीं है। अपनी एक्सपोर्ट की हुई .pkbak फ़ाइल या पुरानी PassKey CSV चुनें।</string>
 </resources>

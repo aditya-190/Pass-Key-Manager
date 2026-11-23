@@ -29,7 +29,7 @@ class NavRouteTest {
             routeName<NavRoute.Security>() to "security_page",
             routeName<NavRoute.Previews>() to "preview_page",
             details to "details_page",
-            routeName<NavRoute.Settings>() to "settings_page",
+            routeName<NavRoute.Settings>() + "?startExport={startExport}" to "settings_page",
             routeName<NavRoute.About>() to "about_page",
             legal to "legal_page",
             routeName<NavRoute.Licences>() to "licences_page",
@@ -51,7 +51,7 @@ class NavRouteTest {
     @Test
     fun `remote announcements keep the strings already used in the console, mapped to typed routes`() {
         mapOf(
-            "settings_page" to NavRoute.Settings,
+            "settings_page" to NavRoute.Settings(),
             "about_page" to NavRoute.About,
             "legal_page/PRIVACY" to NavRoute.Legal("PRIVACY"),
             "legal_page/TERMS" to NavRoute.Legal("TERMS"),

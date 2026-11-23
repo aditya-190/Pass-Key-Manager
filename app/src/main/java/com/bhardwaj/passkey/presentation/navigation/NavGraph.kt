@@ -56,10 +56,11 @@ fun NavGraph(navController: NavHostController, analytics: AnalyticsTracker) {
         composable<NavRoute.Details> {
             DetailScreen(onPopBackStack = { navController.popBackStack() })
         }
-        composable<NavRoute.Settings> {
+        composable<NavRoute.Settings> { entry ->
             SettingsScreen(
                 onPopBackStack = { navController.popBackStack() },
-                onNavigate = { route -> navController.navigate(route) }
+                onNavigate = { route -> navController.navigate(route) },
+                startExport = entry.toRoute<NavRoute.Settings>().startExport
             )
         }
         composable<NavRoute.Consent> { entry ->

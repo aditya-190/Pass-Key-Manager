@@ -30,8 +30,6 @@
     <string name="response">సమాధానం</string>
     <string name="rate_app">అనువర్తనం రేట్ చేయండి</string>
     <string name="change_language">భాషను మార్చు</string>
-    <string name="privacy">గౌప్యం</string>
-    <string name="terms_n_condition">షరతులు మరియు పారామెటర్లు</string>
     <string name="about">గురించి</string>
     <string name="import_data">డేటా దిగుమతి</string>
     <string name="export_data">డేటా ఎగురుతున్నది</string>
@@ -276,4 +274,5 @@
     <string name="backup_reminder_title">మీ వాల్ట్‌ను బ్యాకప్ చేయండి</string>
     <string name="backup_reminder_body">ఈ ఫోన్ పోయినా లేదా రీసెట్ అయినా, మీ పాస్‌వర్డ్‌లను తిరిగి పొందడానికి బ్యాకప్ ఒక్కటే మార్గం.</string>
     <string name="backup_reminder_cta">ఇప్పుడే బ్యాకప్ చేయండి</string>
+    <string name="import_not_a_backup">ఇది PassKey బ్యాకప్ ఫైల్ కాదు. మీరు ఎక్స్‌పోర్ట్ చేసిన .pkbak ఫైల్ లేదా పాత PassKey CSV ని ఎంచుకోండి.</string>
 </resources>

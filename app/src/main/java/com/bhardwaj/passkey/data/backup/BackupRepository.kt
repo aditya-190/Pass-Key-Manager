@@ -21,6 +21,9 @@ sealed interface BackupError {
     data class UnsupportedVersion(val reason: String) : BackupError
     data object FileTooLarge : BackupError
     data object SchemaInvalid : BackupError
+
+    /** Nothing in the file is a PassKey backup (a photo, a random document). */
+    data object NotABackup : BackupError
     data object ReadFailed : BackupError
     data object WriteFailed : BackupError
 }

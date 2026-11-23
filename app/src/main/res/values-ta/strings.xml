@@ -30,8 +30,6 @@
     <string name="response">பதில்</string>
     <string name="rate_app">விமர்சனம் அளியுங்கள்</string>
     <string name="change_language">மொழியை மாற்று</string>
-    <string name="privacy">தனியுரிமை</string>
-    <string name="terms_n_condition">விதிமுறைகள் மற்றும் நிபந்தனைகள்</string>
     <string name="about">பற்றி</string>
     <string name="import_data">தரவு இறக்குமதி</string>
     <string name="export_data">தரவு ஏற்றுமதி</string>
@@ -276,4 +274,5 @@
     <string name="backup_reminder_title">உங்கள் பெட்டகத்தைக் காப்புப்பிரதி எடுங்கள்</string>
     <string name="backup_reminder_body">இந்த ஃபோன் தொலைந்தாலோ மீட்டமைக்கப்பட்டாலோ, உங்கள் கடவுச்சொற்களைத் திரும்பப் பெற காப்புப்பிரதி மட்டுமே வழி.</string>
     <string name="backup_reminder_cta">இப்போது காப்புப்பிரதி எடு</string>
+    <string name="import_not_a_backup">இது PassKey காப்புப்பிரதிக் கோப்பு அல்ல. நீங்கள் ஏற்றுமதி செய்த .pkbak கோப்பையோ பழைய PassKey CSV-ஐயோ தேர்ந்தெடுங்கள்.</string>
 </resources>

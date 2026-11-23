@@ -30,8 +30,6 @@
     <string name="response">Resposta</string>
     <string name="rate_app">Avaliar Aplicativo</string>
     <string name="change_language">Alterar Idioma</string>
-    <string name="privacy">Privacidade</string>
-    <string name="terms_n_condition">Termos e Condições</string>
     <string name="about">Sobre</string>
     <string name="import_data">Importar Dados</string>
     <string name="export_data">Exportar Dados</string>
@@ -279,4 +277,5 @@
     <string name="backup_reminder_title">Faça backup do seu cofre</string>
     <string name="backup_reminder_body">Se este celular for perdido ou redefinido, um backup é a única forma de recuperar suas senhas.</string>
     <string name="backup_reminder_cta">Fazer backup agora</string>
+    <string name="import_not_a_backup">Este não é um arquivo de backup do PassKey. Escolha um arquivo .pkbak que você exportou ou um CSV antigo do PassKey.</string>
 </resources>

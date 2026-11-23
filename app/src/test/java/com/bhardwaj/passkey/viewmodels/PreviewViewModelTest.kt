@@ -172,7 +172,7 @@ class PreviewViewModelTest {
         vm.onIntent(PreviewIntent.ItemClicked(7))
         assertEquals(PreviewEffect.Navigate(NavRoute.Details(7)), vm.effects.first())
         vm.onIntent(PreviewIntent.SettingsClicked)
-        assertEquals(PreviewEffect.Navigate(NavRoute.Settings), vm.effects.first())
+        assertEquals(PreviewEffect.Navigate(NavRoute.Settings()), vm.effects.first())
         vm.onIntent(PreviewIntent.ItemLongPressed("Gmail"))
         assertEquals(PreviewEffect.CopyToClipboard("Gmail", isSensitive = false), vm.effects.first())
         assertTrue(AppEventNames.VALUE_COPIED in analytics.names)

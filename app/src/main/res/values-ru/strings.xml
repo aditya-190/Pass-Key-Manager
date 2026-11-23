@@ -30,8 +30,6 @@
     <string name="response">Ответ</string>
     <string name="rate_app">Оценить приложение</string>
     <string name="change_language">Изменить язык</string>
-    <string name="privacy">Конфиденциальность</string>
-    <string name="terms_n_condition">Условия использования</string>
     <string name="about">О приложении</string>
     <string name="import_data">Импортировать данные</string>
     <string name="export_data">Экспортировать данные</string>
@@ -280,4 +278,5 @@
     <string name="backup_reminder_title">Сделайте резервную копию</string>
     <string name="backup_reminder_body">Если телефон потеряется или будет сброшен, только резервная копия вернёт ваши пароли.</string>
     <string name="backup_reminder_cta">Сделать копию</string>
+    <string name="import_not_a_backup">Это не файл резервной копии PassKey. Выберите экспортированный файл .pkbak или старый CSV-файл PassKey.</string>
 </resources>

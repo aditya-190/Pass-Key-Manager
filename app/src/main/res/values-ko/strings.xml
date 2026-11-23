@@ -30,8 +30,6 @@
     <string name="response">응답</string>
     <string name="rate_app">앱 평가</string>
     <string name="change_language">언어 변경</string>
-    <string name="privacy">개인 정보 보호</string>
-    <string name="terms_n_condition">이용 약관</string>
     <string name="about">소개</string>
     <string name="import_data">데이터 가져오기</string>
     <string name="export_data">데이터 내보내기</string>
@@ -275,4 +273,5 @@
     <string name="backup_reminder_title">보관함을 백업하세요</string>
     <string name="backup_reminder_body">휴대전화를 잃어버리거나 초기화하면 백업만이 비밀번호를 되찾는 유일한 방법입니다.</string>
     <string name="backup_reminder_cta">지금 백업</string>
+    <string name="import_not_a_backup">PassKey 백업 파일이 아닙니다. 내보낸 .pkbak 파일이나 이전 PassKey CSV를 선택하세요.</string>
 </resources>

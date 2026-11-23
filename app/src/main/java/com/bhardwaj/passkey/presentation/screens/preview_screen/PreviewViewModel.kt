@@ -123,7 +123,7 @@ class PreviewViewModel @Inject constructor(
 
             PreviewIntent.SettingsClicked -> {
                 query.value = ""
-                send(PreviewEffect.Navigate(NavRoute.Settings))
+                send(PreviewEffect.Navigate(NavRoute.Settings()))
             }
         }
     }

@@ -34,8 +34,9 @@ sealed interface NavRoute {
     @Serializable
     data class Details(val previewId: Long) : NavRoute
 
+    /** [startExport]: open the export picker straight away (Home's backup reminder). */
     @Serializable
-    data object Settings : NavRoute
+    data class Settings(val startExport: Boolean = false) : NavRoute
 
     @Serializable
     data object About : NavRoute

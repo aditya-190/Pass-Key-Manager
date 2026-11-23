@@ -30,8 +30,6 @@
     <string name="response">प्रतिसाद</string>
     <string name="rate_app">अ‍ॅपची मूल्यांकन करा</string>
     <string name="change_language">भाषा बदला</string>
-    <string name="privacy">गोपनीयता</string>
-    <string name="terms_n_condition">अटी व अटीचे अट</string>
     <string name="about">बद्दल</string>
     <string name="import_data">डेटा आयात करा</string>
     <string name="export_data">डेटा निर्यात करा</string>
@@ -277,4 +275,5 @@
     <string name="backup_reminder_title">तुमच्या व्हॉल्टचा बॅकअप घ्या</string>
     <string name="backup_reminder_body">हा फोन हरवला किंवा रीसेट झाला, तर बॅकअप हाच तुमचे पासवर्ड परत मिळवण्याचा एकमेव मार्ग आहे.</string>
     <string name="backup_reminder_cta">आता बॅकअप घ्या</string>
+    <string name="import_not_a_backup">ही PassKey बॅकअप फाइल नाही. तुम्ही एक्सपोर्ट केलेली .pkbak फाइल किंवा जुनी PassKey CSV निवडा.</string>
 </resources>

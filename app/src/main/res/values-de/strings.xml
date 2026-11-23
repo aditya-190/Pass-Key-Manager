@@ -30,8 +30,6 @@
     <string name="response">Antwort</string>
     <string name="rate_app">App bewerten</string>
     <string name="change_language">Sprache ändern</string>
-    <string name="privacy">Datenschutz</string>
-    <string name="terms_n_condition">Nutzungsbedingungen</string>
     <string name="about">Über uns</string>
     <string name="import_data">Daten importieren</string>
     <string name="export_data">Daten exportieren</string>
@@ -278,4 +276,5 @@
     <string name="backup_reminder_title">Sichere deinen Tresor</string>
     <string name="backup_reminder_body">Geht dieses Telefon verloren oder wird es zurückgesetzt, ist ein Backup der einzige Weg zurück zu deinen Passwörtern.</string>
     <string name="backup_reminder_cta">Jetzt sichern</string>
+    <string name="import_not_a_backup">Das ist keine PassKey-Backupdatei. Wähle eine exportierte .pkbak-Datei oder eine alte PassKey-CSV.</string>
 </resources>

@@ -31,16 +31,19 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
@@ -59,7 +62,6 @@ import com.bhardwaj.passkey.R
 import com.bhardwaj.passkey.about.ExternalLinks
 import com.bhardwaj.passkey.data.backup.BackupFormat
 import com.bhardwaj.passkey.data.backup.ImportMode
-import com.bhardwaj.passkey.legal.LegalDocument
 import com.bhardwaj.passkey.presentation.navigation.NavRoute
 import com.bhardwaj.passkey.presentation.screens.common.ObserveAsEvents
 import com.bhardwaj.passkey.presentation.screens.common.SecureModalBottomSheet
@@ -82,6 +84,7 @@ import kotlinx.coroutines.launch
 fun SettingsScreen(
     onPopBackStack: () -> Unit,
     onNavigate: (NavRoute) -> Unit,
+    startExport: Boolean = false,
     viewModel: SettingsViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.state.collectAsStateWithLifecycle()
@@ -92,13 +95,22 @@ fun SettingsScreen(
     val context = LocalContext.current
     // Backup file selection. The password is collected only after a destination or source is
     // chosen, so the user is never asked for one and then cancels out of the picker.
-    var pendingExportUri by remember { mutableStateOf<Uri?>(null) }
-    var pendingImportUri by remember { mutableStateOf<Uri?>(null) }
-    var pendingVerifyUri by remember { mutableStateOf<Uri?>(null) }
+    var pendingExportUri by rememberSaveable { mutableStateOf<Uri?>(null) }
+    var pendingImportUri by rememberSaveable { mutableStateOf<Uri?>(null) }
+    var pendingVerifyUri by rememberSaveable { mutableStateOf<Uri?>(null) }
 
     val exportLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.CreateDocument("application/octet-stream")
     ) { uri -> pendingExportUri = uri }
+
+    // Home's backup reminder opens Settings with the export picker already up; once, even across rotation.
+    var exportStarted by rememberSaveable { mutableStateOf(false) }
+    LaunchedEffect(startExport) {
+        if (startExport && !exportStarted) {
+            exportStarted = true
+            exportLauncher.launch(defaultBackupFileName())
+        }
+    }
 
     val importLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.OpenDocument()
@@ -233,7 +245,12 @@ fun SettingsScreen(
             }
             is SettingsEffect.ApplyLanguage -> applyAppLanguage(context, event.languageTag)
             is SettingsEffect.ShowSnackbar -> {
-                scope.launch { snackBarHostState.showSnackbar(message = event.message.asString(context)) }
+                scope.launch {
+                    snackBarHostState.showSnackbar(
+                        message = event.message.asString(context),
+                        duration = if (event.long) SnackbarDuration.Long else SnackbarDuration.Short
+                    )
+                }
             }
         }
     }
@@ -313,14 +330,8 @@ fun SettingsScreen(
                             SettingsText(text = stringResource(id = R.string.verify_backup)) {
                                 verifyLauncher.launch(arrayOf("*/*"))
                             }
-                            SettingsText(text = stringResource(id = R.string.privacy)) {
-                                onNavigate(NavRoute.Legal(LegalDocument.PRIVACY.name))
-                            }
                             SettingsText(text = stringResource(id = R.string.privacy_options)) {
                                 onNavigate(NavRoute.Consent(fromSettings = true))
-                            }
-                            SettingsText(text = stringResource(id = R.string.terms_n_condition)) {
-                                onNavigate(NavRoute.Legal(LegalDocument.TERMS.name))
                             }
                             SettingsText(text = stringResource(id = R.string.feature_tour)) {
                                 onNavigate(NavRoute.FeatureTour)

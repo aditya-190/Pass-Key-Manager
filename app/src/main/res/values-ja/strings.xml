@@ -30,8 +30,6 @@
     <string name="response">応答</string>
     <string name="rate_app">アプリを評価</string>
     <string name="change_language">言語を変更</string>
-    <string name="privacy">プライバシー</string>
-    <string name="terms_n_condition">利用規約</string>
     <string name="about">について</string>
     <string name="import_data">データをインポート</string>
     <string name="export_data">データをエクスポート</string>
@@ -274,4 +272,5 @@
     <string name="backup_reminder_title">保管庫をバックアップ</string>
     <string name="backup_reminder_body">このスマートフォンを紛失したりリセットしたりした場合、パスワードを取り戻す方法はバックアップだけです。</string>
     <string name="backup_reminder_cta">今すぐバックアップ</string>
+    <string name="import_not_a_backup">PassKey のバックアップファイルではありません。エクスポートした .pkbak ファイルか、以前の PassKey CSV を選んでください。</string>
 </resources>

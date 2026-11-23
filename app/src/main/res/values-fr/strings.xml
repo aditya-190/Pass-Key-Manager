@@ -30,8 +30,6 @@
     <string name="response">Réponse</string>
     <string name="rate_app">Noter l\'application</string>
     <string name="change_language">Changer de langue</string>
-    <string name="privacy">Confidentialité</string>
-    <string name="terms_n_condition">Termes et conditions</string>
     <string name="about">À propos de</string>
     <string name="import_data">Importer les données</string>
     <string name="export_data">Exporter les données</string>
@@ -279,4 +277,5 @@
     <string name="backup_reminder_title">Sauvegardez votre coffre</string>
     <string name="backup_reminder_body">Si ce téléphone est perdu ou réinitialisé, une sauvegarde est le seul moyen de récupérer vos mots de passe.</string>
     <string name="backup_reminder_cta">Sauvegarder maintenant</string>
+    <string name="import_not_a_backup">Ce n\'est pas un fichier de sauvegarde PassKey. Choisissez un fichier .pkbak que vous avez exporté, ou un ancien CSV PassKey.</string>
 </resources>

@@ -62,4 +62,10 @@
 | 2026-11-23 | Backup reminder: in the announcement card on Home (no notification, no WorkManager), only when no Remote Config announcement is live; 3 days after the first look if never backed up, 30 days after the last successful export; "Later" = 7 days, "Back up now" = 1 day | No new permission or background work (auto-backup was rejected); one card at a time. Existing users' earlier exports were never recorded, so they get one reminder 3 days after updating |
 | 2026-11-23 | Reminder timing is wall-clock but clock-safe: a snooze can't exceed 7 days from now, and a backup dated over a day in the future is not trusted | A moved clock must not silence the reminder for good |
 | 2026-11-23 | Reminder state lives in its own `BackupReminderStore` (3 DataStore longs), not `PreferencesRepository` | Keeps the existing interface and its fakes unchanged; no vault content |
+| 2026-11-23 | A file with nothing readable as a PassKey CSV is "not a PassKey backup" (Import and Verify), not an empty backup | 6b attack #1: a photo picked by mistake read as "0 entries" |
+| 2026-11-23 | Verify results stay on screen longer; dates in UiText are formatted at display time in the app's language (`FormattedDate`) | 6b attack #2, #3 |
+| 2026-11-23 | A verified encrypted backup (dated no later than tomorrow, newer than the last record) counts as a backup for the reminder | 6b attack #7: exports made before 6.0.0 were never recorded |
+| 2026-11-23 | `NavRoute.Settings(startExport)`: the reminder's "Back up now" opens the export picker directly; the reminder shows under a live announcement instead of waiting | 6b attack #5, #6. Announcements can't start an export (they map to `Settings()`) |
+| 2026-11-23 | Settings no longer lists Privacy and Terms; both are in About | Owner decision: one place for legal text, a shorter Settings list. Strings `privacy` and `terms_n_condition` removed |
+| 2026-11-23 | UiText's two spread calls are suppressed in code, not the detekt baseline | Android's string APIs are vararg; the suppression sits next to the reason |
 

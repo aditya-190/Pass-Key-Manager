@@ -153,9 +153,24 @@ class Release600SimulationTest {
             }
         }
 
+    @Test
+    fun `random files picked by mistake never pass as an empty backup and never crash`() = runTest {
+        val codec = BackupCodec(FakePasskeyRepository())
+        repeat(JUNK_SEEDS) { seed ->
+            val rnd = Random(seed)
+            val junk = rnd.nextBytes(rnd.nextInt(0, 4_000))
+            val result = codec.decode(junk, null)
+            result.onSuccess { assertTrue("seed $seed: a readable CSV has entries", it.previews.isNotEmpty()) }
+            result.onFailure {
+                assertTrue("seed $seed", it is com.bhardwaj.passkey.data.backup.BackupException)
+            }
+        }
+    }
+
     private companion object {
         const val SEEDS = 1_000
         const val REMINDER_SEEDS = 2_000
         const val VERIFY_SEEDS = 40
+        const val JUNK_SEEDS = 1_000
     }
 }

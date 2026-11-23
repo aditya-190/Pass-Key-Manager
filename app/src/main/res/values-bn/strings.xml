@@ -30,8 +30,6 @@
     <string name="response">প্রতিক্রিয়া</string>
     <string name="rate_app">অ্যাপ রেটিং</string>
     <string name="change_language">ভাষা পরিবর্তন</string>
-    <string name="privacy">গোপনীয়তা</string>
-    <string name="terms_n_condition">শর্তাবলী এবং অবশ্যই</string>
     <string name="about">সম্পর্কে</string>
     <string name="import_data">তথ্য আমদানি</string>
     <string name="export_data">তথ্য রপ্তানি</string>
@@ -277,4 +275,5 @@
     <string name="backup_reminder_title">আপনার ভল্টের ব্যাকআপ নিন</string>
     <string name="backup_reminder_body">এই ফোন হারালে বা রিসেট হলে, ব্যাকআপই পাসওয়ার্ড ফিরে পাওয়ার একমাত্র উপায়।</string>
     <string name="backup_reminder_cta">এখনই ব্যাকআপ নিন</string>
+    <string name="import_not_a_backup">এটি PassKey ব্যাকআপ ফাইল নয়। আপনার এক্সপোর্ট করা .pkbak ফাইল বা পুরোনো PassKey CSV বেছে নিন।</string>
 </resources>

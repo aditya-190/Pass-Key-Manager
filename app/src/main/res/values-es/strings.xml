@@ -30,8 +30,6 @@
     <string name="response">Respuesta</string>
     <string name="rate_app">Calificar App</string>
     <string name="change_language">Cambiar Idioma</string>
-    <string name="privacy">Privacidad</string>
-    <string name="terms_n_condition">Términos y Condiciones</string>
     <string name="about">Acerca de</string>
     <string name="import_data">Importar Datos</string>
     <string name="export_data">Exportar Datos</string>
@@ -279,4 +277,5 @@
     <string name="backup_reminder_title">Haz una copia de tu bóveda</string>
     <string name="backup_reminder_body">Si pierdes o restableces este teléfono, una copia es la única forma de recuperar tus contraseñas.</string>
     <string name="backup_reminder_cta">Hacer copia ahora</string>
+    <string name="import_not_a_backup">Este no es un archivo de copia de PassKey. Elige un archivo .pkbak que exportaste o un CSV antiguo de PassKey.</string>
 </resources>

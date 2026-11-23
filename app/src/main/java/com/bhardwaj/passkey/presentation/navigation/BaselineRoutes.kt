@@ -1,11 +1,14 @@
 package com.bhardwaj.passkey.presentation.navigation
 
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.bhardwaj.passkey.R
@@ -86,7 +89,8 @@ fun HomeAnnouncement(onNavigate: (NavRoute) -> Unit, modifier: Modifier = Modifi
             }
         }
     }
-    // The backup reminder (6.0.0) uses the same card, and only when no announcement is live: one card at a time.
+    // The backup reminder (6.0.0) uses the same card. It shows under a live announcement rather than waiting
+    // for it to end: a long announcement must not hold back a missing backup.
     val reminderViewModel: BackupReminderViewModel = hiltViewModel()
     val reminderDue by reminderViewModel.isDue.collectAsStateWithLifecycle()
     val reminder = if (reminderDue) {
@@ -101,25 +105,23 @@ fun HomeAnnouncement(onNavigate: (NavRoute) -> Unit, modifier: Modifier = Modifi
     } else {
         null
     }
-    AnnouncementBanner(
-        announcement = announcement ?: reminder,
-        onCta = {
-            if (it.id == BACKUP_REMINDER_ID) {
+    Column(modifier) {
+        AnnouncementBanner(
+            announcement = announcement,
+            onCta = { viewModel.onIntent(AnnouncementIntent.CtaClicked(it)) },
+            onDismiss = { viewModel.onIntent(AnnouncementIntent.Dismissed(it)) }
+        )
+        AnnouncementBanner(
+            announcement = reminder,
+            onCta = {
                 reminderViewModel.onIntent(BackupReminderIntent.BackUpNow)
-                onNavigate(NavRoute.Settings)
-            } else {
-                viewModel.onIntent(AnnouncementIntent.CtaClicked(it))
-            }
-        },
-        onDismiss = {
-            if (it.id == BACKUP_REMINDER_ID) {
-                reminderViewModel.onIntent(BackupReminderIntent.Later)
-            } else {
-                viewModel.onIntent(AnnouncementIntent.Dismissed(it))
-            }
-        },
-        modifier = modifier
-    )
+                onNavigate(NavRoute.Settings(startExport = true))
+            },
+            onDismiss = { reminderViewModel.onIntent(BackupReminderIntent.Later) },
+            // Space only when both cards show; a hidden card takes none.
+            contentPadding = PaddingValues(top = if (announcement != null) 8.dp else 0.dp)
+        )
+    }
 }
 
 /** Local id: Remote Config ids are free text, so this one is prefixed to never collide with them. */

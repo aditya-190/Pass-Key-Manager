@@ -197,4 +197,8 @@ Owner direction (2026-11-23): no UI change; additive, update-safe features; goal
 - TDD: 10 red → green (`BackupReminderTest` 6 of 7, `BackupCodecTest` 2, `SettingsViewModelTest` 2). Simulation:
   2,000 reminder seeds (empty vault, snooze, fresh backup, liveness) and 40 encrypted verify runs with tampered,
   truncated and wrong-password files, 0 failures.
+- Attack pass (owner: fix all): #1 not-a-backup message; #2 long message; #3 date in app language; #4 chosen file
+  survives rotation (rememberSaveable); #5 "Back up now" opens export; #6 reminder shows under an announcement; #7 a
+  verified recent backup counts. TDD 5 red → green; simulation +1,000 junk files. Owner: Privacy and Terms rows
+  removed from Settings (in About). Gates green (326 unit); instrumented 35/35 on the Moto G34.
 

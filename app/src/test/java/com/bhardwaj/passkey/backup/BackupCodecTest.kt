@@ -219,4 +219,15 @@ class BackupCodecTest {
         assertEquals(true, check.legacyFormat)
         assertEquals(null, check.exportedAt)
     }
+
+    @Test
+    fun `a file that is not a backup says so instead of reading as an empty backup`() = runTest {
+        // 6.0.0b attack-pass #1: a photo picked by mistake reported "Backup can be read: 0 entries".
+        val codec = BackupCodec(FakePasskeyRepository())
+        val png =
+            byteArrayOf(0x89.toByte(), 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A) +
+                ByteArray(2_000) { (it * 31).toByte() }
+        assertEquals(BackupError.NotABackup, failure(codec.decode(png, null)))
+        assertEquals(BackupError.NotABackup, failure(codec.decode("just some notes".toByteArray(), null)))
+    }
 }

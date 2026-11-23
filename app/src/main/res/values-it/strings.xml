@@ -30,8 +30,6 @@
     <string name="response">Risposta</string>
     <string name="rate_app">Valuta App</string>
     <string name="change_language">Cambia Lingua</string>
-    <string name="privacy">Privacy</string>
-    <string name="terms_n_condition">Termini e Condizioni</string>
     <string name="about">Informazioni</string>
     <string name="import_data">Importa Dati</string>
     <string name="export_data">Esporta Dati</string>
@@ -279,4 +277,5 @@
     <string name="backup_reminder_title">Fai il backup della cassaforte</string>
     <string name="backup_reminder_body">Se perdi o ripristini questo telefono, un backup è l\'unico modo per recuperare le tue password.</string>
     <string name="backup_reminder_cta">Fai il backup ora</string>
+    <string name="import_not_a_backup">Questo non è un file di backup di PassKey. Scegli un file .pkbak che hai esportato o un vecchio CSV di PassKey.</string>
 </resources>

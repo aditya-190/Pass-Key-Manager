@@ -53,8 +53,6 @@
     <string name="response">Response</string>
     <string name="rate_app">Rate App</string>
     <string name="change_language">Change Language</string>
-    <string name="privacy">Privacy</string>
-    <string name="terms_n_condition">Terms and Conditions</string>
     <string name="about">About</string>
     <string name="import_data">Import Data</string>
     <string name="export_data">Export Data</string>
@@ -262,4 +260,5 @@
     <string name="backup_reminder_title">Back up your vault</string>
     <string name="backup_reminder_body">If this phone is lost or reset, a backup is the only way to get your passwords back.</string>
     <string name="backup_reminder_cta">Back up now</string>
+    <string name="import_not_a_backup">This isn\'t a PassKey backup file. Choose a .pkbak file you exported, or an old PassKey CSV.</string>
 </resources>

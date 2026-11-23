@@ -86,7 +86,12 @@ internal class BackupCodec(
         BackupFormat.hasMagic(bytes) -> decodeEncrypted(bytes, password)
         bytes.size > MAX_LEGACY_CHARS -> failure(BackupError.FileTooLarge)
         else -> LegacyCsvBackup.parse(bytes.toString(Charsets.UTF_8)).let {
-            Result.success(ParsedBackup(it.previews, it.skippedRows, legacyFormat = true))
+            // Nothing readable as a PassKey CSV: a photo or document picked by mistake, not an empty backup.
+            if (it.previews.isEmpty()) {
+                failure(BackupError.NotABackup)
+            } else {
+                Result.success(ParsedBackup(it.previews, it.skippedRows, legacyFormat = true))
+            }
         }
     }
 

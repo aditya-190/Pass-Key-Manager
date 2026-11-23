@@ -12,7 +12,7 @@ import com.bhardwaj.passkey.presentation.navigation.NavRoute
  */
 object AnnouncementRoutes {
     private val allowed: Map<String, NavRoute> = mapOf(
-        "settings_page" to NavRoute.Settings,
+        "settings_page" to NavRoute.Settings(),
         "about_page" to NavRoute.About,
         "legal_page/PRIVACY" to NavRoute.Legal("PRIVACY"),
         "legal_page/TERMS" to NavRoute.Legal("TERMS"),

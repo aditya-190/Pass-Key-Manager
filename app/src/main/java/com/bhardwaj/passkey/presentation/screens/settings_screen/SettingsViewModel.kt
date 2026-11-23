@@ -16,13 +16,12 @@ import com.bhardwaj.passkey.domain.repository.BackupReminderStore
 import com.bhardwaj.passkey.domain.repository.PasskeyRepository
 import com.bhardwaj.passkey.domain.repository.PreferencesRepository
 import com.bhardwaj.passkey.presentation.navigation.NavRoute
+import com.bhardwaj.passkey.utils.FormattedDate
 import com.bhardwaj.passkey.utils.PasswordAnalyzer
 import com.bhardwaj.passkey.utils.SecretKeywords
 import com.bhardwaj.passkey.utils.UiText
 import dagger.hilt.android.lifecycle.HiltViewModel
-import java.text.DateFormat
 import java.util.Arrays
-import java.util.Date
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.channels.Channel
@@ -115,7 +114,10 @@ class SettingsViewModel @Inject constructor(
                 val result = backupRepository.verify(intent.uri, intent.password)
                 intent.password?.let { Arrays.fill(it, Char(0)) }
                 result.fold(
-                    onSuccess = { check -> send(SettingsEffect.ShowSnackbar(verifyMessage(check))) },
+                    onSuccess = { check ->
+                        rememberVerifiedBackup(check)
+                        send(SettingsEffect.ShowSnackbar(verifyMessage(check), long = true))
+                    },
                     onFailure = { error -> snackbar(importFailureMessage(error)) }
                 )
             }
@@ -205,6 +207,7 @@ class SettingsViewModel @Inject constructor(
     private fun importFailureMessage(error: Throwable): Int = when ((error as? BackupException)?.error) {
         BackupError.WrongPasswordOrCorrupt -> R.string.import_wrong_password
         BackupError.FileTooLarge -> R.string.import_file_too_large
+        BackupError.NotABackup -> R.string.import_not_a_backup
         is BackupError.UnsupportedVersion -> R.string.import_unsupported_version
         else -> R.string.import_failed
     }
@@ -212,8 +215,21 @@ class SettingsViewModel @Inject constructor(
     private fun verifyMessage(check: BackupCheck): UiText = if (check.legacyFormat) {
         UiText.StringResource(R.string.verify_backup_ok_legacy, listOf(check.entries))
     } else {
-        val date = check.exportedAt?.let { DateFormat.getDateInstance(DateFormat.MEDIUM).format(Date(it)) } ?: "?"
+        // Formatted when shown, in the app's language (the phone's may differ).
+        val date: Any = check.exportedAt?.let(::FormattedDate) ?: "?"
         UiText.StringResource(R.string.verify_backup_ok, listOf(check.entries, check.authenticators, date))
+    }
+
+    /**
+     * A verified encrypted backup is proof of a backup, so the reminder can rest: people who exported before 6.0.0
+     * started recording exports would otherwise be reminded anyway. A file dated in the future is not trusted, and an
+     * older file never replaces a newer record.
+     */
+    private suspend fun rememberVerifiedBackup(check: BackupCheck) {
+        val exportedAt = check.exportedAt ?: return
+        if (check.legacyFormat || exportedAt > clock.nowMs() + CLOCK_SKEW_MS) return
+        val known = reminderStore.state.first().lastBackupAt
+        if (known == null || exportedAt > known) reminderStore.recordBackup(exportedAt)
     }
 
     private fun snackbar(message: Int) = send(SettingsEffect.ShowSnackbar(UiText.StringResource(message)))
@@ -225,5 +241,6 @@ class SettingsViewModel @Inject constructor(
     private companion object {
         const val STOP_TIMEOUT_MS = 5_000L
         const val PLAY_STORE_URL = "https://play.google.com/store/apps/details?id="
+        const val CLOCK_SKEW_MS = 86_400_000L
     }
 }

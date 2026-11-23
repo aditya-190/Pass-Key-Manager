@@ -61,7 +61,8 @@ sealed interface SettingsIntent {
 }
 
 sealed interface SettingsEffect {
-    data class ShowSnackbar(val message: UiText) : SettingsEffect
+    /** [long] keeps a message that has to be read (a backup check) on screen for longer. */
+    data class ShowSnackbar(val message: UiText, val long: Boolean = false) : SettingsEffect
     data class Navigate(val route: NavRoute) : SettingsEffect
     data class OpenUrl(val url: String) : SettingsEffect
 
