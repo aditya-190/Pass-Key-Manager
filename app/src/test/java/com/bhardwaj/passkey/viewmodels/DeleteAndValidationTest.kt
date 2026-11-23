@@ -6,8 +6,6 @@ import com.bhardwaj.passkey.domain.model.Category
 import com.bhardwaj.passkey.domain.model.Preview
 import com.bhardwaj.passkey.presentation.screens.detail_screen.DetailEvents
 import com.bhardwaj.passkey.presentation.screens.detail_screen.DetailViewModel
-import com.bhardwaj.passkey.presentation.screens.preview_screen.PreviewEvents
-import com.bhardwaj.passkey.presentation.screens.preview_screen.PreviewViewModel
 import com.bhardwaj.passkey.testing.FakePasskeyRepository
 import com.bhardwaj.passkey.testing.MainDispatcherRule
 import com.bhardwaj.passkey.testing.RecordingAnalyticsTracker
@@ -17,7 +15,6 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
-import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Rule
 import org.junit.Test
@@ -41,67 +38,10 @@ class DeleteAndValidationTest {
         return repository.getPreviewById(id)!!
     }
 
-    private fun previewVm() = PreviewViewModel(repository, SavedStateHandle(), analytics)
-
     private fun detailVm(previewId: Long) =
         DetailViewModel(repository, SavedStateHandle(mapOf("previewId" to previewId)), analytics, { emptySet() })
 
-    @Test
-    fun `swiping an entry only asks and cancelling leaves the vault untouched`() = runTest {
-        val entry = seedEntry()
-        val vm = previewVm()
-        vm.onEvent(PreviewEvents.OnSwipedLeft(entry))
-        assertTrue(vm.isAlertOpen)
-        assertEquals("nothing deleted before confirming", 1, repository.allPreviews.size)
-
-        vm.onEvent(PreviewEvents.OnCancelClick)
-        assertEquals(false, vm.isAlertOpen)
-        assertEquals(listOf(entry), repository.allPreviews)
-        assertEquals(2, repository.allDetails.size)
-    }
-
-    @Test
-    fun `confirming deletes the entry with its fields, and undo brings both back unchanged`() = runTest {
-        val entry = seedEntry()
-        val before = repository.allDetails.sortedBy { it.id }
-        val vm = previewVm()
-        vm.onEvent(PreviewEvents.OnSwipedLeft(entry))
-        vm.onEvent(PreviewEvents.OnDeleteClick)
-
-        assertTrue(repository.allPreviews.isEmpty())
-        assertTrue("no orphaned fields", repository.allDetails.isEmpty())
-        assertEquals(UiEvents.ShowUndo(UiText.StringResource(R.string.entry_deleted)), vm.uiEvents.first())
-
-        vm.onEvent(PreviewEvents.OnUndoDelete)
-        assertEquals(listOf(entry), repository.allPreviews)
-        assertEquals(before, repository.allDetails.sortedBy { it.id })
-    }
-
-    @Test
-    fun `a blank heading keeps the sheet open with an error and saves nothing`() = runTest {
-        val vm = previewVm()
-        vm.onEvent(PreviewEvents.OnAddPreviewClick)
-        vm.onEvent(PreviewEvents.OnHeadingChange("   "))
-        vm.onEvent(PreviewEvents.OnSaveClick)
-        assertTrue(vm.isSheetOpen)
-        assertEquals(UiText.StringResource(R.string.enter_valid_heading), vm.sheetError)
-        assertTrue(repository.allPreviews.isEmpty())
-    }
-
-    @Test
-    fun `a duplicate heading keeps what was typed and explains why`() = runTest {
-        seedEntry()
-        val vm = previewVm()
-        vm.onEvent(PreviewEvents.OnAddPreviewClick)
-        vm.onEvent(PreviewEvents.OnHeadingChange("Bank"))
-        vm.onEvent(PreviewEvents.OnSaveClick)
-        assertTrue(vm.isSheetOpen)
-        assertEquals("Bank", vm.previewHeading.value)
-        assertEquals(UiText.StringResource(R.string.heading_exists), vm.sheetError)
-
-        vm.onEvent(PreviewEvents.OnHeadingChange("Bank 2"))
-        assertNull("typing clears the error", vm.sheetError)
-    }
+    // Entry (preview) rules moved to PreviewViewModelTest with the 5.8.0 single-state ViewModel.
 
     @Test
     fun `fields follow the same rules - confirm before delete, undo, keep input`() = runTest {

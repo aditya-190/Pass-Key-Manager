@@ -7,7 +7,7 @@ import com.bhardwaj.passkey.domain.model.Category
 import com.bhardwaj.passkey.domain.model.Detail
 import com.bhardwaj.passkey.presentation.screens.detail_screen.DetailEvents
 import com.bhardwaj.passkey.presentation.screens.detail_screen.DetailViewModel
-import com.bhardwaj.passkey.presentation.screens.preview_screen.PreviewEvents
+import com.bhardwaj.passkey.presentation.screens.preview_screen.PreviewIntent
 import com.bhardwaj.passkey.presentation.screens.preview_screen.PreviewViewModel
 import com.bhardwaj.passkey.testing.FakePasskeyRepository
 import com.bhardwaj.passkey.testing.MainDispatcherRule
@@ -37,10 +37,10 @@ class VaultAnalyticsTest {
     @Test
     fun `creating an entry logs its category only`() = runTest {
         val vm = PreviewViewModel(repository, SavedStateHandle(), analytics)
-        vm.onEvent(PreviewEvents.OnBottomNavigationClick(Category.MAILS.name))
-        vm.onEvent(PreviewEvents.OnAddPreviewClick)
-        vm.onEvent(PreviewEvents.OnHeadingChange("my-secret-bank"))
-        vm.onEvent(PreviewEvents.OnSaveClick)
+        vm.onIntent(PreviewIntent.CategorySelected(Category.MAILS))
+        vm.onIntent(PreviewIntent.AddClicked)
+        vm.onIntent(PreviewIntent.HeadingChanged("my-secret-bank"))
+        vm.onIntent(PreviewIntent.SaveClicked)
 
         assertEquals(1, repository.allPreviews.size)
         val event = analytics.events.single()
@@ -56,9 +56,9 @@ class VaultAnalyticsTest {
             category = Category.BANKS
         )
         val vm = PreviewViewModel(repository, SavedStateHandle(), analytics)
-        vm.onEvent(PreviewEvents.OnChangeClick(repository.getPreviewById(id)!!))
-        vm.onEvent(PreviewEvents.OnHeadingChange("New"))
-        vm.onEvent(PreviewEvents.OnSaveClick)
+        vm.onIntent(PreviewIntent.EditClicked(repository.getPreviewById(id)!!))
+        vm.onIntent(PreviewIntent.HeadingChanged("New"))
+        vm.onIntent(PreviewIntent.SaveClicked)
         assertEquals("New", repository.getPreviewById(id)!!.heading)
         assertTrue(analytics.events.isEmpty())
     }

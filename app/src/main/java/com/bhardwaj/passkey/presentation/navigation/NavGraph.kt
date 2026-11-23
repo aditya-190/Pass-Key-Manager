@@ -46,7 +46,7 @@ fun NavGraph(navController: NavHostController, analytics: AnalyticsTracker) {
             )
         }
         composable<NavRoute.Previews> {
-            PreviewScreen(onNavigate = { navController.navigate(it.route) })
+            PreviewScreen(onNavigate = { navController.navigate(it) })
         }
         composable<NavRoute.Details> {
             DetailScreen(onPopBackStack = { navController.popBackStack() })

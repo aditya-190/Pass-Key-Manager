@@ -7,7 +7,7 @@ import com.bhardwaj.passkey.data.backup.ImportMode
 import com.bhardwaj.passkey.data.security.LockPolicy
 import com.bhardwaj.passkey.domain.model.AutoLockTimeout
 import com.bhardwaj.passkey.domain.model.Category
-import com.bhardwaj.passkey.presentation.screens.preview_screen.PreviewEvents
+import com.bhardwaj.passkey.presentation.screens.preview_screen.PreviewIntent
 import com.bhardwaj.passkey.presentation.screens.preview_screen.PreviewViewModel
 import com.bhardwaj.passkey.testing.FakePasskeyRepository
 import com.bhardwaj.passkey.testing.MainDispatcherRule
@@ -16,6 +16,8 @@ import com.bhardwaj.passkey.utils.PasswordAnalyzer
 import java.util.Random
 import kotlin.time.Duration.Companion.minutes
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
@@ -159,24 +161,26 @@ class Release560SimulationTest {
             val repo = randomVault(rnd)
             val original = repo.snapshot()
             val vm = PreviewViewModel(repo, SavedStateHandle(), RecordingAnalyticsTracker())
+            val subscriber = backgroundScope.launch(UnconfinedTestDispatcher(testScheduler)) { vm.state.collect {} }
             var confirmedDeletes = 0
             repeat(rnd.nextInt(15)) {
                 val previews = repo.allPreviews
                 when (rnd.nextInt(4)) {
                     0 -> previews.randomOrNull(kotlin.random.Random(seed + it))?.let {
-                        vm.onEvent(PreviewEvents.OnSwipedLeft(it))
+                        vm.onIntent(PreviewIntent.SwipedToDelete(it))
                     }
-                    1 -> vm.onEvent(PreviewEvents.OnCancelClick)
-                    2 -> if (vm.isAlertOpen) {
+                    1 -> vm.onIntent(PreviewIntent.DeleteCancelled)
+                    2 -> if (vm.state.value.pendingDelete != null) {
                         confirmedDeletes++
-                        vm.onEvent(PreviewEvents.OnDeleteClick)
+                        vm.onIntent(PreviewIntent.DeleteConfirmed)
                     }
-                    else -> vm.onEvent(PreviewEvents.OnUndoDelete)
+                    else -> vm.onIntent(PreviewIntent.UndoDelete)
                 }
                 val ids = repo.allPreviews.map { it.id }.toSet()
                 assertTrue("seed $seed orphan", repo.allDetails.all { it.previewId in ids })
             }
             if (confirmedDeletes == 0) assertEquals("seed $seed changed without confirm", original, repo.snapshot())
+            subscriber.cancel()
         }
     }
 
