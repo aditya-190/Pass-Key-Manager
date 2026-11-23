@@ -27,7 +27,7 @@ and your vault never leaves your phone.**
 ## Screens
 Unchanged (owner decision, 2026-11-23): Splash → Onboarding (3 intro pages + 6 feature-tour pages, Skip on each) →
 Consent → Recovery setup → Unlock → Home (category list, search, Add) → Entry detail. Settings gains rows only
-(Feature tour; later Verify backup, Import from another app, Theme, Share PassKey).
+(Feature tour, Verify a backup, Theme; later Share PassKey).
 
 ## Data model
 - `preview`, `details` (`isSecret` 5.6.0, `previewId` index 5.8.0), `totp` and `detail_history` (5.8.0),
