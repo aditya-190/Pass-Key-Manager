@@ -29,8 +29,6 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ModalBottomSheet
-import androidx.compose.material3.ModalBottomSheetProperties
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -49,7 +47,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.window.SecureFlagPolicy
 import androidx.core.net.toUri
 import androidx.core.os.LocaleListCompat
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
@@ -61,6 +58,7 @@ import com.bhardwaj.passkey.data.backup.ImportMode
 import com.bhardwaj.passkey.legal.LegalDocument
 import com.bhardwaj.passkey.presentation.navigation.NavRoute
 import com.bhardwaj.passkey.presentation.screens.common.ObserveAsEvents
+import com.bhardwaj.passkey.presentation.screens.common.SecureModalBottomSheet
 import com.bhardwaj.passkey.presentation.screens.settings_screen.SettingsViewModel
 import com.bhardwaj.passkey.presentation.screens.settings_screen.components.AnalysisBottomSheet
 import com.bhardwaj.passkey.presentation.screens.settings_screen.components.AutoLockDialog
@@ -295,10 +293,7 @@ fun SettingsScreen(
     }
     if (uiState.dialog == SettingsDialog.Language) {
         val sheetState = rememberModalBottomSheetState()
-        ModalBottomSheet(
-            properties = ModalBottomSheetProperties(
-                securePolicy = SecureFlagPolicy.SecureOn
-            ),
+        SecureModalBottomSheet(
             sheetState = sheetState,
             onDismissRequest = { onIntent(SettingsIntent.DialogDismissed) },
             dragHandle = {},

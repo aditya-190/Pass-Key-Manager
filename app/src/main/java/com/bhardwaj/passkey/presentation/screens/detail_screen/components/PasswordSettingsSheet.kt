@@ -10,8 +10,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ModalBottomSheet
-import androidx.compose.material3.ModalBottomSheetProperties
 import androidx.compose.material3.Slider
 import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Switch
@@ -26,10 +24,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.window.SecureFlagPolicy
 import com.bhardwaj.passkey.R
 import com.bhardwaj.passkey.domain.model.PasswordCharacterClass
 import com.bhardwaj.passkey.domain.model.PasswordPolicy
+import com.bhardwaj.passkey.presentation.screens.common.SecureModalBottomSheet
 import com.bhardwaj.passkey.presentation.theme.BebasNeue
 import com.bhardwaj.passkey.presentation.theme.Poppins
 import kotlin.math.roundToInt
@@ -44,10 +42,7 @@ fun PasswordSettingsSheet(
 ) {
     val sheetState = rememberModalBottomSheetState()
 
-    ModalBottomSheet(
-        properties = ModalBottomSheetProperties(
-            securePolicy = SecureFlagPolicy.SecureOn
-        ),
+    SecureModalBottomSheet(
         sheetState = sheetState,
         onDismissRequest = { onDismissPasswordSettings() },
         dragHandle = { },

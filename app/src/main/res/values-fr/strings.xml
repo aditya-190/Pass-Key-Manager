@@ -252,4 +252,6 @@
     <string name="password_history_empty">Ce mot de passe n\'a pas encore été modifié.</string>
     <string name="cd_remove_authenticator">Supprimer l\'authentificateur</string>
     <string name="remove_authenticator_confirm">Supprimer cet authentificateur ? Ses codes n\'apparaîtront plus ici et vous aurez peut-être besoin des codes de récupération du compte pour vous connecter.</string>
+    <string name="legal_privacy_autofill_heading">Saisie automatique</string>
+    <string name="legal_privacy_autofill_body">Si vous activez PassKey comme service de saisie automatique, Android lui montre le formulaire que vous remplissez : le type de chaque champ et l\'application ou l\'adresse web à laquelle il appartient, afin de proposer les entrées correspondantes. Cela se passe uniquement sur votre téléphone ; rien sur le formulaire, le site ou les entrées proposées n\'est envoyé, journalisé ni conservé. Tant que le coffre est verrouillé, PassKey ne propose qu\'une suggestion « Déverrouiller » et aucun nom d\'entrée. La saisie automatique reste désactivée tant que vous ne l\'activez pas dans les paramètres d\'Android, où vous pouvez la désactiver à tout moment.</string>
 </resources>

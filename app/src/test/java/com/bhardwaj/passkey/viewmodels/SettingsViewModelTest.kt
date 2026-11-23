@@ -9,9 +9,9 @@ import com.bhardwaj.passkey.data.backup.BackupRepository
 import com.bhardwaj.passkey.data.backup.ImportMode
 import com.bhardwaj.passkey.data.backup.ImportSummary
 import com.bhardwaj.passkey.data.security.DatabaseKeyManager
+import com.bhardwaj.passkey.domain.model.AppLanguage
 import com.bhardwaj.passkey.domain.model.AutoLockTimeout
 import com.bhardwaj.passkey.domain.model.Category
-import com.bhardwaj.passkey.domain.model.Language
 import com.bhardwaj.passkey.domain.repository.PreferencesRepository
 import com.bhardwaj.passkey.presentation.navigation.NavRoute
 import com.bhardwaj.passkey.presentation.screens.settings_screen.SettingsDialog
@@ -74,18 +74,10 @@ class SettingsViewModelTest {
         vm.onIntent(SettingsIntent.LanguageClicked)
         assertEquals(SettingsDialog.Language, vm.state.value.dialog)
 
-        vm.onIntent(SettingsIntent.LanguageChosen(Language("hi", "हिन्दी", "Hindi", comingSoon = false)))
+        vm.onIntent(SettingsIntent.LanguageChosen(AppLanguage.HINDI))
         assertNull(vm.state.value.dialog)
         assertEquals("hi", prefs.language.value)
         assertEquals(SettingsEffect.ApplyLanguage("hi"), vm.effects.first())
-    }
-
-    @Test
-    fun `a coming-soon language changes nothing`() = runTest {
-        val vm = vm()
-        vm.onIntent(SettingsIntent.LanguageChosen(Language("xx", "X", "X", comingSoon = true)))
-        assertNull(prefs.language.value)
-        assertEquals(SettingsEffect.ShowSnackbar(UiText.StringResource(R.string.coming_soon)), vm.effects.first())
     }
 
     @Test

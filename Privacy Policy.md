@@ -33,6 +33,18 @@ Data handled by these services is processed by Google under
 - **Google Firebase Remote Config**: the app fetches settings for update notices and announcements. The request
   carries a Firebase installation identifier and nothing you save. It is not used for analytics.
 
+## Autofill
+
+If you make PassKey your autofill service, Android shows it the structure of the form you are filling: the field
+types and the app package or web address it belongs to, so that it can offer matching entries. That happens entirely
+on the device: nothing about the form, the site or the entries offered is transmitted, logged or stored.
+
+While the vault is locked, PassKey offers a single "unlock" suggestion and no entry names, so the suggestion list drawn
+over another app never reveals which accounts you hold. Saving a login that autofill captured works only while the
+vault is unlocked; otherwise the app says so rather than keeping the credential anywhere.
+
+Autofill is off until you turn it on in Android's settings, and it can be turned off there again at any time.
+
 ## Backups
 
 **Export Data** writes a backup encrypted with AES-256-GCM, using a key derived from a password you

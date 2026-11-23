@@ -11,8 +11,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ModalBottomSheet
-import androidx.compose.material3.ModalBottomSheetProperties
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
@@ -23,8 +21,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.window.SecureFlagPolicy
 import com.bhardwaj.passkey.R
+import com.bhardwaj.passkey.presentation.screens.common.SecureModalBottomSheet
 import com.bhardwaj.passkey.presentation.screens.detail_screen.DetailState
 import com.bhardwaj.passkey.presentation.theme.BebasNeue
 import com.bhardwaj.passkey.presentation.theme.Poppins
@@ -44,8 +42,7 @@ fun PasswordHistorySheet(history: DetailState.History, onCopy: (String) -> Unit,
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     val dateFormat = remember { DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT) }
 
-    ModalBottomSheet(
-        properties = ModalBottomSheetProperties(securePolicy = SecureFlagPolicy.SecureOn),
+    SecureModalBottomSheet(
         sheetState = sheetState,
         onDismissRequest = onDismiss,
         dragHandle = {},

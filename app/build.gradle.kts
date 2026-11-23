@@ -21,8 +21,8 @@ android {
         applicationId = "com.bhardwaj.passkey"
         minSdk = 28
         targetSdk = 36
-        versionCode = 46
-        versionName = "5.7.0"
+        versionCode = 47
+        versionName = "5.8.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
@@ -203,3 +203,13 @@ dependencies {
     debugImplementation(libs.compose.ui.tooling)
     debugImplementation(libs.compose.ui.test.manifest)
 }
+
+/** Fails the build if a bottom sheet is created without FLAG_SECURE. Wired to `check`: a guard nobody runs is not one. */
+val checkSecureBottomSheets by tasks.registering(Exec::class) {
+    group = "verification"
+    description = "Fails if ModalBottomSheet is called outside SecureModalBottomSheet."
+    workingDir = rootDir
+    commandLine("sh", "scripts/check-modal-bottom-sheet.sh")
+}
+
+tasks.named("check") { dependsOn(checkSecureBottomSheets) }

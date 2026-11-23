@@ -248,4 +248,6 @@
     <string name="password_history_empty">此密码尚未更改过。</string>
     <string name="cd_remove_authenticator">移除身份验证器</string>
     <string name="remove_authenticator_confirm">移除此验证器？这里将不再显示它的验证码，登录时可能需要该账号的恢复代码。</string>
+    <string name="legal_privacy_autofill_heading">自动填充</string>
+    <string name="legal_privacy_autofill_body">如果你将 PassKey 设为自动填充服务，Android 会把你正在填写的表单提供给它：每个字段的类型以及所属的应用或网址，以便推荐匹配的条目。这一切只在你的手机上进行；关于表单、网站或推荐条目的任何信息都不会被发送、记录或存储。保险库锁定时，PassKey 只显示一个“解锁”建议，不显示任何条目名称。自动填充默认关闭，需在 Android 设置中开启，也可随时在那里关闭。</string>
 </resources>

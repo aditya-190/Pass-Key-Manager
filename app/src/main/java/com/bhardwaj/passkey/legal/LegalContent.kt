@@ -42,6 +42,7 @@ class LegalTexts(privacyExtras: List<LegalSection> = emptyList(), termsExtras: L
             listOf(
                 LegalSection(R.string.legal_privacy_intro_heading, R.string.legal_privacy_intro_body),
                 LegalSection(R.string.legal_privacy_device_heading, R.string.legal_privacy_device_body),
+                LegalSection(R.string.legal_privacy_autofill_heading, R.string.legal_privacy_autofill_body),
                 LegalSection(R.string.legal_privacy_analytics_heading, R.string.legal_privacy_analytics_body)
             ) + privacyExtras +
                 listOf(

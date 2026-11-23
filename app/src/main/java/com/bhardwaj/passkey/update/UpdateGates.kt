@@ -22,7 +22,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -37,6 +36,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
 import com.bhardwaj.passkey.R
+import com.bhardwaj.passkey.presentation.screens.common.SecureModalBottomSheet
 
 /** Full screen, not dismissible: Back is swallowed and the only action is updating. */
 @Composable
@@ -109,7 +109,7 @@ private fun BlockingScreen(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SoftUpdateSheet(title: String, message: String, onUpdate: () -> Unit, onDismiss: () -> Unit) {
-    ModalBottomSheet(onDismissRequest = onDismiss) {
+    SecureModalBottomSheet(onDismissRequest = onDismiss) {
         SoftUpdateContent(title, message, onUpdate, onDismiss)
     }
 }

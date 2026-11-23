@@ -251,4 +251,6 @@
     <string name="password_history_empty">Dieses Passwort wurde noch nicht geändert.</string>
     <string name="cd_remove_authenticator">Authenticator entfernen</string>
     <string name="remove_authenticator_confirm">Diesen Authenticator entfernen? Seine Codes erscheinen hier nicht mehr, und zum Anmelden brauchst du eventuell die Wiederherstellungscodes des Kontos.</string>
+    <string name="legal_privacy_autofill_heading">Autofill</string>
+    <string name="legal_privacy_autofill_body">Wenn du PassKey als Autofill-Dienst einschaltest, zeigt Android ihm das Formular, das du ausfüllst: die Art jedes Feldes und die App oder Webadresse, zu der es gehört, damit passende Einträge vorgeschlagen werden können. Das geschieht nur auf deinem Telefon; über das Formular, die Website oder die vorgeschlagenen Einträge wird nichts gesendet, protokolliert oder gespeichert. Solange der Tresor gesperrt ist, zeigt PassKey nur einen Vorschlag „Entsperren“ und keine Eintragsnamen. Autofill bleibt aus, bis du es in den Android-Einstellungen einschaltest, und lässt sich dort jederzeit wieder ausschalten.</string>
 </resources>

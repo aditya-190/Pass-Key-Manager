@@ -3,9 +3,9 @@ package com.bhardwaj.passkey.presentation.screens.settings_screen
 import android.net.Uri
 import com.bhardwaj.passkey.BuildConfig
 import com.bhardwaj.passkey.data.backup.ImportMode
+import com.bhardwaj.passkey.domain.model.AppLanguage
 import com.bhardwaj.passkey.domain.model.AutoLockTimeout
 import com.bhardwaj.passkey.domain.model.Detail
-import com.bhardwaj.passkey.domain.model.Language
 import com.bhardwaj.passkey.presentation.navigation.NavRoute
 import com.bhardwaj.passkey.utils.PasswordAnalysisResult
 import com.bhardwaj.passkey.utils.UiText
@@ -34,7 +34,7 @@ sealed interface SettingsDialog {
 /** Password-carrying intents are plain classes: a CharArray has no value equality, and they are never compared. */
 sealed interface SettingsIntent {
     data object LanguageClicked : SettingsIntent
-    data class LanguageChosen(val language: Language) : SettingsIntent
+    data class LanguageChosen(val language: AppLanguage) : SettingsIntent
     data object AutoLockClicked : SettingsIntent
     data class AutoLockChosen(val timeout: AutoLockTimeout) : SettingsIntent
     data object AnalyzeClicked : SettingsIntent

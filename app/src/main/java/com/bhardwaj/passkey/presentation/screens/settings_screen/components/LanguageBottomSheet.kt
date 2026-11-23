@@ -22,11 +22,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.bhardwaj.passkey.R
-import com.bhardwaj.passkey.domain.model.Language
+import com.bhardwaj.passkey.domain.model.AppLanguage
 import com.bhardwaj.passkey.presentation.theme.Poppins
 
 @Composable
-fun LanguageItem(modifier: Modifier = Modifier, language: Language, onLanguageChange: (Language) -> Unit) {
+fun LanguageItem(modifier: Modifier = Modifier, language: AppLanguage, onLanguageChange: (AppLanguage) -> Unit) {
     Column(
         modifier = modifier
             .fillMaxWidth()
@@ -36,7 +36,7 @@ fun LanguageItem(modifier: Modifier = Modifier, language: Language, onLanguageCh
     ) {
         Text(
             modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 16.dp),
-            text = language.languageName,
+            text = language.endonym,
             fontFamily = Poppins,
             fontWeight = FontWeight.Bold,
             fontSize = 16.sp,
@@ -44,7 +44,7 @@ fun LanguageItem(modifier: Modifier = Modifier, language: Language, onLanguageCh
         )
         Text(
             modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 4.dp),
-            text = language.languageNameInEnglish,
+            text = language.englishName,
             fontFamily = Poppins,
             fontWeight = FontWeight.Normal,
             fontSize = 14.sp,
@@ -58,113 +58,8 @@ fun LanguageItem(modifier: Modifier = Modifier, language: Language, onLanguageCh
 fun LanguageBottomSheet(
     modifier: Modifier = Modifier,
     onBackIconClick: () -> Unit,
-    onLanguageChange: (Language) -> Unit
+    onLanguageChange: (AppLanguage) -> Unit
 ) {
-    val languageList = arrayListOf(
-        Language(
-            languageId = "ar",
-            languageName = "عربي",
-            languageNameInEnglish = "Arabic",
-            comingSoon = false
-        ),
-        Language(
-            languageId = "bn",
-            languageName = "বাংলা",
-            languageNameInEnglish = "Bengali",
-            comingSoon = false
-        ),
-        Language(
-            languageId = "zh",
-            languageName = "中文",
-            languageNameInEnglish = "Chinese",
-            comingSoon = false
-        ),
-        Language(
-            languageId = "en",
-            languageName = "English",
-            languageNameInEnglish = "English",
-            comingSoon = false
-        ),
-        Language(
-            languageId = "fr",
-            languageName = "Français",
-            languageNameInEnglish = "French",
-            comingSoon = false
-        ),
-        Language(
-            languageId = "de",
-            languageName = "Deutsch",
-            languageNameInEnglish = "German",
-            comingSoon = false
-        ),
-        Language(
-            languageId = "gu",
-            languageName = "ગુજરાતી",
-            languageNameInEnglish = "Gujarati",
-            comingSoon = false
-        ),
-        Language(
-            languageId = "hi",
-            languageName = "हिन्दी",
-            languageNameInEnglish = "Hindi",
-            comingSoon = false
-        ),
-        Language(
-            languageId = "it",
-            languageName = "Italiano",
-            languageNameInEnglish = "Italian",
-            comingSoon = false
-        ),
-        Language(
-            languageId = "ja",
-            languageName = "日本語",
-            languageNameInEnglish = "Japanese",
-            comingSoon = false
-        ),
-        Language(
-            languageId = "ko",
-            languageName = "한국어",
-            languageNameInEnglish = "Korean",
-            comingSoon = false
-        ),
-        Language(
-            languageId = "mr",
-            languageName = "मराठी",
-            languageNameInEnglish = "Marathi",
-            comingSoon = false
-        ),
-        Language(
-            languageId = "pt",
-            languageName = "Português",
-            languageNameInEnglish = "Portuguese",
-            comingSoon = false
-        ),
-        Language(
-            languageId = "ru",
-            languageName = "Русский",
-            languageNameInEnglish = "Russian",
-            comingSoon = false
-        ),
-        Language(
-            languageId = "es",
-            languageName = "Español",
-            languageNameInEnglish = "Spanish",
-            comingSoon = false
-        ),
-        Language(
-            languageId = "ta",
-            languageName = "தமிழ்",
-            languageNameInEnglish = "Tamil",
-            comingSoon = false
-        ),
-        Language(
-            languageId = "te",
-            languageName = "తెలుగు",
-            languageNameInEnglish = "Telugu",
-            comingSoon = false
-        )
-    )
-
     Column(modifier = modifier.background(MaterialTheme.colorScheme.background)) {
         Icon(
             modifier = Modifier
@@ -197,7 +92,7 @@ fun LanguageBottomSheet(
             color = MaterialTheme.colorScheme.onBackground
         )
         LazyColumn {
-            items(languageList) { single ->
+            items(AppLanguage.entries) { single ->
                 LanguageItem(language = single, onLanguageChange = onLanguageChange)
             }
         }

@@ -43,7 +43,10 @@ design -> https://www.figma.com/community/file/1116675775484733517
 - Drag & Drop to reorder list.
 - Swipe to Delete Feature.
 - Separation of content.
-- Import / Export data to and from storage.
+- Encrypted backups (.pkbak) you can restore on any device; legacy CSV import.
+- Autofill into other apps and websites (Android 9+), with no entry names shown while locked.
+- Two-factor authenticator codes (TOTP) from an otpauth:// link or a typed key.
+- Password history for every secret (last 10 values).
 - SQL Cipher (For Room DB Encryption and Decryption).
 - Your vault never leaves your phone. Crash reports and usage statistics (Firebase) are opt-in and never include vault content.
 

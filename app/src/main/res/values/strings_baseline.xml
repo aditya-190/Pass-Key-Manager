@@ -65,4 +65,6 @@
     <string name="legal_terms_liability_body">The app is provided as is, without warranty. To the extent the law allows, we are not liable for losses arising from its use.</string>
     <string name="legal_terms_changes_heading">Changes</string>
     <string name="legal_terms_changes_body">We may update these terms. The date at the top shows the latest version; continued use means you accept it.</string>
+    <string name="legal_privacy_autofill_heading">Autofill</string>
+    <string name="legal_privacy_autofill_body">If you turn PassKey on as your autofill service, Android shows it the form you are filling: the type of each field and the app or web address it belongs to, so it can offer matching entries. This happens only on your phone; nothing about the form, the site or the entries offered is sent, logged or stored. While the vault is locked, PassKey offers a single Unlock suggestion and no entry names. Autofill is off until you turn it on in Android\'s settings, and you can turn it off there at any time.</string>
 </resources>

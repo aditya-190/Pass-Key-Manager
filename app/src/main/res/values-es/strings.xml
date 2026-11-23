@@ -252,4 +252,6 @@
     <string name="password_history_empty">Esta contraseña aún no se ha cambiado.</string>
     <string name="cd_remove_authenticator">Quitar autenticador</string>
     <string name="remove_authenticator_confirm">¿Quitar este autenticador? Sus códigos dejarán de aparecer aquí y puede que necesites los códigos de recuperación de la cuenta para iniciar sesión.</string>
+    <string name="legal_privacy_autofill_heading">Autocompletar</string>
+    <string name="legal_privacy_autofill_body">Si activas PassKey como servicio de autocompletar, Android le muestra el formulario que estás rellenando: el tipo de cada campo y la app o dirección web a la que pertenece, para que pueda sugerir entradas que coincidan. Esto ocurre solo en tu teléfono; no se envía, registra ni guarda nada sobre el formulario, el sitio o las entradas sugeridas. Mientras la bóveda está bloqueada, PassKey ofrece una única sugerencia «Desbloquear» y ningún nombre de entrada. Autocompletar está desactivado hasta que lo activas en los ajustes de Android, y puedes desactivarlo allí cuando quieras.</string>
 </resources>

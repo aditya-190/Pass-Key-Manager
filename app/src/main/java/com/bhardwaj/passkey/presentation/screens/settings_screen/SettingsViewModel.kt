@@ -114,10 +114,9 @@ class SettingsViewModel @Inject constructor(
 
     private fun chooseLanguage(intent: SettingsIntent.LanguageChosen) {
         showDialog(null)
-        if (intent.language.comingSoon) return snackbar(R.string.coming_soon)
         viewModelScope.launch {
-            preferences.setSelectedLanguageTag(intent.language.languageId)
-            send(SettingsEffect.ApplyLanguage(intent.language.languageId))
+            preferences.setSelectedLanguageTag(intent.language.tag)
+            send(SettingsEffect.ApplyLanguage(intent.language.tag))
         }
     }
 
