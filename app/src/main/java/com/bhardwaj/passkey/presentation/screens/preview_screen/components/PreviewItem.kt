@@ -26,20 +26,22 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalView
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.bhardwaj.passkey.R
+import com.bhardwaj.passkey.data.local.entity.Preview as PreviewEntity
 import com.bhardwaj.passkey.domain.events.PreviewEvents
 import com.bhardwaj.passkey.presentation.theme.Poppins
 import sh.calvin.reorderable.ReorderableCollectionItemScope
-import com.bhardwaj.passkey.data.local.entity.Preview as PreviewEntity
 
 @Composable
 fun PreviewItem(
     modifier: Modifier = Modifier,
     scope: ReorderableCollectionItemScope? = null,
     preview: PreviewEntity,
-    onEvent: (PreviewEvents) -> Unit,
+    onEvent: (PreviewEvents) -> Unit
 ) {
     val view = LocalView.current
     Box(modifier = modifier.fillMaxWidth()) {
@@ -71,12 +73,12 @@ fun PreviewItem(
                                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                                     view.performHapticFeedback(HapticFeedbackConstants.GESTURE_END)
                                 }
-                            },
+                            }
                         )
                     }
                 } ?: Modifier,
                 imageVector = Icons.Default.Apps,
-                contentDescription = "Icon Drag",
+                contentDescription = stringResource(R.string.cd_drag_handle),
                 tint = MaterialTheme.colorScheme.primary
             )
             Text(
@@ -97,7 +99,7 @@ fun PreviewItem(
                 fontFamily = Poppins,
                 fontWeight = FontWeight.Normal,
                 fontSize = 18.sp,
-                color = MaterialTheme.colorScheme.onBackground,
+                color = MaterialTheme.colorScheme.onBackground
             )
 
             if (scope != null) {
@@ -110,7 +112,7 @@ fun PreviewItem(
                         interactionSource = remember { MutableInteractionSource() }
                     ),
                     imageVector = Icons.Default.Edit,
-                    contentDescription = "Icon Edit",
+                    contentDescription = stringResource(R.string.cd_edit),
                     tint = MaterialTheme.colorScheme.primary
                 )
             }

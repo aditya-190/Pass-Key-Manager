@@ -1,5 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="no_previews_found">Пока нет записей</string>
+    <string name="no_details_found">Пока нет данных</string>
+    <!--    Splash Screen    -->
+    <string name="app_version">Версия приложения <xliff:g id="version" example="5.5.1">%1$s</xliff:g></string>
+    <string name="app_description">Единственный менеджер паролей, который вам нужен</string>
+
+    <!--    OnBoarding Screens    -->
+    <!--    Keep the 
+ line breaks and the [[ ]] highlight markers.    -->
+    <string name="skip">Пропустить</string>
+    <string name="next">Далее</string>
+    <string name="first_heading">Создавайте\n[[надёжные]]\nпароли.</string>
+    <string name="second_heading">Все ваши\n[[пароли]]\nздесь.</string>
+    <string name="third_heading">Открывается\nтолько для [[вас]],\nна этом телефоне.</string>
+    <string name="first_description">Перестаньте использовать ненадёжные пароли для своих аккаунтов — переходите на PassKey. Получайте самые надёжные и трудные для взлома пароли.</string>
+    <string name="second_description">Храните все пароли и управляйте ими в одном месте. Запоминайте не сотни паролей, а всего один.</string>
+    <string name="third_description">Ваше хранилище зашифровано на этом телефоне и перед открытием запрашивает отпечаток, лицо или блокировку экрана. Без аккаунта, без облака, без рекламы.</string>
+
     <!-- Main Screens -->
     <string name="banks">Банки</string>
     <string name="mails">Почта</string>
@@ -20,7 +38,6 @@
     <string name="export_data">Экспортировать данные</string>
 
     <!-- Edit Text Hints -->
-    <string name="type_here">Введите здесь…</string>
     <string name="type_your_title_here">Введите ваш заголовок здесь…</string>
     <string name="type_your_response_here">Введите ваш ответ здесь…</string>
     <string name="type_your_heading_here">Введите ваш заголовок здесь…</string>
@@ -35,12 +52,7 @@
 
     <!-- Authentication Screen -->
     <string name="welcome_to_pass_key">Добро пожаловать в Менеджер паролей</string>
-    <string name="authentication_failed">Ошибка аутентификации.</string>
     <string name="something_went_wrong">Что-то пошло не так..</string>
-    <string name="set_password">Пожалуйста, сначала установите пароль для вашего устройства.</string>
-    <string name="permission_required">Требуется доступ к хранилищу для экспорта базы данных.</string>
-    <string name="permission_denied">Доступ запрещен</string>
-    <string name="ok">OK</string>
 
     <!-- Dialogs and Requests -->
     <string name="change">Изменить</string>
@@ -62,15 +74,45 @@
     <!-- Password Health Report -->
     <string name="analyze_passwords">Состояние безопасности</string>
     <string name="security_analysis">Анализ безопасности</string>
-    <string name="security_score">Оценка безопасности</string>
     <string name="weak_passwords">Слабые пароли</string>
     <string name="reused_passwords">Повторяющиеся пароли</string>
-    <string name="safe_passwords">Надежные пароли</string>
     <string name="excellent">Отлично</string>
     <string name="needs_attention">Требует внимания</string>
     <string name="critical">Критично</string>
-    <string name="found_weak">Найдено %1$d слабых паролей</string>
-    <string name="found_reused">Найдено %1$d повторяющихся паролей</string>
-    <string name="used_times">Использовано %1$d раз</string>
     <string name="no_issues">Проблем не обнаружено. Отличная работа!</string>
+    <string name="cd_drag_handle">Изменить порядок</string>
+    <string name="cd_edit">Изменить</string>
+    <string name="cd_delete">Удалить</string>
+    <string name="cd_add_detail">Добавить деталь</string>
+    <string name="cd_add_entry">Добавить запись</string>
+    <string name="cd_settings">Настройки</string>
+    <string name="cd_generate_password">Создать пароль</string>
+    <string name="cd_password_options">Параметры пароля</string>
+    <string name="cd_clear_search">Очистить поиск</string>
+    <string name="cd_open">Открыть</string>
+    <string name="cd_back">Назад</string>
+    <string name="password_settings">Настройки пароля</string>
+    <string name="password_length">Длина: %1$d</string>
+    <string name="security_score_percent">%1$d %%</string>
+    <string name="invalid_file_selected">Выбран недопустимый файл.</string>
+    <plurals name="password_used_times">
+        <item quantity="one">Использован %1$d раз</item>
+        <item quantity="few">Использован %1$d раза</item>
+        <item quantity="many">Использован %1$d раз</item>
+        <item quantity="other">Использован %1$d раза</item>
+    </plurals>
+    <string name="about_message">PassKey — бесплатный менеджер паролей с открытым исходным кодом, без рекламы и без аккаунта.\n\nВаши записи хранятся в зашифрованной базе данных на этом телефоне. Перед показом PassKey запрашивает отпечаток, лицо или блокировку экрана, блокирует снимки экрана, создаёт надёжные пароли и проверяет сохранённые пароли на слабые и повторяющиеся.\n\nИсходный код открыт на GitHub: github.com/aditya-190/Pass-Key-Manager</string>
+    <string name="privacy_message">Ваше хранилище остаётся на вашем телефоне. У PassKey нет аккаунта, синхронизации и собственного сервера, и он никогда не отправляет сохранённые вами записи.\n\nТолько с вашего разрешения приложение отправляет через Google Firebase:\n• Отчёты о сбоях и производительности: технические данные, например модель устройства, версию Android и версию приложения.\n• Статистику использования: какие экраны и функции используются, но никогда не то, что вы храните.\n\nОба варианта выключены, пока вы не сделаете выбор, и вы можете изменить его в любое время в разделе Настройки › Параметры конфиденциальности. PassKey не использует рекламный идентификатор. Google Play используется для проверки обновлений приложения.\n\nЭкспортированные файлы в этой версии не зашифрованы. Храните их в надёжном месте и удаляйте, когда они больше не нужны.</string>
+    <string name="terms_n_condition_message">PassKey предоставляется бесплатно, «как есть», без каких-либо гарантий.\n\nВы отвечаете за защиту своего телефона, блокировки экрана и экспортированных файлов. Ваши данные никогда не покидают телефон, поэтому никто не сможет их восстановить, если телефон потерян или приложение удалено. Регулярно экспортируйте резервную копию.\n\nИспользуя PassKey, вы соглашаетесь с этими условиями и политикой конфиденциальности.</string>
+    <string name="consent_title">Помогите улучшить PassKey</string>
+    <string name="consent_body">Ваши пароли никогда не покидают этот телефон. С вашего разрешения PassKey может отправлять анонимные отчёты в Google Firebase, которые помогают исправлять сбои и понимать, какие функции используются. В них никогда нет ничего из того, что вы сохраняете.</string>
+    <string name="consent_crash_title">Отчёты о сбоях и производительности</string>
+    <string name="consent_crash_body">Технические данные при сбое, например модель устройства, версия Android и версия приложения.</string>
+    <string name="consent_analytics_title">Статистика использования</string>
+    <string name="consent_analytics_body">Какие экраны и функции используются, подсчитывается без ваших данных.</string>
+    <string name="consent_allow_all">Разрешить всё</string>
+    <string name="consent_decline_all">Отклонить всё</string>
+    <string name="consent_save">Сохранить мой выбор</string>
+    <string name="consent_change_later">Это можно изменить в любое время в разделе Настройки › Параметры конфиденциальности.</string>
+    <string name="privacy_options">Параметры конфиденциальности</string>
 </resources>

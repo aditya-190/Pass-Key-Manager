@@ -38,17 +38,17 @@ import com.bhardwaj.passkey.utils.PasswordAnalyzer
 import com.bhardwaj.passkey.utils.UiEvents
 import com.bhardwaj.passkey.utils.UiText
 import dagger.hilt.android.lifecycle.HiltViewModel
+import java.io.BufferedReader
+import java.io.File
+import java.io.IOException
+import java.io.StringReader
+import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.io.BufferedReader
-import java.io.File
-import java.io.IOException
-import java.io.StringReader
-import javax.inject.Inject
 
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
@@ -118,7 +118,6 @@ class SettingsViewModel @Inject constructor(
                     sendUiEvents(
                         UiEvents.ShowSnackBar(
                             message = UiText.StringResource(R.string.coming_soon)
-                                .asString(context = appContext)
                         )
                     )
                 } else {
@@ -148,17 +147,13 @@ class SettingsViewModel @Inject constructor(
                     if (exportDataToStorage(fileName)) {
                         sendUiEvents(
                             UiEvents.ShowSnackBar(
-                                message = UiText.StringResource(
-                                    R.string.export_download
-                                ).asString(appContext)
+                                message = UiText.StringResource(R.string.export_download)
                             )
                         )
                     } else {
                         sendUiEvents(
                             UiEvents.ShowSnackBar(
-                                message = UiText.StringResource(
-                                    R.string.something_went_wrong
-                                ).asString(appContext)
+                                message = UiText.StringResource(R.string.something_went_wrong)
                             )
                         )
                     }
@@ -170,17 +165,13 @@ class SettingsViewModel @Inject constructor(
                     if (importDateFromStorage(event.content)) {
                         sendUiEvents(
                             UiEvents.ShowSnackBar(
-                                message = UiText.StringResource(
-                                    R.string.import_success
-                                ).asString(appContext)
+                                message = UiText.StringResource(R.string.import_success)
                             )
                         )
                     } else {
                         sendUiEvents(
                             UiEvents.ShowSnackBar(
-                                message = UiText.StringResource(
-                                    R.string.import_failed
-                                ).asString(appContext)
+                                message = UiText.StringResource(R.string.import_failed)
                             )
                         )
                     }
@@ -219,44 +210,38 @@ class SettingsViewModel @Inject constructor(
         }
     }
 
-    private fun replaceCommasWithUnderscores(text: String): String {
-        return text.replace(",", "____")
-    }
+    private fun replaceCommasWithUnderscores(text: String): String = text.replace(",", "____")
 
-    private fun replaceUnderscoresWithCommas(text: String): String {
-        return text.replace("____", ",")
-    }
+    private fun replaceUnderscoresWithCommas(text: String): String = text.replace("____", ",")
 
-    private suspend fun exportDataToStorage(fileName: String): Boolean {
-        return try {
-            val allPreviews = repository.getPreviews().first()
+    private suspend fun exportDataToStorage(fileName: String): Boolean = try {
+        val allPreviews = repository.getPreviews().first()
 
-            val csvBuilder = StringBuilder()
-            csvBuilder.append(FILE_HEADER)
-            allPreviews.forEach { preview ->
-                val previewId = preview.previewId!!
-                val details = repository.getDetailsByPreviewId(previewId).first()
-                details.forEach {
-                    val categoryName = preview.categoryName
-                    val heading = replaceCommasWithUnderscores(preview.heading)
-                    val question = replaceCommasWithUnderscores(it.question)
-                    val answer = replaceCommasWithUnderscores(it.answer)
+        val csvBuilder = StringBuilder()
+        csvBuilder.append(FILE_HEADER)
+        allPreviews.forEach { preview ->
+            val previewId = preview.previewId!!
+            val details = repository.getDetailsByPreviewId(previewId).first()
+            details.forEach {
+                val categoryName = preview.categoryName
+                val heading = replaceCommasWithUnderscores(preview.heading)
+                val question = replaceCommasWithUnderscores(it.question)
+                val answer = replaceCommasWithUnderscores(it.answer)
 
-                    csvBuilder.append("$categoryName,$heading,$question,$answer\n")
-                }
+                csvBuilder.append("$categoryName,$heading,$question,$answer\n")
             }
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                saveToDownloadsApi29AndAbove(csvBuilder.toString(), fileName)
-            } else {
-                saveToDownloadsLegacy(csvBuilder.toString(), fileName)
-            }
-
-            true
-        } catch (e: Exception) {
-            e.printStackTrace()
-            false
         }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            saveToDownloadsApi29AndAbove(csvBuilder.toString(), fileName)
+        } else {
+            saveToDownloadsLegacy(csvBuilder.toString(), fileName)
+        }
+
+        true
+    } catch (e: Exception) {
+        e.printStackTrace()
+        false
     }
 
     @RequiresApi(Build.VERSION_CODES.Q)

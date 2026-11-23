@@ -18,12 +18,8 @@ import com.bhardwaj.passkey.R
 import com.bhardwaj.passkey.presentation.screens.onboarding_screens.OnBoardingScreen
 import com.bhardwaj.passkey.presentation.theme.Poppins
 
-
 @Composable
-fun OnBoardingItem(
-    modifier: Modifier = Modifier,
-    screen: OnBoardingScreen
-) {
+fun OnBoardingItem(modifier: Modifier = Modifier, screen: OnBoardingScreen) {
     Column(
         modifier = modifier
             .fillMaxHeight(0.8F)
@@ -33,12 +29,11 @@ fun OnBoardingItem(
     ) {
         Image(
             painter = painterResource(id = R.drawable.icon_logo),
-            contentDescription = "App Logo"
+            contentDescription = null
         )
         TextHighlighter(
             modifier = Modifier.padding(top = 72.dp),
-            fullText = screen.title,
-            highlightedText = screen.highlightedText
+            markedUpText = screen.title
         )
         Text(
             modifier = Modifier.padding(top = 24.dp),

@@ -14,12 +14,15 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.BottomSheetScaffold
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.ModalBottomSheetProperties
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -38,10 +41,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.SecureFlagPolicy
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.bhardwaj.passkey.R
 import com.bhardwaj.passkey.domain.events.SettingsEvents
 import com.bhardwaj.passkey.domain.viewModels.SettingsViewModel
+import com.bhardwaj.passkey.presentation.navigation.Routes
 import com.bhardwaj.passkey.presentation.screens.settings_screen.components.AnalysisBottomSheet
 import com.bhardwaj.passkey.presentation.screens.settings_screen.components.FaqItem
 import com.bhardwaj.passkey.presentation.screens.settings_screen.components.LanguageBottomSheet
@@ -50,6 +55,7 @@ import com.bhardwaj.passkey.presentation.theme.BebasNeue
 import com.bhardwaj.passkey.presentation.theme.Poppins
 import com.bhardwaj.passkey.utils.Constants.Companion.FILE_TYPE
 import com.bhardwaj.passkey.utils.UiEvents
+import com.bhardwaj.passkey.utils.asString
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -64,6 +70,8 @@ fun SettingsScreen(
     val scaffoldState = rememberBottomSheetScaffoldState()
 
     val context = LocalContext.current
+    val invalidFileMessage = stringResource(R.string.invalid_file_selected)
+
     val importDataLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.OpenDocument()
     ) { document ->
@@ -75,7 +83,9 @@ fun SettingsScreen(
                 }
             } else {
                 scope.launch {
-                    snackBarHostState.showSnackbar(message = "Invalid file selected.")
+                    snackBarHostState.showSnackbar(
+                        message = invalidFileMessage
+                    )
                 }
             }
         }
@@ -92,11 +102,13 @@ fun SettingsScreen(
                 is UiEvents.ShowSnackBar -> {
                     scope.launch {
                         snackBarHostState.showSnackbar(
-                            message = event.message,
-                            actionLabel = event.action
+                            message = event.message.asString(context),
+                            actionLabel = event.action?.asString(context)
                         )
                     }
                 }
+
+                else -> Unit
             }
         }
     }
@@ -111,31 +123,11 @@ fun SettingsScreen(
             sheetShape = RectangleShape,
             sheetSwipeEnabled = true,
             sheetDragHandle = {},
+            // Only the Privacy/Terms/About text lives in this sheet. The language picker is a ModalBottomSheet in
+            // its own window; hosting it here left this sheet expanded at 0 px, and Material3's overscroll scale
+            // divides by the sheet height, so a bouncing drag crashed with "scaleY = Infinity" (monkey seed 5521).
             sheetContent = {
-                if (viewModel.isSheetOpen) {
-                    val sheetState = rememberModalBottomSheetState()
-                    ModalBottomSheet(
-                        sheetState = sheetState,
-                        onDismissRequest = { viewModel.onEvent(SettingsEvents.OnDismissBottomSheet) },
-                        dragHandle = {},
-                        shape = RectangleShape,
-                    ) {
-                        LanguageBottomSheet(
-                            onLanguageChange = {
-                                viewModel.onEvent(
-                                    SettingsEvents.OnLanguageChange(
-                                        newLanguage = it
-                                    )
-                                )
-                            },
-                            onBackIconClick = {
-                                viewModel.onEvent(SettingsEvents.OnDismissBottomSheet)
-                            }
-                        )
-                    }
-                } else {
-                    FaqItem(openedBy = viewModel.bottomSheetOpenedBy)
-                }
+                FaqItem(openedBy = viewModel.bottomSheetOpenedBy)
             }
         ) {
             Box(
@@ -145,16 +137,19 @@ fun SettingsScreen(
                     .padding(16.dp)
             ) {
                 Column(
-                    modifier = Modifier.fillMaxSize(),
-                    verticalArrangement = Arrangement.SpaceBetween,
+                    // Scrolls so every row stays reachable at 200% font size and in landscape.
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .verticalScroll(rememberScrollState()),
+                    verticalArrangement = Arrangement.SpaceBetween
                 ) {
                     Column(
                         modifier = Modifier.fillMaxWidth(),
-                        verticalArrangement = Arrangement.Top,
+                        verticalArrangement = Arrangement.Top
                     ) {
                         Icon(
                             painter = painterResource(id = R.drawable.icon_logo),
-                            contentDescription = "App Icon",
+                            contentDescription = null,
                             tint = MaterialTheme.colorScheme.primary
                         )
                         Text(
@@ -172,11 +167,10 @@ fun SettingsScreen(
                                     color = MaterialTheme.colorScheme.primary,
                                     shape = RoundedCornerShape(10.dp)
                                 )
-                                .padding(top = 16.dp, start = 16.dp, end = 16.dp),
+                                .padding(top = 16.dp, start = 16.dp, end = 16.dp)
                         ) {
                             SettingsText(text = stringResource(id = R.string.change_language)) {
                                 viewModel.onEvent(SettingsEvents.OnLanguageClick)
-                                scope.launch { scaffoldState.bottomSheetState.expand() }
                             }
                             SettingsText(text = stringResource(id = R.string.analyze_passwords)) {
                                 viewModel.onEvent(SettingsEvents.OnAnalyzePasswordsClick)
@@ -193,6 +187,9 @@ fun SettingsScreen(
                             SettingsText(text = stringResource(id = R.string.privacy)) {
                                 viewModel.onEvent(SettingsEvents.OnPrivacyClick)
                                 scope.launch { scaffoldState.bottomSheetState.expand() }
+                            }
+                            SettingsText(text = stringResource(id = R.string.privacy_options)) {
+                                onNavigate(Routes.CONSENT_PAGE + "?${Routes.CONSENT_FROM_SETTINGS_ARG}=true")
                             }
                             SettingsText(text = stringResource(id = R.string.terms_n_condition)) {
                                 viewModel.onEvent(SettingsEvents.OnTermsAndConditionClick)
@@ -216,6 +213,32 @@ fun SettingsScreen(
             }
         }
     }
+    if (viewModel.isSheetOpen) {
+        val sheetState = rememberModalBottomSheetState()
+        ModalBottomSheet(
+            properties = ModalBottomSheetProperties(
+                securePolicy = SecureFlagPolicy.SecureOn
+            ),
+            sheetState = sheetState,
+            onDismissRequest = { viewModel.onEvent(SettingsEvents.OnDismissBottomSheet) },
+            dragHandle = {},
+            shape = RectangleShape
+        ) {
+            LanguageBottomSheet(
+                onLanguageChange = {
+                    viewModel.onEvent(
+                        SettingsEvents.OnLanguageChange(
+                            newLanguage = it
+                        )
+                    )
+                },
+                onBackIconClick = {
+                    viewModel.onEvent(SettingsEvents.OnDismissBottomSheet)
+                }
+            )
+        }
+    }
+
     if (isAnalysisSheetOpen) {
         AnalysisBottomSheet(
             result = analysisResult,

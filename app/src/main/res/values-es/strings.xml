@@ -1,5 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="no_previews_found">Aún no hay entradas</string>
+    <string name="no_details_found">Aún no hay detalles</string>
+    <!--    Splash Screen    -->
+    <string name="app_version">Versión de la app <xliff:g id="version" example="5.5.1">%1$s</xliff:g></string>
+    <string name="app_description">El único gestor de contraseñas que necesitarás</string>
+
+    <!--    OnBoarding Screens    -->
+    <!--    Keep the 
+ line breaks and the [[ ]] highlight markers.    -->
+    <string name="skip">Omitir</string>
+    <string name="next">Siguiente</string>
+    <string name="first_heading">Crea\ncontraseñas\n[[seguras]].</string>
+    <string name="second_heading">Todas tus\n[[contraseñas]]\nestán aquí.</string>
+    <string name="third_heading">Se abre solo\npara [[ti]],\nen este teléfono.</string>
+    <string name="first_description">Deja de usar contraseñas inseguras en tus cuentas en línea y da el salto con PassKey. Consigue contraseñas muy seguras y difíciles de descifrar.</string>
+    <string name="second_description">Guarda y gestiona todas tus contraseñas desde un solo lugar. No memorices cientos de contraseñas, solo una.</string>
+    <string name="third_description">Tu bóveda está cifrada en este teléfono y pide tu huella, tu cara o el bloqueo de pantalla antes de abrirse. Sin cuenta, sin nube, sin anuncios.</string>
+
     <!--    Main Screens    -->
     <string name="banks">Bancos</string>
     <string name="mails">Correos</string>
@@ -20,7 +38,6 @@
     <string name="export_data">Exportar Datos</string>
 
     <!--    Edit Text Hints    -->
-    <string name="type_here">Escriba aquí…</string>
     <string name="type_your_title_here">Escriba su título aquí…</string>
     <string name="type_your_response_here">Escriba su respuesta aquí…</string>
     <string name="type_your_heading_here">Escriba su encabezado aquí…</string>
@@ -35,12 +52,7 @@
 
     <!--    Authentication Screen    -->
     <string name="welcome_to_pass_key">Bienvenido a PassKey Manager</string>
-    <string name="authentication_failed">Autenticación Fallida.</string>
     <string name="something_went_wrong">Algo Salió Mal..</string>
-    <string name="set_password">Por favor establezca la contraseña de su dispositivo primero.</string>
-    <string name="permission_required">Se necesita acceso al almacenamiento para exportar la base de datos.</string>
-    <string name="permission_denied">Permiso Denegado</string>
-    <string name="ok">OK</string>
 
     <!--    Dialogs and Requests    -->
     <string name="change">Cambiar</string>
@@ -62,15 +74,44 @@
     <!-- Password Health Report -->
     <string name="analyze_passwords">Estado de seguridad</string>
     <string name="security_analysis">Análisis de seguridad</string>
-    <string name="security_score">Puntuación de seguridad</string>
     <string name="weak_passwords">Contraseñas débiles</string>
     <string name="reused_passwords">Contraseñas reutilizadas</string>
-    <string name="safe_passwords">Contraseñas seguras</string>
     <string name="excellent">Excelente</string>
     <string name="needs_attention">Necesita atención</string>
     <string name="critical">Crítico</string>
-    <string name="found_weak">Se encontraron %1$d contraseñas débiles</string>
-    <string name="found_reused">Se encontraron %1$d contraseñas reutilizadas</string>
-    <string name="used_times">Usado %1$d veces</string>
     <string name="no_issues">No se encontraron problemas. ¡Bien hecho!</string>
+    <string name="cd_drag_handle">Reordenar</string>
+    <string name="cd_edit">Editar</string>
+    <string name="cd_delete">Eliminar</string>
+    <string name="cd_add_detail">Añadir detalle</string>
+    <string name="cd_add_entry">Añadir entrada</string>
+    <string name="cd_settings">Ajustes</string>
+    <string name="cd_generate_password">Generar contraseña</string>
+    <string name="cd_password_options">Opciones de contraseña</string>
+    <string name="cd_clear_search">Borrar búsqueda</string>
+    <string name="cd_open">Abrir</string>
+    <string name="cd_back">Atrás</string>
+    <string name="password_settings">Ajustes de contraseña</string>
+    <string name="password_length">Longitud: %1$d</string>
+    <string name="security_score_percent">%1$d %%</string>
+    <string name="invalid_file_selected">Archivo seleccionado no válido.</string>
+    <plurals name="password_used_times">
+        <item quantity="one">Usada %1$d vez</item>
+        <item quantity="many">Usada %1$d veces</item>
+        <item quantity="other">Usada %1$d veces</item>
+    </plurals>
+    <string name="about_message">PassKey es un gestor de contraseñas gratuito y de código abierto, sin anuncios y sin cuenta.\n\nTus entradas se guardan en una base de datos cifrada en este teléfono. PassKey pide tu huella, tu cara o el bloqueo de pantalla antes de mostrarlas, bloquea las capturas de pantalla, genera contraseñas seguras y revisa las guardadas en busca de contraseñas débiles o repetidas.\n\nEl código fuente es público en GitHub: github.com/aditya-190/Pass-Key-Manager</string>
+    <string name="privacy_message">Tu bóveda se queda en tu teléfono. PassKey no tiene cuenta, ni sincronización, ni servidor propio, y nunca envía las entradas que guardas.\n\nSolo si lo permites, la app usa Google Firebase para enviar:\n• Informes de fallos y rendimiento: datos técnicos como el modelo del dispositivo, la versión de Android y la versión de la app.\n• Estadísticas de uso: qué pantallas y funciones se usan, nunca lo que guardas.\n\nAmbos están desactivados hasta que elijas, y puedes cambiar tu elección en cualquier momento en Ajustes › Opciones de privacidad. PassKey no usa un ID de publicidad. Google Play se usa para buscar actualizaciones de la app.\n\nLos archivos exportados no están cifrados en esta versión. Guárdalos en un lugar seguro y bórralos cuando ya no los necesites.</string>
+    <string name="terms_n_condition_message">PassKey se ofrece gratis, tal cual, sin garantía de ningún tipo.\n\nEres responsable de proteger tu teléfono, tu bloqueo de pantalla y cualquier archivo exportado. Tus datos nunca salen de tu teléfono, así que nadie puede recuperarlos si pierdes el teléfono o eliminas la app. Exporta una copia de seguridad con regularidad.\n\nAl usar PassKey aceptas estos términos y la política de privacidad.</string>
+    <string name="consent_title">Ayuda a mejorar PassKey</string>
+    <string name="consent_body">Tus contraseñas nunca salen de este teléfono. Con tu permiso, PassKey puede enviar informes anónimos a Google Firebase que ayudan a corregir fallos y a ver qué funciones se usan. Nunca incluyen nada de lo que guardas.</string>
+    <string name="consent_crash_title">Informes de fallos y rendimiento</string>
+    <string name="consent_crash_body">Datos técnicos cuando algo falla, como el modelo del dispositivo, la versión de Android y la versión de la app.</string>
+    <string name="consent_analytics_title">Estadísticas de uso</string>
+    <string name="consent_analytics_body">Qué pantallas y funciones se usan, contado sin ninguno de tus datos.</string>
+    <string name="consent_allow_all">Permitir todo</string>
+    <string name="consent_decline_all">Rechazar todo</string>
+    <string name="consent_save">Guardar mis opciones</string>
+    <string name="consent_change_later">Puedes cambiarlo en cualquier momento en Ajustes › Opciones de privacidad.</string>
+    <string name="privacy_options">Opciones de privacidad</string>
 </resources>

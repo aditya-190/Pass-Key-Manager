@@ -24,45 +24,44 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.unit.dp
 import com.bhardwaj.passkey.utils.Categories
 
-data class BottomNavigationItem(
-    val title: String,
-    val icon: ImageVector,
-    val isVisible: Boolean = true
-)
+data class BottomNavigationItem(val category: Categories, val icon: ImageVector, val isVisible: Boolean = true) {
+    /** The persisted enum name, used as the navigation/selection key. */
+    val title: String get() = category.name
+}
 
 val bottomNavigationList = listOf(
     BottomNavigationItem(
-        title = Categories.BANKS.name,
+        category = Categories.BANKS,
         icon = Icons.Filled.AccountBalance
     ),
     BottomNavigationItem(
-        title = Categories.APPS.name,
+        category = Categories.APPS,
         icon = Icons.Filled.Gamepad
     ),
+    // Invisible spacer that reserves room for the centre FAB notch. It is not a destination.
     BottomNavigationItem(
-        title = Categories.BANKS.name,
+        category = Categories.BANKS,
         icon = Icons.Filled.AccountBalance,
-        isVisible = false,
+        isVisible = false
     ),
 
     BottomNavigationItem(
-        title = Categories.MAILS.name,
+        category = Categories.MAILS,
         icon = Icons.Filled.Email
     ),
     BottomNavigationItem(
-        title = Categories.OTHERS.name,
+        category = Categories.OTHERS,
         icon = Icons.AutoMirrored.Filled.Article
     )
 )
 
 @Composable
-fun MainBottomNavigation(
-    selectedIndex: Int,
-    onItemClick: (index: Int, title: String) -> Unit
-) {
+fun MainBottomNavigation(selectedIndex: Int, onItemClick: (index: Int, title: String) -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -76,8 +75,17 @@ fun MainBottomNavigation(
         bottomNavigationList.forEachIndexed { index, item ->
             Icon(
                 imageVector = item.icon,
-                contentDescription = item.title,
+                // Previously the raw enum name ("BANKS"), announced in English in every locale.
+                contentDescription = if (item.isVisible) {
+                    stringResource(id = item.category.labelRes)
+                } else {
+                    null
+                },
                 modifier = Modifier
+                    .then(
+                        // The alpha-0 spacer stays reachable by TalkBack without this.
+                        if (item.isVisible) Modifier else Modifier.clearAndSetSemantics { }
+                    )
                     .size(42.dp)
                     .padding(8.dp)
                     .clickable(
@@ -87,9 +95,16 @@ fun MainBottomNavigation(
                             if (item.isVisible) {
                                 onItemClick(index, item.title)
                             }
-                        })
+                        }
+                    )
                     .alpha(if (item.isVisible) 1F else 0F),
-                tint = if (selectedIndex == index) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline,
+                tint = if (selectedIndex ==
+                    index
+                ) {
+                    MaterialTheme.colorScheme.primary
+                } else {
+                    MaterialTheme.colorScheme.outline
+                }
             )
         }
     }

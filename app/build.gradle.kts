@@ -10,6 +10,7 @@ plugins {
     alias(libs.plugins.google.services)
     alias(libs.plugins.firebase.crashlytics.plugin)
     alias(libs.plugins.firebase.perf.plugin)
+    alias(libs.plugins.ktlint)
 }
 
 android {
@@ -20,8 +21,8 @@ android {
         applicationId = "com.bhardwaj.passkey"
         minSdk = 28
         targetSdk = 36
-        versionCode = 43
-        versionName = "5.5.1"
+        versionCode = 44
+        versionName = "5.5.2"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
@@ -70,6 +71,19 @@ android {
         compose = true
         buildConfig = true
     }
+    lint {
+        // The onboarding strings shipped in English to all 16 locales for several releases
+        // because they were marked translatable="false", which also suppressed this check.
+        // Failing the build is what stops that recurring.
+        error += setOf(
+            "MissingTranslation",
+            "ExtraTranslation",
+            "ImpliedQuantity",
+            "StringFormatInvalid",
+            "StringFormatMatches"
+        )
+        abortOnError = true
+    }
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
@@ -90,6 +104,12 @@ android {
 }
 
 dependencies {
+    constraints {
+        // room-testing 2.8.3 is compiled against kotlinx-serialization 1.8; navigation pulls in 1.7.3, which made
+        // every on-device migration test fail with AbstractMethodError. Test APKs must share the app's version.
+        implementation(libs.kotlinx.serialization.json)
+    }
+
     // Android Essentials
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.activity.compose)
@@ -151,6 +171,7 @@ dependencies {
 
     // Testing & Debugging
     testImplementation(libs.junit)
+    testImplementation(libs.kotlinx.coroutines.test)
     androidTestImplementation(libs.test.ext.junit)
     androidTestImplementation(libs.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))

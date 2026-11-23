@@ -31,7 +31,9 @@ class MigrationTester {
         var db = helper.createDatabase(DB_NAME, 1)
 
         db.execSQL("INSERT INTO $PREVIEW_TABLE (heading, categoryName, priority) VALUES ('Sample Heading', 'BANKS', 1)")
-        db.execSQL("INSERT INTO $DETAILS_TABLE (question, answer, priority, headingName, categoryName) VALUES ('Sample Question', 'Sample Answer', 1, 'Sample Heading', 'BANKS')")
+        db.execSQL(
+            "INSERT INTO $DETAILS_TABLE (question, answer, priority, headingName, categoryName) VALUES ('Sample Question', 'Sample Answer', 1, 'Sample Heading', 'BANKS')"
+        )
         db.close()
 
         db = helper.runMigrationsAndValidate(DB_NAME, 2, true, MIGRATION_1_2)
@@ -78,7 +80,9 @@ class MigrationTester {
 
         categories.forEach { category ->
             for (i in 1..10) {
-                db.execSQL("INSERT INTO $PREVIEW_TABLE (heading, categoryName, priority) VALUES ('TEST_$i', '$category', $i)")
+                db.execSQL(
+                    "INSERT INTO $PREVIEW_TABLE (heading, categoryName, priority) VALUES ('TEST_$i', '$category', $i)"
+                )
             }
         }
 
@@ -86,7 +90,9 @@ class MigrationTester {
         categories.forEach { category ->
             for (i in 1..10) {
                 for (j in 1..10) {
-                    db.execSQL("INSERT INTO $DETAILS_TABLE (question, answer, priority, headingName, categoryName) VALUES ('Question_$j', 'Answer_$j', $j, 'TEST_$i', '$category')")
+                    db.execSQL(
+                        "INSERT INTO $DETAILS_TABLE (question, answer, priority, headingName, categoryName) VALUES ('Question_$j', 'Answer_$j', $j, 'TEST_$i', '$category')"
+                    )
                 }
             }
         }

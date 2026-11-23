@@ -1,6 +1,7 @@
 package com.bhardwaj.passkey.data.repository
 
 import android.content.Context
+import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
@@ -11,20 +12,24 @@ import com.bhardwaj.passkey.data.local.DataStoreSource
 import com.bhardwaj.passkey.utils.Constants.Companion.CURRENT_LANGUAGE
 import com.bhardwaj.passkey.utils.Constants.Companion.ONBOARDING_COMPLETE
 import com.bhardwaj.passkey.utils.Constants.Companion.PASSKEY_PREFS
+import java.io.IOException
+import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
-import java.io.IOException
-import javax.inject.Inject
 
-class DataStoreRepository @Inject constructor(private val context: Context) : DataStoreSource {
+/**
+ * The app's single preferences file. Declared once at top level: a `preferencesDataStore` delegate on a
+ * class instance creates a second DataStore over the same file if the class is ever instantiated twice,
+ * which DataStore rejects at runtime.
+ */
+val Context.passkeyDataStore: DataStore<Preferences> by preferencesDataStore(PASSKEY_PREFS)
+
+class DataStoreRepository @Inject constructor(private val dataSource: DataStore<Preferences>) : DataStoreSource {
     companion object {
         val onBoardingKey = booleanPreferencesKey(name = ONBOARDING_COMPLETE)
         val currentLanguageKey = stringPreferencesKey(name = CURRENT_LANGUAGE)
     }
-
-    private val Context.dataStore by preferencesDataStore(PASSKEY_PREFS)
-    private val dataSource = context.dataStore
 
     override suspend fun <T> readPreference(key: Preferences.Key<T>, defaultValue: T): Flow<T> =
         dataSource.data.catch { exception ->
@@ -39,7 +44,7 @@ class DataStoreRepository @Inject constructor(private val context: Context) : Da
         }
 
     override suspend fun <T> savePreference(key: Preferences.Key<T>, value: T) {
-        context.dataStore.edit { preferences -> preferences[key] = value }
+        dataSource.edit { preferences -> preferences[key] = value }
     }
 
     override suspend fun <T> removePreference(key: Preferences.Key<T>) {

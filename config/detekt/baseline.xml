@@ -1,0 +1,22 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues/>
+  <CurrentIssues>
+    <ID>ComplexCondition:DetailViewModel.kt$DetailViewModel$!includeUpper &amp;&amp; !includeLower &amp;&amp; !includeNumbers &amp;&amp; !includeSpecial</ID>
+    <ID>CyclomaticComplexMethod:DetailViewModel.kt$DetailViewModel$fun onEvent(event: DetailEvents)</ID>
+    <ID>CyclomaticComplexMethod:PreviewViewModel.kt$PreviewViewModel$fun onEvent(event: PreviewEvents)</ID>
+    <ID>CyclomaticComplexMethod:SettingsViewModel.kt$SettingsViewModel$fun onEvent(event: SettingsEvents)</ID>
+    <ID>LongMethod:DetailViewModel.kt$DetailViewModel$fun onEvent(event: DetailEvents)</ID>
+    <ID>LongMethod:PreviewViewModel.kt$PreviewViewModel$fun onEvent(event: PreviewEvents)</ID>
+    <ID>LongMethod:SettingsViewModel.kt$SettingsViewModel$fun onEvent(event: SettingsEvents)</ID>
+    <ID>MaxLineLength:MigrationTester.kt$MigrationTester$"INSERT INTO $DETAILS_TABLE (question, answer, priority, headingName, categoryName) VALUES ('Question_$j', 'Answer_$j', $j, 'TEST_$i', '$category')"</ID>
+    <ID>MaxLineLength:MigrationTester.kt$MigrationTester$"INSERT INTO $DETAILS_TABLE (question, answer, priority, headingName, categoryName) VALUES ('Sample Question', 'Sample Answer', 1, 'Sample Heading', 'BANKS')"</ID>
+    <ID>PrintStackTrace:SettingsPage.kt$e</ID>
+    <ID>PrintStackTrace:SettingsViewModel.kt$SettingsViewModel$e</ID>
+    <ID>SpreadOperator:UiText.kt$(resId, *args.toTypedArray())</ID>
+    <ID>SpreadOperator:UiText.kt$(resId, count, *args.toTypedArray())</ID>
+    <ID>TooGenericExceptionCaught:SettingsPage.kt$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:SettingsViewModel.kt$SettingsViewModel$e: Exception</ID>
+    <ID>UtilityClassWithPublicConstructor:Constants.kt$Constants</ID>
+  </CurrentIssues>
+</SmellBaseline>

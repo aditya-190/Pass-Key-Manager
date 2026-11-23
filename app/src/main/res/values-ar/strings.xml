@@ -1,5 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="no_previews_found">لا توجد إدخالات بعد</string>
+    <string name="no_details_found">لا توجد تفاصيل بعد</string>
+    <!--    Splash Screen    -->
+    <string name="app_version">إصدار التطبيق <xliff:g id="version" example="5.5.1">%1$s</xliff:g></string>
+    <string name="app_description">مدير كلمات المرور الوحيد الذي ستحتاج إليه</string>
+
+    <!--    OnBoarding Screens    -->
+    <!--    Keep the 
+ line breaks and the [[ ]] highlight markers.    -->
+    <string name="skip">تخطٍّ</string>
+    <string name="next">التالي</string>
+    <string name="first_heading">أنشئ\nكلمات مرور\n[[آمنة]].</string>
+    <string name="second_heading">كل\n[[كلمات مرورك]]\nهنا.</string>
+    <string name="third_heading">يُفتح\n[[لك]] وحدك،\nعلى هذا الهاتف.</string>
+    <string name="first_description">توقّف عن استخدام كلمات مرور ضعيفة لحساباتك على الإنترنت، وارتقِ بها مع PassKey. احصل على كلمات مرور آمنة يصعب اختراقها.</string>
+    <string name="second_description">احفظ كل كلمات مرورك وأدرها من مكان واحد. لا تحفظ مئات كلمات المرور، بل واحدة فقط.</string>
+    <string name="third_description">خزنتك مشفّرة على هذا الهاتف وتطلب بصمتك أو وجهك أو قفل الشاشة قبل أن تُفتح. بلا حساب، بلا سحابة، بلا إعلانات.</string>
+
     <!-- Main Screens -->
     <string name="banks">البنوك</string>
     <string name="mails">البريد</string>
@@ -20,7 +38,6 @@
     <string name="export_data">تصدير البيانات</string>
 
     <!-- Edit Text Hints -->
-    <string name="type_here">اكتب هنا…</string>
     <string name="type_your_title_here">اكتب عنوانك هنا…</string>
     <string name="type_your_response_here">اكتب ردك هنا…</string>
     <string name="type_your_heading_here">اكتب عنوانك هنا…</string>
@@ -35,12 +52,7 @@
 
     <!-- Authentication Screen -->
     <string name="welcome_to_pass_key">مرحبًا بك في مدير PassKey</string>
-    <string name="authentication_failed">فشل التوثيق.</string>
     <string name="something_went_wrong">حدث خطأ ما..</string>
-    <string name="set_password">يرجى تعيين كلمة مرور لجهازك أولاً.</string>
-    <string name="permission_required">الوصول إلى التخزين مطلوب لتصدير قاعدة البيانات.</string>
-    <string name="permission_denied">تم رفض الإذن</string>
-    <string name="ok">حسنًا</string>
 
     <!-- Dialogs and Requests -->
     <string name="change">تغيير</string>
@@ -62,15 +74,47 @@
     <!-- Password Health Report -->
     <string name="analyze_passwords">حالة الأمان</string>
     <string name="security_analysis">تحليل الأمان</string>
-    <string name="security_score">درجة الأمان</string>
     <string name="weak_passwords">كلمات مرور ضعيفة</string>
     <string name="reused_passwords">كلمات مرور مكررة</string>
-    <string name="safe_passwords">كلمات مرور آمنة</string>
     <string name="excellent">ممتاز</string>
     <string name="needs_attention">يحتاج إلى انتباه</string>
     <string name="critical">حرج</string>
-    <string name="found_weak">تم العثور على %1$d كلمات مرور ضعيفة</string>
-    <string name="found_reused">تم العثور على %1$d كلمات مرور مكررة</string>
-    <string name="used_times">مستخدمة %1$d مرات</string>
     <string name="no_issues">لم يتم العثور على مشاكل. أحسنت!</string>
+    <string name="cd_drag_handle">إعادة ترتيب</string>
+    <string name="cd_edit">تعديل</string>
+    <string name="cd_delete">حذف</string>
+    <string name="cd_add_detail">إضافة تفصيل</string>
+    <string name="cd_add_entry">إضافة إدخال</string>
+    <string name="cd_settings">الإعدادات</string>
+    <string name="cd_generate_password">إنشاء كلمة مرور</string>
+    <string name="cd_password_options">خيارات كلمة المرور</string>
+    <string name="cd_clear_search">مسح البحث</string>
+    <string name="cd_open">فتح</string>
+    <string name="cd_back">رجوع</string>
+    <string name="password_settings">إعدادات كلمة المرور</string>
+    <string name="password_length">الطول: %1$d</string>
+    <string name="security_score_percent">%1$d%%</string>
+    <string name="invalid_file_selected">الملف المحدد غير صالح.</string>
+    <plurals name="password_used_times">
+        <item quantity="zero">لم تُستخدم</item>
+        <item quantity="one">استُخدمت مرة واحدة</item>
+        <item quantity="two">استُخدمت مرتين</item>
+        <item quantity="few">استُخدمت %1$d مرات</item>
+        <item quantity="many">استُخدمت %1$d مرة</item>
+        <item quantity="other">استُخدمت %1$d مرة</item>
+    </plurals>
+    <string name="about_message">PassKey مدير كلمات مرور مجاني ومفتوح المصدر، بلا إعلانات وبلا حساب.\n\nتُحفظ إدخالاتك في قاعدة بيانات مشفّرة على هذا الهاتف. يطلب PassKey بصمتك أو وجهك أو قفل الشاشة قبل عرضها، ويمنع لقطات الشاشة، وينشئ كلمات مرور قوية، ويفحص كلماتك المحفوظة بحثًا عن الضعيفة أو المكررة.\n\nالشيفرة المصدرية متاحة للعموم على GitHub: github.com/aditya-190/Pass-Key-Manager</string>
+    <string name="privacy_message">تبقى خزنتك على هاتفك. لا يملك PassKey حسابًا ولا مزامنة ولا خادمًا خاصًا به، ولا يرسل أبدًا الإدخالات التي تحفظها.\n\nفقط بإذنك، يرسل التطبيق عبر Google Firebase:\n• تقارير الأعطال والأداء: تفاصيل تقنية مثل طراز الجهاز وإصدار Android وإصدار التطبيق.\n• إحصاءات الاستخدام: الشاشات والميزات المستخدمة، وليس ما تحفظه أبدًا.\n\nكلاهما متوقف حتى تختار، ويمكنك تغيير اختيارك في أي وقت من الإعدادات › خيارات الخصوصية. لا يستخدم PassKey معرّف الإعلانات. يُستخدم Google Play للتحقق من تحديثات التطبيق.\n\nالملفات المُصدَّرة غير مشفّرة في هذا الإصدار. احفظها في مكان آمن واحذفها عندما لا تحتاج إليها.</string>
+    <string name="terms_n_condition_message">يُقدَّم PassKey مجانًا، كما هو، دون أي ضمان.\n\nأنت مسؤول عن حماية هاتفك وقفل الشاشة وأي ملفات مُصدَّرة. لا تغادر بياناتك هاتفك أبدًا، لذا لا يستطيع أحد استعادتها إذا فُقد الهاتف أو حُذف التطبيق. صدِّر نسخة احتياطية بانتظام.\n\nباستخدامك PassKey فإنك توافق على هذه الشروط وعلى سياسة الخصوصية.</string>
+    <string name="consent_title">ساعد في تحسين PassKey</string>
+    <string name="consent_body">كلمات مرورك لا تغادر هذا الهاتف أبدًا. بإذنك، يمكن لـ PassKey إرسال تقارير مجهولة الهوية إلى Google Firebase تساعد على إصلاح الأعطال ومعرفة الميزات المستخدمة. لا تتضمن أبدًا أي شيء تحفظه.</string>
+    <string name="consent_crash_title">تقارير الأعطال والأداء</string>
+    <string name="consent_crash_body">تفاصيل تقنية عند حدوث خطأ، مثل طراز الجهاز وإصدار Android وإصدار التطبيق.</string>
+    <string name="consent_analytics_title">إحصاءات الاستخدام</string>
+    <string name="consent_analytics_body">الشاشات والميزات المستخدمة، تُحصى دون أي من بياناتك.</string>
+    <string name="consent_allow_all">السماح بالكل</string>
+    <string name="consent_decline_all">رفض الكل</string>
+    <string name="consent_save">حفظ اختياراتي</string>
+    <string name="consent_change_later">يمكنك تغيير ذلك في أي وقت من الإعدادات › خيارات الخصوصية.</string>
+    <string name="privacy_options">خيارات الخصوصية</string>
 </resources>

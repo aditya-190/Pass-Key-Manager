@@ -1,0 +1,50 @@
+# Overrides on top of detekt's default config (buildUponDefaultConfig = true).
+naming:
+  # TODO(5.8.0 / Phase 4a): re-enable with ktlint's package-name rule (see .editorconfig).
+  PackageNaming:
+    active: false
+  FunctionNaming:
+    ignoreAnnotated: ['Composable']
+  TopLevelPropertyNaming:
+    constantPattern: '[A-Z][A-Za-z0-9_]*'
+  MatchingDeclarationName:
+    active: false # screen files colocate the Composable with its ViewModel
+complexity:
+  LongParameterList:
+    ignoreAnnotated: ['Composable', 'ParameterizedTest']
+    functionThreshold: 8
+    constructorThreshold: 14 # Hilt-injected ViewModels/repositories (dependencies, not configuration)
+  CyclomaticComplexMethod:
+    ignoreSimpleWhenEntries: true # exhaustive enum → resource/value mappers
+    ignoreAnnotated: ['Composable'] # screen state branches; logic lives in ViewModels
+  LongMethod:
+    ignoreAnnotated: ['Composable'] # screen layouts read top-to-bottom; split by section, not by line count
+  TooManyFunctions:
+    ignoreAnnotatedFunctions: ['Composable', 'Preview']
+    thresholdInClasses: 20
+    thresholdInInterfaces: 25 # Room DAOs: one function per query
+    thresholdInObjects: 100 # analytics/Events.kt is a typed event catalog
+exceptions:
+  SwallowedException:
+    # Expected outcomes mapped to result values, not lost errors.
+    ignoredExceptionTypes:
+      - CancellationException
+      - GetCredentialCancellationException
+      - NoCredentialException
+      - GetCredentialException
+      - GoogleIdTokenParsingException
+      - ActivityNotFoundException
+      - FirebaseAuthUserCollisionException
+      - FirebaseAuthRecentLoginRequiredException
+style:
+  MagicNumber:
+    active: false
+  UnusedPrivateMember:
+    ignoreAnnotated: ['Preview']
+  ReturnCount:
+    max: 4
+  DestructuringDeclarationWithTooManyEntries:
+    maxDestructuringEntries: 4
+  MaxLineLength:
+    maxLineLength: 120
+    excludeCommentStatements: true

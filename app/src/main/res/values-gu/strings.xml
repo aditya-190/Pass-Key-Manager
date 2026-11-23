@@ -1,5 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="no_previews_found">હજી કોઈ એન્ટ્રી નથી</string>
+    <string name="no_details_found">હજી કોઈ વિગત નથી</string>
+    <!--    Splash Screen    -->
+    <string name="app_version">ઍપ સંસ્કરણ <xliff:g id="version" example="5.5.1">%1$s</xliff:g></string>
+    <string name="app_description">તમને જરૂરી એકમાત્ર પાસવર્ડ મેનેજર</string>
+
+    <!--    OnBoarding Screens    -->
+    <!--    Keep the 
+ line breaks and the [[ ]] highlight markers.    -->
+    <string name="skip">છોડો</string>
+    <string name="next">આગળ</string>
+    <string name="first_heading">બનાવો\n[[સુરક્ષિત]]\nપાસવર્ડ.</string>
+    <string name="second_heading">તમારા બધા\n[[પાસવર્ડ]]\nઅહીં છે.</string>
+    <string name="third_heading">ખૂલે છે માત્ર\n[[તમારા]] માટે,\nઆ જ ફોન પર.</string>
+    <string name="first_description">તમારા ઓનલાઇન ખાતાં માટે અસુરક્ષિત પાસવર્ડ વાપરવાનું બંધ કરો, PassKey સાથે આગળ વધો. સૌથી સુરક્ષિત અને તોડવા મુશ્કેલ પાસવર્ડ મેળવો.</string>
+    <string name="second_description">તમારા બધા પાસવર્ડ એક જ જગ્યાએથી સાચવો અને સંભાળો. સેંકડો પાસવર્ડ નહીં, ફક્ત એક જ યાદ રાખો.</string>
+    <string name="third_description">તમારું વૉલ્ટ આ જ ફોન પર એન્ક્રિપ્ટ થયેલું રહે છે અને ખૂલતાં પહેલાં તમારી ફિંગરપ્રિન્ટ, ચહેરો કે સ્ક્રીન લૉક માગે છે. ન એકાઉન્ટ, ન ક્લાઉડ, ન જાહેરાતો.</string>
+
     <!--    Main Screens    -->
     <string name="banks">બેંકો</string>
     <string name="mails">મેલ</string>
@@ -20,7 +38,6 @@
     <string name="export_data">ડેટા નિર્યાત કરો</string>
 
     <!--    Edit Text Hints    -->
-    <string name="type_here">અહીં ટાઇપ કરો…</string>
     <string name="type_your_title_here">તમારો શીર્ષક અહીં ટાઇપ કરો…</string>
     <string name="type_your_response_here">તમારો જવાબ અહીં ટાઇપ કરો…</string>
     <string name="type_your_heading_here">તમારો શીર્ષક અહીં ટાઇપ કરો…</string>
@@ -35,12 +52,7 @@
 
     <!--    Authentication Screen    -->
     <string name="welcome_to_pass_key">PassKey મેનેજર માં આપનું સ્વાગત છે</string>
-    <string name="authentication_failed">પ્રમાણીકરણ નિષ્ફળ થયું.</string>
     <string name="something_went_wrong">કંઈક ખોટું થયું છે..</string>
-    <string name="set_password">કૃપા કરીને પ્રથમ તમારા ડિવાઇસ માટે પાસવર્ડ સેટ કરો.</string>
-    <string name="permission_required">ડેટાબેઝ નિર્યાત કરવા માટે સ્ટોરેજ ઍક્સેસ જરૂરી છે.</string>
-    <string name="permission_denied">પરવાનગી નકારી</string>
-    <string name="ok">ઠીક છે</string>
 
     <!--    Dialogs and Requests    -->
     <string name="change">બદલવું</string>
@@ -62,15 +74,43 @@
     <!-- Password Health Report -->
     <string name="analyze_passwords">સુરક્ષા સ્થિતિ</string>
     <string name="security_analysis">સુરક્ષા વિશ્લેષણ</string>
-    <string name="security_score">સુરક્ષા સ્કોર</string>
     <string name="weak_passwords">નબળા પાસવર્ડ્સ</string>
     <string name="reused_passwords">પુનઃઉપયોગમાં લેવાયેલા પાસવર્ડ્સ</string>
-    <string name="safe_passwords">સુરક્ષિત પાસવર્ડ્સ</string>
     <string name="excellent">ઉત્તમ</string>
     <string name="needs_attention">ધ્યાન આપવાની જરૂર છે</string>
     <string name="critical">ગંભીર</string>
-    <string name="found_weak">%1$d નબળા પાસવર્ડ્સ મળ્યા</string>
-    <string name="found_reused">%1$d પુનઃઉપયોગમાં લેવાયેલા પાસવર્ડ્સ મળ્યા</string>
-    <string name="used_times">%1$d વખત ઉપયોગ થયો</string>
     <string name="no_issues">કોઈ સમસ્યા મળી નથી. સરસ!</string>
+    <string name="cd_drag_handle">ફરીથી ગોઠવો</string>
+    <string name="cd_edit">સંપાદિત કરો</string>
+    <string name="cd_delete">કાઢી નાખો</string>
+    <string name="cd_add_detail">વિગત ઉમેરો</string>
+    <string name="cd_add_entry">એન્ટ્રી ઉમેરો</string>
+    <string name="cd_settings">સેટિંગ્સ</string>
+    <string name="cd_generate_password">પાસવર્ડ બનાવો</string>
+    <string name="cd_password_options">પાસવર્ડ વિકલ્પો</string>
+    <string name="cd_clear_search">શોધ સાફ કરો</string>
+    <string name="cd_open">ખોલો</string>
+    <string name="cd_back">પાછળ</string>
+    <string name="password_settings">પાસવર્ડ સેટિંગ્સ</string>
+    <string name="password_length">લંબાઈ: %1$d</string>
+    <string name="security_score_percent">%1$d%%</string>
+    <string name="invalid_file_selected">અમાન્ય ફાઇલ પસંદ કરી.</string>
+    <plurals name="password_used_times">
+        <item quantity="one">%1$d વાર વપરાયેલ</item>
+        <item quantity="other">%1$d વાર વપરાયેલ</item>
+    </plurals>
+    <string name="about_message">PassKey એક મફત, ઓપન-સોર્સ પાસવર્ડ મેનેજર છે, જેમાં જાહેરાતો નથી અને એકાઉન્ટની જરૂર નથી.\n\nતમારી એન્ટ્રીઓ આ જ ફોન પર એન્ક્રિપ્ટ થયેલા ડેટાબેસમાં સચવાય છે. PassKey તેમને બતાવતાં પહેલાં તમારી ફિંગરપ્રિન્ટ, ચહેરો કે સ્ક્રીન લૉક માગે છે, સ્ક્રીનશૉટ રોકે છે, મજબૂત પાસવર્ડ બનાવે છે અને સાચવેલા પાસવર્ડમાં નબળા કે ફરી વપરાયેલા પાસવર્ડ તપાસે છે.\n\nસોર્સ કોડ GitHub પર જાહેર છે: github.com/aditya-190/Pass-Key-Manager</string>
+    <string name="privacy_message">તમારું વૉલ્ટ તમારા ફોન પર જ રહે છે. PassKey નું ન કોઈ એકાઉન્ટ છે, ન સિંક, ન પોતાનું સર્વર, અને તે તમારી સાચવેલી એન્ટ્રીઓ ક્યારેય મોકલતું નથી.\n\nમાત્ર તમારી મંજૂરીથી, ઍપ Google Firebase દ્વારા આ મોકલે છે:\n• ક્રૅશ અને પર્ફોર્મન્સ રિપોર્ટ: ડિવાઇસ મૉડલ, Android વર્ઝન અને ઍપ વર્ઝન જેવી ટેક્નિકલ માહિતી.\n• ઉપયોગના આંકડા: કઈ સ્ક્રીન અને સુવિધાઓ વપરાય છે, તમે શું સાચવો છો તે ક્યારેય નહીં.\n\nતમે પસંદ ન કરો ત્યાં સુધી બંને બંધ રહે છે, અને સેટિંગ્સ › ગોપનીયતા વિકલ્પોમાં તમે ગમે ત્યારે પસંદગી બદલી શકો છો. PassKey જાહેરાત ID નો ઉપયોગ કરતું નથી. ઍપ અપડેટ તપાસવા Google Play નો ઉપયોગ થાય છે.\n\nઆ વર્ઝનમાં એક્સપોર્ટ કરેલી ફાઇલો એન્ક્રિપ્ટ થયેલી નથી. તેમને સુરક્ષિત જગ્યાએ રાખો અને જરૂર ન હોય ત્યારે ડિલીટ કરો.</string>
+    <string name="terms_n_condition_message">PassKey મફત, જેમ છે તેમ, કોઈ પણ વૉરંટી વગર આપવામાં આવે છે.\n\nતમારો ફોન, સ્ક્રીન લૉક અને એક્સપોર્ટ કરેલી ફાઇલો સુરક્ષિત રાખવી એ તમારી જવાબદારી છે. તમારો ડેટા ક્યારેય ફોનની બહાર જતો નથી, તેથી ફોન ખોવાય કે ઍપ દૂર થાય તો કોઈ તેને પાછો લાવી શકતું નથી. નિયમિત રીતે બૅકઅપ એક્સપોર્ટ કરો.\n\nPassKey નો ઉપયોગ કરીને તમે આ શરતો અને ગોપનીયતા નીતિ સાથે સંમત થાઓ છો.</string>
+    <string name="consent_title">PassKey ને વધુ સારું બનાવવામાં મદદ કરો</string>
+    <string name="consent_body">તમારા પાસવર્ડ ક્યારેય આ ફોનની બહાર જતા નથી. તમારી મંજૂરીથી, PassKey Google Firebase ને અનામી રિપોર્ટ મોકલી શકે છે, જે ક્રૅશ સુધારવામાં અને કઈ સુવિધાઓ વપરાય છે તે સમજવામાં મદદ કરે છે. તેમાં તમે સાચવેલું કંઈ પણ ક્યારેય હોતું નથી.</string>
+    <string name="consent_crash_title">ક્રૅશ અને પર્ફોર્મન્સ રિપોર્ટ</string>
+    <string name="consent_crash_body">કંઈક ખોટું થાય ત્યારે ટેક્નિકલ માહિતી, જેમ કે ડિવાઇસ મૉડલ, Android વર્ઝન અને ઍપ વર્ઝન.</string>
+    <string name="consent_analytics_title">ઉપયોગના આંકડા</string>
+    <string name="consent_analytics_body">કઈ સ્ક્રીન અને સુવિધાઓ વપરાય છે, તમારા કોઈ ડેટા વગર ગણવામાં આવે છે.</string>
+    <string name="consent_allow_all">બધાને મંજૂરી આપો</string>
+    <string name="consent_decline_all">બધું નકારો</string>
+    <string name="consent_save">મારી પસંદગી સાચવો</string>
+    <string name="consent_change_later">તમે આ સેટિંગ્સ › ગોપનીયતા વિકલ્પોમાં ગમે ત્યારે બદલી શકો છો.</string>
+    <string name="privacy_options">ગોપનીયતા વિકલ્પો</string>
 </resources>

@@ -26,7 +26,7 @@ fun FaqItem(openedBy: AlertBy) {
             R.string.terms_n_condition,
             R.string.terms_n_condition_message
         ),
-        AlertBy.ABOUT to Pair(R.string.about, R.string.about_message),
+        AlertBy.ABOUT to Pair(R.string.about, R.string.about_message)
     )
 
     LazyColumn(
@@ -38,7 +38,7 @@ fun FaqItem(openedBy: AlertBy) {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(MaterialTheme.colorScheme.background),
+                    .background(MaterialTheme.colorScheme.background)
             ) {
                 Text(
                     modifier = Modifier
@@ -63,7 +63,7 @@ fun FaqItem(openedBy: AlertBy) {
                 text = stringResource(id = bottomSheetContent[openedBy]!!.second),
                 fontWeight = FontWeight.Normal,
                 fontSize = 16.sp,
-                color = MaterialTheme.colorScheme.onBackground,
+                color = MaterialTheme.colorScheme.onBackground
             )
         }
     }

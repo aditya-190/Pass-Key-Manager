@@ -29,6 +29,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.ModalBottomSheetProperties
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
@@ -42,11 +43,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.SecureFlagPolicy
 import com.bhardwaj.passkey.R
 import com.bhardwaj.passkey.data.local.entity.Details
 import com.bhardwaj.passkey.presentation.theme.BebasNeue
@@ -55,14 +58,13 @@ import com.bhardwaj.passkey.utils.PasswordAnalysisResult
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AnalysisBottomSheet(
-    result: PasswordAnalysisResult,
-    onDismiss: () -> Unit,
-    onDetailClick: (Details) -> Unit
-) {
+fun AnalysisBottomSheet(result: PasswordAnalysisResult, onDismiss: () -> Unit, onDetailClick: (Details) -> Unit) {
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
 
     ModalBottomSheet(
+        properties = ModalBottomSheetProperties(
+            securePolicy = SecureFlagPolicy.SecureOn
+        ),
         sheetState = sheetState,
         onDismissRequest = { onDismiss() },
         containerColor = MaterialTheme.colorScheme.background
@@ -159,11 +161,7 @@ fun AnalysisBottomSheet(
 }
 
 @Composable
-fun ScoreCircularIndicator(
-    score: Int,
-    size: Dp = 160.dp,
-    strokeWidth: Dp = 10.dp
-) {
+fun ScoreCircularIndicator(score: Int, size: Dp = 160.dp, strokeWidth: Dp = 10.dp) {
     var animationPlayed by remember { mutableStateOf(false) }
     val curPercentage = animateFloatAsState(
         targetValue = if (animationPlayed) score / 100f else 0f,
@@ -202,7 +200,7 @@ fun ScoreCircularIndicator(
         }
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Text(
-                text = "$score%",
+                text = stringResource(R.string.security_score_percent, score),
                 fontSize = 28.sp,
                 fontWeight = FontWeight.Bold,
                 fontFamily = Poppins,
@@ -281,7 +279,7 @@ fun SimpleAnalysisItem(detail: Details, onClick: () -> Unit) {
             }
             Icon(
                 imageVector = Icons.AutoMirrored.Rounded.OpenInNew,
-                contentDescription = "Open",
+                contentDescription = stringResource(R.string.cd_open),
                 tint = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.size(20.dp)
             )
@@ -290,12 +288,7 @@ fun SimpleAnalysisItem(detail: Details, onClick: () -> Unit) {
 }
 
 @Composable
-fun ReusedAnalysisItem(
-    password: String,
-    count: Int,
-    examples: List<Details>,
-    onDetailClick: (Details) -> Unit
-) {
+fun ReusedAnalysisItem(password: String, count: Int, examples: List<Details>, onDetailClick: (Details) -> Unit) {
     Card(
         shape = RoundedCornerShape(8.dp),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant),
@@ -307,7 +300,7 @@ fun ReusedAnalysisItem(
                 modifier = Modifier.padding(bottom = 8.dp)
             ) {
                 Text(
-                    text = stringResource(R.string.used_times, count),
+                    text = pluralStringResource(R.plurals.password_used_times, count, count),
                     fontFamily = Poppins,
                     fontWeight = FontWeight.Bold,
                     fontSize = 14.sp,

@@ -1,5 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="no_previews_found">暂无条目</string>
+    <string name="no_details_found">暂无详情</string>
+    <!--    Splash Screen    -->
+    <string name="app_version">应用版本 <xliff:g id="version" example="5.5.1">%1$s</xliff:g></string>
+    <string name="app_description">你唯一需要的密码管理器</string>
+
+    <!--    OnBoarding Screens    -->
+    <!--    Keep the 
+ line breaks and the [[ ]] highlight markers.    -->
+    <string name="skip">跳过</string>
+    <string name="next">下一步</string>
+    <string name="first_heading">生成\n[[安全]]\n密码。</string>
+    <string name="second_heading">你的所有\n[[密码]]\n都在这里。</string>
+    <string name="third_heading">只为[[你]]\n打开，\n就在这部手机上。</string>
+    <string name="first_description">别再为在线账户使用不安全的密码，用 PassKey 更进一步。获取最安全、最难破解的密码。</string>
+    <string name="second_description">在一个地方存储和管理你的所有密码。不必记住几百个密码，只需记住一个。</string>
+    <string name="third_description">你的保险库在这部手机上加密，打开前会要求指纹、面容或屏幕锁。无需账号，没有云端，没有广告。</string>
+
     <!-- Main Screens -->
     <string name="banks">银行</string>
     <string name="mails">邮件</string>
@@ -20,7 +38,6 @@
     <string name="export_data">导出数据</string>
 
     <!-- Edit Text Hints -->
-    <string name="type_here">在此输入…</string>
     <string name="type_your_title_here">在此输入您的标题…</string>
     <string name="type_your_response_here">在此输入您的响应…</string>
     <string name="type_your_heading_here">在此输入您的标题…</string>
@@ -35,12 +52,7 @@
 
     <!-- Authentication Screen -->
     <string name="welcome_to_pass_key">欢迎使用PassKey Manager</string>
-    <string name="authentication_failed">身份验证失败。</string>
     <string name="something_went_wrong">出了点问题..</string>
-    <string name="set_password">请先为您的设备设置密码。</string>
-    <string name="permission_required">需要访问存储空间以导出数据库。</string>
-    <string name="permission_denied">权限被拒绝</string>
-    <string name="ok">确定</string>
 
     <!-- Dialogs and Requests -->
     <string name="change">更改</string>
@@ -62,15 +74,42 @@
     <!-- Password Health Report -->
     <string name="analyze_passwords">安全状态</string>
     <string name="security_analysis">安全分析</string>
-    <string name="security_score">安全评分</string>
     <string name="weak_passwords">弱密码</string>
     <string name="reused_passwords">重复使用的密码</string>
-    <string name="safe_passwords">安全密码</string>
     <string name="excellent">优秀</string>
     <string name="needs_attention">需要注意</string>
     <string name="critical">严重</string>
-    <string name="found_weak">发现 %1$d 个弱密码</string>
-    <string name="found_reused">发现 %1$d 个重复使用的密码</string>
-    <string name="used_times">已使用 %1$d 次</string>
     <string name="no_issues">未发现问题。干得好！</string>
+    <string name="cd_drag_handle">重新排序</string>
+    <string name="cd_edit">编辑</string>
+    <string name="cd_delete">删除</string>
+    <string name="cd_add_detail">添加详情</string>
+    <string name="cd_add_entry">添加条目</string>
+    <string name="cd_settings">设置</string>
+    <string name="cd_generate_password">生成密码</string>
+    <string name="cd_password_options">密码选项</string>
+    <string name="cd_clear_search">清除搜索</string>
+    <string name="cd_open">打开</string>
+    <string name="cd_back">返回</string>
+    <string name="password_settings">密码设置</string>
+    <string name="password_length">长度：%1$d</string>
+    <string name="security_score_percent">%1$d%%</string>
+    <string name="invalid_file_selected">选择的文件无效。</string>
+    <plurals name="password_used_times">
+        <item quantity="other">已使用 %1$d 次</item>
+    </plurals>
+    <string name="about_message">PassKey 是一款免费、开源的密码管理器，没有广告，也无需账号。\n\n你的条目保存在这部手机上的加密数据库中。PassKey 在显示前会要求指纹、面容或屏幕锁，会阻止截屏，能生成高强度密码，并检查已保存密码中是否有弱密码或重复使用的密码。\n\n源代码在 GitHub 上公开：github.com/aditya-190/Pass-Key-Manager</string>
+    <string name="privacy_message">你的保险库只留在你的手机上。PassKey 没有账号、没有同步，也没有自己的服务器，绝不会发送你保存的条目。\n\n只有在你允许时，应用才会通过 Google Firebase 发送：\n• 崩溃和性能报告：设备型号、Android 版本和应用版本等技术信息。\n• 使用统计：使用了哪些界面和功能，绝不包括你保存的内容。\n\n在你选择之前两者都处于关闭状态，你可以随时在“设置 › 隐私选项”中更改。PassKey 不使用广告 ID。应用通过 Google Play 检查更新。\n\n此版本导出的文件未加密。请妥善保管，不再需要时请删除。</string>
+    <string name="terms_n_condition_message">PassKey 免费提供，按现状提供，不附带任何形式的保证。\n\n你有责任保护好自己的手机、屏幕锁和导出的文件。你的数据从不离开手机，因此手机丢失或应用被删除后，任何人都无法恢复。请定期导出备份。\n\n使用 PassKey 即表示你同意本条款和隐私政策。</string>
+    <string name="consent_title">帮助改进 PassKey</string>
+    <string name="consent_body">你的密码绝不会离开这部手机。经你允许，PassKey 可以向 Google Firebase 发送匿名报告，用于修复崩溃并了解哪些功能被使用。报告中绝不包含你保存的任何内容。</string>
+    <string name="consent_crash_title">崩溃和性能报告</string>
+    <string name="consent_crash_body">出现问题时的技术信息，例如设备型号、Android 版本和应用版本。</string>
+    <string name="consent_analytics_title">使用统计</string>
+    <string name="consent_analytics_body">统计使用了哪些界面和功能，不包含你的任何数据。</string>
+    <string name="consent_allow_all">全部允许</string>
+    <string name="consent_decline_all">全部拒绝</string>
+    <string name="consent_save">保存我的选择</string>
+    <string name="consent_change_later">你可以随时在“设置 › 隐私选项”中更改。</string>
+    <string name="privacy_options">隐私选项</string>
 </resources>

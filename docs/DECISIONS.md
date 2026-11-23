@@ -1,0 +1,22 @@
+# Decisions
+
+| Date | Decision | Why |
+|---|---|---|
+| 2026-11-21 | Reuse closed PRs #1–#4 (refs/pull/N/head, based on f92cd08), split into smaller releases | They already fix most findings and are tested; they were too big to review and predated the studio baseline |
+| 2026-11-21 | The production `PASS_PHRASE` lives only in `local.properties` (git-ignored). Agents never read that file | It is the legacy key for every existing user's vault |
+| 2026-11-21 | Free, no ads, no paywall | Trust is the product; "no ads" is the top praise in 5★ reviews |
+| 2026-11-21 | Keep the "PassKey" brand; change the Play title to a keyword-led one; move to Productivity | Keeps 34K installs and existing ratings; the brand alone loses to the "passkeys" term |
+| 2026-11-21 | Keep Firebase Analytics and Crashlytics, but consent-gated, no ad ID, no PII, no vault content; the listing says "vault never leaves your phone", not "no internet" | Owner wants analytics; honesty in the Data-safety form and the listing |
+| 2026-11-21 | Rejected: HIBP breach check and WorkManager auto-backup. Approved: backup-reminder notification and Credential Manager provider | Owner decision on opt-in features |
+| 2026-11-21 | Passkey (FIDO) storage planned for 6.1.0 | Makes the name match what searchers expect; answers the "passkeys not working" reviews |
+| 2026-11-22 | 5.5.2 keeps `allowBackup="true"`; it is turned off in 5.6.0 together with the encrypted backup | Turning it off first would remove the only automatic way to move the vault to a new phone before a safe replacement exists. Android cloud backup is end-to-end encrypted by the screen lock on API 28+ |
+| 2026-11-22 | Third onboarding page no longer promises autofill (it returns in 5.8.0 when autofill ships) | The feature didn't exist; an honest release can't advertise it |
+| 2026-11-22 | Consent: two switches (crash+performance, usage statistics), both off until chosen, "Decline all" and "Allow all" with equal weight; upgrading users are asked once, before unlock | Opt-in without dark patterns; matches the studio baseline consent model |
+| 2026-11-22 | Performance Monitoring follows the crash/diagnostics choice. Crash reports captured before the choice are kept on the device: sent if the user allows, deleted on an explicit decline (owner chose this over deleting while undecided) | First-run crashes (onboarding, consent screen) would otherwise be invisible; a "no" still guarantees they are never sent |
+| 2026-11-22 | Firebase automatic screen reporting off; `screen_view` comes only from navigation | Avoids duplicate per-Activity screen views; route names only |
+| 2026-11-22 | The password keyboard on the Response field becomes a per-field choice in 5.6.0 (with `isSecret`) | Owner decision: keyboards hide Enter and suggestions for multi-line notes and usernames |
+| 2026-11-22 | AD_ID and AdServices permissions removed with `tools:node="remove"`; ad-ID collection off | No ads, so no reason for an advertising ID in a password manager |
+| 2026-11-22 | ktlint package-name and filename rules, and detekt PackageNaming, disabled until Phase 4a | Renaming packages now would break cherry-picking archived PR #4 |
+| 2026-11-22 | detekt runs as detekt-cli 1.23.8 via a JavaExec task; 16 pre-existing findings baselined | The 1.23 Gradle plugin doesn't support Kotlin 2.x; new code must stay clean |
+| 2026-11-22 | New and legal strings are machine translations into 16 locales, pending native review | `MissingTranslation` is a build error; shipping English legal text to 16 locales was the bug being fixed |
+| 2026-11-22 | Local JVM builds use Corretto 22 (`JAVA_HOME`); Gradle 8.14 cannot run on Android Studio's bundled JDK 25 | Toolchain upgrade comes in 5.6.0 |

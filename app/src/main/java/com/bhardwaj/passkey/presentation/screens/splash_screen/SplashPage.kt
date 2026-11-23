@@ -36,10 +36,7 @@ import com.bhardwaj.passkey.utils.UiEvents
 import kotlinx.coroutines.delay
 
 @Composable
-fun SplashPage(
-    onNavigate: (UiEvents.Navigate) -> Unit,
-    viewModel: SplashViewModel = hiltViewModel()
-) {
+fun SplashPage(onNavigate: (UiEvents.Navigate) -> Unit, viewModel: SplashViewModel = hiltViewModel()) {
     val scale = remember {
         Animatable(0.3F)
     }
@@ -77,7 +74,7 @@ fun SplashPage(
         ) {
             Image(
                 painter = painterResource(id = R.drawable.splash_logo),
-                contentDescription = "App Logo",
+                contentDescription = null,
                 modifier = Modifier
                     .fillMaxSize()
                     .scale(scale.value)

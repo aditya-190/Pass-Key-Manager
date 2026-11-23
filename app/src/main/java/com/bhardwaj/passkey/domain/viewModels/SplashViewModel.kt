@@ -1,46 +1,42 @@
 package com.bhardwaj.passkey.domain.viewModels
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.bhardwaj.passkey.consent.ConsentStore
 import com.bhardwaj.passkey.data.repository.DataStoreRepository
 import com.bhardwaj.passkey.domain.events.SplashEvents
-import com.bhardwaj.passkey.presentation.navigation.NavScreens
+import com.bhardwaj.passkey.launch.LaunchRouter
+import com.bhardwaj.passkey.presentation.navigation.route
 import com.bhardwaj.passkey.utils.UiEvents
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @HiltViewModel
 class SplashViewModel @Inject constructor(
-    val repository: DataStoreRepository
+    private val repository: DataStoreRepository,
+    private val consentStore: ConsentStore
 ) : ViewModel() {
-
-    var startDestination by mutableStateOf(NavScreens.SplashPage.route)
-        private set
-
-    private val _uiEvents = Channel<UiEvents>()
+    private val _uiEvents = Channel<UiEvents>(Channel.BUFFERED)
     val uiEvents = _uiEvents.receiveAsFlow()
+
+    private var routed = false
 
     fun onEvent(event: SplashEvents) {
         when (event) {
             SplashEvents.OnLoadingComplete -> {
+                if (routed) return
+                routed = true
                 viewModelScope.launch {
-                    repository.readPreference(
-                        DataStoreRepository.onBoardingKey,
-                        defaultValue = false
-                    ).collect { completed ->
-                        startDestination = if (completed) {
-                            NavScreens.SecurityPage.route
-                        } else {
-                            NavScreens.OnboardingPage.route
-                        }
-                        _uiEvents.send(UiEvents.Navigate(startDestination))
-                    }
+                    // Read once. Collecting kept the splash subscribed and re-navigated on every later
+                    // preference write.
+                    val onboardingDone = repository.readPreference(DataStoreRepository.onBoardingKey, false).first()
+                    val consentDecided = consentStore.consent.first().decided
+                    val step = LaunchRouter.atStart(onboardingDone = onboardingDone, consentDecided = consentDecided)
+                    _uiEvents.send(UiEvents.Navigate(step.route))
                 }
             }
         }

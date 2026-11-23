@@ -14,11 +14,7 @@ import androidx.compose.ui.unit.sp
 import com.bhardwaj.passkey.presentation.theme.Poppins
 
 @Composable
-fun SettingsText(
-    modifier: Modifier = Modifier,
-    text: String,
-    onClick: () -> Unit,
-) {
+fun SettingsText(modifier: Modifier = Modifier, text: String, onClick: () -> Unit) {
     Text(
         modifier = modifier
             .fillMaxWidth()

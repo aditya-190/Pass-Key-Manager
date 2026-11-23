@@ -49,11 +49,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.DialogProperties
+import androidx.compose.ui.window.SecureFlagPolicy
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.bhardwaj.passkey.R
 import com.bhardwaj.passkey.domain.events.PreviewEvents
@@ -66,27 +69,27 @@ import com.bhardwaj.passkey.presentation.screens.preview_screen.components.Previ
 import com.bhardwaj.passkey.presentation.theme.BebasNeue
 import com.bhardwaj.passkey.utils.ButtonType
 import com.bhardwaj.passkey.utils.Categories
+import com.bhardwaj.passkey.utils.SecureClipboard
 import com.bhardwaj.passkey.utils.UiEvents
+import com.bhardwaj.passkey.utils.UiText
+import com.bhardwaj.passkey.utils.asString
 import kotlinx.coroutines.launch
 import sh.calvin.reorderable.ReorderableItem
 import sh.calvin.reorderable.rememberReorderableLazyListState
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun PreviewScreen(
-    onNavigate: (UiEvents.Navigate) -> Unit,
-    viewModel: PreviewViewModel = hiltViewModel()
-) {
+fun PreviewScreen(onNavigate: (UiEvents.Navigate) -> Unit, viewModel: PreviewViewModel = hiltViewModel()) {
     val categoryName by viewModel.categoryName.collectAsState()
-    val categoryNameMap = mapOf(
-        Categories.BANKS.name to stringResource(id = R.string.banks),
-        Categories.APPS.name to stringResource(id = R.string.apps),
-        Categories.MAILS.name to stringResource(id = R.string.mails),
-        Categories.OTHERS.name to stringResource(id = R.string.others),
-    )
+    // Localized display names come from Categories.labelRes, which the bottom navigation
+    // also uses, so the two can no longer drift apart.
+    val categoryNameMap = Categories.entries.associate { it.name to stringResource(it.labelRes) }
 
     val previewHeading by viewModel.previewHeading.collectAsState()
-    val bottomSheetHeading by viewModel.bottomSheetHeading.collectAsState()
+    val isEditingSheet by viewModel.isEditingSheet.collectAsState()
+    // Resolved here rather than in the ViewModel so it follows the app locale.
+    val bottomSheetHeading =
+        stringResource(if (isEditingSheet) R.string.edit else R.string.add)
     val searchText by viewModel.searchText.collectAsState()
     val previews by viewModel.previews.collectAsState()
 
@@ -103,6 +106,8 @@ fun PreviewScreen(
         }
     }
 
+    val context = LocalContext.current
+
     LaunchedEffect(key1 = true) {
         viewModel.uiEvents.collect { event ->
             when (event) {
@@ -110,9 +115,24 @@ fun PreviewScreen(
                 is UiEvents.ShowSnackBar -> {
                     scope.launch {
                         snackBarHostState.showSnackbar(
-                            message = event.message,
-                            actionLabel = event.action
+                            message = event.message.asString(context),
+                            actionLabel = event.action?.asString(context)
                         )
+                    }
+                }
+                is UiEvents.CopyToClipboard -> {
+                    SecureClipboard.copy(
+                        context = context,
+                        text = event.value,
+                        isSensitive = event.isSensitive
+                    )
+                    // Android 13+ shows its own copy confirmation, so a second one is noise.
+                    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
+                        scope.launch {
+                            snackBarHostState.showSnackbar(
+                                message = UiText.StringResource(R.string.copied).asString(context)
+                            )
+                        }
                     }
                 }
 
@@ -146,11 +166,11 @@ fun PreviewScreen(
                 content = {
                     Icon(
                         imageVector = Icons.Default.Add,
-                        contentDescription = "Add Preview",
+                        contentDescription = stringResource(R.string.cd_add_entry)
                     )
                 }
             )
-        },
+        }
     ) { paddingValues ->
         Box(
             modifier = Modifier
@@ -167,12 +187,12 @@ fun PreviewScreen(
                 ) {
                     Icon(
                         painter = painterResource(id = R.drawable.icon_logo),
-                        contentDescription = "App Icon",
+                        contentDescription = null,
                         tint = MaterialTheme.colorScheme.primary
                     )
                     Icon(
                         imageVector = Icons.Default.Settings,
-                        contentDescription = "Settings Icon",
+                        contentDescription = stringResource(R.string.cd_settings),
                         tint = MaterialTheme.colorScheme.primary,
                         modifier = Modifier
                             .padding(8.dp)
@@ -212,11 +232,11 @@ fun PreviewScreen(
                             .fillMaxWidth()
                             .padding(16.dp),
                         painter = painterResource(id = R.drawable.icon_empty_list),
-                        contentDescription = "No Previews Found"
+                        contentDescription = stringResource(id = R.string.no_previews_found)
                     )
                 } else {
                     LazyColumn(
-                        state = lazyListState,
+                        state = lazyListState
                     ) {
                         items(
                             items = previews,
@@ -256,7 +276,7 @@ fun PreviewScreen(
                                             ) {
                                                 Icon(
                                                     imageVector = Icons.Default.Delete,
-                                                    contentDescription = "Icon Delete",
+                                                    contentDescription = stringResource(R.string.cd_delete),
                                                     modifier = Modifier.align(Alignment.CenterEnd),
                                                     tint = MaterialTheme.colorScheme.background
                                                 )
@@ -296,6 +316,7 @@ fun PreviewScreen(
         }
         if (viewModel.isAlertOpen) {
             AlertDialog(
+                properties = DialogProperties(securePolicy = SecureFlagPolicy.SecureOn),
                 containerColor = MaterialTheme.colorScheme.background,
                 onDismissRequest = {
                     viewModel.onEvent(PreviewEvents.OnDismissAlertDialog)

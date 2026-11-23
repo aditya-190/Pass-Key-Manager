@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -19,6 +18,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.bhardwaj.passkey.presentation.theme.BebasNeue
+import com.bhardwaj.passkey.utils.vaultKeyboardOptions
 
 @Composable
 fun PassKeyTextField(
@@ -29,7 +29,8 @@ fun PassKeyTextField(
     placeHolderText: String = "",
     textStyle: TextStyle = MaterialTheme.typography.bodyMedium,
     maxLines: Int = 10,
-    imeAction: ImeAction = ImeAction.Next
+    imeAction: ImeAction = ImeAction.Next,
+    isSecret: Boolean = false
 ) {
     Box(
         modifier = modifier.fillMaxWidth()
@@ -59,9 +60,7 @@ fun PassKeyTextField(
                     innerTextField()
                 }
             },
-            keyboardOptions = KeyboardOptions(
-                imeAction = imeAction
-            ),
+            keyboardOptions = vaultKeyboardOptions(isSecret = isSecret, imeAction = imeAction)
         )
 
         Text(
