@@ -96,6 +96,9 @@ Owner decisions: PBKDF2 recovery slot (no argon2kt), mandatory one-time recovery
   dialog (17 languages). Tests red → green; 298 unit, 34 instrumented; +1,000-seed hosting simulation. Emulator
   (API 28): typed login → "Save to PassKey?" → saved as an entry with a secret password → "Unlock to fill" →
   fingerprint → the login fills.
+- Moto G34 + Chrome 157 round trip after the fixes (2026-11-23): practice login typed → "Save username and password
+  to PassKey?" → saved as the-internet.herokuapp.com (username, secret password) → fresh form shows only "Unlock to
+  fill · PassKey" → fingerprint → login offered → both fields filled. Phone settings restored afterwards.
 Open: the real Play 5.5.1 → 5.7.0 upgrade needs a Play internal testing track (a debug build cannot replace a
 Play-signed install without uninstalling). Rollout set by the owner (100%).
 
