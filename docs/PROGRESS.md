@@ -68,6 +68,24 @@ Unit tests: 179, all passing. Instrumented: 10/10 on API 28. All gates green inc
 **Overall: 🟠 shippable** once the owner actions below are done; the DB-key Blocker is 5.7.0's job.
 
 
+## Phase 3: release 5.7.0 "Per-install key" (branch `release/5.7.0`), in progress ⏸
+Owner decisions: PBKDF2 recovery slot (no argon2kt), mandatory one-time recovery password.
+- PR #3 ported (`e9e1a4a`, `f4b6c66`) and integrated with the 5.6.0 lock work (`847c88a`): UnlockPromptPolicy (6 tests)
+  restores prompt-on-resume / no-loop rules the PR's gate had lost; PBKDF2 replaces Argon2 with reference-vector tests.
+- **Blocker found and fixed** (`7eeb92a`): Android 9/10 crashed on every unlock of a re-keyed vault
+  (DEVICE_CREDENTIAL alone is rejected below API 30). CredentialAuthenticators (3 tests) + a crash guard.
+- Device verification on API 28 (`8a5c2fc`): legacy vault → re-key → PIN unlock ×2; lock removed → recovery password
+  (wrong refused, right opens); lock re-added → slots rebuilt → PIN alone; fingerprint enrolled → BIO slot → fingerprint
+  unlock through CryptoObject. Default device suite OK (26), vault untouched.
+- PR #3's destructive device tests made opt-in; running them was blocked by the safety classifier (deletes app data).
+- Attack pass, owner chose #1 and #2: recovery password now 10+ characters, not "weak", with a strength meter
+  (PasswordStrength + RecoveryPasswordTest, 5 tests, red → green); upgrade-funnel events recovery_setup_shown /
+  recovery_setup_completed / vault_migration_failed. New strings translated into 16 locales (machine, pending review).
+- Destructive VaultMigrationTest / KeyStoreWrapperTest skipped by owner decision (they stay opt-in).
+- Simulation: 5,000 seeded random passwords (all scripts, empty, 10k chars) + 5,000 repeat/run cases: 0 failures;
+  10k-character value measured in under 1 ms. Gates green: ktlint, detekt, 200 unit tests, lint, release build.
+Open: invalidation on enrollment change (needs a physical device), staged rollout.
+
 ## Carried into 5.6.0
 - Per-field secret keyboard (attack-pass finding #1), built on the `isSecret` column.
 - A failed Android 10+ export is reported as success (`SettingsViewModel.kt:260`); replaced by the encrypted backup.

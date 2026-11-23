@@ -201,4 +201,37 @@
     <string name="entry_deleted">એન્ટ્રી કાઢી નાખી</string>
     <string name="field_deleted">ફીલ્ડ કાઢી નાખ્યું</string>
     <string name="undo">પાછું લાવો</string>
+    <string name="recovery_setup_title">પુનઃપ્રાપ્તિ પાસવર્ડ સેટ કરો</string>
+    <string name="recovery_setup_message_new">PassKey તમારી ફિંગરપ્રિન્ટ કે સ્ક્રીન લૉકથી ખૂલે છે. આ પુનઃપ્રાપ્તિ પાસવર્ડ વૈકલ્પિક રસ્તો છે — ફિંગરપ્રિન્ટ બદલો કે ઉપકરણ લૉક દૂર કરો ત્યારે જરૂર પડશે. તે રીસેટ થઈ શકતો નથી, સુરક્ષિત જગ્યાએ રાખો.</string>
+    <string name="recovery_setup_message_upgrade">આ અપડેટ તમારી વૉલ્ટને આ ઉપકરણ માટેની અનન્ય કી વડે ફરીથી એન્ક્રિપ્ટ કરે છે. પહેલાં પુનઃપ્રાપ્તિ પાસવર્ડ સેટ કરો: ફિંગરપ્રિન્ટ બદલો કે લૉક દૂર કરો ત્યારે એ જ એકમાત્ર રસ્તો છે. તે રીસેટ થઈ શકતો નથી.</string>
+    <string name="recovery_unlock_title">તમારો પુનઃપ્રાપ્તિ પાસવર્ડ દાખલ કરો</string>
+    <string name="recovery_unlock_message">તમારા ઉપકરણના બાયોમેટ્રિક કે સ્ક્રીન લૉક બદલાયા છે, તેથી વૉલ્ટ ખોલવા PassKey ને પુનઃપ્રાપ્તિ પાસવર્ડ જોઈએ.</string>
+    <string name="recovery_unlock_wrong">એ પાસવર્ડ કામ ન આવ્યો. ફરી પ્રયાસ કરો.</string>
+    <string name="migration_title">તમારી વૉલ્ટ સુરક્ષિત કરી રહ્યા છીએ</string>
+    <string name="migration_message">તમારી નોંધો આ ઉપકરણની અનન્ય કી વડે ફરીથી એન્ક્રિપ્ટ થઈ રહી છે. ઍપ ખુલ્લી રાખો.</string>
+    <string name="migration_failed_title">વૉલ્ટ સુરક્ષિત કરવાનું પૂરું ન થઈ શક્યું</string>
+    <string name="migration_failed_message">કંઈ ખોવાયું નથી અને તમારી નોંધો અકબંધ છે. ફરી પ્રયાસ કરો, અથવા પછી ઍપ ખોલો.</string>
+    <string name="migration_failed_message_can_export">કંઈ ખોવાયું નથી — તમારી વૉલ્ટ અકબંધ અને વાંચી શકાય તેવી છે. ફરી પ્રયાસ કરો, અથવા પહેલાં સેટિંગ્સમાંથી બૅકઅપ લો.</string>
+    <string name="migration_retry">ફરી પ્રયાસ કરો</string>
+    <string name="device_lock_required_title">ઉપકરણ લૉક જરૂરી</string>
+    <string name="device_lock_required_message">PassKey તમારી વૉલ્ટને ઉપકરણના સ્ક્રીન લૉકથી સુરક્ષિત રાખે છે. ચાલુ રાખવા પિન, પૅટર્ન, પાસવર્ડ કે બાયોમેટ્રિક સેટ કરો.</string>
+    <string name="device_lock_open_settings">સેટિંગ્સ ખોલો</string>
+    <string name="change_recovery_password">પુનઃપ્રાપ્તિ પાસવર્ડ બદલો</string>
+    <string name="recovery_change_current_title">વર્તમાન પાસવર્ડની પુષ્ટિ કરો</string>
+    <string name="recovery_change_current_message">તમે જ છો તે સાબિત કરવા હાલનો પુનઃપ્રાપ્તિ પાસવર્ડ દાખલ કરો.</string>
+    <string name="recovery_change_new_title">નવો પુનઃપ્રાપ્તિ પાસવર્ડ પસંદ કરો</string>
+    <string name="recovery_change_new_message">આ તમારા જૂના પુનઃપ્રાપ્તિ પાસવર્ડની જગ્યા લે છે. તે રીસેટ થઈ શકતો નથી, સુરક્ષિત જગ્યાએ રાખો.</string>
+    <string name="recovery_change_done">પુનઃપ્રાપ્તિ પાસવર્ડ બદલાયો.</string>
+    <string name="recovery_change_failed">એ પાસવર્ડ સાચો ન હતો.</string>
+    <string name="migration_export_first">પહેલાં બૅકઅપ લો</string>
+    <string name="migration_export_now">હમણાં મારી વૉલ્ટ નિકાસ કરો</string>
+    <string name="recovery_password_hint">રિકવરી પાસવર્ડ</string>
+    <string name="recovery_password_too_weak">આ પાસવર્ડ સહેલાઈથી ધારી શકાય છે. લાંબો પાસવર્ડ અથવા થોડા અસંબંધિત શબ્દો વાપરો.</string>
+    <string name="password_strength_weak">મજબૂતી: નબળો</string>
+    <string name="password_strength_fair">મજબૂતી: ઠીક</string>
+    <string name="password_strength_strong">મજબૂતી: મજબૂત</string>
+    <plurals name="password_min_length">
+        <item quantity="one">ઓછામાં ઓછા %1$d અક્ષર વાપરો.</item>
+        <item quantity="other">ઓછામાં ઓછા %1$d અક્ષર વાપરો.</item>
+    </plurals>
 </resources>

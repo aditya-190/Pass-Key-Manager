@@ -7,18 +7,18 @@ import androidx.compose.ui.test.SemanticsMatcher
 import androidx.compose.ui.test.assertIsOff
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.AndroidComposeTestRule
-import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.datastore.preferences.core.booleanPreferencesKey
-import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.platform.app.InstrumentationRegistry
 import com.bhardwaj.passkey.data.repository.passkeyDataStore
 import com.bhardwaj.passkey.presentation.MainActivity
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
+import org.junit.Assume.assumeTrue
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -32,8 +32,12 @@ import org.junit.runner.RunWith
  */
 @RunWith(AndroidJUnit4::class)
 class LaunchFlowE2ETest {
+    // Opt-in since 5.7.0 (-e launchFlow true): the flow ends at real system authentication (PIN / biometric),
+    // which only a host script can answer (scripts/e2e/unlock_once.sh); a plain run must not leave it up.
     @get:Rule
-    val compose = createAndroidComposeRule<MainActivity>()
+    val compose = gateComposeRule(MainActivity::class.java) {
+        InstrumentationRegistry.getArguments().getString("launchFlow") == "true"
+    }
 
     private val timeoutMs = 10_000L
 
@@ -41,11 +45,12 @@ class LaunchFlowE2ETest {
 
     private fun prefs() = runBlocking { compose.activity.applicationContext.passkeyDataStore.data.first() }
 
-    private fun <A : ComponentActivity> AndroidComposeTestRule<ActivityScenarioRule<A>, A>.awaitText(text: String) =
+    private fun <A : ComponentActivity> AndroidComposeTestRule<GateActivityRule<A>, A>.awaitText(text: String) =
         waitUntil(timeoutMs) { onAllNodesWithText(text).fetchSemanticsNodes().isNotEmpty() }
 
     @Test
     fun launchFollowsOnboardingThenConsentThenUnlock() {
+        assumeTrue(InstrumentationRegistry.getArguments().getString("launchFlow") == "true")
         val before = prefs()
         val onboarded = before[booleanPreferencesKey("onboarding_complete")] ?: false
         val decided = before[booleanPreferencesKey("consent_decided")] ?: false
@@ -68,9 +73,12 @@ class LaunchFlowE2ETest {
         // Unlock, reached only after the consent decision. On a device with a screen lock the system
         // credential screen may already cover the app, which also means the unlock step was reached.
         // runCatching: "no compose hierarchy" means the credential screen covers the app, i.e. unlock was reached.
+        // Past onboarding and consent: the vault gate is in front (recovery setup, unlock prompt, a spinner while
+        // the system prompt is up, or the system PIN screen covering the app).
         compose.waitUntil(timeoutMs) {
             runCatching {
-                compose.onAllNodesWithText(string(R.string.welcome_to_pass_key)).fetchSemanticsNodes().isNotEmpty()
+                listOf(R.string.skip, R.string.consent_decline_all)
+                    .none { compose.onAllNodesWithText(string(it)).fetchSemanticsNodes().isNotEmpty() }
             }.getOrDefault(true)
         }
         val consentStillShown = runCatching {

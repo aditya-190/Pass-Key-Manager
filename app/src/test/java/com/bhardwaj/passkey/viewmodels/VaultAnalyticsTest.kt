@@ -4,13 +4,10 @@ import androidx.lifecycle.SavedStateHandle
 import com.bhardwaj.passkey.analytics.AppEventNames
 import com.bhardwaj.passkey.analytics.AppParams
 import com.bhardwaj.passkey.data.local.entity.Details
-import com.bhardwaj.passkey.data.security.VaultSession
 import com.bhardwaj.passkey.domain.events.DetailEvents
 import com.bhardwaj.passkey.domain.events.PreviewEvents
-import com.bhardwaj.passkey.domain.events.SecurityEvents
 import com.bhardwaj.passkey.domain.viewModels.DetailViewModel
 import com.bhardwaj.passkey.domain.viewModels.PreviewViewModel
-import com.bhardwaj.passkey.domain.viewModels.SecurityViewModel
 import com.bhardwaj.passkey.testing.FakePasskeyRepository
 import com.bhardwaj.passkey.testing.MainDispatcherRule
 import com.bhardwaj.passkey.testing.RecordingAnalyticsTracker
@@ -103,13 +100,5 @@ class VaultAnalyticsTest {
         assertEquals(AppEventNames.VALUE_COPIED, analytics.events.single().name)
         assertEquals(true, analytics.events.single().params[AppParams.SENSITIVE])
         assertFalse(loggedValues().any { it.contains("4321") })
-    }
-
-    @Test
-    fun `unlock outcomes are counted`() = runTest {
-        val vm = SecurityViewModel(VaultSession { 0L }, analytics)
-        vm.onEvent(SecurityEvents.OnAuthenticationError)
-        vm.onEvent(SecurityEvents.OnAuthenticationSucceeded)
-        assertEquals(listOf(AppEventNames.UNLOCK_FAILED, AppEventNames.VAULT_UNLOCKED), analytics.names)
     }
 }

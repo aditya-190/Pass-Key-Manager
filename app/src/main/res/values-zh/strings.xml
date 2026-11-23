@@ -201,4 +201,36 @@
     <string name="entry_deleted">条目已删除</string>
     <string name="field_deleted">字段已删除</string>
     <string name="undo">撤销</string>
+    <string name="recovery_setup_title">设置恢复密码</string>
+    <string name="recovery_setup_message_new">PassKey 通过指纹或屏幕锁解锁。此恢复密码是备用入口——更换指纹或移除设备锁时会用到。它无法重置，请妥善保管。</string>
+    <string name="recovery_setup_message_upgrade">此次更新会用本设备专属的密钥重新加密你的密码库。请先设置恢复密码：若更换指纹或移除设备锁，它是唯一的入口。它无法重置。</string>
+    <string name="recovery_unlock_title">输入你的恢复密码</string>
+    <string name="recovery_unlock_message">设备的生物识别或屏幕锁已更改，PassKey 需要你的恢复密码才能解锁密码库。</string>
+    <string name="recovery_unlock_wrong">该密码无效，请重试。</string>
+    <string name="migration_title">正在保护你的密码库</string>
+    <string name="migration_message">正在用本设备专属的密钥重新加密你的条目，请保持应用开启。</string>
+    <string name="migration_failed_title">未能完成密码库的保护</string>
+    <string name="migration_failed_message">没有任何数据丢失，你的条目保持不变。请重试，或稍后重新打开应用。</string>
+    <string name="migration_failed_message_can_export">没有任何数据丢失——你的密码库完好且可读。请重试，或先从设置中导出备份。</string>
+    <string name="migration_retry">重试</string>
+    <string name="device_lock_required_title">需要设备锁</string>
+    <string name="device_lock_required_message">PassKey 使用设备的屏幕锁保护你的密码库。请设置 PIN、图案、密码或生物识别以继续。</string>
+    <string name="device_lock_open_settings">打开设置</string>
+    <string name="change_recovery_password">更改恢复密码</string>
+    <string name="recovery_change_current_title">确认当前密码</string>
+    <string name="recovery_change_current_message">请输入现有的恢复密码以证明是你本人。</string>
+    <string name="recovery_change_new_title">设置新的恢复密码</string>
+    <string name="recovery_change_new_message">这将替换你原来的恢复密码。它无法重置，请妥善保管。</string>
+    <string name="recovery_change_done">恢复密码已更改。</string>
+    <string name="recovery_change_failed">该密码不正确。</string>
+    <string name="migration_export_first">先导出备份</string>
+    <string name="migration_export_now">立即导出我的密码库</string>
+    <string name="recovery_password_hint">恢复密码</string>
+    <string name="recovery_password_too_weak">这个密码很容易被猜到。请使用更长的密码，或几个互不相关的词。</string>
+    <string name="password_strength_weak">强度：弱</string>
+    <string name="password_strength_fair">强度：一般</string>
+    <string name="password_strength_strong">强度：强</string>
+    <plurals name="password_min_length">
+        <item quantity="other">请至少使用 %1$d 个字符。</item>
+    </plurals>
 </resources>

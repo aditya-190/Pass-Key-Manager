@@ -201,4 +201,37 @@
     <string name="entry_deleted">பதிவு நீக்கப்பட்டது</string>
     <string name="field_deleted">புலம் நீக்கப்பட்டது</string>
     <string name="undo">செயல்தவிர்</string>
+    <string name="recovery_setup_title">மீட்பு கடவுச்சொல்லை அமைக்கவும்</string>
+    <string name="recovery_setup_message_new">PassKey உங்கள் கைரேகை அல்லது திரைப் பூட்டால் திறக்கிறது. இந்த மீட்பு கடவுச்சொல் மாற்று வழி — கைரேகைகளை மாற்றினாலோ சாதனப் பூட்டை நீக்கினாலோ இது தேவைப்படும். இதை மீட்டமைக்க முடியாது, பாதுகாப்பான இடத்தில் வைக்கவும்.</string>
+    <string name="recovery_setup_message_upgrade">இந்தப் புதுப்பிப்பு உங்கள் பெட்டகத்தை இந்தச் சாதனத்திற்கே உரிய சாவியால் மீண்டும் மறையாக்குகிறது. முதலில் மீட்பு கடவுச்சொல்லை அமைக்கவும்: கைரேகைகளை மாற்றினால் அல்லது பூட்டை நீக்கினால் இதுவே ஒரே வழி. இதை மீட்டமைக்க முடியாது.</string>
+    <string name="recovery_unlock_title">உங்கள் மீட்பு கடவுச்சொல்லை உள்ளிடவும்</string>
+    <string name="recovery_unlock_message">உங்கள் சாதனத்தின் உயிரியல் அல்லது திரைப் பூட்டு மாறியுள்ளது, எனவே பெட்டகத்தைத் திறக்க PassKey க்கு மீட்பு கடவுச்சொல் தேவை.</string>
+    <string name="recovery_unlock_wrong">அந்தக் கடவுச்சொல் வேலை செய்யவில்லை. மீண்டும் முயலவும்.</string>
+    <string name="migration_title">உங்கள் பெட்டகம் பாதுகாக்கப்படுகிறது</string>
+    <string name="migration_message">உங்கள் பதிவுகள் இந்தச் சாதனத்திற்கே உரிய சாவியால் மீண்டும் மறையாக்கப்படுகின்றன. ஆப்ஸைத் திறந்தே வைக்கவும்.</string>
+    <string name="migration_failed_title">பெட்டகப் பாதுகாப்பை முடிக்க முடியவில்லை</string>
+    <string name="migration_failed_message">எதுவும் இழக்கப்படவில்லை, உங்கள் பதிவுகள் அப்படியே உள்ளன. மீண்டும் முயலவும், அல்லது பின்னர் ஆப்ஸைத் திறக்கவும்.</string>
+    <string name="migration_failed_message_can_export">எதுவும் இழக்கப்படவில்லை — உங்கள் பெட்டகம் பாதுகாப்பாகவும் படிக்கக்கூடியதாகவும் உள்ளது. மீண்டும் முயலவும், அல்லது அமைப்புகளிலிருந்து முதலில் காப்புப்பிரதி எடுக்கவும்.</string>
+    <string name="migration_retry">மீண்டும் முயலவும்</string>
+    <string name="device_lock_required_title">சாதனப் பூட்டு தேவை</string>
+    <string name="device_lock_required_message">PassKey உங்கள் பெட்டகத்தை சாதனத்தின் திரைப் பூட்டால் பாதுகாக்கிறது. தொடர பின், வடிவம், கடவுச்சொல் அல்லது உயிரியல் அடையாளத்தை அமைக்கவும்.</string>
+    <string name="device_lock_open_settings">அமைப்புகளைத் திற</string>
+    <string name="change_recovery_password">மீட்பு கடவுச்சொல்லை மாற்று</string>
+    <string name="recovery_change_current_title">தற்போதைய கடவுச்சொல்லை உறுதிப்படுத்து</string>
+    <string name="recovery_change_current_message">நீங்கள்தான் என்பதை நிரூபிக்க தற்போதைய மீட்பு கடவுச்சொல்லை உள்ளிடவும்.</string>
+    <string name="recovery_change_new_title">புதிய மீட்பு கடவுச்சொல்லைத் தேர்ந்தெடு</string>
+    <string name="recovery_change_new_message">இது உங்கள் பழைய மீட்பு கடவுச்சொல்லை மாற்றும். இதை மீட்டமைக்க முடியாது, பாதுகாப்பாக வைக்கவும்.</string>
+    <string name="recovery_change_done">மீட்பு கடவுச்சொல் மாற்றப்பட்டது.</string>
+    <string name="recovery_change_failed">அந்தக் கடவுச்சொல் சரியில்லை.</string>
+    <string name="migration_export_first">முதலில் காப்புப்பிரதி எடு</string>
+    <string name="migration_export_now">என் பெட்டகத்தை இப்போது ஏற்றுமதி செய்</string>
+    <string name="recovery_password_hint">மீட்பு கடவுச்சொல்</string>
+    <string name="recovery_password_too_weak">இந்தக் கடவுச்சொல்லை எளிதில் ஊகிக்கலாம். நீளமான கடவுச்சொல் அல்லது தொடர்பில்லாத சில சொற்களைப் பயன்படுத்தவும்.</string>
+    <string name="password_strength_weak">வலிமை: பலவீனம்</string>
+    <string name="password_strength_fair">வலிமை: பரவாயில்லை</string>
+    <string name="password_strength_strong">வலிமை: வலுவானது</string>
+    <plurals name="password_min_length">
+        <item quantity="one">குறைந்தது %1$d எழுத்துகளைப் பயன்படுத்தவும்.</item>
+        <item quantity="other">குறைந்தது %1$d எழுத்துகளைப் பயன்படுத்தவும்.</item>
+    </plurals>
 </resources>

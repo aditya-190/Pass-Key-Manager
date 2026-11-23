@@ -202,4 +202,37 @@
     <string name="entry_deleted">नोंद हटवली</string>
     <string name="field_deleted">फील्ड हटवले</string>
     <string name="undo">पूर्ववत करा</string>
+    <string name="recovery_setup_title">पुनर्प्राप्ती पासवर्ड सेट करा</string>
+    <string name="recovery_setup_message_new">PassKey तुमच्या बोटांचा ठसा किंवा स्क्रीन लॉकने उघडते. हा पुनर्प्राप्ती पासवर्ड पर्यायी मार्ग आहे — ठसे बदलल्यास किंवा उपकरण लॉक काढल्यास तो लागेल. तो रीसेट करता येत नाही, म्हणून सुरक्षित ठिकाणी ठेवा.</string>
+    <string name="recovery_setup_message_upgrade">हे अपडेट तुमची व्हॉल्ट या उपकरणासाठी खास किल्लीने पुन्हा एन्क्रिप्ट करते. आधी पुनर्प्राप्ती पासवर्ड सेट करा: ठसे बदलल्यास किंवा लॉक काढल्यास तोच एकमेव मार्ग असेल. तो रीसेट करता येत नाही.</string>
+    <string name="recovery_unlock_title">तुमचा पुनर्प्राप्ती पासवर्ड टाका</string>
+    <string name="recovery_unlock_message">तुमच्या उपकरणाचे बायोमेट्रिक किंवा स्क्रीन लॉक बदलले आहे, त्यामुळे व्हॉल्ट उघडण्यासाठी PassKey ला पुनर्प्राप्ती पासवर्ड हवा.</string>
+    <string name="recovery_unlock_wrong">तो पासवर्ड चालला नाही. पुन्हा प्रयत्न करा.</string>
+    <string name="migration_title">तुमची व्हॉल्ट सुरक्षित करत आहोत</string>
+    <string name="migration_message">तुमच्या नोंदी या उपकरणाच्या खास किल्लीने पुन्हा एन्क्रिप्ट होत आहेत. कृपया ॲप उघडे ठेवा.</string>
+    <string name="migration_failed_title">व्हॉल्ट सुरक्षित करणे पूर्ण झाले नाही</string>
+    <string name="migration_failed_message">काहीही हरवले नाही आणि तुमच्या नोंदी जशाच्या तशा आहेत. पुन्हा प्रयत्न करा, किंवा नंतर ॲप उघडा.</string>
+    <string name="migration_failed_message_can_export">काहीही हरवले नाही — तुमची व्हॉल्ट सुरक्षित आणि वाचनीय आहे. पुन्हा प्रयत्न करा, किंवा आधी सेटिंग्जमधून बॅकअप घ्या.</string>
+    <string name="migration_retry">पुन्हा प्रयत्न करा</string>
+    <string name="device_lock_required_title">उपकरण लॉक आवश्यक</string>
+    <string name="device_lock_required_message">PassKey तुमची व्हॉल्ट उपकरणाच्या स्क्रीन लॉकने सुरक्षित ठेवते. पुढे जाण्यासाठी पिन, पॅटर्न, पासवर्ड किंवा बायोमेट्रिक सेट करा.</string>
+    <string name="device_lock_open_settings">सेटिंग्ज उघडा</string>
+    <string name="change_recovery_password">पुनर्प्राप्ती पासवर्ड बदला</string>
+    <string name="recovery_change_current_title">सध्याच्या पासवर्डची पुष्टी करा</string>
+    <string name="recovery_change_current_message">तुम्हीच आहात हे सिद्ध करण्यासाठी सध्याचा पुनर्प्राप्ती पासवर्ड टाका.</string>
+    <string name="recovery_change_new_title">नवीन पुनर्प्राप्ती पासवर्ड निवडा</string>
+    <string name="recovery_change_new_message">हा तुमच्या जुन्या पुनर्प्राप्ती पासवर्डची जागा घेतो. तो रीसेट करता येत नाही, सुरक्षित ठिकाणी ठेवा.</string>
+    <string name="recovery_change_done">पुनर्प्राप्ती पासवर्ड बदलला.</string>
+    <string name="recovery_change_failed">तो पासवर्ड बरोबर नव्हता.</string>
+    <string name="migration_export_first">आधी बॅकअप घ्या</string>
+    <string name="migration_export_now">माझी व्हॉल्ट आता निर्यात करा</string>
+    <string name="recovery_password_hint">रिकव्हरी पासवर्ड</string>
+    <string name="recovery_password_too_weak">हा पासवर्ड सहज ओळखता येतो. मोठा पासवर्ड किंवा काही असंबंधित शब्द वापरा.</string>
+    <string name="password_strength_weak">मजबुती: कमकुवत</string>
+    <string name="password_strength_fair">मजबुती: ठीक</string>
+    <string name="password_strength_strong">मजबुती: मजबूत</string>
+    <plurals name="password_min_length">
+        <item quantity="one">किमान %1$d अक्षरे वापरा.</item>
+        <item quantity="other">किमान %1$d अक्षरे वापरा.</item>
+    </plurals>
 </resources>

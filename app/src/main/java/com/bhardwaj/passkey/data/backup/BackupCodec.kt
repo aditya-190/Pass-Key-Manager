@@ -25,9 +25,7 @@ internal class BackupCodec(
 
     suspend fun encode(password: CharArray, exportedAt: Long, appVersion: String): ByteArray {
         val previews = repository.getPreviews().first()
-        val payload = BackupPayload(
-            exportedAt = exportedAt,
-            appVersion = appVersion,
+        return encodePreviews(
             previews = previews.map { preview ->
                 val details = repository.getDetailsByPreviewId(preview.previewId!!).first()
                 BackupPreview(
@@ -36,8 +34,21 @@ internal class BackupCodec(
                     sequence = preview.sequence,
                     details = details.map { BackupDetail(it.question, it.answer, it.sequence, it.isSecret) }
                 )
-            }
+            },
+            password = password,
+            exportedAt = exportedAt,
+            appVersion = appVersion
         )
+    }
+
+    /** Encrypts already-assembled entries; also used by the migration rescue export. */
+    fun encodePreviews(
+        previews: List<BackupPreview>,
+        password: CharArray,
+        exportedAt: Long,
+        appVersion: String
+    ): ByteArray {
+        val payload = BackupPayload(exportedAt = exportedAt, appVersion = appVersion, previews = previews)
         val plaintext = gzip(json.encodeToString(payload).toByteArray(Charsets.UTF_8))
         return try {
             BackupCrypto.encrypt(plaintext, password)

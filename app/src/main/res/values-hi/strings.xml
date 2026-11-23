@@ -202,4 +202,37 @@
     <string name="entry_deleted">एंट्री हटाई गई</string>
     <string name="field_deleted">फ़ील्ड हटाया गया</string>
     <string name="undo">वापस लाएँ</string>
+    <string name="recovery_setup_title">पुनर्प्राप्ति पासवर्ड सेट करें</string>
+    <string name="recovery_setup_message_new">PassKey आपके फ़िंगरप्रिंट या स्क्रीन लॉक से खुलता है। यह पुनर्प्राप्ति पासवर्ड अंदर जाने का वैकल्पिक रास्ता है — फ़िंगरप्रिंट बदलने या डिवाइस लॉक हटाने पर यही काम आएगा। इसे रीसेट नहीं किया जा सकता, इसलिए सुरक्षित जगह रखें।</string>
+    <string name="recovery_setup_message_upgrade">यह अपडेट आपकी वॉल्ट को इस डिवाइस के लिए अनोखी कुंजी से दोबारा एन्क्रिप्ट करता है। पहले पुनर्प्राप्ति पासवर्ड सेट करें: फ़िंगरप्रिंट बदलने या डिवाइस लॉक हटाने पर यही एकमात्र रास्ता होगा। इसे रीसेट नहीं किया जा सकता, इसलिए सुरक्षित जगह रखें।</string>
+    <string name="recovery_unlock_title">अपना पुनर्प्राप्ति पासवर्ड डालें</string>
+    <string name="recovery_unlock_message">आपके डिवाइस के बायोमेट्रिक या स्क्रीन लॉक बदल गए हैं, इसलिए वॉल्ट खोलने के लिए PassKey को आपका पुनर्प्राप्ति पासवर्ड चाहिए।</string>
+    <string name="recovery_unlock_wrong">यह पासवर्ड काम नहीं आया। फिर कोशिश करें।</string>
+    <string name="migration_title">आपकी वॉल्ट सुरक्षित की जा रही है</string>
+    <string name="migration_message">आपकी प्रविष्टियों को इस डिवाइस की अनोखी कुंजी से दोबारा एन्क्रिप्ट किया जा रहा है। कृपया ऐप खुला रखें।</string>
+    <string name="migration_failed_title">वॉल्ट सुरक्षित करना पूरा नहीं हो सका</string>
+    <string name="migration_failed_message">कुछ भी नहीं खोया और आपकी प्रविष्टियाँ जस की तस हैं। फिर कोशिश करें, या बाद में ऐप दोबारा खोलें।</string>
+    <string name="migration_failed_message_can_export">कुछ भी नहीं खोया — आपकी वॉल्ट सुरक्षित और पढ़ने योग्य है। फिर कोशिश करें, या पहले सेटिंग्स से बैकअप निर्यात करें।</string>
+    <string name="migration_retry">फिर कोशिश करें</string>
+    <string name="device_lock_required_title">डिवाइस लॉक ज़रूरी है</string>
+    <string name="device_lock_required_message">PassKey आपकी वॉल्ट को डिवाइस के स्क्रीन लॉक से सुरक्षित रखता है। जारी रखने के लिए पिन, पैटर्न, पासवर्ड या बायोमेट्रिक सेट करें।</string>
+    <string name="device_lock_open_settings">सेटिंग्स खोलें</string>
+    <string name="change_recovery_password">पुनर्प्राप्ति पासवर्ड बदलें</string>
+    <string name="recovery_change_current_title">मौजूदा पासवर्ड की पुष्टि करें</string>
+    <string name="recovery_change_current_message">यह आप ही हैं, यह साबित करने के लिए मौजूदा पुनर्प्राप्ति पासवर्ड डालें।</string>
+    <string name="recovery_change_new_title">नया पुनर्प्राप्ति पासवर्ड चुनें</string>
+    <string name="recovery_change_new_message">यह आपके पुराने पुनर्प्राप्ति पासवर्ड की जगह लेगा। इसे रीसेट नहीं किया जा सकता, सुरक्षित जगह रखें।</string>
+    <string name="recovery_change_done">पुनर्प्राप्ति पासवर्ड बदल दिया गया।</string>
+    <string name="recovery_change_failed">वह पासवर्ड सही नहीं था।</string>
+    <string name="migration_export_first">पहले बैकअप निर्यात करें</string>
+    <string name="migration_export_now">मेरी वॉल्ट अभी निर्यात करें</string>
+    <string name="recovery_password_hint">रिकवरी पासवर्ड</string>
+    <string name="recovery_password_too_weak">इस पासवर्ड का अनुमान लगाना आसान है। लंबा पासवर्ड या कुछ असंबंधित शब्द इस्तेमाल करें।</string>
+    <string name="password_strength_weak">मज़बूती: कमज़ोर</string>
+    <string name="password_strength_fair">मज़बूती: ठीक-ठाक</string>
+    <string name="password_strength_strong">मज़बूती: मज़बूत</string>
+    <plurals name="password_min_length">
+        <item quantity="one">कम से कम %1$d अक्षर इस्तेमाल करें।</item>
+        <item quantity="other">कम से कम %1$d अक्षर इस्तेमाल करें।</item>
+    </plurals>
 </resources>

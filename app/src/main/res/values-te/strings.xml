@@ -201,5 +201,38 @@
     <string name="entry_deleted">ఎంట్రీ తొలగించబడింది</string>
     <string name="field_deleted">ఫీల్డ్ తొలగించబడింది</string>
     <string name="undo">రద్దు చేయి</string>
+    <string name="recovery_setup_title">రికవరీ పాస్‌వర్డ్ సెట్ చేయండి</string>
+    <string name="recovery_setup_message_new">PassKey మీ వేలిముద్ర లేదా స్క్రీన్ లాక్‌తో తెరుచుకుంటుంది. ఈ రికవరీ పాస్‌వర్డ్ ప్రత్యామ్నాయ మార్గం — వేలిముద్రలు మార్చినా, పరికర లాక్ తీసేసినా ఇది అవసరం. దీన్ని రీసెట్ చేయలేరు, సురక్షితంగా ఉంచండి.</string>
+    <string name="recovery_setup_message_upgrade">ఈ అప్‌డేట్ మీ వాల్ట్‌ను ఈ పరికరానికే ప్రత్యేకమైన కీతో మళ్లీ ఎన్‌క్రిప్ట్ చేస్తుంది. ముందుగా రికవరీ పాస్‌వర్డ్ సెట్ చేయండి: వేలిముద్రలు మార్చినా, లాక్ తీసేసినా ఇదే ఏకైక మార్గం. దీన్ని రీసెట్ చేయలేరు.</string>
+    <string name="recovery_unlock_title">మీ రికవరీ పాస్‌వర్డ్ నమోదు చేయండి</string>
+    <string name="recovery_unlock_message">మీ పరికర బయోమెట్రిక్ లేదా స్క్రీన్ లాక్ మారింది, కాబట్టి వాల్ట్ తెరవడానికి PassKey కి రికవరీ పాస్‌వర్డ్ కావాలి.</string>
+    <string name="recovery_unlock_wrong">ఆ పాస్‌వర్డ్ పని చేయలేదు. మళ్లీ ప్రయత్నించండి.</string>
+    <string name="migration_title">మీ వాల్ట్‌ను భద్రపరుస్తున్నాం</string>
+    <string name="migration_message">మీ ఎంట్రీలు ఈ పరికరానికే ప్రత్యేకమైన కీతో మళ్లీ ఎన్‌క్రిప్ట్ అవుతున్నాయి. యాప్‌ను తెరిచే ఉంచండి.</string>
+    <string name="migration_failed_title">వాల్ట్ భద్రపరచడం పూర్తి కాలేదు</string>
+    <string name="migration_failed_message">ఏమీ పోలేదు, మీ ఎంట్రీలు యథాతథంగా ఉన్నాయి. మళ్లీ ప్రయత్నించండి, లేదా తర్వాత యాప్ తెరవండి.</string>
+    <string name="migration_failed_message_can_export">ఏమీ పోలేదు — మీ వాల్ట్ చెక్కుచెదరలేదు, చదవగలిగేలా ఉంది. మళ్లీ ప్రయత్నించండి, లేదా ముందు సెట్టింగ్‌ల నుండి బ్యాకప్ తీసుకోండి.</string>
+    <string name="migration_retry">మళ్లీ ప్రయత్నించు</string>
+    <string name="device_lock_required_title">పరికర లాక్ అవసరం</string>
+    <string name="device_lock_required_message">PassKey మీ వాల్ట్‌ను పరికర స్క్రీన్ లాక్‌తో కాపాడుతుంది. కొనసాగించడానికి పిన్, నమూనా, పాస్‌వర్డ్ లేదా బయోమెట్రిక్ సెట్ చేయండి.</string>
+    <string name="device_lock_open_settings">సెట్టింగ్‌లు తెరువు</string>
+    <string name="change_recovery_password">రికవరీ పాస్‌వర్డ్ మార్చు</string>
+    <string name="recovery_change_current_title">ప్రస్తుత పాస్‌వర్డ్‌ను నిర్ధారించండి</string>
+    <string name="recovery_change_current_message">మీరేనని నిరూపించడానికి ప్రస్తుత రికవరీ పాస్‌వర్డ్‌ను నమోదు చేయండి.</string>
+    <string name="recovery_change_new_title">కొత్త రికవరీ పాస్‌వర్డ్ ఎంచుకోండి</string>
+    <string name="recovery_change_new_message">ఇది మీ పాత రికవరీ పాస్‌వర్డ్‌ను భర్తీ చేస్తుంది. దీన్ని రీసెట్ చేయలేరు, సురక్షితంగా ఉంచండి.</string>
+    <string name="recovery_change_done">రికవరీ పాస్‌వర్డ్ మార్చబడింది.</string>
+    <string name="recovery_change_failed">ఆ పాస్‌వర్డ్ సరైనది కాదు.</string>
+    <string name="migration_export_first">ముందు బ్యాకప్ తీసుకోండి</string>
+    <string name="migration_export_now">నా వాల్ట్‌ను ఇప్పుడే ఎగుమతి చేయి</string>
+    <string name="recovery_password_hint">రికవరీ పాస్‌వర్డ్</string>
+    <string name="recovery_password_too_weak">ఈ పాస్‌వర్డ్‌ను సులభంగా ఊహించవచ్చు. పొడవైన పాస్‌వర్డ్ లేదా సంబంధం లేని కొన్ని పదాలు వాడండి.</string>
+    <string name="password_strength_weak">బలం: బలహీనం</string>
+    <string name="password_strength_fair">బలం: పర్వాలేదు</string>
+    <string name="password_strength_strong">బలం: బలమైనది</string>
+    <plurals name="password_min_length">
+        <item quantity="one">కనీసం %1$d అక్షరాలు వాడండి.</item>
+        <item quantity="other">కనీసం %1$d అక్షరాలు వాడండి.</item>
+    </plurals>
 </resources>
 

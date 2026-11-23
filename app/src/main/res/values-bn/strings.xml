@@ -202,4 +202,37 @@
     <string name="entry_deleted">এন্ট্রি মুছে ফেলা হয়েছে</string>
     <string name="field_deleted">ফিল্ড মুছে ফেলা হয়েছে</string>
     <string name="undo">ফিরিয়ে আনুন</string>
+    <string name="recovery_setup_title">পুনরুদ্ধার পাসওয়ার্ড সেট করুন</string>
+    <string name="recovery_setup_message_new">PassKey আপনার আঙুলের ছাপ বা স্ক্রিন লক দিয়ে খোলে। এই পুনরুদ্ধার পাসওয়ার্ড হলো বিকল্প পথ — আঙুলের ছাপ বদলালে বা ডিভাইস লক সরালে এটি লাগবে। এটি রিসেট করা যায় না, তাই নিরাপদ জায়গায় রাখুন।</string>
+    <string name="recovery_setup_message_upgrade">এই আপডেট আপনার ভল্টকে এই ডিভাইসের জন্য অনন্য একটি কী দিয়ে পুনরায় এনক্রিপ্ট করে। আগে একটি পুনরুদ্ধার পাসওয়ার্ড সেট করুন: আঙুলের ছাপ বদলালে বা ডিভাইস লক সরালে এটিই একমাত্র উপায়। এটি রিসেট করা যায় না, তাই নিরাপদে রাখুন।</string>
+    <string name="recovery_unlock_title">আপনার পুনরুদ্ধার পাসওয়ার্ড দিন</string>
+    <string name="recovery_unlock_message">আপনার ডিভাইসের বায়োমেট্রিক বা স্ক্রিন লক বদলে গেছে, তাই ভল্ট খুলতে PassKey-এর পুনরুদ্ধার পাসওয়ার্ড দরকার।</string>
+    <string name="recovery_unlock_wrong">এই পাসওয়ার্ড কাজ করেনি। আবার চেষ্টা করুন।</string>
+    <string name="migration_title">আপনার ভল্ট সুরক্ষিত করা হচ্ছে</string>
+    <string name="migration_message">আপনার এন্ট্রিগুলি এই ডিভাইসের অনন্য কী দিয়ে পুনরায় এনক্রিপ্ট করা হচ্ছে। অ্যাপটি খোলা রাখুন।</string>
+    <string name="migration_failed_title">ভল্ট সুরক্ষিত করা শেষ করা যায়নি</string>
+    <string name="migration_failed_message">কিছুই হারায়নি এবং আপনার এন্ট্রি অক্ষত আছে। আবার চেষ্টা করুন, বা পরে অ্যাপ খুলুন।</string>
+    <string name="migration_failed_message_can_export">কিছুই হারায়নি — আপনার ভল্ট অক্ষত ও পঠনযোগ্য। আবার চেষ্টা করুন, বা আগে সেটিংস থেকে ব্যাকআপ নিন।</string>
+    <string name="migration_retry">আবার চেষ্টা করুন</string>
+    <string name="device_lock_required_title">ডিভাইস লক প্রয়োজন</string>
+    <string name="device_lock_required_message">PassKey আপনার ভল্ট ডিভাইসের স্ক্রিন লক দিয়ে সুরক্ষিত রাখে। চালিয়ে যেতে পিন, প্যাটার্ন, পাসওয়ার্ড বা বায়োমেট্রিক সেট করুন।</string>
+    <string name="device_lock_open_settings">সেটিংস খুলুন</string>
+    <string name="change_recovery_password">পুনরুদ্ধার পাসওয়ার্ড বদলান</string>
+    <string name="recovery_change_current_title">বর্তমান পাসওয়ার্ড নিশ্চিত করুন</string>
+    <string name="recovery_change_current_message">আপনিই যে তা প্রমাণ করতে বর্তমান পুনরুদ্ধার পাসওয়ার্ড দিন।</string>
+    <string name="recovery_change_new_title">নতুন পুনরুদ্ধার পাসওয়ার্ড বাছুন</string>
+    <string name="recovery_change_new_message">এটি আপনার পুরনো পুনরুদ্ধার পাসওয়ার্ড প্রতিস্থাপন করে। এটি রিসেট করা যায় না, তাই নিরাপদে রাখুন।</string>
+    <string name="recovery_change_done">পুনরুদ্ধার পাসওয়ার্ড বদলানো হয়েছে।</string>
+    <string name="recovery_change_failed">পাসওয়ার্ডটি সঠিক ছিল না।</string>
+    <string name="migration_export_first">আগে ব্যাকআপ নিন</string>
+    <string name="migration_export_now">এখনই আমার ভল্ট রপ্তানি করুন</string>
+    <string name="recovery_password_hint">রিকভারি পাসওয়ার্ড</string>
+    <string name="recovery_password_too_weak">এই পাসওয়ার্ড সহজে অনুমান করা যায়। আরও লম্বা পাসওয়ার্ড বা কয়েকটি অসম্পর্কিত শব্দ ব্যবহার করুন।</string>
+    <string name="password_strength_weak">শক্তি: দুর্বল</string>
+    <string name="password_strength_fair">শক্তি: মাঝারি</string>
+    <string name="password_strength_strong">শক্তি: শক্তিশালী</string>
+    <plurals name="password_min_length">
+        <item quantity="one">কমপক্ষে %1$d অক্ষর ব্যবহার করুন।</item>
+        <item quantity="other">কমপক্ষে %1$d অক্ষর ব্যবহার করুন।</item>
+    </plurals>
 </resources>

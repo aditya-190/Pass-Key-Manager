@@ -200,4 +200,36 @@
     <string name="entry_deleted">エントリを削除しました</string>
     <string name="field_deleted">項目を削除しました</string>
     <string name="undo">元に戻す</string>
+    <string name="recovery_setup_title">復旧用パスワードを設定</string>
+    <string name="recovery_setup_message_new">PassKey は指紋または画面ロックで解錠します。この復旧用パスワードは代替の入口です。指紋を変更したり端末ロックを解除した場合に必要になります。再発行はできませんので安全な場所に保管してください。</string>
+    <string name="recovery_setup_message_upgrade">このアップデートでは、保管庫をこの端末固有の鍵で暗号化し直します。まず復旧用パスワードを設定してください。指紋を変更したり端末ロックを解除した場合、これが唯一の入口になります。再発行はできません。</string>
+    <string name="recovery_unlock_title">復旧用パスワードを入力</string>
+    <string name="recovery_unlock_message">端末の生体認証または画面ロックが変更されたため、保管庫を開くには復旧用パスワードが必要です。</string>
+    <string name="recovery_unlock_wrong">そのパスワードでは解錠できませんでした。もう一度お試しください。</string>
+    <string name="migration_title">保管庫を保護しています</string>
+    <string name="migration_message">この端末固有の鍵で登録内容を暗号化し直しています。アプリを開いたままにしてください。</string>
+    <string name="migration_failed_title">保管庫の保護を完了できませんでした</string>
+    <string name="migration_failed_message">失われたものはなく、登録内容はそのままです。もう一度試すか、後でアプリを開いてください。</string>
+    <string name="migration_failed_message_can_export">失われたものはありません。保管庫は無傷で読み取り可能です。もう一度試すか、先に設定からバックアップを書き出してください。</string>
+    <string name="migration_retry">再試行</string>
+    <string name="device_lock_required_title">端末ロックが必要です</string>
+    <string name="device_lock_required_message">PassKey は端末の画面ロックで保管庫を保護します。続けるには PIN、パターン、パスワード、または生体認証を設定してください。</string>
+    <string name="device_lock_open_settings">設定を開く</string>
+    <string name="change_recovery_password">復旧用パスワードを変更</string>
+    <string name="recovery_change_current_title">現在のパスワードを確認</string>
+    <string name="recovery_change_current_message">本人確認のため、現在の復旧用パスワードを入力してください。</string>
+    <string name="recovery_change_new_title">新しい復旧用パスワードを設定</string>
+    <string name="recovery_change_new_message">以前の復旧用パスワードと置き換わります。再発行はできませんので安全な場所に保管してください。</string>
+    <string name="recovery_change_done">復旧用パスワードを変更しました。</string>
+    <string name="recovery_change_failed">パスワードが正しくありませんでした。</string>
+    <string name="migration_export_first">先にバックアップを書き出す</string>
+    <string name="migration_export_now">今すぐ保管庫を書き出す</string>
+    <string name="recovery_password_hint">復元用パスワード</string>
+    <string name="recovery_password_too_weak">このパスワードは推測されやすいです。もっと長いパスワードか、関連のない単語をいくつか組み合わせてください。</string>
+    <string name="password_strength_weak">強度: 弱い</string>
+    <string name="password_strength_fair">強度: 普通</string>
+    <string name="password_strength_strong">強度: 強い</string>
+    <plurals name="password_min_length">
+        <item quantity="other">%1$d 文字以上にしてください。</item>
+    </plurals>
 </resources>

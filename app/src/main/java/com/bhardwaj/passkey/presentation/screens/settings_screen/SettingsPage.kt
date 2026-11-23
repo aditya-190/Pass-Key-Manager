@@ -105,6 +105,30 @@ fun SettingsScreen(
         }
     }
 
+    // Two steps: prove the current password, then choose the new one. Reuses the same dialog.
+    when (viewModel.recoveryChangeStep) {
+        false -> BackupPasswordDialog(
+            confirmMode = false,
+            titleRes = R.string.recovery_change_current_title,
+            hintRes = R.string.recovery_password_hint,
+            messageRes = R.string.recovery_change_current_message,
+            onDismiss = { viewModel.onEvent(SettingsEvents.OnDismissRecoveryChange) },
+            onConfirm = { viewModel.onEvent(SettingsEvents.OnCurrentRecoveryPasswordEntered(it)) }
+        )
+
+        true -> BackupPasswordDialog(
+            confirmMode = true,
+            titleRes = R.string.recovery_change_new_title,
+            recoveryRules = true,
+            hintRes = R.string.recovery_password_hint,
+            messageRes = R.string.recovery_change_new_message,
+            onDismiss = { viewModel.onEvent(SettingsEvents.OnDismissRecoveryChange) },
+            onConfirm = { viewModel.onEvent(SettingsEvents.OnNewRecoveryPasswordEntered(it)) }
+        )
+
+        null -> Unit
+    }
+
     val autoLockTimeout by viewModel.autoLockTimeout.collectAsStateWithLifecycle()
     if (viewModel.isAutoLockDialogOpen) {
         AutoLockDialog(
@@ -217,6 +241,11 @@ fun SettingsScreen(
                             }
                             SettingsText(text = stringResource(id = R.string.auto_lock)) {
                                 viewModel.onEvent(SettingsEvents.OnAutoLockClick)
+                            }
+                            SettingsText(
+                                text = stringResource(id = R.string.change_recovery_password)
+                            ) {
+                                viewModel.onEvent(SettingsEvents.OnChangeRecoveryPasswordClick)
                             }
                             SettingsText(text = stringResource(id = R.string.import_data)) {
                                 importLauncher.launch(arrayOf("*/*"))

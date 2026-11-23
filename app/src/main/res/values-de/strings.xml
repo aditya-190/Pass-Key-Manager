@@ -203,4 +203,37 @@
     <string name="entry_deleted">Eintrag gelöscht</string>
     <string name="field_deleted">Feld gelöscht</string>
     <string name="undo">Rückgängig</string>
+    <string name="recovery_setup_title">Wiederherstellungspasswort festlegen</string>
+    <string name="recovery_setup_message_new">PassKey entsperrt mit Fingerabdruck oder Bildschirmsperre. Dieses Wiederherstellungspasswort ist der Ersatzweg hinein — du brauchst es, wenn du deine Fingerabdrücke änderst oder die Gerätesperre entfernst. Es lässt sich nicht zurücksetzen, bewahre es sicher auf.</string>
+    <string name="recovery_setup_message_upgrade">Dieses Update verschlüsselt deinen Tresor mit einem gerätespezifischen Schlüssel neu. Lege zuerst ein Wiederherstellungspasswort fest: Es ist der einzige Weg zurück, wenn du deine Fingerabdrücke änderst oder die Gerätesperre entfernst. Es lässt sich nicht zurücksetzen.</string>
+    <string name="recovery_unlock_title">Wiederherstellungspasswort eingeben</string>
+    <string name="recovery_unlock_message">Die Biometrie oder Bildschirmsperre deines Geräts hat sich geändert, daher braucht PassKey dein Wiederherstellungspasswort.</string>
+    <string name="recovery_unlock_wrong">Dieses Passwort hat nicht funktioniert. Versuche es erneut.</string>
+    <string name="migration_title">Tresor wird gesichert</string>
+    <string name="migration_message">Deine Einträge werden mit einem gerätespezifischen Schlüssel neu verschlüsselt. Bitte lass die App geöffnet.</string>
+    <string name="migration_failed_title">Sicherung des Tresors nicht abgeschlossen</string>
+    <string name="migration_failed_message">Es ging nichts verloren, deine Einträge sind unverändert. Versuche es erneut oder öffne die App später.</string>
+    <string name="migration_failed_message_can_export">Es ging nichts verloren — dein Tresor ist intakt und lesbar. Versuche es erneut oder exportiere zuerst ein Backup in den Einstellungen.</string>
+    <string name="migration_retry">Erneut versuchen</string>
+    <string name="device_lock_required_title">Gerätesperre erforderlich</string>
+    <string name="device_lock_required_message">PassKey schützt deinen Tresor mit der Bildschirmsperre deines Geräts. Richte PIN, Muster, Passwort oder Biometrie ein, um fortzufahren.</string>
+    <string name="device_lock_open_settings">Einstellungen öffnen</string>
+    <string name="change_recovery_password">Wiederherstellungspasswort ändern</string>
+    <string name="recovery_change_current_title">Aktuelles Passwort bestätigen</string>
+    <string name="recovery_change_current_message">Gib dein bisheriges Wiederherstellungspasswort ein, um dich auszuweisen.</string>
+    <string name="recovery_change_new_title">Neues Wiederherstellungspasswort wählen</string>
+    <string name="recovery_change_new_message">Das ersetzt dein bisheriges Wiederherstellungspasswort. Es lässt sich nicht zurücksetzen, bewahre es sicher auf.</string>
+    <string name="recovery_change_done">Wiederherstellungspasswort geändert.</string>
+    <string name="recovery_change_failed">Das Passwort war nicht korrekt.</string>
+    <string name="migration_export_first">Zuerst ein Backup exportieren</string>
+    <string name="migration_export_now">Tresor jetzt exportieren</string>
+    <string name="recovery_password_hint">Wiederherstellungspasswort</string>
+    <string name="recovery_password_too_weak">Dieses Passwort ist leicht zu erraten. Nimm ein längeres oder ein paar Wörter, die nichts miteinander zu tun haben.</string>
+    <string name="password_strength_weak">Stärke: schwach</string>
+    <string name="password_strength_fair">Stärke: mittel</string>
+    <string name="password_strength_strong">Stärke: stark</string>
+    <plurals name="password_min_length">
+        <item quantity="one">Verwende mindestens %1$d Zeichen.</item>
+        <item quantity="other">Verwende mindestens %1$d Zeichen.</item>
+    </plurals>
 </resources>
