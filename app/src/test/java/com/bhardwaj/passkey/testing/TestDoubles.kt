@@ -106,6 +106,11 @@ class FakePasskeyRepository : PasskeyRepository {
     val allPreviews: List<Preview> get() = previews.value
     val allDetails: List<Detail> get() = details.value
 
+    /** Runs before every create and transaction; a test can suspend here to hold a write "in flight". */
+    var writeGate: suspend () -> Unit = {}
+    var transactions = 0
+        private set
+
     override fun getPreviews(): Flow<List<Preview>> = previews.map { list -> list.sortedBy { it.sequence } }
 
     override fun getPreviewsByCategory(category: Category): Flow<List<Preview>> =
@@ -118,6 +123,7 @@ class FakePasskeyRepository : PasskeyRepository {
         previews.value.find { it.heading.equals(heading, ignoreCase = true) && it.category == category }
 
     override suspend fun createPreview(heading: String, category: Category, sequence: Long): Long {
+        writeGate()
         val id = nextId++
         previews.value = previews.value + Preview(id = id, heading = heading, category = category, sequence = sequence)
         return id
@@ -153,6 +159,7 @@ class FakePasskeyRepository : PasskeyRepository {
         sequence: Long,
         isSecret: Boolean
     ): Long {
+        writeGate()
         val id = nextId++
         details.value = details.value + Detail(id, previewId, question, answer, sequence, isSecret)
         return id
@@ -174,7 +181,11 @@ class FakePasskeyRepository : PasskeyRepository {
         details.value = details.value.map { if (it.id == detailId) it.copy(sequence = sequence) else it }
     }
 
-    override suspend fun <R> runInTransaction(block: suspend () -> R): R = block()
+    override suspend fun <R> runInTransaction(block: suspend () -> R): R {
+        transactions++
+        writeGate()
+        return block()
+    }
 
     override suspend fun deleteAll() {
         previews.value = emptyList()

@@ -13,6 +13,7 @@ import com.bhardwaj.passkey.testing.FakePasskeyRepository
 import com.bhardwaj.passkey.testing.MainDispatcherRule
 import com.bhardwaj.passkey.testing.RecordingAnalyticsTracker
 import com.bhardwaj.passkey.utils.UiText
+import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
@@ -144,5 +145,20 @@ class DetailViewModelTest {
         val vm = vm()
         vm.onIntent(DetailIntent.LongPressed("4321"))
         assertEquals(DetailEffect.CopyToClipboard("4321", isSensitive = true), vm.effects.first())
+    }
+
+    @Test
+    fun `a second Save tap while the first is running does not create a duplicate field`() = runTest {
+        // Attack-pass #2.
+        val vm = vm()
+        val gate = CompletableDeferred<Unit>()
+        repository.writeGate = { gate.await() }
+        vm.onIntent(DetailIntent.AddClicked)
+        vm.onIntent(DetailIntent.QuestionChanged("PIN"))
+        vm.onIntent(DetailIntent.AnswerChanged("4321"))
+        vm.onIntent(DetailIntent.SaveClicked)
+        vm.onIntent(DetailIntent.SaveClicked)
+        gate.complete(Unit)
+        assertEquals(1, repository.allDetails.size)
     }
 }

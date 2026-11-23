@@ -13,6 +13,7 @@ import com.bhardwaj.passkey.testing.MainDispatcherRule
 import com.bhardwaj.passkey.testing.RecordingAnalyticsTracker
 import com.bhardwaj.passkey.utils.Constants.Companion.PREVIEW_CATEGORY_NAME
 import com.bhardwaj.passkey.utils.UiText
+import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
@@ -173,5 +174,52 @@ class PreviewViewModelTest {
         vm.onIntent(PreviewIntent.ItemLongPressed("Gmail"))
         assertEquals(PreviewEffect.CopyToClipboard("Gmail", isSensitive = false), vm.effects.first())
         assertTrue(AppEventNames.VALUE_COPIED in analytics.names)
+    }
+
+    @Test
+    fun `a second Delete tap while the first is running is ignored, so Undo keeps the fields`() = runTest {
+        // Attack-pass #1: the dialog stayed up during the write and a second tap replaced the Undo copy.
+        val id = repository.createPreview("Bank", Category.BANKS)
+        repository.createDetail(id, "PIN", "4321")
+        val vm = vm()
+        val gate = CompletableDeferred<Unit>()
+        repository.writeGate = { gate.await() }
+
+        vm.onIntent(PreviewIntent.SwipedToDelete(vm.state.value.items.single()))
+        vm.onIntent(PreviewIntent.DeleteConfirmed)
+        assertNull("the dialog closes at once", vm.state.value.pendingDelete)
+        vm.onIntent(PreviewIntent.DeleteConfirmed)
+        gate.complete(Unit)
+        assertEquals(1, repository.transactions)
+
+        vm.onIntent(PreviewIntent.UndoDelete)
+        assertEquals(listOf("PIN"), repository.allDetails.map { it.question })
+    }
+
+    @Test
+    fun `a second Save tap while the first is running does not create a duplicate`() = runTest {
+        // Attack-pass #2.
+        val vm = vm()
+        val gate = CompletableDeferred<Unit>()
+        repository.writeGate = { gate.await() }
+        vm.onIntent(PreviewIntent.AddClicked)
+        vm.onIntent(PreviewIntent.HeadingChanged("Bank"))
+        vm.onIntent(PreviewIntent.SaveClicked)
+        vm.onIntent(PreviewIntent.SaveClicked)
+        gate.complete(Unit)
+        assertEquals(1, repository.allPreviews.size)
+        assertNull(vm.state.value.editor)
+    }
+
+    @Test
+    fun `saving an edit of an entry that vanished keeps what was typed as a new entry`() = runTest {
+        // Attack-pass #4: the sheet used to close and drop the edit silently.
+        val id = repository.createPreview("Old", Category.BANKS)
+        val vm = vm()
+        vm.onIntent(PreviewIntent.EditClicked(vm.state.value.items.single()))
+        repository.deletePreview(repository.getPreviewById(id)!!)
+        vm.onIntent(PreviewIntent.HeadingChanged("Renamed"))
+        vm.onIntent(PreviewIntent.SaveClicked)
+        assertEquals(listOf("Renamed"), repository.allPreviews.map { it.heading })
     }
 }

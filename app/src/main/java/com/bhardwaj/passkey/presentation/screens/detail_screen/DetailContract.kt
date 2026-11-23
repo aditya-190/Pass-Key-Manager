@@ -26,7 +26,9 @@ data class DetailState(
         /** Until the user sets the switch, it follows the title's keywords. */
         val secretSetByUser: Boolean = false,
         /** Shown inside the sheet: a rejected save keeps the sheet and what was typed. */
-        val error: UiText? = null
+        val error: UiText? = null,
+        /** A save is being written; further Save taps are ignored so a double tap cannot create a duplicate. */
+        val isSaving: Boolean = false
     ) {
         val isEdit: Boolean get() = editingId != null
     }

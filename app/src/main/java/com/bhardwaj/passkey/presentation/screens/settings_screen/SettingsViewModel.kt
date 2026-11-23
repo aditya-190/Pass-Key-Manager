@@ -30,6 +30,8 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 
 @HiltViewModel
@@ -48,6 +50,8 @@ class SettingsViewModel @Inject constructor(
 
     /** Held only between the two recovery-change steps, then zeroed. */
     private var pendingCurrentRecoveryPassword: CharArray? = null
+
+    private val backupMutex = Mutex()
 
     val state: StateFlow<SettingsState> = combine(local, preferences.autoLockTimeout) { ui, timeout ->
         ui.copy(autoLockTimeout = timeout)
@@ -79,13 +83,13 @@ class SettingsViewModel @Inject constructor(
                 showDialog(null)
             }
 
-            is SettingsIntent.ExportChosen -> runWork {
+            is SettingsIntent.ExportChosen -> runBackup {
                 val result = backupRepository.export(intent.uri, intent.password)
                 Arrays.fill(intent.password, Char(0))
                 snackbar(if (result.isSuccess) R.string.export_success else R.string.export_failed)
             }
 
-            is SettingsIntent.ImportChosen -> runWork {
+            is SettingsIntent.ImportChosen -> runBackup {
                 val result = backupRepository.import(intent.uri, intent.password, intent.mode)
                 intent.password?.let { Arrays.fill(it, Char(0)) }
                 result.fold(
@@ -146,7 +150,15 @@ class SettingsViewModel @Inject constructor(
         pendingCurrentRecoveryPassword = null
     }
 
-    /** One long operation at a time: rapid taps on Export or Safety check used to start several. */
+    /**
+     * Backups run one after another, never dropped: by the time the intent arrives the user has already picked a
+     * file (the picker created it) and typed a password, so ignoring it left an empty file and an unwiped password.
+     */
+    private fun runBackup(block: suspend () -> Unit) {
+        viewModelScope.launch { backupMutex.withLock { block() } }
+    }
+
+    /** One safety check at a time: rapid taps used to start several. */
     private fun runWork(block: suspend () -> Unit) {
         if (local.value.isWorking) return
         local.update { it.copy(isWorking = true) }

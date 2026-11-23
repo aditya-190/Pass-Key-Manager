@@ -97,6 +97,11 @@ Owner: 5.7.0 → 100% rollout (owner sets it in Play Console); physical checks o
 - Device (API 28): default suite OK (26), vault untouched; minified release walked through all routes but Onboarding;
   home/details/settings smoke (tabs, swipe → confirm → cancel, generator marks secret, dialogs) with no crash.
 - Local fix: the schema folder's case-only rename needed a two-step `mv` on macOS (MigrationTester could not find it).
+- Attack pass, owner chose to fix all: #1 double-tap Delete then Undo lost the entry's fields (dialog now closes
+  before the write; a second tap is a no-op); #2 double-tap Save made duplicates (editor isSaving guard, both
+  screens); #3 a backup picked during another job was dropped with its password unwiped (backups now queue on a
+  mutex); #4 saving an edit of a vanished entry dropped it (saved as new). 5 tests red → green; 232 unit tests;
+  #1 re-checked on device (double-tap Delete → Undo → entry and field back). #5 (schema folder case) is local only.
 
 ## Carried into 5.6.0
 - Per-field secret keyboard (attack-pass finding #1), built on the `isSecret` column.

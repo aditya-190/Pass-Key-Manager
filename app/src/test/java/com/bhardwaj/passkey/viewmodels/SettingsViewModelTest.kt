@@ -24,6 +24,7 @@ import com.bhardwaj.passkey.utils.UiText
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
+import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -187,6 +188,27 @@ class SettingsViewModelTest {
         vm.onIntent(SettingsIntent.RateClicked)
         val effect = vm.effects.first() as SettingsEffect.OpenUrl
         assertTrue(effect.url.endsWith("id=${BuildConfig.APPLICATION_ID}"))
+    }
+
+    @Test
+    fun `a backup chosen while another job runs still happens, and every password is wiped`() = runTest {
+        // Attack-pass #3: it was silently dropped, leaving an empty file and the password in memory.
+        val gate = CompletableDeferred<Unit>()
+        coEvery { backups.export(any(), any()) } coAnswers {
+            gate.await()
+            Result.success(Unit)
+        }
+        val vm = vm()
+        val first = "first pass".toCharArray()
+        val second = "second pass".toCharArray()
+        vm.onIntent(SettingsIntent.ExportChosen(uri, first))
+        vm.onIntent(SettingsIntent.AnalyzeClicked)
+        vm.onIntent(SettingsIntent.ExportChosen(uri, second))
+        gate.complete(Unit)
+
+        coVerify(exactly = 2) { backups.export(any(), any()) }
+        assertTrue(first.all { it == Char(0) } && second.all { it == Char(0) })
+        assertTrue("the safety check still ran", vm.state.value.dialog is SettingsDialog.Analysis)
     }
 
     private class FakePreferences : PreferencesRepository {

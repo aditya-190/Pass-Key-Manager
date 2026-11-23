@@ -149,9 +149,11 @@ class DetailViewModel @Inject constructor(
         // Trimmed on both paths: a trailing space in a stored password fails silently wherever it is pasted.
         val question = editor.question.trim()
         val answer = editor.answer.trim()
+        if (editor.isSaving) return
         if (question.isEmpty() || answer.isEmpty()) {
             return editEditor { it.copy(error = UiText.StringResource(R.string.enter_valid_title_n_response)) }
         }
+        editEditor { it.copy(isSaving = true) }
         viewModelScope.launch {
             val existing = editor.editingId?.let { repository.getDetailById(it) }
             if (existing != null) {
@@ -166,10 +168,11 @@ class DetailViewModel @Inject constructor(
 
     private fun deletePending() {
         val target = local.value.pendingDelete ?: return
+        // Cleared before the write, so the dialog closes at once and a second tap does nothing.
+        local.update { it.copy(pendingDelete = null) }
         viewModelScope.launch {
             repository.deleteDetail(target)
             lastDeleted = target
-            local.update { it.copy(pendingDelete = null) }
             send(DetailEffect.ShowUndo(UiText.StringResource(R.string.field_deleted)))
         }
     }

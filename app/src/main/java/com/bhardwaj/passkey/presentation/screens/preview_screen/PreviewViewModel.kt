@@ -123,23 +123,26 @@ class PreviewViewModel @Inject constructor(
         transient.update { it.copy(editor = editor) }
     }
 
-    private fun rejectSave(message: Int) =
-        transient.update { it.copy(editor = it.editor?.copy(error = UiText.StringResource(message))) }
+    private fun rejectSave(message: Int) = transient.update {
+        it.copy(editor = it.editor?.copy(error = UiText.StringResource(message), isSaving = false))
+    }
 
     private fun save() {
         val editor = transient.value.editor ?: return
+        if (editor.isSaving) return
         val heading = editor.heading.trim()
         if (heading.isEmpty()) return rejectSave(R.string.enter_valid_heading)
+        transient.update { it.copy(editor = it.editor?.copy(isSaving = true)) }
         viewModelScope.launch {
             val currentCategory = Category.fromNameOrOther(category.value)
             val existing = repository.getPreviewByHeading(heading, currentCategory)
             // While editing, the lookup finds the row being edited; that is not a clash.
             if (existing != null && existing.id != editor.editingId) return@launch rejectSave(R.string.heading_exists)
 
-            if (editor.editingId != null) {
-                repository.getPreviewById(editor.editingId)?.let {
-                    repository.updatePreview(it.copy(heading = heading, category = currentCategory))
-                }
+            // An entry deleted while its sheet was open is saved as new rather than dropping what was typed.
+            val editing = editor.editingId?.let { repository.getPreviewById(it) }
+            if (editing != null) {
+                repository.updatePreview(editing.copy(heading = heading, category = currentCategory))
             } else {
                 repository.createPreview(heading = heading, category = currentCategory)
                 analytics.log(AppEvents.entryCreated(currentCategory))
@@ -150,6 +153,9 @@ class PreviewViewModel @Inject constructor(
 
     private fun deletePending() {
         val target = transient.value.pendingDelete ?: return
+        // Cleared before the write: the dialog closes at once, and a second tap finds nothing to delete. A
+        // second delete used to replace the Undo copy with one that had no fields left.
+        transient.update { it.copy(pendingDelete = null) }
         viewModelScope.launch {
             val details = repository.getDetailsByPreviewId(target.id).first()
             // No foreign-key cascade: the fields go in the same transaction as their entry.
@@ -158,7 +164,6 @@ class PreviewViewModel @Inject constructor(
                 repository.deletePreview(target)
             }
             lastDeleted = target to details
-            transient.update { it.copy(pendingDelete = null) }
             send(PreviewEffect.ShowUndo(UiText.StringResource(R.string.entry_deleted)))
         }
     }

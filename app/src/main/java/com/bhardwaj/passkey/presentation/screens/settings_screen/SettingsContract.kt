@@ -15,7 +15,7 @@ data class SettingsState(
     val autoLockTimeout: AutoLockTimeout = AutoLockTimeout.DEFAULT,
     /** At most one dialog or sheet at a time; five separate flags allowed impossible combinations. */
     val dialog: SettingsDialog? = null,
-    /** A safety check, export or import is running; repeat taps are ignored until it ends. */
+    /** A safety check is running; repeat taps are ignored until it ends. */
     val isWorking: Boolean = false
 )
 
