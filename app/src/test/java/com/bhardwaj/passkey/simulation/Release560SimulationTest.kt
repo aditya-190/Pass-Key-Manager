@@ -194,7 +194,7 @@ class Release560SimulationTest {
             val rnd = Random(seed.toLong())
             val route = if (rnd.nextInt(10) == 0) allowed.random(kotlin.random.Random(seed)) else rnd.text(30)
             val safe = AnnouncementRoutes.safeRoute(route)
-            if (safe != null) assertTrue("seed $seed '$route'", safe in allowed)
+            if (safe != null) assertTrue("seed $seed '$route'", route.trim() in allowed)
             assertFalse(PasswordAnalyzer.looksSecret(route, emptySet()))
         }
     }

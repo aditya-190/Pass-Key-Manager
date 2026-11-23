@@ -21,7 +21,7 @@ import com.bhardwaj.passkey.data.security.DatabaseKeyManager
 import com.bhardwaj.passkey.domain.model.AutoLockTimeout
 import com.bhardwaj.passkey.domain.repository.PasskeyRepository
 import com.bhardwaj.passkey.domain.repository.PreferencesRepository
-import com.bhardwaj.passkey.presentation.navigation.Routes
+import com.bhardwaj.passkey.presentation.navigation.NavRoute
 import com.bhardwaj.passkey.utils.PasswordAnalysisResult
 import com.bhardwaj.passkey.utils.PasswordAnalyzer
 import com.bhardwaj.passkey.utils.SecretKeywords
@@ -249,7 +249,7 @@ class SettingsViewModel @Inject constructor(
                 isAnalysisSheetOpen = false
                 sendUiEvents(
                     UiEvents.Navigate(
-                        Routes.DETAILS_PAGE + "?previewId=${event.detail.previewId}"
+                        NavRoute.Details(event.detail.previewId)
                     )
                 )
             }

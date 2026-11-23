@@ -13,6 +13,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
@@ -23,8 +24,7 @@ import com.bhardwaj.passkey.data.security.LockPolicy
 import com.bhardwaj.passkey.data.security.VaultSession
 import com.bhardwaj.passkey.data.security.lockTrace
 import com.bhardwaj.passkey.presentation.navigation.NavGraph
-import com.bhardwaj.passkey.presentation.navigation.NavScreens
-import com.bhardwaj.passkey.presentation.navigation.Routes
+import com.bhardwaj.passkey.presentation.navigation.NavRoute
 import com.bhardwaj.passkey.presentation.theme.PassKeyTheme
 import com.bhardwaj.passkey.update.InAppUpdateController
 import com.bhardwaj.passkey.update.UpdateGateController
@@ -81,7 +81,7 @@ class MainActivity : FragmentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     val navController = rememberNavController()
-                    val route = navController.currentBackStackEntryAsState().value?.destination?.route
+                    val destination = navController.currentBackStackEntryAsState().value?.destination
                     val isUnlocked by vaultSession.isUnlocked.collectAsStateWithLifecycle()
                     VaultLockGate(navController)
                     UpdateHost(
@@ -90,12 +90,11 @@ class MainActivity : FragmentActivity() {
                         updateController = inAppUpdates,
                         analytics = analytics,
                         // Soft prompts only on the vault home, never during onboarding, unlock or editing.
-                        isMainScreen = isUnlocked && route?.startsWith(Routes.PREVIEW_PAGE) == true,
+                        isMainScreen = isUnlocked && destination?.hasRoute<NavRoute.Previews>() == true,
                         packageName = packageName
                     ) {
                         NavGraph(
                             navController = navController,
-                            startDestination = NavScreens.SplashPage.route,
                             analytics = analytics
                         )
                     }
@@ -126,7 +125,7 @@ class MainActivity : FragmentActivity() {
         LaunchedEffect(isUnlocked, lockReason, route) {
             if (LockPolicy.mustShowLockScreen(isUnlocked, lockReason, route)) {
                 lockTrace("gate -> lock screen from $route reason=$lockReason")
-                navController.navigate(Routes.SECURITY_PAGE) { popUpTo(0) { inclusive = true } }
+                navController.navigate(NavRoute.Security) { popUpTo(0) { inclusive = true } }
             }
         }
     }

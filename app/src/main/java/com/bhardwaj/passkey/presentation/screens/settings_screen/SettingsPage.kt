@@ -48,7 +48,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.bhardwaj.passkey.R
 import com.bhardwaj.passkey.data.backup.BackupFormat
 import com.bhardwaj.passkey.data.backup.ImportMode
-import com.bhardwaj.passkey.presentation.navigation.Routes
+import com.bhardwaj.passkey.legal.LegalDocument
+import com.bhardwaj.passkey.presentation.navigation.NavRoute
 import com.bhardwaj.passkey.presentation.screens.common.ObserveAsEvents
 import com.bhardwaj.passkey.presentation.screens.settings_screen.SettingsEvents
 import com.bhardwaj.passkey.presentation.screens.settings_screen.SettingsViewModel
@@ -70,7 +71,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun SettingsScreen(
     onPopBackStack: () -> Unit,
-    onNavigate: (String) -> Unit,
+    onNavigate: (NavRoute) -> Unit,
     viewModel: SettingsViewModel = hiltViewModel()
 ) {
     val snackBarHostState = remember { SnackbarHostState() }
@@ -252,16 +253,16 @@ fun SettingsScreen(
                                 exportLauncher.launch(defaultBackupFileName())
                             }
                             SettingsText(text = stringResource(id = R.string.privacy)) {
-                                onNavigate(Routes.LEGAL_PAGE + "/PRIVACY")
+                                onNavigate(NavRoute.Legal(LegalDocument.PRIVACY.name))
                             }
                             SettingsText(text = stringResource(id = R.string.privacy_options)) {
-                                onNavigate(Routes.CONSENT_PAGE + "?${Routes.CONSENT_FROM_SETTINGS_ARG}=true")
+                                onNavigate(NavRoute.Consent(fromSettings = true))
                             }
                             SettingsText(text = stringResource(id = R.string.terms_n_condition)) {
-                                onNavigate(Routes.LEGAL_PAGE + "/TERMS")
+                                onNavigate(NavRoute.Legal(LegalDocument.TERMS.name))
                             }
                             SettingsText(text = stringResource(id = R.string.about)) {
-                                onNavigate(Routes.ABOUT_PAGE)
+                                onNavigate(NavRoute.About)
                             }
                         }
                     }

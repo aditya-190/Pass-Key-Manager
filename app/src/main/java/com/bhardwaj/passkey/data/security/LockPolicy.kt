@@ -1,7 +1,9 @@
 package com.bhardwaj.passkey.data.security
 
 import com.bhardwaj.passkey.domain.model.AutoLockTimeout
-import com.bhardwaj.passkey.presentation.navigation.Routes
+import com.bhardwaj.passkey.presentation.navigation.NavRoute
+import com.bhardwaj.passkey.presentation.navigation.RouteNames
+import com.bhardwaj.passkey.presentation.navigation.routeName
 
 /**
  * Every re-lock decision, as pure functions of elapsed-realtime values so it can be tested without a
@@ -11,10 +13,10 @@ import com.bhardwaj.passkey.presentation.navigation.Routes
 object LockPolicy {
     /** Screens that come before the vault exists or is unlocked; a cold start must not interrupt them. */
     private val preVaultRoutes = setOf(
-        Routes.SPLASH_PAGE,
-        Routes.ONBOARDING_PAGE,
-        Routes.CONSENT_PAGE,
-        Routes.SECURITY_PAGE
+        routeName<NavRoute.Splash>(),
+        routeName<NavRoute.Onboarding>(),
+        routeName<NavRoute.Consent>(),
+        routeName<NavRoute.Security>()
     )
 
     /**
@@ -44,8 +46,8 @@ object LockPolicy {
      */
     fun mustShowLockScreen(isUnlocked: Boolean, reason: LockReason, currentRoute: String?): Boolean {
         if (isUnlocked || currentRoute == null) return false
-        val base = currentRoute.substringBefore('?')
-        if (base == Routes.SECURITY_PAGE) return false
+        val base = RouteNames.baseOf(currentRoute)
+        if (base == routeName<NavRoute.Security>()) return false
         return reason != LockReason.ColdStart || base !in preVaultRoutes
     }
 }

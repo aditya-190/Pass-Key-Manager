@@ -3,7 +3,8 @@ package com.bhardwaj.passkey.security
 import com.bhardwaj.passkey.data.security.LockPolicy
 import com.bhardwaj.passkey.data.security.LockReason
 import com.bhardwaj.passkey.domain.model.AutoLockTimeout
-import com.bhardwaj.passkey.presentation.navigation.Routes
+import com.bhardwaj.passkey.presentation.navigation.NavRoute
+import com.bhardwaj.passkey.presentation.navigation.routeName
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
@@ -59,7 +60,7 @@ class LockPolicyTest {
     @Test
     fun `vault screens restored after process death go to the lock screen`() {
         // Android restores the back stack after killing the app; the session starts locked (ColdStart).
-        listOf(Routes.PREVIEW_PAGE, Routes.DETAILS_PAGE + "?previewId=4", Routes.SETTINGS_PAGE).forEach { route ->
+        listOf(PREVIEWS, DETAILS, routeName<NavRoute.Settings>(), routeName<NavRoute.About>()).forEach { route ->
             assertTrue(route, LockPolicy.mustShowLockScreen(false, LockReason.ColdStart, route))
         }
     }
@@ -67,10 +68,10 @@ class LockPolicyTest {
     @Test
     fun `first-run screens are never interrupted by a cold-start lock`() {
         listOf(
-            Routes.SPLASH_PAGE,
-            Routes.ONBOARDING_PAGE,
-            Routes.CONSENT_PAGE,
-            Routes.SECURITY_PAGE,
+            routeName<NavRoute.Splash>(),
+            routeName<NavRoute.Onboarding>(),
+            CONSENT,
+            SECURITY,
             null
         ).forEach { route ->
             assertFalse("$route", LockPolicy.mustShowLockScreen(false, LockReason.ColdStart, route))
@@ -79,9 +80,17 @@ class LockPolicyTest {
 
     @Test
     fun `any real lock sends every screen except the lock screen itself back to unlock`() {
-        assertTrue(LockPolicy.mustShowLockScreen(false, LockReason.Background, Routes.CONSENT_PAGE))
-        assertTrue(LockPolicy.mustShowLockScreen(false, LockReason.Idle, Routes.PREVIEW_PAGE))
-        assertFalse(LockPolicy.mustShowLockScreen(false, LockReason.Idle, Routes.SECURITY_PAGE))
-        assertFalse(LockPolicy.mustShowLockScreen(true, LockReason.Idle, Routes.PREVIEW_PAGE))
+        assertTrue(LockPolicy.mustShowLockScreen(false, LockReason.Background, CONSENT))
+        assertTrue(LockPolicy.mustShowLockScreen(false, LockReason.Idle, PREVIEWS))
+        assertFalse(LockPolicy.mustShowLockScreen(false, LockReason.Idle, SECURITY))
+        assertFalse(LockPolicy.mustShowLockScreen(true, LockReason.Idle, PREVIEWS))
+    }
+
+    private companion object {
+        // Route strings as Navigation generates them for @Serializable destinations.
+        val PREVIEWS = routeName<NavRoute.Previews>()
+        val SECURITY = routeName<NavRoute.Security>()
+        val DETAILS = routeName<NavRoute.Details>() + "/4"
+        val CONSENT = routeName<NavRoute.Consent>() + "?fromSettings={fromSettings}"
     }
 }
