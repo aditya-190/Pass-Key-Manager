@@ -275,4 +275,16 @@
     <string name="backup_reminder_body">இந்த ஃபோன் தொலைந்தாலோ மீட்டமைக்கப்பட்டாலோ, உங்கள் கடவுச்சொற்களைத் திரும்பப் பெற காப்புப்பிரதி மட்டுமே வழி.</string>
     <string name="backup_reminder_cta">இப்போது காப்புப்பிரதி எடு</string>
     <string name="import_not_a_backup">இது PassKey காப்புப்பிரதிக் கோப்பு அல்ல. நீங்கள் ஏற்றுமதி செய்த .pkbak கோப்பையோ பழைய PassKey CSV-ஐயோ தேர்ந்தெடுங்கள்.</string>
+
+    <!-- 6.0.0 theme, passphrase and icon shortcuts -->
+    <string name="theme">தீம்</string>
+    <string name="theme_system">ஃபோனைப் போல</string>
+    <string name="theme_light">லைட்</string>
+    <string name="theme_dark">டார்க்</string>
+    <string name="passphrase">சொற்களைப் பயன்படுத்து (பாஸ்ஃப்ரேஸ்)</string>
+    <string name="passphrase_words">சொற்கள்: %d</string>
+    <string name="shortcut_add_short">பதிவு சேர்</string>
+    <string name="shortcut_add_long">புதிய பதிவைச் சேர்</string>
+    <string name="shortcut_search_short">தேடு</string>
+    <string name="shortcut_search_long">உங்கள் பெட்டகத்தில் தேடு</string>
 </resources>

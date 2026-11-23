@@ -17,3 +17,6 @@ Keep both lists in step.
 | Poppins font | SIL Open Font License 1.1 | `res/font/poppins*.ttf` |
 | Bebas Neue font | SIL Open Font License 1.1 | `res/font/bebas_neue.ttf` |
 | App icon, splash logo, empty-state illustration | Original (owner) | |
+| Passphrase word list (`utils/PassphraseWords.kt`) | PassKey's own work | 1,758 common English words written for PassKey (6.0.0) |
+| Shortcut icons (`ic_shortcut_add`, `ic_shortcut_search`) | Apache License 2.0 | Material icon glyphs on the brand colour |
+

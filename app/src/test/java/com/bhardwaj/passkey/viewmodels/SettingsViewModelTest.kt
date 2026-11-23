@@ -14,6 +14,7 @@ import com.bhardwaj.passkey.data.security.DatabaseKeyManager
 import com.bhardwaj.passkey.domain.model.AppLanguage
 import com.bhardwaj.passkey.domain.model.AutoLockTimeout
 import com.bhardwaj.passkey.domain.model.Category
+import com.bhardwaj.passkey.domain.model.ThemeMode
 import com.bhardwaj.passkey.domain.repository.PreferencesRepository
 import com.bhardwaj.passkey.presentation.navigation.NavRoute
 import com.bhardwaj.passkey.presentation.screens.settings_screen.SettingsDialog
@@ -160,6 +161,17 @@ class SettingsViewModelTest {
         vm.onIntent(SettingsIntent.ExportChosen(uri, password))
         assertEquals(SettingsEffect.ShowSnackbar(UiText.StringResource(R.string.export_success)), vm.effects.first())
         assertTrue(password.all { it == Char(0) })
+    }
+
+    @Test
+    fun `the theme choice opens, saves, closes and shows the saved mode`() = runTest {
+        val vm = vm()
+        vm.onIntent(SettingsIntent.ThemeClicked)
+        assertEquals(SettingsDialog.Theme, vm.state.value.dialog)
+        vm.onIntent(SettingsIntent.ThemeChosen(ThemeMode.DARK))
+        assertNull(vm.state.value.dialog)
+        assertEquals(ThemeMode.DARK, prefs.theme.value)
+        assertEquals(ThemeMode.DARK, vm.state.value.themeMode)
     }
 
     @Test
@@ -348,6 +360,11 @@ class SettingsViewModelTest {
         override val autoLockTimeout: Flow<AutoLockTimeout> = timeout
         override suspend fun setAutoLockTimeout(timeout: AutoLockTimeout) {
             this.timeout.value = timeout
+        }
+        val theme = MutableStateFlow(ThemeMode.SYSTEM)
+        override val themeMode: Flow<ThemeMode> = theme
+        override suspend fun setThemeMode(mode: ThemeMode) {
+            theme.value = mode
         }
     }
 }

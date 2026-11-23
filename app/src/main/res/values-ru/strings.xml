@@ -279,4 +279,16 @@
     <string name="backup_reminder_body">Если телефон потеряется или будет сброшен, только резервная копия вернёт ваши пароли.</string>
     <string name="backup_reminder_cta">Сделать копию</string>
     <string name="import_not_a_backup">Это не файл резервной копии PassKey. Выберите экспортированный файл .pkbak или старый CSV-файл PassKey.</string>
+
+    <!-- 6.0.0 theme, passphrase and icon shortcuts -->
+    <string name="theme">Тема</string>
+    <string name="theme_system">Как в телефоне</string>
+    <string name="theme_light">Светлая</string>
+    <string name="theme_dark">Тёмная</string>
+    <string name="passphrase">Использовать слова (парольная фраза)</string>
+    <string name="passphrase_words">Слов: %d</string>
+    <string name="shortcut_add_short">Добавить</string>
+    <string name="shortcut_add_long">Добавить запись</string>
+    <string name="shortcut_search_short">Поиск</string>
+    <string name="shortcut_search_long">Поиск в хранилище</string>
 </resources>

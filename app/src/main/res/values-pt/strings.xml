@@ -278,4 +278,16 @@
     <string name="backup_reminder_body">Se este celular for perdido ou redefinido, um backup é a única forma de recuperar suas senhas.</string>
     <string name="backup_reminder_cta">Fazer backup agora</string>
     <string name="import_not_a_backup">Este não é um arquivo de backup do PassKey. Escolha um arquivo .pkbak que você exportou ou um CSV antigo do PassKey.</string>
+
+    <!-- 6.0.0 theme, passphrase and icon shortcuts -->
+    <string name="theme">Tema</string>
+    <string name="theme_system">Igual ao celular</string>
+    <string name="theme_light">Claro</string>
+    <string name="theme_dark">Escuro</string>
+    <string name="passphrase">Usar palavras (frase-senha)</string>
+    <string name="passphrase_words">Palavras: %d</string>
+    <string name="shortcut_add_short">Adicionar</string>
+    <string name="shortcut_add_long">Adicionar uma entrada</string>
+    <string name="shortcut_search_short">Buscar</string>
+    <string name="shortcut_search_long">Buscar no seu cofre</string>
 </resources>

@@ -273,4 +273,16 @@
     <string name="backup_reminder_body">このスマートフォンを紛失したりリセットしたりした場合、パスワードを取り戻す方法はバックアップだけです。</string>
     <string name="backup_reminder_cta">今すぐバックアップ</string>
     <string name="import_not_a_backup">PassKey のバックアップファイルではありません。エクスポートした .pkbak ファイルか、以前の PassKey CSV を選んでください。</string>
+
+    <!-- 6.0.0 theme, passphrase and icon shortcuts -->
+    <string name="theme">テーマ</string>
+    <string name="theme_system">端末の設定に従う</string>
+    <string name="theme_light">ライト</string>
+    <string name="theme_dark">ダーク</string>
+    <string name="passphrase">単語を使う（パスフレーズ）</string>
+    <string name="passphrase_words">単語数: %d</string>
+    <string name="shortcut_add_short">追加</string>
+    <string name="shortcut_add_long">エントリを追加</string>
+    <string name="shortcut_search_short">検索</string>
+    <string name="shortcut_search_long">保管庫を検索</string>
 </resources>

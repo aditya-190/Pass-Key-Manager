@@ -276,4 +276,16 @@
     <string name="backup_reminder_body">अगर यह फ़ोन खो जाए या रीसेट हो जाए, तो बैकअप ही आपके पासवर्ड वापस पाने का एकमात्र तरीका है।</string>
     <string name="backup_reminder_cta">अभी बैकअप लें</string>
     <string name="import_not_a_backup">यह PassKey बैकअप फ़ाइल नहीं है। अपनी एक्सपोर्ट की हुई .pkbak फ़ाइल या पुरानी PassKey CSV चुनें।</string>
+
+    <!-- 6.0.0 theme, passphrase and icon shortcuts -->
+    <string name="theme">थीम</string>
+    <string name="theme_system">फ़ोन जैसा</string>
+    <string name="theme_light">लाइट</string>
+    <string name="theme_dark">डार्क</string>
+    <string name="passphrase">शब्दों का उपयोग करें (पासफ़्रेज़)</string>
+    <string name="passphrase_words">शब्द: %d</string>
+    <string name="shortcut_add_short">एंट्री जोड़ें</string>
+    <string name="shortcut_add_long">नई एंट्री जोड़ें</string>
+    <string name="shortcut_search_short">खोजें</string>
+    <string name="shortcut_search_long">अपने वॉल्ट में खोजें</string>
 </resources>

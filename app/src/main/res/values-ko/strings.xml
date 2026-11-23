@@ -274,4 +274,16 @@
     <string name="backup_reminder_body">휴대전화를 잃어버리거나 초기화하면 백업만이 비밀번호를 되찾는 유일한 방법입니다.</string>
     <string name="backup_reminder_cta">지금 백업</string>
     <string name="import_not_a_backup">PassKey 백업 파일이 아닙니다. 내보낸 .pkbak 파일이나 이전 PassKey CSV를 선택하세요.</string>
+
+    <!-- 6.0.0 theme, passphrase and icon shortcuts -->
+    <string name="theme">테마</string>
+    <string name="theme_system">휴대전화 설정과 동일</string>
+    <string name="theme_light">라이트</string>
+    <string name="theme_dark">다크</string>
+    <string name="passphrase">단어 사용(암호 문구)</string>
+    <string name="passphrase_words">단어: %d개</string>
+    <string name="shortcut_add_short">항목 추가</string>
+    <string name="shortcut_add_long">새 항목 추가</string>
+    <string name="shortcut_search_short">검색</string>
+    <string name="shortcut_search_long">보관함 검색</string>
 </resources>

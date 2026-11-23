@@ -278,4 +278,16 @@
     <string name="backup_reminder_body">Si pierdes o restableces este teléfono, una copia es la única forma de recuperar tus contraseñas.</string>
     <string name="backup_reminder_cta">Hacer copia ahora</string>
     <string name="import_not_a_backup">Este no es un archivo de copia de PassKey. Elige un archivo .pkbak que exportaste o un CSV antiguo de PassKey.</string>
+
+    <!-- 6.0.0 theme, passphrase and icon shortcuts -->
+    <string name="theme">Tema</string>
+    <string name="theme_system">Igual que el teléfono</string>
+    <string name="theme_light">Claro</string>
+    <string name="theme_dark">Oscuro</string>
+    <string name="passphrase">Usar palabras (frase de contraseña)</string>
+    <string name="passphrase_words">Palabras: %d</string>
+    <string name="shortcut_add_short">Añadir</string>
+    <string name="shortcut_add_long">Añadir una entrada</string>
+    <string name="shortcut_search_short">Buscar</string>
+    <string name="shortcut_search_long">Buscar en tu bóveda</string>
 </resources>

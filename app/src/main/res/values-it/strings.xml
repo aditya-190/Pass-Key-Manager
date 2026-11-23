@@ -278,4 +278,16 @@
     <string name="backup_reminder_body">Se perdi o ripristini questo telefono, un backup è l\'unico modo per recuperare le tue password.</string>
     <string name="backup_reminder_cta">Fai il backup ora</string>
     <string name="import_not_a_backup">Questo non è un file di backup di PassKey. Scegli un file .pkbak che hai esportato o un vecchio CSV di PassKey.</string>
+
+    <!-- 6.0.0 theme, passphrase and icon shortcuts -->
+    <string name="theme">Tema</string>
+    <string name="theme_system">Come il telefono</string>
+    <string name="theme_light">Chiaro</string>
+    <string name="theme_dark">Scuro</string>
+    <string name="passphrase">Usa parole (passphrase)</string>
+    <string name="passphrase_words">Parole: %d</string>
+    <string name="shortcut_add_short">Aggiungi</string>
+    <string name="shortcut_add_long">Aggiungi una voce</string>
+    <string name="shortcut_search_short">Cerca</string>
+    <string name="shortcut_search_long">Cerca nella cassaforte</string>
 </resources>

@@ -277,4 +277,16 @@
     <string name="backup_reminder_body">Geht dieses Telefon verloren oder wird es zurückgesetzt, ist ein Backup der einzige Weg zurück zu deinen Passwörtern.</string>
     <string name="backup_reminder_cta">Jetzt sichern</string>
     <string name="import_not_a_backup">Das ist keine PassKey-Backupdatei. Wähle eine exportierte .pkbak-Datei oder eine alte PassKey-CSV.</string>
+
+    <!-- 6.0.0 theme, passphrase and icon shortcuts -->
+    <string name="theme">Design</string>
+    <string name="theme_system">Wie Telefon</string>
+    <string name="theme_light">Hell</string>
+    <string name="theme_dark">Dunkel</string>
+    <string name="passphrase">Wörter verwenden (Passphrase)</string>
+    <string name="passphrase_words">Wörter: %d</string>
+    <string name="shortcut_add_short">Hinzufügen</string>
+    <string name="shortcut_add_long">Neuen Eintrag hinzufügen</string>
+    <string name="shortcut_search_short">Suchen</string>
+    <string name="shortcut_search_long">Im Tresor suchen</string>
 </resources>

@@ -5,6 +5,8 @@ import com.bhardwaj.passkey.R
 import com.bhardwaj.passkey.analytics.AppEventNames
 import com.bhardwaj.passkey.domain.model.Category
 import com.bhardwaj.passkey.domain.model.PasswordHistoryEntry
+import com.bhardwaj.passkey.domain.model.PendingShortcut
+import com.bhardwaj.passkey.domain.model.ShortcutAction
 import com.bhardwaj.passkey.domain.totp.TotpConfig
 import com.bhardwaj.passkey.presentation.navigation.NavRoute
 import com.bhardwaj.passkey.presentation.screens.preview_screen.PreviewEffect
@@ -37,9 +39,10 @@ class PreviewViewModelTest {
 
     private val repository = FakePasskeyRepository()
     private val analytics = RecordingAnalyticsTracker()
+    private val shortcuts = PendingShortcut()
 
     private fun TestScope.vm(handle: SavedStateHandle = SavedStateHandle()) =
-        PreviewViewModel(repository, handle, analytics).also { vm ->
+        PreviewViewModel(repository, handle, analytics, shortcuts).also { vm ->
             // The state is shared WhileSubscribed, like the screen; keep a subscriber for the test's lifetime.
             backgroundScope.launch(UnconfinedTestDispatcher(testScheduler)) { vm.state.collect {} }
         }
@@ -242,5 +245,34 @@ class PreviewViewModelTest {
         vm.onIntent(PreviewIntent.UndoDelete)
         assertEquals(codes, repository.allTotp)
         assertEquals(listOf("old"), repository.history[field]!!.map { it.answer })
+    }
+
+    @Test
+    fun `search also finds an entry by a field's name, never by its value`() = runTest {
+        // 6.0.0c: "pin" finds the bank whose field is called PIN.
+        val bank = repository.createPreview("HDFC", Category.BANKS)
+        repository.createDetail(bank, "Card PIN", "4321")
+        val other = repository.createPreview("SBI", Category.BANKS)
+        repository.createDetail(other, "Note", "my pin is in the drawer")
+        val vm = vm()
+        vm.onIntent(PreviewIntent.QueryChanged("pin"))
+        assertEquals(listOf("HDFC"), vm.state.value.items.map { it.heading })
+        vm.onIntent(PreviewIntent.QueryChanged("4321"))
+        assertTrue("values are never searched", vm.state.value.items.isEmpty())
+    }
+
+    @Test
+    fun `the Add shortcut opens the editor once, and Search asks for the search field`() = runTest {
+        shortcuts.offer(ShortcutAction.ADD_ENTRY)
+        val vm = vm()
+        assertTrue(vm.state.value.editor != null && !vm.state.value.editor!!.isEdit)
+        assertNull("used up", shortcuts.take())
+
+        vm.onIntent(PreviewIntent.EditorDismissed)
+        // Home is already showing when the next shortcut arrives (MainActivity is singleTask).
+        shortcuts.offer(ShortcutAction.SEARCH)
+        assertEquals(PreviewEffect.FocusSearch, vm.effects.first())
+        assertNull(vm.state.value.editor)
+        assertNull(shortcuts.take())
     }
 }

@@ -284,4 +284,16 @@
     <string name="backup_reminder_body">إذا فُقد هذا الهاتف أو أُعيد ضبطه، فالنسخة الاحتياطية هي الطريقة الوحيدة لاستعادة كلمات مرورك.</string>
     <string name="backup_reminder_cta">نسخ احتياطي الآن</string>
     <string name="import_not_a_backup">هذا ليس ملف نسخة احتياطية من PassKey. اختر ملف ‎.pkbak الذي صدّرته، أو ملف CSV قديمًا من PassKey.</string>
+
+    <!-- 6.0.0 theme, passphrase and icon shortcuts -->
+    <string name="theme">المظهر</string>
+    <string name="theme_system">مثل الهاتف</string>
+    <string name="theme_light">فاتح</string>
+    <string name="theme_dark">داكن</string>
+    <string name="passphrase">استخدم كلمات (عبارة مرور)</string>
+    <string name="passphrase_words">الكلمات: %d</string>
+    <string name="shortcut_add_short">إضافة إدخال</string>
+    <string name="shortcut_add_long">إضافة إدخال جديد</string>
+    <string name="shortcut_search_short">بحث</string>
+    <string name="shortcut_search_long">ابحث في خزنتك</string>
 </resources>

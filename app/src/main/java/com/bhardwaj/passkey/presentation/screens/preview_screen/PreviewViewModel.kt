@@ -9,7 +9,9 @@ import com.bhardwaj.passkey.analytics.AppEvents
 import com.bhardwaj.passkey.domain.model.Category
 import com.bhardwaj.passkey.domain.model.Detail
 import com.bhardwaj.passkey.domain.model.PasswordHistoryEntry
+import com.bhardwaj.passkey.domain.model.PendingShortcut
 import com.bhardwaj.passkey.domain.model.Preview
+import com.bhardwaj.passkey.domain.model.ShortcutAction
 import com.bhardwaj.passkey.domain.model.TotpEntry
 import com.bhardwaj.passkey.domain.repository.PasskeyRepository
 import com.bhardwaj.passkey.presentation.navigation.NavRoute
@@ -23,8 +25,10 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
@@ -35,7 +39,8 @@ import kotlinx.coroutines.launch
 class PreviewViewModel @Inject constructor(
     private val repository: PasskeyRepository,
     private val savedStateHandle: SavedStateHandle,
-    private val analytics: AnalyticsTracker
+    private val analytics: AnalyticsTracker,
+    pendingShortcut: PendingShortcut
 ) : ViewModel() {
     // BUFFERED: with lifecycle-aware collection a backgrounded screen has no collector, and a rendezvous
     // channel would suspend whoever sent the effect.
@@ -64,23 +69,49 @@ class PreviewViewModel @Inject constructor(
      * Derived from independent sources rather than accumulated: feeding the public state back into itself
      * would be a loop that only ends because StateFlow drops equal values.
      */
+    /**
+     * Field names per entry, for search (6.0.0). Only the names: values are dropped here, so a search can never
+     * match (or reveal the presence of) a password.
+     */
+    private val fieldNames = repository.getDetails().map { details ->
+        details.groupBy({ it.previewId }, { it.question })
+    }
+
     val state: StateFlow<PreviewState> = combine(
         category,
         query,
         transient,
-        category.flatMapLatest { repository.getPreviewsByCategory(Category.fromNameOrOther(it)) }
-    ) { categoryName, currentQuery, ui, rows ->
+        category.flatMapLatest { repository.getPreviewsByCategory(Category.fromNameOrOther(it)) },
+        fieldNames
+    ) { categoryName, currentQuery, ui, rows, names ->
         PreviewState(
             category = Category.fromNameOrOther(categoryName),
             query = currentQuery,
             items = rows
-                .filter { currentQuery.isBlank() || it.heading.contains(currentQuery, ignoreCase = true) }
+                .filter { currentQuery.isBlank() || it.matches(currentQuery.trim(), names[it.id].orEmpty()) }
                 .filterNot { it.id == ui.pendingDelete?.id },
             isLoading = false,
             editor = ui.editor,
             pendingDelete = ui.pendingDelete
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(STOP_TIMEOUT_MS), PreviewState())
+
+    init {
+        // An icon shortcut (6.0.0) runs here, after the vault is open, and only once, including one that arrives
+        // while Home is already showing.
+        viewModelScope.launch {
+            pendingShortcut.requests.filterNotNull().collect {
+                when (pendingShortcut.take()) {
+                    ShortcutAction.ADD_ENTRY -> openEditor(PreviewState.Editor())
+                    ShortcutAction.SEARCH -> send(PreviewEffect.FocusSearch)
+                    null -> Unit
+                }
+            }
+        }
+    }
+
+    private fun Preview.matches(query: String, names: List<String>): Boolean =
+        heading.contains(query, ignoreCase = true) || names.any { it.contains(query, ignoreCase = true) }
 
     fun onIntent(intent: PreviewIntent) {
         when (intent) {

@@ -128,6 +128,24 @@ class DetailViewModelTest {
     }
 
     @Test
+    fun `the generator can make a passphrase of words`() = runTest {
+        // 6.0.0c.
+        val vm = vm()
+        vm.onIntent(DetailIntent.AddClicked)
+        vm.onIntent(DetailIntent.PassphraseToggled(true))
+        vm.onIntent(DetailIntent.WordsChanged(6))
+        assertTrue(vm.state.value.policy.passphrase)
+        vm.onIntent(DetailIntent.GenerateClicked)
+        val editor = vm.state.value.editor!!
+        assertEquals(6, editor.answer.split("-").size)
+        assertTrue(editor.isSecret)
+
+        vm.onIntent(DetailIntent.PassphraseToggled(false))
+        vm.onIntent(DetailIntent.GenerateClicked)
+        assertTrue("back to characters", !vm.state.value.editor!!.answer.contains("-"))
+    }
+
+    @Test
     fun `moves renumber the full list and are ignored while searching`() = runTest {
         val a = repository.createDetail(1, "A", "1", sequence = 0)
         val b = repository.createDetail(1, "B", "2", sequence = 1)

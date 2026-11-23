@@ -71,6 +71,7 @@ import com.bhardwaj.passkey.presentation.screens.settings_screen.components.Auto
 import com.bhardwaj.passkey.presentation.screens.settings_screen.components.BackupPasswordDialog
 import com.bhardwaj.passkey.presentation.screens.settings_screen.components.LanguageBottomSheet
 import com.bhardwaj.passkey.presentation.screens.settings_screen.components.SettingsText
+import com.bhardwaj.passkey.presentation.screens.settings_screen.components.ThemeDialog
 import com.bhardwaj.passkey.presentation.theme.BebasNeue
 import com.bhardwaj.passkey.presentation.theme.Poppins
 import com.bhardwaj.passkey.utils.asString
@@ -179,6 +180,12 @@ fun SettingsScreen(
             current = uiState.autoLockTimeout,
             onDismiss = { onIntent(SettingsIntent.DialogDismissed) },
             onSelect = { onIntent(SettingsIntent.AutoLockChosen(it)) }
+        )
+
+        SettingsDialog.Theme -> ThemeDialog(
+            current = uiState.themeMode,
+            onDismiss = { onIntent(SettingsIntent.DialogDismissed) },
+            onSelect = { onIntent(SettingsIntent.ThemeChosen(it)) }
         )
 
         else -> Unit
@@ -315,6 +322,9 @@ fun SettingsScreen(
                             }
                             SettingsText(text = stringResource(id = R.string.auto_lock)) {
                                 onIntent(SettingsIntent.AutoLockClicked)
+                            }
+                            SettingsText(text = stringResource(id = R.string.theme)) {
+                                onIntent(SettingsIntent.ThemeClicked)
                             }
                             SettingsText(
                                 text = stringResource(id = R.string.change_recovery_password)

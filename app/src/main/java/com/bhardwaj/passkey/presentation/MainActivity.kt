@@ -1,14 +1,19 @@
 package com.bhardwaj.passkey.presentation
 
+import android.content.Intent
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.view.WindowManager
+import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -24,6 +29,10 @@ import com.bhardwaj.passkey.data.security.AppLockObserver
 import com.bhardwaj.passkey.data.security.LockPolicy
 import com.bhardwaj.passkey.data.security.VaultSession
 import com.bhardwaj.passkey.data.security.lockTrace
+import com.bhardwaj.passkey.domain.model.PendingShortcut
+import com.bhardwaj.passkey.domain.model.ShortcutAction
+import com.bhardwaj.passkey.domain.model.ThemeMode
+import com.bhardwaj.passkey.domain.repository.PreferencesRepository
 import com.bhardwaj.passkey.presentation.navigation.NavGraph
 import com.bhardwaj.passkey.presentation.navigation.NavRoute
 import com.bhardwaj.passkey.presentation.theme.PassKeyTheme
@@ -33,11 +42,20 @@ import com.bhardwaj.passkey.update.UpdateHost
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withTimeoutOrNull
 
 @AndroidEntryPoint
 class MainActivity : FragmentActivity() {
     @Inject
     lateinit var analytics: AnalyticsTracker
+
+    @Inject
+    lateinit var preferences: PreferencesRepository
+
+    @Inject
+    lateinit var pendingShortcut: PendingShortcut
 
     @Inject
     lateinit var vaultSession: VaultSession
@@ -67,9 +85,24 @@ class MainActivity : FragmentActivity() {
         super.onDestroy()
     }
 
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        offerShortcut(intent)
+    }
+
+    /** Icon shortcuts only ask Home to act; Home runs them after the vault is unlocked. */
+    private fun offerShortcut(intent: Intent?) {
+        ShortcutAction.fromIntentAction(intent?.action)?.let(pendingShortcut::offer)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        if (savedInstanceState == null) offerShortcut(intent)
+        // Read once before the first frame so a chosen Light or Dark never flashes the other scheme; a tiny
+        // preferences file, bounded in case storage is slow.
+        val initialTheme = runBlocking { withTimeoutOrNull(THEME_READ_TIMEOUT_MS) { preferences.themeMode.first() } }
+            ?: ThemeMode.SYSTEM
         inAppUpdates = InAppUpdateController.create(this)
         window?.setFlags(
             WindowManager.LayoutParams.FLAG_SECURE,
@@ -79,7 +112,23 @@ class MainActivity : FragmentActivity() {
         // so explicitly, so the two survive independently.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) setRecentsScreenshotEnabled(false)
         setContent {
-            PassKeyTheme {
+            val themeMode by preferences.themeMode.collectAsStateWithLifecycle(initialTheme)
+            val dark = when (themeMode) {
+                ThemeMode.SYSTEM -> isSystemInDarkTheme()
+                ThemeMode.LIGHT -> false
+                ThemeMode.DARK -> true
+            }
+            // Status and navigation bar icons follow the app's scheme, not the phone's, or they vanish.
+            DisposableEffect(dark) {
+                val bars = if (dark) {
+                    SystemBarStyle.dark(Color.TRANSPARENT)
+                } else {
+                    SystemBarStyle.light(Color.TRANSPARENT, Color.TRANSPARENT)
+                }
+                enableEdgeToEdge(statusBarStyle = bars, navigationBarStyle = bars)
+                onDispose {}
+            }
+            PassKeyTheme(darkTheme = dark) {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
@@ -136,5 +185,6 @@ class MainActivity : FragmentActivity() {
 
     private companion object {
         const val IDLE_POLL_INTERVAL_MS = 5_000L
+        const val THEME_READ_TIMEOUT_MS = 300L
     }
 }

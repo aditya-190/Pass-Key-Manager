@@ -72,6 +72,8 @@ sealed interface DetailIntent {
     data object PolicyClicked : DetailIntent
     data object PolicyDismissed : DetailIntent
     data class LengthChanged(val length: Int) : DetailIntent
+    data class PassphraseToggled(val enabled: Boolean) : DetailIntent
+    data class WordsChanged(val words: Int) : DetailIntent
 
     /** Typed, unlike the old event that dispatched on "Upper", "Lower", "Number" and "Special". */
     data class CharacterClassToggled(val characterClass: PasswordCharacterClass, val enabled: Boolean) : DetailIntent

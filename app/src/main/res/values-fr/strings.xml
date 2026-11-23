@@ -278,4 +278,16 @@
     <string name="backup_reminder_body">Si ce téléphone est perdu ou réinitialisé, une sauvegarde est le seul moyen de récupérer vos mots de passe.</string>
     <string name="backup_reminder_cta">Sauvegarder maintenant</string>
     <string name="import_not_a_backup">Ce n\'est pas un fichier de sauvegarde PassKey. Choisissez un fichier .pkbak que vous avez exporté, ou un ancien CSV PassKey.</string>
+
+    <!-- 6.0.0 theme, passphrase and icon shortcuts -->
+    <string name="theme">Thème</string>
+    <string name="theme_system">Comme le téléphone</string>
+    <string name="theme_light">Clair</string>
+    <string name="theme_dark">Sombre</string>
+    <string name="passphrase">Utiliser des mots (phrase secrète)</string>
+    <string name="passphrase_words">Mots : %d</string>
+    <string name="shortcut_add_short">Ajouter</string>
+    <string name="shortcut_add_long">Ajouter une entrée</string>
+    <string name="shortcut_search_short">Rechercher</string>
+    <string name="shortcut_search_long">Rechercher dans le coffre</string>
 </resources>

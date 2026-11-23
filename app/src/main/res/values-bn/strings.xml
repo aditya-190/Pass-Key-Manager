@@ -276,4 +276,16 @@
     <string name="backup_reminder_body">এই ফোন হারালে বা রিসেট হলে, ব্যাকআপই পাসওয়ার্ড ফিরে পাওয়ার একমাত্র উপায়।</string>
     <string name="backup_reminder_cta">এখনই ব্যাকআপ নিন</string>
     <string name="import_not_a_backup">এটি PassKey ব্যাকআপ ফাইল নয়। আপনার এক্সপোর্ট করা .pkbak ফাইল বা পুরোনো PassKey CSV বেছে নিন।</string>
+
+    <!-- 6.0.0 theme, passphrase and icon shortcuts -->
+    <string name="theme">থিম</string>
+    <string name="theme_system">ফোনের মতো</string>
+    <string name="theme_light">লাইট</string>
+    <string name="theme_dark">ডার্ক</string>
+    <string name="passphrase">শব্দ ব্যবহার করুন (পাসফ্রেজ)</string>
+    <string name="passphrase_words">শব্দ: %d</string>
+    <string name="shortcut_add_short">এন্ট্রি যোগ</string>
+    <string name="shortcut_add_long">নতুন এন্ট্রি যোগ করুন</string>
+    <string name="shortcut_search_short">খুঁজুন</string>
+    <string name="shortcut_search_long">আপনার ভল্টে খুঁজুন</string>
 </resources>

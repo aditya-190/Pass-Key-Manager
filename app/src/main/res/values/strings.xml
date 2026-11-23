@@ -261,4 +261,16 @@
     <string name="backup_reminder_body">If this phone is lost or reset, a backup is the only way to get your passwords back.</string>
     <string name="backup_reminder_cta">Back up now</string>
     <string name="import_not_a_backup">This isn\'t a PassKey backup file. Choose a .pkbak file you exported, or an old PassKey CSV.</string>
+
+    <!-- 6.0.0 theme, passphrase and icon shortcuts -->
+    <string name="theme">Theme</string>
+    <string name="theme_system">Same as phone</string>
+    <string name="theme_light">Light</string>
+    <string name="theme_dark">Dark</string>
+    <string name="passphrase">Use words (passphrase)</string>
+    <string name="passphrase_words">Words: %d</string>
+    <string name="shortcut_add_short">Add entry</string>
+    <string name="shortcut_add_long">Add a new entry</string>
+    <string name="shortcut_search_short">Search</string>
+    <string name="shortcut_search_long">Search your vault</string>
 </resources>

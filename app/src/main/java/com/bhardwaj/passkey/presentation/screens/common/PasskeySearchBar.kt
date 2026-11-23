@@ -20,6 +20,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
@@ -35,7 +37,9 @@ fun PasskeySearchBar(
     query: String,
     onQueryChange: (String) -> Unit,
     onTrailingIconClick: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    /** Lets the Search icon shortcut put the cursor here (6.0.0). */
+    focusRequester: FocusRequester = remember { FocusRequester() }
 ) {
     Row(
         modifier = modifier
@@ -57,7 +61,8 @@ fun PasskeySearchBar(
         BasicTextField(
             modifier = Modifier
                 .padding(horizontal = 8.dp)
-                .weight(1F),
+                .weight(1F)
+                .focusRequester(focusRequester),
             value = query,
             onValueChange = onQueryChange,
             textStyle = TextStyle(

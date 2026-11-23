@@ -48,6 +48,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.painterResource
@@ -110,10 +111,13 @@ fun PreviewScreen(onNavigate: (NavRoute) -> Unit, viewModel: PreviewViewModel = 
 
     val context = LocalContext.current
     val undoLabel = stringResource(R.string.undo)
+    val searchFocus = remember { FocusRequester() }
 
     ObserveAsEvents(viewModel.effects) { event ->
         when (event) {
             is PreviewEffect.Navigate -> onNavigate(event.route)
+            // The search field exists only when there is something to search; otherwise Home is enough.
+            PreviewEffect.FocusSearch -> runCatching { searchFocus.requestFocus() }
             is PreviewEffect.ShowUndo -> {
                 scope.launch {
                     val result = snackBarHostState.showSnackbar(
@@ -217,6 +221,7 @@ fun PreviewScreen(onNavigate: (NavRoute) -> Unit, viewModel: PreviewViewModel = 
 
                 if (searchText.isNotBlank() || previews.isNotEmpty()) {
                     PasskeySearchBar(
+                        focusRequester = searchFocus,
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(top = 8.dp, bottom = 16.dp),

@@ -11,7 +11,10 @@ enum class PasswordCharacterClass { UPPERCASE, LOWERCASE, DIGITS, SYMBOLS }
  */
 data class PasswordPolicy(
     val length: Int = DEFAULT_LENGTH,
-    val classes: Set<PasswordCharacterClass> = DEFAULT_CLASSES
+    val classes: Set<PasswordCharacterClass> = DEFAULT_CLASSES,
+    /** Words instead of characters (6.0.0). A-Z capitalises the words, 0-9 adds a digit. */
+    val passphrase: Boolean = false,
+    val words: Int = DEFAULT_WORDS
 ) {
     val includeUppercase: Boolean get() = PasswordCharacterClass.UPPERCASE in classes
     val includeLowercase: Boolean get() = PasswordCharacterClass.LOWERCASE in classes
@@ -32,7 +35,12 @@ data class PasswordPolicy(
         )
     }
 
+    fun withWords(count: Int): PasswordPolicy = copy(words = count.coerceIn(MIN_WORDS, MAX_WORDS))
+
     companion object {
+        const val MIN_WORDS = 3
+        const val MAX_WORDS = 10
+        const val DEFAULT_WORDS = 5
         const val MIN_LENGTH = 4
         const val MAX_LENGTH = 32
         const val DEFAULT_LENGTH = 12

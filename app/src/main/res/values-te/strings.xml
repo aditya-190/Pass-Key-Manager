@@ -275,4 +275,16 @@
     <string name="backup_reminder_body">ఈ ఫోన్ పోయినా లేదా రీసెట్ అయినా, మీ పాస్‌వర్డ్‌లను తిరిగి పొందడానికి బ్యాకప్ ఒక్కటే మార్గం.</string>
     <string name="backup_reminder_cta">ఇప్పుడే బ్యాకప్ చేయండి</string>
     <string name="import_not_a_backup">ఇది PassKey బ్యాకప్ ఫైల్ కాదు. మీరు ఎక్స్‌పోర్ట్ చేసిన .pkbak ఫైల్ లేదా పాత PassKey CSV ని ఎంచుకోండి.</string>
+
+    <!-- 6.0.0 theme, passphrase and icon shortcuts -->
+    <string name="theme">థీమ్</string>
+    <string name="theme_system">ఫోన్‌లాగే</string>
+    <string name="theme_light">లైట్</string>
+    <string name="theme_dark">డార్క్</string>
+    <string name="passphrase">పదాలు వాడండి (పాస్‌ఫ్రేజ్)</string>
+    <string name="passphrase_words">పదాలు: %d</string>
+    <string name="shortcut_add_short">ఎంట్రీ జోడించు</string>
+    <string name="shortcut_add_long">కొత్త ఎంట్రీ జోడించండి</string>
+    <string name="shortcut_search_short">వెతుకు</string>
+    <string name="shortcut_search_long">మీ వాల్ట్‌లో వెతకండి</string>
 </resources>

@@ -7,15 +7,22 @@ import com.bhardwaj.passkey.analytics.EventValidator
 import com.bhardwaj.passkey.data.backup.BackupCodec
 import com.bhardwaj.passkey.domain.backup.BackupReminderPolicy
 import com.bhardwaj.passkey.domain.model.Category
+import com.bhardwaj.passkey.domain.model.PasswordPolicy
+import com.bhardwaj.passkey.domain.model.PendingShortcut
+import com.bhardwaj.passkey.domain.model.ShortcutAction
+import com.bhardwaj.passkey.domain.model.ThemeMode
 import com.bhardwaj.passkey.domain.repository.BackupReminderState
 import com.bhardwaj.passkey.domain.totp.TotpConfig
 import com.bhardwaj.passkey.presentation.screens.onboarding_screens.FeatureTourEffect
 import com.bhardwaj.passkey.presentation.screens.onboarding_screens.FeatureTourEvent
 import com.bhardwaj.passkey.presentation.screens.onboarding_screens.FeatureTourViewModel
 import com.bhardwaj.passkey.presentation.screens.onboarding_screens.OnboardingPages
+import com.bhardwaj.passkey.presentation.screens.preview_screen.PreviewIntent
+import com.bhardwaj.passkey.presentation.screens.preview_screen.PreviewViewModel
 import com.bhardwaj.passkey.testing.FakePasskeyRepository
 import com.bhardwaj.passkey.testing.MainDispatcherRule
 import com.bhardwaj.passkey.testing.RecordingAnalyticsTracker
+import com.bhardwaj.passkey.utils.PassphraseGenerator
 import kotlin.random.Random
 import kotlin.time.Duration.Companion.minutes
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -167,10 +174,77 @@ class Release600SimulationTest {
         }
     }
 
+    @Test
+    fun `passphrases always have the asked words from the list, with the asked shape`() {
+        repeat(PASSPHRASE_SEEDS) { seed ->
+            val rnd = java.util.Random(seed.toLong())
+            val asked = rnd.nextInt(-5, 20)
+            val capitalize = rnd.nextBoolean()
+            val withDigit = rnd.nextBoolean()
+            val phrase = PassphraseGenerator.generate(asked, capitalize, withDigit, rnd)
+            val parts = phrase.split("-")
+            assertEquals("seed $seed", asked.coerceIn(PasswordPolicy.MIN_WORDS, PasswordPolicy.MAX_WORDS), parts.size)
+            assertTrue(
+                "seed $seed",
+                parts.all { part ->
+                    part.trimEnd { it.isDigit() }.lowercase() in PassphraseGenerator.words
+                }
+            )
+            assertEquals("seed $seed", if (withDigit) 1 else 0, phrase.count { it.isDigit() })
+            if (capitalize) assertTrue("seed $seed", parts.all { it.first().isUpperCase() })
+        }
+    }
+
+    @Test
+    fun `search by field name never matches on a value alone and never leaves the category`() = runTest {
+        repeat(SEARCH_SEEDS) { seed ->
+            val rnd = Random(seed)
+            val repo = FakePasskeyRepository()
+            val secret = "zq${rnd.nextInt(1_000, 9_999)}"
+            repeat(rnd.nextInt(1, 6)) { i ->
+                val id = repo.createPreview("entry $i", Category.entries.random(rnd), i.toLong())
+                repeat(rnd.nextInt(0, 4)) { j ->
+                    repo.createDetail(id, "field $j", if (rnd.nextBoolean()) secret else "value $j", j.toLong())
+                }
+            }
+            val vm = PreviewViewModel(repo, SavedStateHandle(), RecordingAnalyticsTracker(), PendingShortcut())
+            val job = backgroundScope.launch(UnconfinedTestDispatcher(testScheduler)) { vm.state.collect {} }
+            vm.onIntent(PreviewIntent.QueryChanged(secret))
+            assertTrue("seed $seed: a value is never searchable", vm.state.value.items.isEmpty())
+            vm.onIntent(PreviewIntent.QueryChanged("field"))
+            val category = vm.state.value.category
+            assertTrue("seed $seed", vm.state.value.items.all { it.category == category })
+            job.cancel()
+        }
+    }
+
+    @Test
+    fun `stored theme and shortcut input of any shape is handled`() {
+        repeat(MISC_SEEDS) { seed ->
+            val rnd = Random(seed)
+            val junk = String(CharArray(rnd.nextInt(0, 20)) { (rnd.nextInt(32, 0x2FF)).toChar() })
+            val mode = ThemeMode.fromNameOrSystem(if (rnd.nextBoolean()) junk else ThemeMode.entries.random(rnd).name)
+            assertTrue("seed $seed", mode in ThemeMode.entries)
+            assertTrue("seed $seed", ShortcutAction.fromIntentAction(junk) == null)
+
+            val pending = PendingShortcut()
+            var last: ShortcutAction? = null
+            repeat(rnd.nextInt(0, 6)) {
+                last = ShortcutAction.entries.random(rnd)
+                pending.offer(last!!)
+            }
+            assertEquals("seed $seed", last, pending.take())
+            assertEquals("seed $seed", null, pending.take())
+        }
+    }
+
     private companion object {
         const val SEEDS = 1_000
         const val REMINDER_SEEDS = 2_000
         const val VERIFY_SEEDS = 40
         const val JUNK_SEEDS = 1_000
+        const val PASSPHRASE_SEEDS = 2_000
+        const val SEARCH_SEEDS = 1_000
+        const val MISC_SEEDS = 1_000
     }
 }

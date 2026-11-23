@@ -10,6 +10,7 @@ import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.bhardwaj.passkey.domain.model.AutoLockTimeout
+import com.bhardwaj.passkey.domain.model.ThemeMode
 import com.bhardwaj.passkey.domain.repository.PreferencesRepository
 import com.bhardwaj.passkey.utils.Constants.Companion.AUTO_LOCK_TIMEOUT
 import com.bhardwaj.passkey.utils.Constants.Companion.CURRENT_LANGUAGE
@@ -56,5 +57,17 @@ class PreferencesRepositoryImpl @Inject constructor(private val dataStore: DataS
 
     override suspend fun setAutoLockTimeout(timeout: AutoLockTimeout) {
         dataStore.edit { it[autoLockKey] = timeout.millis }
+    }
+
+    private val themeKey = stringPreferencesKey(THEME_MODE)
+
+    override val themeMode: Flow<ThemeMode> = preferences.map { ThemeMode.fromNameOrSystem(it[themeKey]) }
+
+    override suspend fun setThemeMode(mode: ThemeMode) {
+        dataStore.edit { it[themeKey] = mode.name }
+    }
+
+    private companion object {
+        const val THEME_MODE = "theme_mode"
     }
 }

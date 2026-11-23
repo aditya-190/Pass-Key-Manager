@@ -68,4 +68,9 @@
 | 2026-11-23 | `NavRoute.Settings(startExport)`: the reminder's "Back up now" opens the export picker directly; the reminder shows under a live announcement instead of waiting | 6b attack #5, #6. Announcements can't start an export (they map to `Settings()`) |
 | 2026-11-23 | Settings no longer lists Privacy and Terms; both are in About | Owner decision: one place for legal text, a shorter Settings list. Strings `privacy` and `terms_n_condition` removed |
 | 2026-11-23 | UiText's two spread calls are suppressed in code, not the detekt baseline | Android's string APIs are vararg; the suppression sits next to the reason |
+| 2026-11-23 | "Old passwords" check dropped from 6.0.0 | A field's age only exists in password history, which began with 5.8.0; nothing could be flagged as over a year old before late 2027, and existing fields have no creation date. Revisit in 2027 (no schema change needed then) |
+| 2026-11-23 | Icon shortcuts are Add entry and Search (not Generate password) | A generator shortcut would need a screen of its own; both chosen ones land on existing UI. They only queue a request; Home acts after unlock, once |
+| 2026-11-23 | Passphrases use PassKey's own 1,758-word list (≈10.8 bits/word, 5 words ≈ 54 bits), hyphen-joined; A-Z capitalises, 0-9 adds one digit | No download or third-party licence; readable for non-native speakers. Characters stay the default |
+| 2026-11-23 | Theme: System / Light / Dark in Settings; read once before the first frame (bounded 300 ms) so a forced mode never flashes; bar icons follow the app's scheme | Colours unchanged (owner rule); only the choice of scheme |
+| 2026-11-23 | Home search also matches field names, never values | Values are dropped before they reach the search |
 

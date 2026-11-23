@@ -235,7 +235,13 @@ class Release580bSimulationTest {
                 }
             }
             val before = Triple(repo.allDetails.toSet(), repo.allTotp.toSet(), repo.history.toMap())
-            val vm = PreviewViewModel(repo, SavedStateHandle(), RecordingAnalyticsTracker())
+            val vm =
+                PreviewViewModel(
+                    repo,
+                    SavedStateHandle(),
+                    RecordingAnalyticsTracker(),
+                    com.bhardwaj.passkey.domain.model.PendingShortcut()
+                )
             val job = backgroundScope.launch(UnconfinedTestDispatcher(testScheduler)) { vm.state.collect {} }
             vm.onIntent(PreviewIntent.SwipedToDelete(vm.state.value.items.random(kotlin.random.Random(seed))))
             vm.onIntent(PreviewIntent.DeleteConfirmed)

@@ -56,6 +56,9 @@ sealed interface PreviewIntent {
 }
 
 sealed interface PreviewEffect {
+    /** The Search shortcut: put the cursor in the search field. */
+    data object FocusSearch : PreviewEffect
+
     data class Navigate(val route: NavRoute) : PreviewEffect
     data class ShowUndo(val message: UiText) : PreviewEffect
     data class CopyToClipboard(val value: String, val isSensitive: Boolean) : PreviewEffect

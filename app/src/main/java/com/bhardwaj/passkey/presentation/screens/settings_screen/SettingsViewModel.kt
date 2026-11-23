@@ -59,8 +59,12 @@ class SettingsViewModel @Inject constructor(
 
     private val backupMutex = Mutex()
 
-    val state: StateFlow<SettingsState> = combine(local, preferences.autoLockTimeout) { ui, timeout ->
-        ui.copy(autoLockTimeout = timeout)
+    val state: StateFlow<SettingsState> = combine(
+        local,
+        preferences.autoLockTimeout,
+        preferences.themeMode
+    ) { ui, timeout, theme ->
+        ui.copy(autoLockTimeout = timeout, themeMode = theme)
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(STOP_TIMEOUT_MS), SettingsState())
 
     fun onIntent(intent: SettingsIntent) {
@@ -69,6 +73,11 @@ class SettingsViewModel @Inject constructor(
             is SettingsIntent.LanguageChosen -> chooseLanguage(intent)
             SettingsIntent.AutoLockClicked -> showDialog(SettingsDialog.AutoLock)
             is SettingsIntent.AutoLockChosen -> chooseAutoLock(intent.timeout)
+            SettingsIntent.ThemeClicked -> showDialog(SettingsDialog.Theme)
+            is SettingsIntent.ThemeChosen -> {
+                showDialog(null)
+                viewModelScope.launch { preferences.setThemeMode(intent.mode) }
+            }
             SettingsIntent.AnalyzeClicked -> analyze()
             is SettingsIntent.AnalysisItemClicked -> {
                 showDialog(null)

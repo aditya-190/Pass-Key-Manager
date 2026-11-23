@@ -14,6 +14,7 @@ import com.bhardwaj.passkey.domain.repository.PasskeyRepository
 import com.bhardwaj.passkey.domain.totp.Base32
 import com.bhardwaj.passkey.domain.totp.OtpAuthUri
 import com.bhardwaj.passkey.domain.totp.TotpConfig
+import com.bhardwaj.passkey.utils.PassphraseGenerator
 import com.bhardwaj.passkey.utils.PasswordAnalyzer
 import com.bhardwaj.passkey.utils.PasswordGenerator
 import com.bhardwaj.passkey.utils.SecretKeywords
@@ -147,6 +148,9 @@ class DetailViewModel @Inject constructor(
             DetailIntent.PolicyClicked -> local.update { it.copy(isPolicySheetOpen = true) }
             DetailIntent.PolicyDismissed -> local.update { it.copy(isPolicySheetOpen = false) }
             is DetailIntent.LengthChanged -> local.update { it.copy(policy = it.policy.withLength(intent.length)) }
+            is DetailIntent.PassphraseToggled ->
+                local.update { it.copy(policy = it.policy.copy(passphrase = intent.enabled)) }
+            is DetailIntent.WordsChanged -> local.update { it.copy(policy = it.policy.withWords(intent.words)) }
             is DetailIntent.CharacterClassToggled ->
                 local.update { it.copy(policy = it.policy.toggle(intent.characterClass, intent.enabled)) }
 
@@ -266,13 +270,21 @@ class DetailViewModel @Inject constructor(
 
     private fun generate() {
         val policy = local.value.policy
-        val password = PasswordGenerator.generate(
-            length = policy.length,
-            includeUpper = policy.includeUppercase,
-            includeLower = policy.includeLowercase,
-            includeNumbers = policy.includeDigits,
-            includeSpecial = policy.includeSymbols
-        )
+        val password = if (policy.passphrase) {
+            PassphraseGenerator.generate(
+                words = policy.words,
+                capitalize = policy.includeUppercase,
+                withDigit = policy.includeDigits
+            )
+        } else {
+            PasswordGenerator.generate(
+                length = policy.length,
+                includeUpper = policy.includeUppercase,
+                includeLower = policy.includeLowercase,
+                includeNumbers = policy.includeDigits,
+                includeSpecial = policy.includeSymbols
+            )
+        }
         // A generated value is unambiguously a secret.
         editEditor { it.copy(answer = password, isSecret = true, secretSetByUser = true, error = null) }
         analytics.log(AppEvents.passwordGenerated(length = password.length))

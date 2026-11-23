@@ -6,6 +6,7 @@ import com.bhardwaj.passkey.data.backup.ImportMode
 import com.bhardwaj.passkey.domain.model.AppLanguage
 import com.bhardwaj.passkey.domain.model.AutoLockTimeout
 import com.bhardwaj.passkey.domain.model.Detail
+import com.bhardwaj.passkey.domain.model.ThemeMode
 import com.bhardwaj.passkey.presentation.navigation.NavRoute
 import com.bhardwaj.passkey.utils.PasswordAnalysisResult
 import com.bhardwaj.passkey.utils.UiText
@@ -13,6 +14,7 @@ import com.bhardwaj.passkey.utils.UiText
 data class SettingsState(
     val appVersion: String = BuildConfig.VERSION_NAME,
     val autoLockTimeout: AutoLockTimeout = AutoLockTimeout.DEFAULT,
+    val themeMode: ThemeMode = ThemeMode.SYSTEM,
     /** At most one dialog or sheet at a time; five separate flags allowed impossible combinations. */
     val dialog: SettingsDialog? = null,
     /** A safety check is running; repeat taps are ignored until it ends. */
@@ -22,6 +24,7 @@ data class SettingsState(
 sealed interface SettingsDialog {
     data object Language : SettingsDialog
     data object AutoLock : SettingsDialog
+    data object Theme : SettingsDialog
 
     /** Explains Chrome's own "Autofill using another service" step before Android's picker opens. */
     data object AutofillHelp : SettingsDialog
@@ -40,6 +43,8 @@ sealed interface SettingsIntent {
     data class LanguageChosen(val language: AppLanguage) : SettingsIntent
     data object AutoLockClicked : SettingsIntent
     data class AutoLockChosen(val timeout: AutoLockTimeout) : SettingsIntent
+    data object ThemeClicked : SettingsIntent
+    data class ThemeChosen(val mode: ThemeMode) : SettingsIntent
     data object AnalyzeClicked : SettingsIntent
     data class AnalysisItemClicked(val detail: Detail) : SettingsIntent
     data object RateClicked : SettingsIntent

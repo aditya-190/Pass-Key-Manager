@@ -274,4 +274,16 @@
     <string name="backup_reminder_body">如果手机丢失或重置，备份是找回密码的唯一方式。</string>
     <string name="backup_reminder_cta">立即备份</string>
     <string name="import_not_a_backup">这不是 PassKey 备份文件。请选择你导出的 .pkbak 文件或旧版 PassKey CSV。</string>
+
+    <!-- 6.0.0 theme, passphrase and icon shortcuts -->
+    <string name="theme">主题</string>
+    <string name="theme_system">跟随手机</string>
+    <string name="theme_light">浅色</string>
+    <string name="theme_dark">深色</string>
+    <string name="passphrase">使用单词（密码短语）</string>
+    <string name="passphrase_words">单词数：%d</string>
+    <string name="shortcut_add_short">添加条目</string>
+    <string name="shortcut_add_long">添加新条目</string>
+    <string name="shortcut_search_short">搜索</string>
+    <string name="shortcut_search_long">搜索保险库</string>
 </resources>

@@ -202,3 +202,12 @@ Owner direction (2026-11-23): no UI change; additive, update-safe features; goal
   verified recent backup counts. TDD 5 red → green; simulation +1,000 junk files. Owner: Privacy and Terms rows
   removed from Settings (in About). Gates green (326 unit); instrumented 35/35 on the Moto G34.
 
+### 6c: small additions, code-complete
+- Settings › Theme: System / Light / Dark (same colours), applied before the first frame; bar icons follow it.
+- Generator: "Use words (passphrase)" switch; word count 3–10 (default 5); A-Z capitalises, 0-9 adds a digit.
+- Home search also matches field names (never values).
+- Icon shortcuts: Add entry, Search (run after unlock, once; also when Home is already open).
+- Dropped: "old passwords" (no field ages exist until history is a year old). 10 strings in 17 languages.
+- TDD: 10 red → green (SmallFeaturesTest 6, Settings 1, Detail 1, Preview 2). Simulation: 2,000 passphrases,
+  1,000 search vaults (values never match), 1,000 theme/shortcut inputs, 0 failures.
+
