@@ -21,3 +21,6 @@ local.properties
 /.idea/gradle.xml
 /.idea/kotlinc.xml
 /.idea/misc.xml
+
+# Signed release bundles and their R8 mapping, produced locally for upload; never committed.
+/app/release/
