@@ -83,4 +83,7 @@
 | 2026-11-23 | Settings › "Share with friends" reuses About's share text and the system share sheet | Word of mouth; no new strings |
 | 2026-11-23 | Dependency added: `androidx.credentials:credentials` 1.6.0 (latest stable on Google Maven, checked 2026-11-23) | Needed for the Android 14+ sign-in sheet provider (owner approved). Official AndroidX; ships its own R8 rules |
 | 2026-11-23 | Sign-in sheet provider: passwords only, get only (no save yet), apps only (a browser asking for a website gets nothing until a trusted-browser list exists); the sheet shows only "Unlock to fill", never entry names; same matcher, signer trust (TOFU) and fingerprint function as autofill; logins without a username are not offered | Same privacy rules as autofill. Enabled only on API 34+ (`@bool/credential_provider_enabled`). Users turn it on in Android's "Passwords, passkeys & accounts" |
+| 2026-11-23 | 6.0.0 went straight to production at 100% (no internal test) | Owner decision; 47 was already live |
+| 2026-11-23 | Remote Config v2 publishes the review pacing now but keeps `latest_version_code` at 47 until 48 is live | Raising it earlier would tell 47 users to update to a version they can't get yet |
+| 2026-11-23 | Native store listings in all 17 app languages; no "No ads" in short descriptions | ASO: local search indexes native listings; Play flags price/promotion words in the short description |
 
