@@ -1,5 +1,6 @@
 package com.bhardwaj.passkey.presentation.screens.onboarding_screens
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bhardwaj.passkey.analytics.AnalyticsTracker
@@ -12,7 +13,10 @@ import kotlinx.coroutines.launch
 
 /** The feature tour replayed on its own. It only reports how far people get and closes; it stores nothing. */
 @HiltViewModel
-class FeatureTourViewModel @Inject constructor(private val analytics: AnalyticsTracker) : ViewModel() {
+class FeatureTourViewModel @Inject constructor(
+    private val analytics: AnalyticsTracker,
+    private val savedState: SavedStateHandle
+) : ViewModel() {
     // BUFFERED for the same reason as onboarding: a backgrounded screen must not suspend the sender.
     private val _effects = Channel<FeatureTourEffect>(Channel.BUFFERED)
     val effects = _effects.receiveAsFlow()
@@ -20,8 +24,11 @@ class FeatureTourViewModel @Inject constructor(private val analytics: AnalyticsT
     private var closed = false
 
     init {
-        // Once per opening: the ViewModel outlives rotation.
-        analytics.log(AppEvents.featureTourStarted())
+        // Once per opening: the ViewModel outlives rotation, and the flag in saved state outlives process death.
+        if (savedState.get<Boolean>(STARTED_LOGGED) != true) {
+            savedState[STARTED_LOGGED] = true
+            analytics.log(AppEvents.featureTourStarted())
+        }
     }
 
     fun onEvent(event: FeatureTourEvent) {
@@ -33,6 +40,10 @@ class FeatureTourViewModel @Inject constructor(private val analytics: AnalyticsT
             FeatureTourEvent.Complete -> analytics.log(AppEvents.featureTourCompleted())
         }
         viewModelScope.launch { _effects.send(FeatureTourEffect.Close) }
+    }
+
+    private companion object {
+        const val STARTED_LOGGED = "feature_tour_started_logged"
     }
 }
 

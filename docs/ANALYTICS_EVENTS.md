@@ -10,9 +10,9 @@ Nothing is sent unless the user allowed "Usage statistics" (`ConsentApplier`; th
 |---|---|---|---|
 | `screen_view` | `screen_name`, `screen_class`: the route name with arguments stripped | Every navigation destination | 5.5.2 |
 | `consent_updated` | `analytics` (bool), `crash` (bool) | The consent screen is saved | 5.5.2 |
-| `onboarding_page_view` | `page` (1-based) | An onboarding page is shown | 5.5.2 |
+| `onboarding_page_view` | `page` (1-based; 1–3 intro, 4–9 feature tour from 6.0.0) | An onboarding page is shown | 5.5.2 |
 | `onboarding_skipped` | `page` (1-based) | Skip is tapped | 5.5.2 |
-| `tutorial_complete` | — | The last onboarding page's Next | 5.5.2 |
+| `tutorial_complete` | — | The last onboarding page's Next (page 9 from 6.0.0, so the completion rate drops: compare `onboarding_skipped` with page ≥ 4 instead) | 5.5.2 |
 | `feature_tour_started` | — | Settings › Feature tour (or an announcement) opens the tour on its own | 6.0.0 |
 | `feature_tour_completed` | — | The last tour page's Next | 6.0.0 |
 | `feature_tour_skipped` | `page` (1-based, tour pages only) | Skip in the replayed tour | 6.0.0 |

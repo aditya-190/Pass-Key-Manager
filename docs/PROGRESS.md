@@ -179,3 +179,10 @@ Owner direction (2026-11-23): no UI change; additive, update-safe features; goal
 - Events: `feature_tour_started`, `feature_tour_completed`, `feature_tour_skipped(page)`.
 - TDD: 8 red → green (`FeatureTourTest` 7, `NavRouteTest` 2 updated). Simulation `Release600SimulationTest`: 1,000
   seeds of random Skip/Next/double taps, 0 failures.
+- Attack pass (owner: fix them): #1 long tour text cut off at 200% font on narrow phones → pages scroll
+  (`FeatureTourLayoutTest`, on the Moto G34: red on en TOUR_GENERATOR without the fix, green in all 17 languages with
+  it; a 1280 dp tablet emulator could not show the bug). #2 a late Skip/Next after Back could also close Settings →
+  pops only the tour route. #3 9-page first run lowers `tutorial_complete` → documented in ANALYTICS_EVENTS. #4
+  process death re-counted `feature_tour_started` → flag in SavedStateHandle (red → green). #5 translations → native
+  review list.
+- Gates green (307 unit); instrumented 35/35 on the Moto G34 (via `am instrument`, app data kept).

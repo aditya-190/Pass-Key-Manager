@@ -47,7 +47,8 @@ fun NavGraph(navController: NavHostController, analytics: AnalyticsTracker) {
             )
         }
         composable<NavRoute.FeatureTour> {
-            FeatureTourScreen(onClose = { navController.popBackStack() })
+            // Pops the tour only: if Back already closed it, a late Skip/Next must not close Settings as well.
+            FeatureTourScreen(onClose = { navController.popBackStack<NavRoute.FeatureTour>(inclusive = true) })
         }
         composable<NavRoute.Previews> {
             PreviewScreen(onNavigate = { navController.navigate(it) })

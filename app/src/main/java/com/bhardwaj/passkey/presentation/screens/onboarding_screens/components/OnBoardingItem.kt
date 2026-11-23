@@ -5,6 +5,8 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -21,8 +23,11 @@ import com.bhardwaj.passkey.presentation.theme.Poppins
 @Composable
 fun OnBoardingItem(modifier: Modifier = Modifier, screen: OnBoardingScreen) {
     Column(
+        // Scrolls only when it must: the 6.0.0 tour texts are longer, and at 200% font or in long scripts they
+        // were cut off. At normal sizes nothing moves.
         modifier = modifier
             .fillMaxHeight(0.8F)
+            .verticalScroll(rememberScrollState())
             .padding(16.dp),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.Start

@@ -1,5 +1,6 @@
 package com.bhardwaj.passkey.simulation
 
+import androidx.lifecycle.SavedStateHandle
 import com.bhardwaj.passkey.analytics.AppEventNames
 import com.bhardwaj.passkey.analytics.AppParams
 import com.bhardwaj.passkey.analytics.EventValidator
@@ -36,7 +37,7 @@ class Release600SimulationTest {
         repeat(SEEDS) { seed ->
             val random = Random(seed)
             val analytics = RecordingAnalyticsTracker()
-            val vm = FeatureTourViewModel(analytics)
+            val vm = FeatureTourViewModel(analytics, SavedStateHandle())
             val effects = mutableListOf<FeatureTourEffect>()
             val collector = backgroundScope.launch(UnconfinedTestDispatcher(testScheduler)) {
                 vm.effects.toList(effects)

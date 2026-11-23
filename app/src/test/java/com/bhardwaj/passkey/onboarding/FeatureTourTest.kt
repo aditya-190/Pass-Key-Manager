@@ -1,5 +1,6 @@
 package com.bhardwaj.passkey.onboarding
 
+import androidx.lifecycle.SavedStateHandle
 import com.bhardwaj.passkey.analytics.AppEventNames
 import com.bhardwaj.passkey.analytics.AppEvents
 import com.bhardwaj.passkey.analytics.AppParams
@@ -59,7 +60,7 @@ class FeatureTourTest {
 
     @Test
     fun `opening the tour is counted once, finishing closes it once`() = runTest {
-        val vm = FeatureTourViewModel(analytics)
+        val vm = FeatureTourViewModel(analytics, SavedStateHandle())
         vm.onEvent(FeatureTourEvent.Complete)
         vm.onEvent(FeatureTourEvent.Complete)
         assertEquals(FeatureTourEffect.Close, vm.effects.first())
@@ -71,12 +72,21 @@ class FeatureTourTest {
 
     @Test
     fun `skipping closes the tour and logs the 1-based page`() = runTest {
-        val vm = FeatureTourViewModel(analytics)
+        val vm = FeatureTourViewModel(analytics, SavedStateHandle())
         vm.onEvent(FeatureTourEvent.Skip(page = 2))
         vm.onEvent(FeatureTourEvent.Complete)
         assertEquals(FeatureTourEffect.Close, vm.effects.first())
         assertEquals(AppEventNames.FEATURE_TOUR_SKIPPED, analytics.names.last())
         assertEquals(mapOf(AppParams.PAGE to 3), analytics.events.last().params)
+    }
+
+    @Test
+    fun `a tour restored after process death is not counted as a new one`() {
+        // Attack-pass #4: Android recreates the ViewModel from saved state; the opening was already counted.
+        val handle = SavedStateHandle()
+        FeatureTourViewModel(analytics, handle)
+        FeatureTourViewModel(analytics, SavedStateHandle(handle.keys().associateWith { handle.get<Any>(it) }))
+        assertEquals(listOf(AppEventNames.FEATURE_TOUR_STARTED), analytics.names)
     }
 
     @Test
