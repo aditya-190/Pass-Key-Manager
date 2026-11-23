@@ -238,4 +238,5 @@
     <string name="cd_remove_authenticator">Remove authenticator</string>
     <string name="remove_authenticator_confirm">Remove this authenticator? Its codes will stop here, and you may need the account\'s recovery codes to sign in.</string>
     <string name="autofill_untrusted_app">This app isn\'t the one PassKey filled before under this name, so nothing was filled. If you reinstalled it from a different store, remove and re-add the login in PassKey.</string>
+    <string name="autofill_setup_help">On the next screen, choose PassKey as Android\'s autofill service. Chrome also has its own setting: open Chrome › Settings › Autofill services and choose \"Autofill using another service\".</string>
 </resources>

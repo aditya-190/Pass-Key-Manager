@@ -15,6 +15,7 @@ data class AutofillCredential(val previewId: Long, val label: String, val userna
 object AutofillMatcher {
 
     private const val MIN_TOKEN_LENGTH = 3
+    private const val MAX_SUFFIX_LABELS = 3
 
     /**
      * Parts of a package name or domain that identify nobody. "com.google.android.gm" and
@@ -27,10 +28,15 @@ object AutofillMatcher {
     )
 
     /**
-     * Second-level public suffixes common among this app's users. Without them "google.co.uk" would reduce to "co".
-     * Not the full Public Suffix List (no new dependency); an unknown suffix only makes matching stricter.
+     * Multi-label public suffixes: country second levels (without them "google.co.uk" would reduce to "co") and shared
+     * hosting platforms from the Public Suffix List's private section (without them every site on herokuapp.com or
+     * github.io would be one site, and a login saved on one would be offered to all). Not the full list (no new
+     * dependency); an unknown suffix only makes matching stricter.
      */
-    private val TWO_PART_SUFFIXES = setOf(
+    private val KNOWN_SUFFIXES = setOf(
+        "herokuapp.com", "github.io", "gitlab.io", "web.app", "firebaseapp.com", "appspot.com", "netlify.app",
+        "vercel.app", "pages.dev", "workers.dev", "blogspot.com", "wordpress.com", "wixsite.com", "azurewebsites.net",
+        "cloudfront.net", "onrender.com", "glitch.me", "fly.dev", "replit.app", "s3.amazonaws.com",
         "co.uk", "org.uk", "ac.uk", "gov.uk", "co.in", "net.in", "org.in", "gov.in", "ac.in", "co.jp", "ne.jp",
         "com.au", "net.au", "org.au", "com.br", "com.mx", "co.za", "co.nz", "com.sg", "com.tr", "co.kr", "com.cn",
         "com.tw", "com.hk", "com.ar", "co.id", "com.my", "com.pk", "com.bd", "com.eg", "com.sa", "co.il", "com.ng"
@@ -63,7 +69,10 @@ object AutofillMatcher {
     private fun registrableName(host: String): String? {
         val labels = host.split('.').filter { it.isNotEmpty() }
         if (labels.size < 2) return labels.singleOrNull()
-        val suffixParts = if (labels.takeLast(2).joinToString(".") in TWO_PART_SUFFIXES) 2 else 1
+        // Longest known suffix first: s3.amazonaws.com is checked before a two-label match.
+        val suffixParts = (MAX_SUFFIX_LABELS downTo 2).firstOrNull { parts ->
+            labels.size > parts && labels.takeLast(parts).joinToString(".") in KNOWN_SUFFIXES
+        } ?: 1
         return labels.getOrNull(labels.size - suffixParts - 1)
     }
 

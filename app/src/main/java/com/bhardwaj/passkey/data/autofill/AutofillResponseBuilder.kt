@@ -10,6 +10,7 @@ import android.widget.RemoteViews
 import com.bhardwaj.passkey.R
 import com.bhardwaj.passkey.domain.autofill.AutofillCredential
 import com.bhardwaj.passkey.domain.autofill.AutofillMatcher
+import com.bhardwaj.passkey.domain.autofill.AutofillResponsePlan
 import com.bhardwaj.passkey.domain.repository.PasskeyRepository
 import com.bhardwaj.passkey.utils.SecretKeywords
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -40,10 +41,10 @@ class AutofillResponseBuilder @Inject constructor(
     }
 
     fun fillResponse(fields: AutofillFields, credentials: List<AutofillCredential>): FillResponse? {
-        if (credentials.isEmpty()) return null
+        val plan = AutofillResponsePlan.afterUnlock(credentials.size, canSave(fields)) ?: return null
         val builder = FillResponse.Builder()
-        credentials.forEach { builder.addDataset(dataset(fields, it)) }
-        addSaveInfo(builder, fields)
+        if (plan.datasets) credentials.forEach { builder.addDataset(dataset(fields, it)) }
+        if (plan.offerSave) addSaveInfo(builder, fields)
         return builder.build()
     }
 
@@ -59,9 +60,9 @@ class AutofillResponseBuilder @Inject constructor(
             label = context.getString(R.string.autofill_unlock),
             sublabel = context.getString(R.string.app_name)
         )
-        return FillResponse.Builder()
-            .setAuthentication(fields.allIds(), sender, presentation)
-            .build()
+        val builder = FillResponse.Builder().setAuthentication(fields.allIds(), sender, presentation)
+        if (AutofillResponsePlan.forAuthentication(canSave(fields)).offerSave) addSaveInfo(builder, fields)
+        return builder.build()
     }
 
     @Suppress("DEPRECATION") // Dataset.Builder(Presentations) is API 33+; minSdk here is 28.
@@ -83,8 +84,10 @@ class AutofillResponseBuilder @Inject constructor(
      * Offers to save only when both halves of a credential are present. A save prompt on a
      * password-only form would create an entry with nothing to identify it by.
      */
+    private fun canSave(fields: AutofillFields) = fields.usernameIds.isNotEmpty() && fields.passwordIds.isNotEmpty()
+
     private fun addSaveInfo(builder: FillResponse.Builder, fields: AutofillFields) {
-        if (fields.usernameIds.isEmpty() || fields.passwordIds.isEmpty()) return
+        if (!canSave(fields)) return
         builder.setSaveInfo(
             SaveInfo.Builder(
                 SaveInfo.SAVE_DATA_TYPE_USERNAME or SaveInfo.SAVE_DATA_TYPE_PASSWORD,

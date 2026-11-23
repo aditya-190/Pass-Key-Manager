@@ -203,6 +203,21 @@ class SettingsViewModelTest {
         assertTrue("the safety check still ran", vm.state.value.dialog is SettingsDialog.Analysis)
     }
 
+    @Test
+    fun `autofill setup explains Chrome's extra step before opening Android's picker`() = runTest {
+        // Device finding C: Chrome ignores the Android setting until "Autofill using another service" is chosen.
+        val vm = vm()
+        vm.onIntent(SettingsIntent.AutofillClicked)
+        assertEquals(SettingsDialog.AutofillHelp, vm.state.value.dialog)
+        vm.onIntent(SettingsIntent.DialogDismissed)
+        assertNull(vm.state.value.dialog)
+
+        vm.onIntent(SettingsIntent.AutofillClicked)
+        vm.onIntent(SettingsIntent.AutofillHelpContinue)
+        assertNull(vm.state.value.dialog)
+        assertEquals(SettingsEffect.OpenAutofillSettings, vm.effects.first())
+    }
+
     private class FakePreferences : PreferencesRepository {
         val timeout = MutableStateFlow(AutoLockTimeout.DEFAULT)
         val language = MutableStateFlow<String?>(null)

@@ -163,4 +163,23 @@ class AutofillMatcherTest {
         val details = (1L..2L).associateWith { listOf(detail(it * 10, it, "Password", "pw", isSecret = true)) }
         assertThat(AutofillMatcher.match(previews, details, setOf("google")).map { it.previewId }).containsExactly(2L)
     }
+
+    // Device finding B: shared hosting platforms are not one site.
+    @Test
+    fun `a login saved on a hosted site is not offered to other sites on the same platform`() {
+        val saved = listOf(preview(1, "the-internet.herokuapp.com"))
+        val details = mapOf(1L to listOf(detail(10, 1, "Password", "pw", isSecret = true)))
+        listOf("evil.herokuapp.com", "https://me.github.io/login", "phish.web.app", "x.netlify.app").forEach { host ->
+            assertThat(AutofillMatcher.match(saved, details, AutofillMatcher.tokensOf(null, host))).isEmpty()
+        }
+        val genuine = AutofillMatcher.tokensOf(null, "https://the-internet.herokuapp.com/login")
+        assertThat(AutofillMatcher.match(saved, details, genuine)).hasSize(1)
+    }
+
+    @Test
+    fun `the site name on a hosting platform is the label before the platform`() {
+        assertThat(AutofillMatcher.tokensOf(null, "shop.example.github.io")).contains("example")
+        assertThat(AutofillMatcher.tokensOf(null, "files.mybucket.s3.amazonaws.com")).contains("mybucket")
+        assertThat(AutofillMatcher.tokensOf(null, "my.herokuapp.com")).doesNotContain("herokuapp")
+    }
 }

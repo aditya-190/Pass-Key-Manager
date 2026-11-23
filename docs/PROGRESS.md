@@ -92,6 +92,10 @@ Owner decisions: PBKDF2 recovery slot (no argon2kt), mandatory one-time recovery
   service" is chosen in Chrome's settings; the form then shows only "Unlock to fill · PassKey". Found: Android never
   offers to save a new login (the authentication response carries no SaveInfo) - see 5.8.0 device findings. The
   phone's autofill service, Chrome's setting and stay-on were restored; the debug app and test vault were kept.
+- Device findings fixed: A save is offered (SaveInfo on both responses); B shared-hosting suffixes; C Chrome guidance
+  dialog (17 languages). Tests red → green; 298 unit, 34 instrumented; +1,000-seed hosting simulation. Emulator
+  (API 28): typed login → "Save to PassKey?" → saved as an entry with a secret password → "Unlock to fill" →
+  fingerprint → the login fills.
 Open: the real Play 5.5.1 → 5.7.0 upgrade needs a Play internal testing track (a debug build cannot replace a
 Play-signed install without uninstalling). Rollout set by the owner (100%).
 

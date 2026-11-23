@@ -22,6 +22,9 @@ data class SettingsState(
 sealed interface SettingsDialog {
     data object Language : SettingsDialog
     data object AutoLock : SettingsDialog
+
+    /** Explains Chrome's own "Autofill using another service" step before Android's picker opens. */
+    data object AutofillHelp : SettingsDialog
     data class Analysis(val result: PasswordAnalysisResult) : SettingsDialog
 
     /** Recovery change, step 1: prove the current password. */
@@ -41,6 +44,7 @@ sealed interface SettingsIntent {
     data class AnalysisItemClicked(val detail: Detail) : SettingsIntent
     data object RateClicked : SettingsIntent
     data object AutofillClicked : SettingsIntent
+    data object AutofillHelpContinue : SettingsIntent
     data object ChangeRecoveryClicked : SettingsIntent
     class CurrentRecoveryEntered(val password: CharArray) : SettingsIntent
     class NewRecoveryEntered(val password: CharArray) : SettingsIntent

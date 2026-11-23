@@ -249,6 +249,25 @@ class Release580bSimulationTest {
         }
     }
 
+    @Test
+    fun `sites sharing a hosting platform never receive each other's logins`() {
+        val platforms =
+            listOf("herokuapp.com", "github.io", "web.app", "netlify.app", "vercel.app", "pages.dev", "blogspot.com")
+        repeat(SEEDS) { seed ->
+            val rnd = Random(seed.toLong())
+            val platform = platforms[rnd.nextInt(platforms.size)]
+            val owner = "site${rnd.nextInt(1_000)}"
+            val other = "other${rnd.nextInt(1_000)}"
+            // Autofill saves a web login under its full host.
+            val saved = listOf(Preview(1, "$owner.$platform", Category.OTHERS))
+            val details = mapOf(1L to listOf(Detail(10, 1, "Password", "pw", isSecret = true)))
+            val stranger = AutofillMatcher.tokensOf(null, "https://$other.$platform/login")
+            assertTrue("seed $seed: $other.$platform", AutofillMatcher.match(saved, details, stranger).isEmpty())
+            val genuine = AutofillMatcher.tokensOf(null, "https://$owner.$platform/login")
+            assertEquals("seed $seed genuine", 1, AutofillMatcher.match(saved, details, genuine).size)
+        }
+    }
+
     private companion object {
         const val SEEDS = 2_000
 

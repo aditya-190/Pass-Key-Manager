@@ -4,6 +4,7 @@ import com.bhardwaj.passkey.analytics.AppEvents
 import com.bhardwaj.passkey.analytics.EventValidator
 import com.bhardwaj.passkey.domain.autofill.AppTrust
 import com.bhardwaj.passkey.domain.autofill.AutofillDecision
+import com.bhardwaj.passkey.domain.autofill.AutofillResponsePlan
 import com.bhardwaj.passkey.domain.autofill.AutofillSaveMerger
 import com.bhardwaj.passkey.domain.autofill.SaveOp
 import com.bhardwaj.passkey.domain.model.Detail
@@ -93,5 +94,25 @@ class AutofillHardeningTest {
         assertEquals(listOf("none", "one", "many"), events.subList(1, 4).map { it.params.values.single() })
         assertEquals("updated", events[4].params.values.single())
         assertEquals("link", events[5].params.values.single())
+    }
+
+    // Device finding A: a new login was never offered for saving.
+    @Test
+    fun `the unlock suggestion also offers to save, but only for a username and password form`() {
+        val saveable = AutofillResponsePlan.forAuthentication(canSave = true)
+        assertEquals(AutofillResponsePlan(datasets = false, offerSave = true), saveable)
+        val notSaveable = AutofillResponsePlan.forAuthentication(canSave = false)
+        assertEquals(AutofillResponsePlan(datasets = false, offerSave = false), notSaveable)
+    }
+
+    @Test
+    fun `after unlock a form with no saved login still offers to save it`() {
+        val saveOnly = AutofillResponsePlan(datasets = false, offerSave = true)
+        assertEquals(saveOnly, AutofillResponsePlan.afterUnlock(matches = 0, canSave = true))
+        assertEquals(null, AutofillResponsePlan.afterUnlock(matches = 0, canSave = false))
+        val fillAndSave = AutofillResponsePlan(datasets = true, offerSave = true)
+        assertEquals(fillAndSave, AutofillResponsePlan.afterUnlock(matches = 2, canSave = true))
+        val fillOnly = AutofillResponsePlan(datasets = true, offerSave = false)
+        assertEquals(fillOnly, AutofillResponsePlan.afterUnlock(matches = 1, canSave = false))
     }
 }
