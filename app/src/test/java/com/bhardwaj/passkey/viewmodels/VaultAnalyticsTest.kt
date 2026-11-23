@@ -4,10 +4,10 @@ import androidx.lifecycle.SavedStateHandle
 import com.bhardwaj.passkey.analytics.AppEventNames
 import com.bhardwaj.passkey.analytics.AppParams
 import com.bhardwaj.passkey.data.local.entity.Details
-import com.bhardwaj.passkey.domain.events.DetailEvents
-import com.bhardwaj.passkey.domain.events.PreviewEvents
-import com.bhardwaj.passkey.domain.viewModels.DetailViewModel
-import com.bhardwaj.passkey.domain.viewModels.PreviewViewModel
+import com.bhardwaj.passkey.presentation.screens.detail_screen.DetailEvents
+import com.bhardwaj.passkey.presentation.screens.detail_screen.DetailViewModel
+import com.bhardwaj.passkey.presentation.screens.preview_screen.PreviewEvents
+import com.bhardwaj.passkey.presentation.screens.preview_screen.PreviewViewModel
 import com.bhardwaj.passkey.testing.FakePasskeyRepository
 import com.bhardwaj.passkey.testing.MainDispatcherRule
 import com.bhardwaj.passkey.testing.RecordingAnalyticsTracker

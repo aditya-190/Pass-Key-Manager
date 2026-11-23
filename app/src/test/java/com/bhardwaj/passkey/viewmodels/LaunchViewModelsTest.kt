@@ -3,12 +3,12 @@ package com.bhardwaj.passkey.viewmodels
 import com.bhardwaj.passkey.analytics.AppEventNames
 import com.bhardwaj.passkey.analytics.ConsentState
 import com.bhardwaj.passkey.consent.FakeConsentStore
-import com.bhardwaj.passkey.data.repository.DataStoreRepository
-import com.bhardwaj.passkey.domain.events.OnBoardingEvents
-import com.bhardwaj.passkey.domain.events.SplashEvents
-import com.bhardwaj.passkey.domain.viewModels.OnBoardingViewModel
-import com.bhardwaj.passkey.domain.viewModels.SplashViewModel
+import com.bhardwaj.passkey.data.datastore.PreferencesRepositoryImpl
 import com.bhardwaj.passkey.presentation.navigation.Routes
+import com.bhardwaj.passkey.presentation.screens.onboarding_screens.OnBoardingEvents
+import com.bhardwaj.passkey.presentation.screens.onboarding_screens.OnBoardingViewModel
+import com.bhardwaj.passkey.presentation.screens.splash_screen.SplashEvents
+import com.bhardwaj.passkey.presentation.screens.splash_screen.SplashViewModel
 import com.bhardwaj.passkey.testing.MainDispatcherRule
 import com.bhardwaj.passkey.testing.RecordingAnalyticsTracker
 import com.bhardwaj.passkey.testing.testDataStore
@@ -34,7 +34,7 @@ class LaunchViewModelsTest {
 
     private val analytics = RecordingAnalyticsTracker()
 
-    private fun prefs() = DataStoreRepository(testDataStore(tmp.root))
+    private fun prefs() = PreferencesRepositoryImpl(testDataStore(tmp.root))
 
     @Test
     fun `splash sends a new user to onboarding`() = runTest {
@@ -45,7 +45,7 @@ class LaunchViewModelsTest {
 
     @Test
     fun `splash asks an upgrading user for consent once`() = runTest {
-        val prefs = prefs().apply { savePreference(DataStoreRepository.onBoardingKey, true) }
+        val prefs = prefs().apply { setOnboardingCompleted(true) }
         val vm = SplashViewModel(prefs, FakeConsentStore())
         vm.onEvent(SplashEvents.OnLoadingComplete)
         assertEquals(UiEvents.Navigate(Routes.CONSENT_PAGE), vm.uiEvents.first())
@@ -53,14 +53,14 @@ class LaunchViewModelsTest {
 
     @Test
     fun `splash navigates exactly once even if preferences change later`() = runTest {
-        val prefs = prefs().apply { savePreference(DataStoreRepository.onBoardingKey, true) }
+        val prefs = prefs().apply { setOnboardingCompleted(true) }
         val consent = FakeConsentStore(ConsentState(true, analytics = false, crash = false))
         val vm = SplashViewModel(prefs, consent)
         val received = mutableListOf<UiEvents>()
         val job = backgroundScope.launch { vm.uiEvents.toList(received) }
         vm.onEvent(SplashEvents.OnLoadingComplete)
         // Before 5.5.2 the splash kept collecting DataStore and re-navigated on every write.
-        prefs.savePreference(DataStoreRepository.onBoardingKey, false)
+        prefs.setOnboardingCompleted(false)
         consent.save(analytics = true, crash = true)
         assertEquals(listOf<UiEvents>(UiEvents.Navigate(Routes.SECURITY_PAGE)), received)
         job.cancel()
@@ -72,7 +72,7 @@ class LaunchViewModelsTest {
         val vm = OnBoardingViewModel(prefs, FakeConsentStore(), analytics)
         vm.onEvent(OnBoardingEvents.OnBoardingComplete)
         assertEquals(UiEvents.Navigate(Routes.CONSENT_PAGE), vm.uiEvents.first())
-        assertTrue(prefs.readPreference(DataStoreRepository.onBoardingKey, false).first())
+        assertTrue(prefs.onboardingCompleted.first())
         assertTrue(AppEventNames.ONBOARDING_COMPLETE in analytics.names)
     }
 

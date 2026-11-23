@@ -1,5 +1,6 @@
 package com.bhardwaj.passkey.data.security
 
+import com.bhardwaj.passkey.domain.model.AutoLockTimeout
 import com.bhardwaj.passkey.presentation.navigation.Routes
 
 /**

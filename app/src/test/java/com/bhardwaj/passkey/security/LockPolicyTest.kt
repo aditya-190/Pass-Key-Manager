@@ -1,8 +1,8 @@
 package com.bhardwaj.passkey.security
 
-import com.bhardwaj.passkey.data.security.AutoLockTimeout
 import com.bhardwaj.passkey.data.security.LockPolicy
 import com.bhardwaj.passkey.data.security.LockReason
+import com.bhardwaj.passkey.domain.model.AutoLockTimeout
 import com.bhardwaj.passkey.presentation.navigation.Routes
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue

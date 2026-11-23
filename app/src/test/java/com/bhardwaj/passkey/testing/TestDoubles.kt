@@ -8,7 +8,7 @@ import com.bhardwaj.passkey.analytics.AnalyticsTracker
 import com.bhardwaj.passkey.crash.CrashReporter
 import com.bhardwaj.passkey.data.local.entity.Details
 import com.bhardwaj.passkey.data.local.entity.Preview
-import com.bhardwaj.passkey.data.repository.PasskeyRepository
+import com.bhardwaj.passkey.domain.repository.PasskeyRepository
 import java.io.File
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

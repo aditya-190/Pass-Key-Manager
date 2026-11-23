@@ -1,12 +1,12 @@
-package com.bhardwaj.passkey.domain.viewModels
+package com.bhardwaj.passkey.presentation.screens.splash_screen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bhardwaj.passkey.consent.ConsentStore
-import com.bhardwaj.passkey.data.repository.DataStoreRepository
-import com.bhardwaj.passkey.domain.events.SplashEvents
+import com.bhardwaj.passkey.domain.repository.PreferencesRepository
 import com.bhardwaj.passkey.launch.LaunchRouter
 import com.bhardwaj.passkey.presentation.navigation.route
+import com.bhardwaj.passkey.presentation.screens.splash_screen.SplashEvents
 import com.bhardwaj.passkey.utils.UiEvents
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
 
 @HiltViewModel
 class SplashViewModel @Inject constructor(
-    private val repository: DataStoreRepository,
+    private val preferences: PreferencesRepository,
     private val consentStore: ConsentStore
 ) : ViewModel() {
     private val _uiEvents = Channel<UiEvents>(Channel.BUFFERED)
@@ -33,7 +33,7 @@ class SplashViewModel @Inject constructor(
                 viewModelScope.launch {
                     // Read once. Collecting kept the splash subscribed and re-navigated on every later
                     // preference write.
-                    val onboardingDone = repository.readPreference(DataStoreRepository.onBoardingKey, false).first()
+                    val onboardingDone = preferences.onboardingCompleted.first()
                     val consentDecided = consentStore.consent.first().decided
                     val step = LaunchRouter.atStart(onboardingDone = onboardingDone, consentDecided = consentDecided)
                     _uiEvents.send(UiEvents.Navigate(step.route))

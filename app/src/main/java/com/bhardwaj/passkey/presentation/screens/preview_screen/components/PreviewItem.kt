@@ -32,7 +32,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.bhardwaj.passkey.R
 import com.bhardwaj.passkey.data.local.entity.Preview as PreviewEntity
-import com.bhardwaj.passkey.domain.events.PreviewEvents
+import com.bhardwaj.passkey.presentation.screens.preview_screen.PreviewEvents
 import com.bhardwaj.passkey.presentation.theme.Poppins
 import sh.calvin.reorderable.ReorderableCollectionItemScope
 

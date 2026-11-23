@@ -6,10 +6,10 @@ import com.bhardwaj.passkey.data.backup.BackupCodec
 import com.bhardwaj.passkey.data.backup.ImportMode
 import com.bhardwaj.passkey.data.local.entity.Details
 import com.bhardwaj.passkey.data.local.entity.Preview
-import com.bhardwaj.passkey.data.security.AutoLockTimeout
 import com.bhardwaj.passkey.data.security.LockPolicy
-import com.bhardwaj.passkey.domain.events.PreviewEvents
-import com.bhardwaj.passkey.domain.viewModels.PreviewViewModel
+import com.bhardwaj.passkey.domain.model.AutoLockTimeout
+import com.bhardwaj.passkey.presentation.screens.preview_screen.PreviewEvents
+import com.bhardwaj.passkey.presentation.screens.preview_screen.PreviewViewModel
 import com.bhardwaj.passkey.testing.FakePasskeyRepository
 import com.bhardwaj.passkey.testing.MainDispatcherRule
 import com.bhardwaj.passkey.testing.RecordingAnalyticsTracker

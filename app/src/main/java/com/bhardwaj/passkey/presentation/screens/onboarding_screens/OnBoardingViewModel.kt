@@ -1,14 +1,14 @@
-package com.bhardwaj.passkey.domain.viewModels
+package com.bhardwaj.passkey.presentation.screens.onboarding_screens
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bhardwaj.passkey.analytics.AnalyticsTracker
 import com.bhardwaj.passkey.analytics.AppEvents
 import com.bhardwaj.passkey.consent.ConsentStore
-import com.bhardwaj.passkey.data.repository.DataStoreRepository
-import com.bhardwaj.passkey.domain.events.OnBoardingEvents
+import com.bhardwaj.passkey.domain.repository.PreferencesRepository
 import com.bhardwaj.passkey.launch.LaunchRouter
 import com.bhardwaj.passkey.presentation.navigation.route
+import com.bhardwaj.passkey.presentation.screens.onboarding_screens.OnBoardingEvents
 import com.bhardwaj.passkey.utils.UiEvents
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -19,7 +19,7 @@ import kotlinx.coroutines.launch
 
 @HiltViewModel
 class OnBoardingViewModel @Inject constructor(
-    private val repository: DataStoreRepository,
+    private val preferences: PreferencesRepository,
     private val consentStore: ConsentStore,
     private val analytics: AnalyticsTracker
 ) : ViewModel() {
@@ -48,7 +48,7 @@ class OnBoardingViewModel @Inject constructor(
     private fun finish() {
         finished = true
         viewModelScope.launch {
-            repository.savePreference(key = DataStoreRepository.onBoardingKey, value = true)
+            preferences.setOnboardingCompleted(true)
             val step = LaunchRouter.afterOnboarding(consentDecided = consentStore.consent.first().decided)
             _uiEvents.send(UiEvents.Navigate(step.route))
         }

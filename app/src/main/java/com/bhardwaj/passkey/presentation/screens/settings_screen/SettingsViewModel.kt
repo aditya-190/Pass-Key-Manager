@@ -1,4 +1,4 @@
-package com.bhardwaj.passkey.domain.viewModels
+package com.bhardwaj.passkey.presentation.screens.settings_screen
 
 import android.app.Application
 import android.app.LocaleManager
@@ -17,12 +17,12 @@ import com.bhardwaj.passkey.R
 import com.bhardwaj.passkey.data.backup.BackupError
 import com.bhardwaj.passkey.data.backup.BackupException
 import com.bhardwaj.passkey.data.backup.BackupRepository
-import com.bhardwaj.passkey.data.repository.DataStoreRepository
-import com.bhardwaj.passkey.data.repository.PasskeyRepository
-import com.bhardwaj.passkey.data.security.AutoLockTimeout
 import com.bhardwaj.passkey.data.security.DatabaseKeyManager
-import com.bhardwaj.passkey.domain.events.SettingsEvents
+import com.bhardwaj.passkey.domain.model.AutoLockTimeout
+import com.bhardwaj.passkey.domain.repository.PasskeyRepository
+import com.bhardwaj.passkey.domain.repository.PreferencesRepository
 import com.bhardwaj.passkey.presentation.navigation.Routes
+import com.bhardwaj.passkey.presentation.screens.settings_screen.SettingsEvents
 import com.bhardwaj.passkey.utils.PasswordAnalysisResult
 import com.bhardwaj.passkey.utils.PasswordAnalyzer
 import com.bhardwaj.passkey.utils.SecretKeywords
@@ -34,10 +34,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -46,7 +43,7 @@ import kotlinx.coroutines.withContext
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
     private val repository: PasskeyRepository,
-    private val dataStoreRepository: DataStoreRepository,
+    private val preferences: PreferencesRepository,
     private val backupRepository: BackupRepository,
     private val secretKeywords: SecretKeywords,
     private val keyManager: DatabaseKeyManager,
@@ -82,14 +79,7 @@ class SettingsViewModel @Inject constructor(
     /** Held only between the two dialog steps, then zeroed. */
     private var pendingCurrentRecoveryPassword: CharArray? = null
 
-    val autoLockTimeout: StateFlow<AutoLockTimeout> = flow {
-        emitAll(
-            dataStoreRepository.readPreference(
-                key = DataStoreRepository.autoLockTimeoutKey,
-                defaultValue = AutoLockTimeout.DEFAULT.millis
-            )
-        )
-    }.map { AutoLockTimeout.fromMillis(it) }
+    val autoLockTimeout: StateFlow<AutoLockTimeout> = preferences.autoLockTimeout
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), AutoLockTimeout.DEFAULT)
 
     fun onEvent(event: SettingsEvents) {
@@ -123,10 +113,7 @@ class SettingsViewModel @Inject constructor(
                     )
                 } else {
                     viewModelScope.launch {
-                        dataStoreRepository.savePreference(
-                            key = DataStoreRepository.currentLanguageKey,
-                            value = event.newLanguage.languageId
-                        )
+                        preferences.setSelectedLanguageTag(event.newLanguage.languageId)
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                             appContext.getSystemService(LocaleManager::class.java).applicationLocales =
                                 LocaleList.forLanguageTags(event.newLanguage.languageId)
@@ -248,10 +235,7 @@ class SettingsViewModel @Inject constructor(
             is SettingsEvents.OnAutoLockTimeoutChange -> {
                 isAutoLockDialogOpen = false
                 viewModelScope.launch {
-                    dataStoreRepository.savePreference(
-                        key = DataStoreRepository.autoLockTimeoutKey,
-                        value = event.timeout.millis
-                    )
+                    preferences.setAutoLockTimeout(event.timeout)
                 }
             }
 

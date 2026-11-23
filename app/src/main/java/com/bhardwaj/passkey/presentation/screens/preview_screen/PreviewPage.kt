@@ -61,11 +61,11 @@ import androidx.compose.ui.window.DialogProperties
 import androidx.compose.ui.window.SecureFlagPolicy
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.bhardwaj.passkey.R
-import com.bhardwaj.passkey.domain.events.PreviewEvents
-import com.bhardwaj.passkey.domain.viewModels.PreviewViewModel
 import com.bhardwaj.passkey.presentation.navigation.HomeAnnouncement
 import com.bhardwaj.passkey.presentation.screens.common.PassKeyButton
 import com.bhardwaj.passkey.presentation.screens.common.PasskeySearchBar
+import com.bhardwaj.passkey.presentation.screens.preview_screen.PreviewEvents
+import com.bhardwaj.passkey.presentation.screens.preview_screen.PreviewViewModel
 import com.bhardwaj.passkey.presentation.screens.preview_screen.components.MainBottomNavigation
 import com.bhardwaj.passkey.presentation.screens.preview_screen.components.PreviewBottomSheet
 import com.bhardwaj.passkey.presentation.screens.preview_screen.components.PreviewItem

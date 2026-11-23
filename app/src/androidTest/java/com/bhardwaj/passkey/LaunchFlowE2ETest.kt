@@ -13,7 +13,7 @@ import androidx.compose.ui.test.performClick
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
-import com.bhardwaj.passkey.data.repository.passkeyDataStore
+import com.bhardwaj.passkey.data.datastore.passkeyDataStore
 import com.bhardwaj.passkey.presentation.MainActivity
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.flow.first

@@ -2,7 +2,7 @@ package com.bhardwaj.passkey.data.backup
 
 import com.bhardwaj.passkey.data.local.entity.Details
 import com.bhardwaj.passkey.data.local.entity.Preview
-import com.bhardwaj.passkey.data.repository.PasskeyRepository
+import com.bhardwaj.passkey.domain.repository.PasskeyRepository
 import java.io.ByteArrayOutputStream
 import java.util.Arrays
 import java.util.zip.GZIPInputStream
