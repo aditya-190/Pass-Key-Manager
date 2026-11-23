@@ -284,6 +284,7 @@
     <string name="theme_dark">डार्क</string>
     <string name="passphrase">शब्दों का उपयोग करें (पासफ़्रेज़)</string>
     <string name="passphrase_words">शब्द: %d</string>
+    <string name="passphrase_hint">पासफ़्रेज़ लंबे होते हैं। अगर कोई साइट लंबाई सीमित करती है, तो शब्द बंद कर दें।</string>
     <string name="shortcut_add_short">एंट्री जोड़ें</string>
     <string name="shortcut_add_long">नई एंट्री जोड़ें</string>
     <string name="shortcut_search_short">खोजें</string>

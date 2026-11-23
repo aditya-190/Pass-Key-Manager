@@ -286,6 +286,7 @@
     <string name="theme_dark">Sombre</string>
     <string name="passphrase">Utiliser des mots (phrase secrète)</string>
     <string name="passphrase_words">Mots : %d</string>
+    <string name="passphrase_hint">Les phrases secrètes sont longues. Si un site limite la longueur, désactivez les mots.</string>
     <string name="shortcut_add_short">Ajouter</string>
     <string name="shortcut_add_long">Ajouter une entrée</string>
     <string name="shortcut_search_short">Rechercher</string>

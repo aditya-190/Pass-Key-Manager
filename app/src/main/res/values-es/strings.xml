@@ -286,6 +286,7 @@
     <string name="theme_dark">Oscuro</string>
     <string name="passphrase">Usar palabras (frase de contraseña)</string>
     <string name="passphrase_words">Palabras: %d</string>
+    <string name="passphrase_hint">Las frases de contraseña son largas. Si un sitio limita la longitud, desactiva las palabras.</string>
     <string name="shortcut_add_short">Añadir</string>
     <string name="shortcut_add_long">Añadir una entrada</string>
     <string name="shortcut_search_short">Buscar</string>

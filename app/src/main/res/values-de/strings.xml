@@ -285,6 +285,7 @@
     <string name="theme_dark">Dunkel</string>
     <string name="passphrase">Wörter verwenden (Passphrase)</string>
     <string name="passphrase_words">Wörter: %d</string>
+    <string name="passphrase_hint">Passphrasen sind lang. Wenn eine Website die Länge begrenzt, schalte Wörter aus.</string>
     <string name="shortcut_add_short">Hinzufügen</string>
     <string name="shortcut_add_long">Neuen Eintrag hinzufügen</string>
     <string name="shortcut_search_short">Suchen</string>

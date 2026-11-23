@@ -284,6 +284,7 @@
     <string name="theme_dark">डार्क</string>
     <string name="passphrase">शब्द वापरा (पासफ्रेज)</string>
     <string name="passphrase_words">शब्द: %d</string>
+    <string name="passphrase_hint">पासफ्रेज लांब असतात. एखादी साइट लांबी मर्यादित करत असल्यास शब्द बंद करा.</string>
     <string name="shortcut_add_short">नोंद जोडा</string>
     <string name="shortcut_add_long">नवीन नोंद जोडा</string>
     <string name="shortcut_search_short">शोधा</string>

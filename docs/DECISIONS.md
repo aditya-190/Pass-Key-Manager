@@ -73,4 +73,9 @@
 | 2026-11-23 | Passphrases use PassKey's own 1,758-word list (≈10.8 bits/word, 5 words ≈ 54 bits), hyphen-joined; A-Z capitalises, 0-9 adds one digit | No download or third-party licence; readable for non-native speakers. Characters stay the default |
 | 2026-11-23 | Theme: System / Light / Dark in Settings; read once before the first frame (bounded 300 ms) so a forced mode never flashes; bar icons follow the app's scheme | Colours unchanged (owner rule); only the choice of scheme |
 | 2026-11-23 | Home search also matches field names, never values | Values are dropped before they reach the search |
+| 2026-11-23 | Passphrase minimum raised to 4 words (≈43 bits) | 6c attack #2: 3 words (≈32 bits) was weaker than the character default |
+| 2026-11-23 | Search lists name matches first, then field-name-only matches | 6c attack #3 |
+| 2026-11-23 | A shortcut on an open vault pops back to Home before it runs | 6c attack #4 |
+| 2026-11-23 | Theme: `PassKeyAppTheme` for both activities draws once the choice is read (no main-thread wait) and, on Android 12+, calls `UiModeManager.setApplicationNightMode` so the launch screen and the autofill prompt match. Android 9–11 still show the phone's scheme in the split-second launch screen (no API there) | 6c attack #1, #5, #6. Changing the theme recreates the activity once (a configuration change), as Android does for any night-mode switch |
+| 2026-11-23 | Word mode shows a hint that some sites limit length | 6c attack #7 |
 

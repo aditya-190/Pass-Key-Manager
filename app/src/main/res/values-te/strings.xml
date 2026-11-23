@@ -283,6 +283,7 @@
     <string name="theme_dark">డార్క్</string>
     <string name="passphrase">పదాలు వాడండి (పాస్‌ఫ్రేజ్)</string>
     <string name="passphrase_words">పదాలు: %d</string>
+    <string name="passphrase_hint">పాస్‌ఫ్రేజ్‌లు పొడవుగా ఉంటాయి. ఏదైనా సైట్ పొడవును పరిమితం చేస్తే, పదాలను ఆఫ్ చేయండి.</string>
     <string name="shortcut_add_short">ఎంట్రీ జోడించు</string>
     <string name="shortcut_add_long">కొత్త ఎంట్రీ జోడించండి</string>
     <string name="shortcut_search_short">వెతుకు</string>

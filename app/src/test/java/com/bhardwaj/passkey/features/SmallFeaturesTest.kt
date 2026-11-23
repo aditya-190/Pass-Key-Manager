@@ -80,4 +80,34 @@ class SmallFeaturesTest {
         assertEquals(ShortcutAction.SEARCH, pending.take())
         assertNull(pending.take())
     }
+
+    @Test
+    fun `passphrases have at least four words`() {
+        // 6.0.0c attack-pass #2: three words were about 32 bits, weaker than the character default.
+        assertEquals(4, PasswordPolicy.MIN_WORDS)
+        assertEquals(4, PassphraseGenerator.generate(words = 1, capitalize = false, withDigit = false).split("-").size)
+    }
+
+    @Test
+    fun `the theme choice decides light or dark, and tells the system the same`() {
+        // 6.0.0c attack-pass #1, #5, #6.
+        assertEquals(true, ThemeMode.SYSTEM.isDark(systemDark = true))
+        assertEquals(false, ThemeMode.SYSTEM.isDark(systemDark = false))
+        assertEquals(false, ThemeMode.LIGHT.isDark(systemDark = true))
+        assertEquals(true, ThemeMode.DARK.isDark(systemDark = false))
+        assertEquals(listOf(0, 1, 2), listOf(ThemeMode.SYSTEM, ThemeMode.LIGHT, ThemeMode.DARK).map { it.nightMode() })
+    }
+
+    @Test
+    fun `a shortcut on an open vault returns to Home first`() {
+        // 6.0.0c attack-pass #4: Add opened its sheet behind an entry's screen.
+        assertTrue(ShortcutAction.needsHome(ShortcutAction.ADD_ENTRY, unlocked = true, onHome = false))
+        assertEquals(false, ShortcutAction.needsHome(ShortcutAction.ADD_ENTRY, unlocked = true, onHome = true))
+        assertEquals(
+            "the lock screen leads to Home anyway",
+            false,
+            ShortcutAction.needsHome(ShortcutAction.SEARCH, unlocked = false, onHome = false)
+        )
+        assertEquals(false, ShortcutAction.needsHome(null, unlocked = true, onHome = false))
+    }
 }

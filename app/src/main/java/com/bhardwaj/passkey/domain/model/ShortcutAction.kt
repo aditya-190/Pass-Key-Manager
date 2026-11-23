@@ -6,6 +6,10 @@ enum class ShortcutAction(val intentAction: String) {
     SEARCH("com.bhardwaj.passkey.action.SEARCH");
 
     companion object {
+        /** A pending shortcut on an open vault brings the user back to Home, where it runs. */
+        fun needsHome(pending: ShortcutAction?, unlocked: Boolean, onHome: Boolean): Boolean =
+            pending != null && unlocked && !onHome
+
         /** Only our own actions: anything else (including the launcher's MAIN) is no shortcut. */
         fun fromIntentAction(action: String?): ShortcutAction? = entries.firstOrNull { it.intentAction == action }
     }

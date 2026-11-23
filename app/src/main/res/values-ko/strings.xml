@@ -282,6 +282,7 @@
     <string name="theme_dark">다크</string>
     <string name="passphrase">단어 사용(암호 문구)</string>
     <string name="passphrase_words">단어: %d개</string>
+    <string name="passphrase_hint">암호 문구는 깁니다. 길이를 제한하는 사이트에서는 단어 사용을 끄세요.</string>
     <string name="shortcut_add_short">항목 추가</string>
     <string name="shortcut_add_long">새 항목 추가</string>
     <string name="shortcut_search_short">검색</string>

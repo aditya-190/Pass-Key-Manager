@@ -281,6 +281,7 @@
     <string name="theme_dark">ダーク</string>
     <string name="passphrase">単語を使う（パスフレーズ）</string>
     <string name="passphrase_words">単語数: %d</string>
+    <string name="passphrase_hint">パスフレーズは長くなります。文字数に制限があるサイトでは、単語をオフにしてください。</string>
     <string name="shortcut_add_short">追加</string>
     <string name="shortcut_add_long">エントリを追加</string>
     <string name="shortcut_search_short">検索</string>

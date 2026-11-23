@@ -68,6 +68,15 @@ fun PasswordSettingsSheet(
             // 6.0.0: words instead of characters. A-Z capitalises the words and 0-9 adds a digit; a-z and !@#
             // don't apply to words, so they step aside in this mode.
             PasswordToggleRow(stringResource(R.string.passphrase), policy.passphrase, onPassphraseToggle)
+            if (policy.passphrase) {
+                // Some sites cap length well below a passphrase's ~30 characters.
+                Text(
+                    text = stringResource(R.string.passphrase_hint),
+                    fontFamily = Poppins,
+                    fontSize = 13.sp,
+                    color = MaterialTheme.colorScheme.outline
+                )
+            }
             Spacer(modifier = Modifier.height(8.dp))
 
             val (label, value, range) = if (policy.passphrase) {

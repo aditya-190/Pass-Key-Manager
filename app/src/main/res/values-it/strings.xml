@@ -286,6 +286,7 @@
     <string name="theme_dark">Scuro</string>
     <string name="passphrase">Usa parole (passphrase)</string>
     <string name="passphrase_words">Parole: %d</string>
+    <string name="passphrase_hint">Le passphrase sono lunghe. Se un sito limita la lunghezza, disattiva le parole.</string>
     <string name="shortcut_add_short">Aggiungi</string>
     <string name="shortcut_add_long">Aggiungi una voce</string>
     <string name="shortcut_search_short">Cerca</string>

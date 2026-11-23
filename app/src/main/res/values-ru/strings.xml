@@ -287,6 +287,7 @@
     <string name="theme_dark">Тёмная</string>
     <string name="passphrase">Использовать слова (парольная фраза)</string>
     <string name="passphrase_words">Слов: %d</string>
+    <string name="passphrase_hint">Парольные фразы длинные. Если сайт ограничивает длину, отключите слова.</string>
     <string name="shortcut_add_short">Добавить</string>
     <string name="shortcut_add_long">Добавить запись</string>
     <string name="shortcut_search_short">Поиск</string>

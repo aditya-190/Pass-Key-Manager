@@ -282,6 +282,7 @@
     <string name="theme_dark">深色</string>
     <string name="passphrase">使用单词（密码短语）</string>
     <string name="passphrase_words">单词数：%d</string>
+    <string name="passphrase_hint">密码短语较长。如果网站限制长度，请关闭单词模式。</string>
     <string name="shortcut_add_short">添加条目</string>
     <string name="shortcut_add_long">添加新条目</string>
     <string name="shortcut_search_short">搜索</string>

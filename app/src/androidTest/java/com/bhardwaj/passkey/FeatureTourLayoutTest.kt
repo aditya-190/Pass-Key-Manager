@@ -13,6 +13,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.semantics.SemanticsActions
 import androidx.compose.ui.test.getBoundsInRoot
 import androidx.compose.ui.test.junit4.v2.createComposeRule
+import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTouchInput
@@ -79,6 +80,11 @@ class FeatureTourLayoutTest {
             val next = localized.getString(R.string.next)
             OnboardingPages.tour.forEachIndexed { index, page ->
                 val description = localized.getString(page.description)
+                // Attack-pass #8: right after an install the device is slow; wait until the pager has settled on
+                // this page (exactly one copy of its text) instead of assuming it already has.
+                compose.waitUntil(PAGE_TIMEOUT_MS) {
+                    compose.onAllNodesWithText(description).fetchSemanticsNodes().size == 1
+                }
                 val text = compose.onNodeWithText(description)
                 repeat(SWIPES) { text.performTouchInput { swipeUp() } }
                 compose.waitForIdle()
@@ -103,5 +109,6 @@ class FeatureTourLayoutTest {
 
     private companion object {
         const val SWIPES = 4
+        const val PAGE_TIMEOUT_MS = 10_000L
     }
 }

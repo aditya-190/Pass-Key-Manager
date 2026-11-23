@@ -38,7 +38,8 @@ data class PasswordPolicy(
     fun withWords(count: Int): PasswordPolicy = copy(words = count.coerceIn(MIN_WORDS, MAX_WORDS))
 
     companion object {
-        const val MIN_WORDS = 3
+        /** Four words ≈ 43 bits; three (≈ 32) was weaker than the 12-character default. */
+        const val MIN_WORDS = 4
         const val MAX_WORDS = 10
         const val DEFAULT_WORDS = 5
         const val MIN_LENGTH = 4

@@ -292,6 +292,7 @@
     <string name="theme_dark">داكن</string>
     <string name="passphrase">استخدم كلمات (عبارة مرور)</string>
     <string name="passphrase_words">الكلمات: %d</string>
+    <string name="passphrase_hint">عبارات المرور طويلة. إذا حدّد موقع ما الطول، فأوقف استخدام الكلمات.</string>
     <string name="shortcut_add_short">إضافة إدخال</string>
     <string name="shortcut_add_long">إضافة إدخال جديد</string>
     <string name="shortcut_search_short">بحث</string>

@@ -88,7 +88,7 @@ class PreviewViewModel @Inject constructor(
             category = Category.fromNameOrOther(categoryName),
             query = currentQuery,
             items = rows
-                .filter { currentQuery.isBlank() || it.matches(currentQuery.trim(), names[it.id].orEmpty()) }
+                .searchedBy(currentQuery.trim(), names)
                 .filterNot { it.id == ui.pendingDelete?.id },
             isLoading = false,
             editor = ui.editor,
@@ -110,8 +110,13 @@ class PreviewViewModel @Inject constructor(
         }
     }
 
-    private fun Preview.matches(query: String, names: List<String>): Boolean =
-        heading.contains(query, ignoreCase = true) || names.any { it.contains(query, ignoreCase = true) }
+    /** Name matches first, then entries that only have a matching field name; each group keeps its order. */
+    private fun List<Preview>.searchedBy(query: String, names: Map<Long, List<String>>): List<Preview> {
+        if (query.isEmpty()) return this
+        val (byName, rest) = partition { it.heading.contains(query, ignoreCase = true) }
+        return byName +
+            rest.filter { preview -> names[preview.id].orEmpty().any { it.contains(query, ignoreCase = true) } }
+    }
 
     fun onIntent(intent: PreviewIntent) {
         when (intent) {

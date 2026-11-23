@@ -41,8 +41,9 @@ import com.bhardwaj.passkey.data.autofill.AutofillStructureParser
 import com.bhardwaj.passkey.domain.autofill.AppTrust
 import com.bhardwaj.passkey.domain.repository.AutofillTrustStore
 import com.bhardwaj.passkey.domain.repository.PasskeyRepository
+import com.bhardwaj.passkey.domain.repository.PreferencesRepository
 import com.bhardwaj.passkey.presentation.screens.security_screen.VaultGateViewModel
-import com.bhardwaj.passkey.presentation.theme.PassKeyTheme
+import com.bhardwaj.passkey.presentation.theme.PassKeyAppTheme
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -71,6 +72,9 @@ class AutofillUnlockActivity : FragmentActivity() {
 
     @Inject
     lateinit var analytics: AnalyticsTracker
+
+    @Inject
+    lateinit var preferences: PreferencesRepository
 
     @Inject
     lateinit var trustStore: AutofillTrustStore
@@ -102,7 +106,8 @@ class AutofillUnlockActivity : FragmentActivity() {
         }
 
         setContent {
-            PassKeyTheme {
+            // The user's theme choice, like the app itself (6.0.0).
+            PassKeyAppTheme(themeMode = preferences.themeMode) {
                 val state by viewModel.state.collectAsStateWithLifecycle()
                 val isUntrusted by untrusted.collectAsStateWithLifecycle()
                 // Same prompt rules as the vault gate: prompt when the screen is really in front, never again

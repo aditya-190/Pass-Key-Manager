@@ -286,6 +286,7 @@
     <string name="theme_dark">Escuro</string>
     <string name="passphrase">Usar palavras (frase-senha)</string>
     <string name="passphrase_words">Palavras: %d</string>
+    <string name="passphrase_hint">Frases-senha são longas. Se um site limitar o tamanho, desative as palavras.</string>
     <string name="shortcut_add_short">Adicionar</string>
     <string name="shortcut_add_long">Adicionar uma entrada</string>
     <string name="shortcut_search_short">Buscar</string>

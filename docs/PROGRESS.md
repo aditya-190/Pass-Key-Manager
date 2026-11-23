@@ -210,4 +210,7 @@ Owner direction (2026-11-23): no UI change; additive, update-safe features; goal
 - Dropped: "old passwords" (no field ages exist until history is a year old). 10 strings in 17 languages.
 - TDD: 10 red → green (SmallFeaturesTest 6, Settings 1, Detail 1, Preview 2). Simulation: 2,000 passphrases,
   1,000 search vaults (values never match), 1,000 theme/shortcut inputs, 0 failures.
+- Attack pass (owner: fix all): #1/#5/#6 shared `PassKeyAppTheme` (no blocking read; Android 12+ tells the system so
+  launch screen and autofill prompt match); #2 min 4 words; #3 name matches first; #4 shortcut returns to Home; #7
+  long-passphrase hint; #8 layout test waits for the pager. TDD 4 red → green.
 

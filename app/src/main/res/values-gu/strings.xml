@@ -283,6 +283,7 @@
     <string name="theme_dark">ડાર્ક</string>
     <string name="passphrase">શબ્દો વાપરો (પાસફ્રેઝ)</string>
     <string name="passphrase_words">શબ્દો: %d</string>
+    <string name="passphrase_hint">પાસફ્રેઝ લાંબા હોય છે. કોઈ સાઇટ લંબાઈ મર્યાદિત કરે, તો શબ્દો બંધ કરો.</string>
     <string name="shortcut_add_short">એન્ટ્રી ઉમેરો</string>
     <string name="shortcut_add_long">નવી એન્ટ્રી ઉમેરો</string>
     <string name="shortcut_search_short">શોધો</string>

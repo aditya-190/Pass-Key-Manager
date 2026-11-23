@@ -283,6 +283,7 @@
     <string name="theme_dark">டார்க்</string>
     <string name="passphrase">சொற்களைப் பயன்படுத்து (பாஸ்ஃப்ரேஸ்)</string>
     <string name="passphrase_words">சொற்கள்: %d</string>
+    <string name="passphrase_hint">பாஸ்ஃப்ரேஸ்கள் நீளமானவை. ஒரு தளம் நீளத்தைக் கட்டுப்படுத்தினால், சொற்களை அணைக்கவும்.</string>
     <string name="shortcut_add_short">பதிவு சேர்</string>
     <string name="shortcut_add_long">புதிய பதிவைச் சேர்</string>
     <string name="shortcut_search_short">தேடு</string>

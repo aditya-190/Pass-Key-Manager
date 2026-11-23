@@ -275,4 +275,15 @@ class PreviewViewModelTest {
         assertNull(vm.state.value.editor)
         assertNull(shortcuts.take())
     }
+
+    @Test
+    fun `entries whose name matches come before entries that only have a matching field`() = runTest {
+        // 6.0.0c attack-pass #3: "pass" buried Passport under every entry with a Password field.
+        val gmail = repository.createPreview("Gmail", Category.BANKS, sequence = 0)
+        repository.createDetail(gmail, "Password", "x")
+        repository.createPreview("Passport", Category.BANKS, sequence = 1)
+        val vm = vm()
+        vm.onIntent(PreviewIntent.QueryChanged("pass"))
+        assertEquals(listOf("Passport", "Gmail"), vm.state.value.items.map { it.heading })
+    }
 }
