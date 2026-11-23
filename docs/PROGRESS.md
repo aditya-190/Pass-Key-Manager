@@ -82,7 +82,8 @@ Owner decisions: PBKDF2 recovery slot (no argon2kt), mandatory one-time recovery
   (PasswordStrength + RecoveryPasswordTest, 5 tests, red → green); upgrade-funnel events recovery_setup_shown /
   recovery_setup_completed / vault_migration_failed. New strings translated into 16 locales (machine, pending review).
 - Destructive VaultMigrationTest / KeyStoreWrapperTest skipped by owner decision (they stay opt-in).
-- Gates green: ktlint, detekt, 196 unit tests, lint, release build.
+- Simulation: 5,000 seeded random passwords (all scripts, empty, 10k chars) + 5,000 repeat/run cases: 0 failures;
+  10k-character value measured in under 1 ms. Gates green: ktlint, detekt, 200 unit tests, lint, release build.
 Open: invalidation on enrollment change (needs a physical device), staged rollout.
 
 ## Carried into 5.6.0
