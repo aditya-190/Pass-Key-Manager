@@ -1,19 +1,29 @@
 package com.bhardwaj.passkey.simulation
 
+import androidx.lifecycle.SavedStateHandle
 import com.bhardwaj.passkey.data.backup.BackupCodec
 import com.bhardwaj.passkey.data.backup.ImportMode
+import com.bhardwaj.passkey.domain.autofill.AppTrust
 import com.bhardwaj.passkey.domain.autofill.AutofillMatcher
+import com.bhardwaj.passkey.domain.autofill.AutofillSaveMerger
+import com.bhardwaj.passkey.domain.autofill.SaveOp
 import com.bhardwaj.passkey.domain.model.Category
 import com.bhardwaj.passkey.domain.model.Detail
+import com.bhardwaj.passkey.domain.model.PasswordHistoryEntry
 import com.bhardwaj.passkey.domain.model.Preview
 import com.bhardwaj.passkey.domain.totp.Base32
 import com.bhardwaj.passkey.domain.totp.OtpAuthUri
 import com.bhardwaj.passkey.domain.totp.TotpAlgorithm
 import com.bhardwaj.passkey.domain.totp.TotpConfig
 import com.bhardwaj.passkey.domain.totp.TotpGenerator
+import com.bhardwaj.passkey.presentation.screens.preview_screen.PreviewIntent
+import com.bhardwaj.passkey.presentation.screens.preview_screen.PreviewViewModel
 import com.bhardwaj.passkey.testing.FakePasskeyRepository
+import com.bhardwaj.passkey.testing.RecordingAnalyticsTracker
 import java.util.Random
 import kotlin.time.Duration.Companion.minutes
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
@@ -24,7 +34,11 @@ import org.junit.Test
  * sites), TOTP generation and Base32/otpauth parsing, and backup round trips carrying authenticators.
  * Every assertion names its seed.
  */
+@OptIn(kotlinx.coroutines.ExperimentalCoroutinesApi::class)
 class Release580bSimulationTest {
+    @get:org.junit.Rule
+    val main = com.bhardwaj.passkey.testing.MainDispatcherRule()
+
     private val services = listOf("google", "github", "netflix", "amazon", "paypal", "proton", "instagram", "bank")
     private val scripts = listOf("बैंक", "বাংলা", "بنك", "銀行", "🔐", "Ünïcödé", "x", "")
 
@@ -142,6 +156,98 @@ class Release580bSimulationTest {
                 assertEquals("seed $seed", expected, actual)
             }
         }
+
+    @Test
+    fun `repeated autofill saves keep one password field and only move changed values to history`() {
+        repeat(SEEDS) { seed ->
+            val rnd = Random(seed.toLong())
+            var details = List(rnd.nextInt(4)) { i ->
+                Detail(i + 1L, 1, listOf("User", "Note", "Password", "PIN")[i], "v$i", i.toLong(), isSecret = i >= 2)
+            }
+            var nextId = 100L
+            var historyWrites = 0
+            repeat(rnd.nextInt(12) + 1) {
+                val password = if (rnd.nextInt(3) ==
+                    0
+                ) {
+                    details.firstOrNull { it.isSecret }?.answer ?: "p"
+                } else {
+                    "p${rnd.nextInt(5)}"
+                }
+                val user = listOf(null, "", "me", "me2")[rnd.nextInt(4)]
+                AutofillSaveMerger.plan(details, user, password, setOf("password")).forEach { op ->
+                    details = when (op) {
+                        is SaveOp.Update -> {
+                            val before = details.single { it.id == op.detail.id }
+                            assertTrue("seed $seed no-op update", before != op.detail)
+                            if (before.isSecret && before.answer != op.detail.answer) historyWrites++
+                            details.map { if (it.id == op.detail.id) op.detail else it }
+                        }
+                        is SaveOp.Create ->
+                            details +
+                                Detail(nextId++, 1, op.question, op.answer, op.sequence, op.isSecret)
+                    }
+                }
+                assertEquals("seed $seed password", password, details.first { it.isSecret }.answer)
+                assertTrue(
+                    "seed $seed duplicate creates",
+                    details.count { it.question == AutofillSaveMerger.PASSWORD_LABEL } <= 1
+                )
+            }
+            assertTrue(historyWrites >= 0)
+        }
+    }
+
+    @Test
+    fun `trust on first use is never fooled by a changed or unreadable signer`() {
+        repeat(SEEDS) { seed ->
+            val rnd = Random(seed.toLong())
+            var stored: String? = null
+            val genuine = AppTrust.fingerprint(listOf("cert${rnd.nextInt(3)}"))
+            repeat(rnd.nextInt(10) + 1) {
+                val actual = listOf(
+                    genuine,
+                    null,
+                    AppTrust.fingerprint(listOf("evil${rnd.nextInt(3)}"))
+                )[rnd.nextInt(3)]
+                when (AppTrust.decide(stored, actual)) {
+                    AppTrust.Decision.FirstUse -> stored = actual
+                    AppTrust.Decision.Trusted -> assertEquals("seed $seed", stored, actual)
+                    AppTrust.Decision.Mismatch -> assertTrue("seed $seed", actual == null || actual != stored)
+                }
+            }
+        }
+    }
+
+    @Test
+    fun `deleting and undoing entries with codes and history never loses anything`() = runTest {
+        repeat(SEEDS) { seed ->
+            val rnd = Random(seed.toLong())
+            val repo = FakePasskeyRepository()
+            repeat(rnd.nextInt(4) + 1) { i ->
+                val id = repo.createPreview("Entry $i", Category.BANKS, i.toLong())
+                repeat(rnd.nextInt(3)) { d ->
+                    val field = repo.createDetail(id, "q$d", "a$d", isSecret = rnd.nextBoolean())
+                    if (rnd.nextBoolean()) repo.history[field] = listOf(PasswordHistoryEntry(1, field, "old$d", 1))
+                }
+                repeat(rnd.nextInt(3)) { t ->
+                    repo.createTotp(id, "code$t", TotpConfig(byteArrayOf(1, 2, 3, t.toByte())))
+                }
+            }
+            val before = Triple(repo.allDetails.toSet(), repo.allTotp.toSet(), repo.history.toMap())
+            val vm = PreviewViewModel(repo, SavedStateHandle(), RecordingAnalyticsTracker())
+            val job = backgroundScope.launch(UnconfinedTestDispatcher(testScheduler)) { vm.state.collect {} }
+            vm.onIntent(PreviewIntent.SwipedToDelete(vm.state.value.items.random(kotlin.random.Random(seed))))
+            vm.onIntent(PreviewIntent.DeleteConfirmed)
+            vm.onIntent(PreviewIntent.UndoDelete)
+            assertEquals(
+                "seed $seed",
+                before,
+                Triple(repo.allDetails.toSet(), repo.allTotp.toSet(), repo.history.toMap())
+            )
+            job.cancel()
+        }
+    }
 
     private companion object {
         const val SEEDS = 2_000

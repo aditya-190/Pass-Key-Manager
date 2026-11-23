@@ -223,4 +223,30 @@ class DetailViewModelTest {
         vm.onIntent(DetailIntent.HistoryDismissed)
         assertNull(vm.state.value.history)
     }
+
+    @Test
+    fun `Undo after deleting a secret brings back its password history`() = runTest {
+        // Attack-pass #4: history cascades with its field.
+        val id = repository.createDetail(1, "Password", "new", isSecret = true)
+        repository.history[id] = listOf(PasswordHistoryEntry(1, id, "old", 5))
+        val vm = vm()
+        vm.onIntent(DetailIntent.SwipedToDelete(vm.state.value.items.single()))
+        vm.onIntent(DetailIntent.DeleteConfirmed)
+        assertTrue(repository.history[id].isNullOrEmpty())
+        vm.onIntent(DetailIntent.UndoDelete)
+        assertEquals(listOf("old"), repository.history[id]!!.map { it.answer })
+    }
+
+    @Test
+    fun `a pasted link cannot store an unbounded issuer or account`() = runTest {
+        // Attack-pass #5.
+        val vm = vm()
+        val huge = "a".repeat(100_000)
+        vm.onIntent(DetailIntent.AddAuthenticatorClicked)
+        vm.onIntent(DetailIntent.AuthenticatorInputChanged("otpauth://totp/$huge?secret=JBSWY3DPEHPK3PXP&issuer=$huge"))
+        vm.onIntent(DetailIntent.AuthenticatorSaveClicked)
+        val stored = repository.allTotp.single()
+        assertTrue(stored.label.length <= 256)
+        assertTrue((stored.config.issuer?.length ?: 0) <= 256 && (stored.config.account?.length ?: 0) <= 256)
+    }
 }

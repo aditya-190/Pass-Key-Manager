@@ -111,6 +111,9 @@ class FakePasskeyRepository : PasskeyRepository {
 
     /** Runs before every create and transaction; a test can suspend here to hold a write "in flight". */
     var writeGate: suspend () -> Unit = {}
+
+    /** Past values by detail id; the real repository writes these itself on every secret change. */
+    val history = mutableMapOf<Long, List<PasswordHistoryEntry>>()
     var transactions = 0
         private set
 
@@ -137,8 +140,10 @@ class FakePasskeyRepository : PasskeyRepository {
         previews.value = previews.value.filterNot { it.id == preview.id } + preview
     }
 
+    // Mirrors the database: authenticators cascade with their entry, history with its field.
     override suspend fun deletePreview(preview: Preview) {
         previews.value = previews.value.filterNot { it.id == preview.id }
+        totp.value = totp.value.filterNot { it.previewId == preview.id }
     }
 
     override suspend fun updatePreviewSequence(previewId: Long, sequence: Long) {
@@ -174,9 +179,11 @@ class FakePasskeyRepository : PasskeyRepository {
 
     override suspend fun deleteDetail(detail: Detail) {
         details.value = details.value.filterNot { it.id == detail.id }
+        history.remove(detail.id)
     }
 
     override suspend fun deleteDetailsByPreviewId(previewId: Long) {
+        details.value.filter { it.previewId == previewId }.forEach { history.remove(it.id) }
         details.value = details.value.filterNot { it.previewId == previewId }
     }
 
@@ -201,13 +208,16 @@ class FakePasskeyRepository : PasskeyRepository {
         totp.value = totp.value.filterNot { it.id == entry.id }
     }
 
-    /** Past values by detail id; the real repository writes these itself on every secret change. */
-    val history = mutableMapOf<Long, List<PasswordHistoryEntry>>()
-
     override fun getHistoryForDetail(detailId: Long): Flow<List<PasswordHistoryEntry>> =
         kotlinx.coroutines.flow.flowOf(history[detailId].orEmpty())
 
-    override suspend fun lastChangedAt(detailId: Long): Long? = null
+    override suspend fun restoreCascaded(
+        authenticators: List<TotpEntry>,
+        history: Map<Long, List<PasswordHistoryEntry>>
+    ) {
+        authenticators.forEach { entry -> totp.value = totp.value.filterNot { it.id == entry.id } + entry }
+        history.filterValues { it.isNotEmpty() }.forEach { (id, entries) -> this.history[id] = entries }
+    }
 
     override suspend fun <R> runInTransaction(block: suspend () -> R): R {
         transactions++

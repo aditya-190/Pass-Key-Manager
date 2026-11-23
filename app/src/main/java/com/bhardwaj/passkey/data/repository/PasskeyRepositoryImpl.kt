@@ -156,7 +156,20 @@ class PasskeyRepositoryImpl(
     override fun getHistoryForDetail(detailId: Long): Flow<List<PasswordHistoryEntry>> =
         vaultFlow({ it.historyDao.getForDetail(detailId) }) { it.toDomain() }
 
-    override suspend fun lastChangedAt(detailId: Long): Long? = vault.requireDb().historyDao.lastChangedAt(detailId)
+    override suspend fun restoreCascaded(
+        authenticators: List<TotpEntry>,
+        history: Map<Long, List<PasswordHistoryEntry>>
+    ) {
+        val db = vault.requireDb()
+        authenticators.forEach { db.totpDao.upsert(it.toEntity()) }
+        history.forEach { (detailId, entries) ->
+            entries.forEach {
+                db.historyDao.insert(
+                    DetailHistoryEntity(detailsId = detailId, answer = it.answer, changedAt = it.changedAt)
+                )
+            }
+        }
+    }
 
     override suspend fun <R> runInTransaction(block: suspend () -> R): R = vault.requireDb().withTransaction { block() }
 

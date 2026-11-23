@@ -75,8 +75,8 @@ interface PasskeyRepository {
 
     fun getHistoryForDetail(detailId: Long): Flow<List<PasswordHistoryEntry>>
 
-    /** When this secret last changed, or null if it has never been edited. */
-    suspend fun lastChangedAt(detailId: Long): Long?
+    /** Undo: puts back what a delete cascaded away (authenticators, password history), with the same ids. */
+    suspend fun restoreCascaded(authenticators: List<TotpEntry>, history: Map<Long, List<PasswordHistoryEntry>>)
 
     // Cross-cutting
 

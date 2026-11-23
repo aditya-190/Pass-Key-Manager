@@ -4,6 +4,8 @@ import androidx.lifecycle.SavedStateHandle
 import com.bhardwaj.passkey.R
 import com.bhardwaj.passkey.analytics.AppEventNames
 import com.bhardwaj.passkey.domain.model.Category
+import com.bhardwaj.passkey.domain.model.PasswordHistoryEntry
+import com.bhardwaj.passkey.domain.totp.TotpConfig
 import com.bhardwaj.passkey.presentation.navigation.NavRoute
 import com.bhardwaj.passkey.presentation.screens.preview_screen.PreviewEffect
 import com.bhardwaj.passkey.presentation.screens.preview_screen.PreviewIntent
@@ -221,5 +223,24 @@ class PreviewViewModelTest {
         vm.onIntent(PreviewIntent.HeadingChanged("Renamed"))
         vm.onIntent(PreviewIntent.SaveClicked)
         assertEquals(listOf("Renamed"), repository.allPreviews.map { it.heading })
+    }
+
+    @Test
+    fun `Undo after deleting an entry brings back its authenticators and password history`() = runTest {
+        // Attack-pass #4: the TOTP foreign key cascades, and Undo used to restore only the entry and its fields.
+        val id = repository.createPreview("GitHub", Category.BANKS)
+        val field = repository.createDetail(id, "Password", "new", isSecret = true)
+        repository.history[field] = listOf(PasswordHistoryEntry(1, field, "old", 5))
+        repository.createTotp(id, "me", TotpConfig(secret = byteArrayOf(1, 2, 3, 4, 5)))
+        val codes = repository.allTotp
+        val vm = vm()
+
+        vm.onIntent(PreviewIntent.SwipedToDelete(vm.state.value.items.single()))
+        vm.onIntent(PreviewIntent.DeleteConfirmed)
+        assertTrue(repository.allTotp.isEmpty() && repository.history.isEmpty())
+
+        vm.onIntent(PreviewIntent.UndoDelete)
+        assertEquals(codes, repository.allTotp)
+        assertEquals(listOf("old"), repository.history[field]!!.map { it.answer })
     }
 }

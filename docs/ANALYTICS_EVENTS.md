@@ -26,6 +26,10 @@ Nothing is sent unless the user allowed "Usage statistics" (`ConsentApplier`; th
 | `recovery_setup_shown` | `existing_vault` (bool) | The mandatory recovery-password step is shown (upgrade = true, new install = false) | 5.7.0 |
 | `recovery_setup_completed` | `existing_vault` (bool) | The vault key is provisioned after the recovery password is set | 5.7.0 |
 | `vault_migration_failed` | `reason`: failure enum, lowercase (for example `export_failed`) | The 5.7.0 re-key fails; the original database is kept | 5.7.0 |
+| `autofill_unlock_shown` | — | A fillable form got the "Unlock to fill" suggestion (every fill authenticates) | 5.8.0 |
+| `autofill_filled` | `match`: none / one / many | Autofill answered after authentication | 5.8.0 |
+| `autofill_saved` | `result`: created / updated / unchanged / refused_locked / refused_untrusted / failed | Android offered to save a login | 5.8.0 |
+| `authenticator_added` | `source`: link / key | An authenticator was added on an entry | 5.8.0 |
 
 User property: `consent_analytics` (`true` / `false`).
 
@@ -33,6 +37,7 @@ User property: `consent_analytics` (`true` / `false`).
 - Activation: `tutorial_complete` → `consent_updated` → `vault_unlocked` → first `entry_created` → first `field_saved`.
 - Habit: users with `vault_unlocked` on 3+ distinct days in their first 7 (the D7 proxy).
 - 5.7.0 upgrade: `recovery_setup_shown{existing_vault=true}` → `recovery_setup_completed` → `vault_unlocked`; any `vault_migration_failed` by `reason` halts the staged rollout.
+- Autofill: `autofill_unlock_shown` → `autofill_filled{match!=none}`; `autofill_saved{result=updated}` shows people keeping passwords current. No package, domain or label is ever sent.
 - Value moments: `password_generated` and `value_copied{sensitive=true}` per active user.
 
 ## Studio baseline events (5.6.0, `analytics/BaselineEvents.kt`)

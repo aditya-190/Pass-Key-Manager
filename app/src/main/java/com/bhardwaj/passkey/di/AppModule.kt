@@ -6,9 +6,11 @@ import androidx.datastore.preferences.core.Preferences
 import com.bhardwaj.passkey.data.datastore.PreferencesRepositoryImpl
 import com.bhardwaj.passkey.data.datastore.passkeyDataStore
 import com.bhardwaj.passkey.data.local.VaultDatabaseProvider
+import com.bhardwaj.passkey.data.repository.AutofillTrustStoreImpl
 import com.bhardwaj.passkey.data.repository.PasskeyRepositoryImpl
 import com.bhardwaj.passkey.data.security.DefaultKeyDerivation
 import com.bhardwaj.passkey.data.security.KeyDerivation
+import com.bhardwaj.passkey.domain.repository.AutofillTrustStore
 import com.bhardwaj.passkey.domain.repository.PasskeyRepository
 import com.bhardwaj.passkey.domain.repository.PreferencesRepository
 import com.bhardwaj.passkey.utils.ResourceSecretKeywords
@@ -34,6 +36,10 @@ object AppModule {
     @Provides
     @Singleton
     fun provideKeyDerivation(impl: DefaultKeyDerivation): KeyDerivation = impl
+
+    @Provides
+    @Singleton
+    fun provideAutofillTrustStore(impl: AutofillTrustStoreImpl): AutofillTrustStore = impl
 
     @Provides
     @Singleton

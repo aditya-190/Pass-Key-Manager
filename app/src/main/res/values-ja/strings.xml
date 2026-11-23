@@ -249,4 +249,5 @@
     <string name="remove_authenticator_confirm">この認証システムを削除しますか？ここにコードが表示されなくなり、ログインにはアカウントの復旧コードが必要になる場合があります。</string>
     <string name="legal_privacy_autofill_heading">自動入力</string>
     <string name="legal_privacy_autofill_body">PassKey を自動入力サービスとして有効にすると、Android は入力中のフォームを PassKey に見せます。各欄の種類と、そのフォームが属するアプリまたはウェブアドレスで、一致するエントリを提案するためです。これはスマートフォン内だけで行われ、フォーム、サイト、提案したエントリについての情報が送信、記録、保存されることはありません。保管庫がロックされている間は、「ロック解除」の候補を 1 つだけ表示し、エントリ名は表示しません。自動入力は Android の設定で有効にするまでオフのままで、いつでもそこでオフにできます。</string>
+    <string name="autofill_untrusted_app">これは PassKey が以前この名前で入力したアプリではないため、何も入力しませんでした。別のストアから再インストールした場合は、PassKey でログイン情報を削除してから追加し直してください。</string>
 </resources>

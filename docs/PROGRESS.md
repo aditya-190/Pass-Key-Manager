@@ -114,6 +114,11 @@ Owner: 5.7.0 → 100% rollout (owner sets it in Play Console); physical checks o
 - Device (API 28): real vault migrated 3→4 with data intact; locked autofill shows only "Unlock to fill" (no entry
   names); unlock → fingerprint → back to the form; cancel shows a button instead of re-prompting.
 - Not taken from PR #4: Robolectric backup test (new dependency), its update-controller tests (code replaced in 5.6.0).
+- 4b attack pass, owner chose all fixes: #1 every fill authenticates; #2 save updates the existing password (history
+  keeps the old one); #3 trust on first use for apps (Room v5); #4 Undo restores authenticators and history (found
+  while planning: entry delete cascaded the codes); #5 issuer/account capped; #6 four autofill/authenticator events.
+  13 tests red → green; 289 unit, 34 instrumented. Simulation +3,000 seeds (saves, trust, delete/undo), 0 failures.
+  Device: real vault v4→v5 intact; with the vault unlocked the form still shows only "Unlock to fill".
 
 ## Carried into 5.6.0
 - Per-field secret keyboard (attack-pass finding #1), built on the `isSecret` column.

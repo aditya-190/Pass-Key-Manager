@@ -10,17 +10,28 @@ import android.service.autofill.FillRequest
 import android.service.autofill.SaveCallback
 import android.service.autofill.SaveRequest
 import com.bhardwaj.passkey.R
+import com.bhardwaj.passkey.analytics.AnalyticsTracker
+import com.bhardwaj.passkey.analytics.AppEvents
+import com.bhardwaj.passkey.analytics.AppEvents.AutofillSaveResult
+import com.bhardwaj.passkey.data.autofill.AppSigner
 import com.bhardwaj.passkey.data.autofill.AutofillResponseBuilder
 import com.bhardwaj.passkey.data.autofill.AutofillStructureParser
 import com.bhardwaj.passkey.data.local.VaultDatabaseProvider
+import com.bhardwaj.passkey.domain.autofill.AppTrust
+import com.bhardwaj.passkey.domain.autofill.AutofillDecision
+import com.bhardwaj.passkey.domain.autofill.AutofillSaveMerger
+import com.bhardwaj.passkey.domain.autofill.SaveOp
 import com.bhardwaj.passkey.domain.model.Category
+import com.bhardwaj.passkey.domain.repository.AutofillTrustStore
 import com.bhardwaj.passkey.domain.repository.PasskeyRepository
+import com.bhardwaj.passkey.utils.SecretKeywords
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 /**
@@ -46,6 +57,15 @@ class PasskeyAutofillService : AutofillService() {
     @Inject
     lateinit var repository: PasskeyRepository
 
+    @Inject
+    lateinit var analytics: AnalyticsTracker
+
+    @Inject
+    lateinit var trustStore: AutofillTrustStore
+
+    @Inject
+    lateinit var secretKeywords: SecretKeywords
+
     private val job = SupervisorJob()
     private val scope = CoroutineScope(job + Dispatchers.Default)
 
@@ -55,80 +75,85 @@ class PasskeyAutofillService : AutofillService() {
     }
 
     override fun onFillRequest(request: FillRequest, cancellationSignal: CancellationSignal, callback: FillCallback) {
-        val context = request.fillContexts.lastOrNull()
-        if (context == null) {
-            callback.onSuccess(null)
-            return
+        val fields = request.fillContexts.lastOrNull()?.structure?.let { AutofillStructureParser.parse(it) }
+        when (AutofillDecision.forRequest(isFillable = fields?.isFillable == true)) {
+            AutofillDecision.None -> callback.onSuccess(null)
+            // Always authenticate, even while the vault is open: an unlocked vault (the grace period after any
+            // unlock, or auto-lock "Never") used to hand logins to a matching app without asking. The suggestion
+            // carries no entry names.
+            AutofillDecision.Authenticate -> {
+                analytics.log(AppEvents.autofillUnlockShown())
+                callback.onSuccess(responseBuilder.authenticationResponse(fields!!, authenticationSender()))
+            }
         }
-        val structure = context.structure
-        val fields = AutofillStructureParser.parse(structure)
-        if (!fields.isFillable) {
-            callback.onSuccess(null)
-            return
-        }
-
-        if (!vault.isOpen) {
-            callback.onSuccess(
-                responseBuilder.authenticationResponse(fields, authenticationSender())
-            )
-            return
-        }
-
-        val clientPackage = structure.activityComponent?.packageName
-        val work = scope.launch {
-            val credentials = responseBuilder.credentialsFor(fields, clientPackage)
-            callback.onSuccess(responseBuilder.fillResponse(fields, credentials))
-        }
-        cancellationSignal.setOnCancelListener { work.cancel() }
     }
 
     /**
      * Saves a credential the user has just typed elsewhere.
      *
-     * Only possible while the vault is open: writing needs the key, and there is no way to
-     * authenticate from inside a save request. A locked vault reports failure rather than
-     * silently dropping the credential, so the user is told nothing was saved.
+     * Only possible while the vault is open: writing needs the key, and a save request cannot authenticate. An
+     * existing entry's password is updated (its old value goes to history) rather than a second one being added.
      */
     override fun onSaveRequest(request: SaveRequest, callback: SaveCallback) {
         val structure = request.fillContexts.lastOrNull()?.structure
         val credential = structure?.let { AutofillStructureParser.extractCredential(it) }
-        if (credential == null || credential.password.isBlank()) {
-            callback.onFailure(getString(R.string.autofill_save_failed))
-            return
+        when {
+            credential == null || credential.password.isBlank() -> return fail(callback, R.string.autofill_save_failed)
+            !vault.isOpen -> return fail(callback, R.string.autofill_save_locked, AutofillSaveResult.REFUSED_LOCKED)
         }
-        if (!vault.isOpen) {
-            callback.onFailure(getString(R.string.autofill_save_locked))
-            return
-        }
-
-        val heading = credential.heading(structure.activityComponent?.packageName)
+        val clientPackage = structure.activityComponent?.packageName
         scope.launch {
-            val saved = runCatching {
-                repository.runInTransaction {
-                    val previewId = repository.getPreviewByHeading(heading, Category.OTHERS)?.id
-                        ?: repository.createPreview(heading, Category.OTHERS)
-                    credential.username?.takeIf { it.isNotBlank() }?.let {
-                        repository.createDetail(previewId, USERNAME_LABEL, it, sequence = 0)
-                    }
-                    repository.createDetail(
-                        previewId = previewId,
-                        question = PASSWORD_LABEL,
-                        answer = credential.password,
-                        sequence = 1,
-                        // Known to be a secret by where it came from, so the analyser never has
-                        // to guess for it in any locale.
-                        isSecret = true
-                    )
-                }
-                true
-            }.getOrDefault(false)
-
-            if (saved) {
-                callback.onSuccess()
-            } else {
-                callback.onFailure(getString(R.string.autofill_save_failed))
+            val result = runCatching { save(credential, clientPackage) }.getOrDefault(AutofillSaveResult.FAILED)
+            analytics.log(AppEvents.autofillSaved(result))
+            when (result) {
+                AutofillSaveResult.REFUSED_UNTRUSTED -> callback.onFailure(getString(R.string.autofill_untrusted_app))
+                AutofillSaveResult.FAILED -> callback.onFailure(getString(R.string.autofill_save_failed))
+                else -> callback.onSuccess()
             }
         }
+    }
+
+    private suspend fun save(
+        credential: AutofillStructureParser.SavedCredential,
+        clientPackage: String?
+    ): AutofillSaveResult {
+        // Apps (not web pages) must still be the app first seen under that name.
+        val trustedPackage = clientPackage?.takeIf { credential.webDomain == null }
+        val signer = trustedPackage?.let { AppSigner.fingerprintOf(this, it) }
+        val trust = trustedPackage?.let { AppTrust.decide(trustStore.trustedSigner(it), signer) }
+        if (trust == AppTrust.Decision.Mismatch) return AutofillSaveResult.REFUSED_UNTRUSTED
+
+        val heading = credential.heading(clientPackage)
+        val outcome = repository.runInTransaction {
+            val existingId = repository.getPreviewByHeading(heading, Category.OTHERS)?.id
+            val previewId = existingId ?: repository.createPreview(heading, Category.OTHERS)
+            val existing = existingId?.let { repository.getDetailsByPreviewId(it).first() }.orEmpty()
+            val ops = AutofillSaveMerger.plan(existing, credential.username, credential.password, secretKeywords.all())
+            ops.forEach { op ->
+                when (op) {
+                    is SaveOp.Update -> repository.updateDetail(op.detail)
+                    is SaveOp.Create -> repository.createDetail(
+                        previewId,
+                        op.question,
+                        op.answer,
+                        op.sequence,
+                        op.isSecret
+                    )
+                }
+            }
+            when {
+                existingId == null -> AutofillSaveResult.CREATED
+                ops.isEmpty() -> AutofillSaveResult.UNCHANGED
+                else -> AutofillSaveResult.UPDATED
+            }
+        }
+        if (trust == AppTrust.Decision.FirstUse && signer != null) trustStore.rememberSigner(trustedPackage, signer)
+        return outcome
+    }
+
+    private fun fail(callback: SaveCallback, message: Int, result: AutofillSaveResult = AutofillSaveResult.FAILED) {
+        analytics.log(AppEvents.autofillSaved(result))
+        callback.onFailure(getString(message))
     }
 
     private fun authenticationSender(): android.content.IntentSender {
@@ -150,8 +175,6 @@ class PasskeyAutofillService : AutofillService() {
 
     private companion object {
         const val AUTH_REQUEST_CODE = 9001
-        const val USERNAME_LABEL = "Username"
-        const val PASSWORD_LABEL = "Password"
     }
 }
 

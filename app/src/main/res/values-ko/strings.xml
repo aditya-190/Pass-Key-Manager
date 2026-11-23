@@ -250,4 +250,5 @@
     <string name="remove_authenticator_confirm">이 인증기를 삭제할까요? 여기에서 더 이상 코드가 표시되지 않으며, 로그인하려면 계정의 복구 코드가 필요할 수 있습니다.</string>
     <string name="legal_privacy_autofill_heading">자동 완성</string>
     <string name="legal_privacy_autofill_body">PassKey를 자동 완성 서비스로 켜면 Android가 입력 중인 양식을 PassKey에 보여 줍니다. 각 필드의 종류와 해당 앱 또는 웹 주소로, 일치하는 항목을 제안하기 위해서입니다. 이 과정은 휴대전화 안에서만 이루어지며 양식, 사이트, 제안된 항목에 관한 어떤 정보도 전송, 기록, 저장되지 않습니다. 보관함이 잠겨 있는 동안 PassKey는 \'잠금 해제\' 제안 하나만 표시하고 항목 이름은 보여 주지 않습니다. 자동 완성은 Android 설정에서 켜기 전까지 꺼져 있으며, 언제든 그곳에서 끌 수 있습니다.</string>
+    <string name="autofill_untrusted_app">PassKey가 이전에 이 이름으로 입력한 앱이 아니므로 아무것도 입력하지 않았습니다. 다른 스토어에서 다시 설치했다면 PassKey에서 로그인 정보를 삭제한 뒤 다시 추가하세요.</string>
 </resources>

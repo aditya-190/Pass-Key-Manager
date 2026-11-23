@@ -8,7 +8,9 @@ import com.bhardwaj.passkey.analytics.AnalyticsTracker
 import com.bhardwaj.passkey.analytics.AppEvents
 import com.bhardwaj.passkey.domain.model.Category
 import com.bhardwaj.passkey.domain.model.Detail
+import com.bhardwaj.passkey.domain.model.PasswordHistoryEntry
 import com.bhardwaj.passkey.domain.model.Preview
+import com.bhardwaj.passkey.domain.model.TotpEntry
 import com.bhardwaj.passkey.domain.repository.PasskeyRepository
 import com.bhardwaj.passkey.presentation.navigation.NavRoute
 import com.bhardwaj.passkey.utils.Constants.Companion.PREVIEW_CATEGORY_NAME
@@ -48,7 +50,15 @@ class PreviewViewModel @Inject constructor(
     private data class Transient(val editor: PreviewState.Editor? = null, val pendingDelete: Preview? = null)
 
     /** Held for the Undo snackbar only. */
-    private var lastDeleted: Pair<Preview, List<Detail>>? = null
+    /** Everything a delete removes, held for the Undo snackbar only. */
+    private data class Deleted(
+        val preview: Preview,
+        val details: List<Detail>,
+        val authenticators: List<TotpEntry>,
+        val history: Map<Long, List<PasswordHistoryEntry>>
+    )
+
+    private var lastDeleted: Deleted? = null
 
     /**
      * Derived from independent sources rather than accumulated: feeding the public state back into itself
@@ -158,24 +168,33 @@ class PreviewViewModel @Inject constructor(
         transient.update { it.copy(pendingDelete = null) }
         viewModelScope.launch {
             val details = repository.getDetailsByPreviewId(target.id).first()
-            // No foreign-key cascade: the fields go in the same transaction as their entry.
+            // Snapshot what the database cascades away (authenticators with the entry, history with each field),
+            // so Undo can put all of it back: a lost authenticator can lock the user out of the account.
+            val snapshot = Deleted(
+                preview = target,
+                details = details,
+                authenticators = repository.getTotpByPreviewId(target.id).first(),
+                history = details.associate { it.id to repository.getHistoryForDetail(it.id).first() }
+            )
+            // No foreign-key cascade for fields: they go in the same transaction as their entry.
             repository.runInTransaction {
                 repository.deleteDetailsByPreviewId(target.id)
                 repository.deletePreview(target)
             }
-            lastDeleted = target to details
+            lastDeleted = snapshot
             send(PreviewEffect.ShowUndo(UiText.StringResource(R.string.entry_deleted)))
         }
     }
 
     private fun undoDelete() {
-        val (preview, details) = lastDeleted ?: return
+        val deleted = lastDeleted ?: return
         lastDeleted = null
         viewModelScope.launch {
-            // Same ids as before the delete, so the fields point at the restored entry.
+            // Same ids as before the delete, so fields, codes and history point at the restored entry.
             repository.runInTransaction {
-                repository.updatePreview(preview)
-                details.forEach { repository.updateDetail(it) }
+                repository.updatePreview(deleted.preview)
+                deleted.details.forEach { repository.updateDetail(it) }
+                repository.restoreCascaded(deleted.authenticators, deleted.history)
             }
         }
     }

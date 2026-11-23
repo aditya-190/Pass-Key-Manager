@@ -173,4 +173,23 @@ class BackupCodecTest {
         assertTrue(target.allTotp.isEmpty())
         assertEquals(1, summary.skipped)
     }
+
+    @Test
+    fun `an imported authenticator's issuer is bounded`() = runTest {
+        // Attack-pass #5: a hostile file could store an issuer of any length.
+        val source = FakePasskeyRepository()
+        source.createPreview("Bank", Category.BANKS)
+        val bytes = BackupCodec(source).encode(password.copyOf(), 1L, "test")
+        val payload = BackupCodec(source).decode(bytes, password.copyOf()).getOrThrow()
+        val hostile = payload.copy(
+            previews = payload.previews.map {
+                it.copy(
+                    totp = listOf(BackupTotp(label = "x", secret = "JBSWY3DPEHPK3PXP", issuer = "i".repeat(1_000_000)))
+                )
+            }
+        )
+        val target = FakePasskeyRepository()
+        BackupCodec(target).restore(hostile, ImportMode.MERGE)
+        assertTrue(target.allTotp.single().config.issuer!!.length <= 256)
+    }
 }

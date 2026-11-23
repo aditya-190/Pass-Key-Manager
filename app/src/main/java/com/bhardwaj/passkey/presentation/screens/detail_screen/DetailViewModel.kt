@@ -7,6 +7,7 @@ import com.bhardwaj.passkey.R
 import com.bhardwaj.passkey.analytics.AnalyticsTracker
 import com.bhardwaj.passkey.analytics.AppEvents
 import com.bhardwaj.passkey.domain.model.Detail
+import com.bhardwaj.passkey.domain.model.PasswordHistoryEntry
 import com.bhardwaj.passkey.domain.model.PasswordPolicy
 import com.bhardwaj.passkey.domain.model.TotpEntry
 import com.bhardwaj.passkey.domain.repository.PasskeyRepository
@@ -63,7 +64,7 @@ class DetailViewModel @Inject constructor(
         val history: DetailState.History? = null
     )
 
-    private var lastDeleted: Detail? = null
+    private var lastDeleted: Pair<Detail, List<PasswordHistoryEntry>>? = null
 
     val state: StateFlow<DetailState> = combine(
         repository.getDetailsByPreviewId(previewId),
@@ -125,9 +126,15 @@ class DetailViewModel @Inject constructor(
             is DetailIntent.SwipedToDelete -> local.update { it.copy(pendingDelete = intent.detail) }
             DetailIntent.DeleteCancelled -> local.update { it.copy(pendingDelete = null) }
             DetailIntent.DeleteConfirmed -> deletePending()
-            DetailIntent.UndoDelete -> lastDeleted?.let { detail ->
+            DetailIntent.UndoDelete -> lastDeleted?.let { (detail, history) ->
                 lastDeleted = null
-                viewModelScope.launch { repository.updateDetail(detail) }
+                // History cascades with its field, so it comes back with it.
+                viewModelScope.launch {
+                    repository.runInTransaction {
+                        repository.updateDetail(detail)
+                        repository.restoreCascaded(emptyList(), mapOf(detail.id to history))
+                    }
+                }
             }
 
             is DetailIntent.Moved -> move(intent.fromIndex, intent.toIndex)
@@ -186,10 +193,18 @@ class DetailViewModel @Inject constructor(
         }
         local.update { it.copy(totpEditor = null) }
         viewModelScope.launch {
-            val label = config.issuer?.takeIf { it.isNotBlank() }
-                ?: config.account?.takeIf { it.isNotBlank() }
-                ?: DEFAULT_AUTHENTICATOR_LABEL
-            repository.createTotp(previewId = previewId, label = label, config = config)
+            // A pasted link is untrusted text; bound what it can store (attack-pass #5).
+            val bounded = config.copy(
+                issuer = config.issuer?.take(MAX_LABEL_CHARS),
+                account = config.account?.take(MAX_LABEL_CHARS)
+            )
+            val label = (
+                bounded.issuer?.takeIf { it.isNotBlank() }
+                    ?: bounded.account?.takeIf { it.isNotBlank() }
+                    ?: DEFAULT_AUTHENTICATOR_LABEL
+                ).take(MAX_LABEL_CHARS)
+            repository.createTotp(previewId = previewId, label = label, config = bounded)
+            analytics.log(AppEvents.authenticatorAdded(fromLink = input.startsWith("otpauth://", ignoreCase = true)))
         }
     }
 
@@ -230,8 +245,9 @@ class DetailViewModel @Inject constructor(
         // Cleared before the write, so the dialog closes at once and a second tap does nothing.
         local.update { it.copy(pendingDelete = null) }
         viewModelScope.launch {
+            val history = repository.getHistoryForDetail(target.id).first()
             repository.deleteDetail(target)
-            lastDeleted = target
+            lastDeleted = target to history
             send(DetailEffect.ShowUndo(UiText.StringResource(R.string.field_deleted)))
         }
     }
@@ -271,5 +287,8 @@ class DetailViewModel @Inject constructor(
 
         /** Only reached by a hand-typed secret, which carries no issuer or account. */
         const val DEFAULT_AUTHENTICATOR_LABEL = "Authenticator"
+
+        /** Same bound as an imported backup's headings and labels. */
+        const val MAX_LABEL_CHARS = 256
     }
 }

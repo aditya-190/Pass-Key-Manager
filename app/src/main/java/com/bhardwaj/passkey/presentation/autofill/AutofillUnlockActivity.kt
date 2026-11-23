@@ -33,12 +33,19 @@ import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.bhardwaj.passkey.R
+import com.bhardwaj.passkey.analytics.AnalyticsTracker
+import com.bhardwaj.passkey.analytics.AppEvents
+import com.bhardwaj.passkey.data.autofill.AppSigner
 import com.bhardwaj.passkey.data.autofill.AutofillResponseBuilder
 import com.bhardwaj.passkey.data.autofill.AutofillStructureParser
+import com.bhardwaj.passkey.domain.autofill.AppTrust
+import com.bhardwaj.passkey.domain.repository.AutofillTrustStore
+import com.bhardwaj.passkey.domain.repository.PasskeyRepository
 import com.bhardwaj.passkey.presentation.screens.security_screen.VaultGateViewModel
 import com.bhardwaj.passkey.presentation.theme.PassKeyTheme
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
 /**
@@ -58,6 +65,18 @@ class AutofillUnlockActivity : FragmentActivity() {
 
     @Inject
     lateinit var responseBuilder: AutofillResponseBuilder
+
+    @Inject
+    lateinit var repository: PasskeyRepository
+
+    @Inject
+    lateinit var analytics: AnalyticsTracker
+
+    @Inject
+    lateinit var trustStore: AutofillTrustStore
+
+    /** The app's signer differs from the one first seen under its name: nothing is filled. */
+    private val untrusted = MutableStateFlow(false)
 
     private val viewModel: VaultGateViewModel by viewModels()
 
@@ -85,6 +104,7 @@ class AutofillUnlockActivity : FragmentActivity() {
         setContent {
             PassKeyTheme {
                 val state by viewModel.state.collectAsStateWithLifecycle()
+                val isUntrusted by untrusted.collectAsStateWithLifecycle()
                 // Same prompt rules as the vault gate: prompt when the screen is really in front, never again
                 // after a cancel until the user asks (on API 28 the PIN screen is a separate activity, and
                 // re-prompting on every return looped forever).
@@ -96,6 +116,7 @@ class AutofillUnlockActivity : FragmentActivity() {
                 LifecycleEventEffect(Lifecycle.Event.ON_STOP) { viewModel.onGateStopped() }
                 UnlockContent(
                     state = state,
+                    isUntrusted = isUntrusted,
                     onAuthenticate = ::requestUnlock,
                     onCancel = {
                         setResult(RESULT_CANCELED)
@@ -128,15 +149,22 @@ class AutofillUnlockActivity : FragmentActivity() {
         val assist = structure ?: return
         lifecycleScope.launch {
             val fields = AutofillStructureParser.parse(assist)
-            val credentials = responseBuilder.credentialsFor(
-                fields,
-                assist.activityComponent?.packageName
-            )
+            val clientPackage = assist.activityComponent?.packageName
+            // Apps (not web pages, which the browser vouches for) must still be the app first filled under that name.
+            val trustedPackage = clientPackage?.takeIf { fields.webDomain == null }
+            val signer = trustedPackage?.let { AppSigner.fingerprintOf(this@AutofillUnlockActivity, it) }
+            val trust = trustedPackage?.let { AppTrust.decide(trustStore.trustedSigner(it), signer) }
+            if (trust == AppTrust.Decision.Mismatch) {
+                untrusted.value = true
+                return@launch
+            }
+            val credentials = responseBuilder.credentialsFor(fields, clientPackage)
+            if (trust == AppTrust.Decision.FirstUse && signer != null && credentials.isNotEmpty()) {
+                trustStore.rememberSigner(trustedPackage, signer)
+            }
+            analytics.log(AppEvents.autofillFilled(matches = credentials.size))
             val response = responseBuilder.fillResponse(fields, credentials)
-            setResult(
-                RESULT_OK,
-                Intent().putExtra(AutofillManager.EXTRA_AUTHENTICATION_RESULT, response)
-            )
+            setResult(RESULT_OK, Intent().putExtra(AutofillManager.EXTRA_AUTHENTICATION_RESULT, response))
             finish()
         }
     }
@@ -145,6 +173,7 @@ class AutofillUnlockActivity : FragmentActivity() {
 @Composable
 private fun UnlockContent(
     state: VaultGateViewModel.State,
+    isUntrusted: Boolean,
     onAuthenticate: () -> Unit,
     onCancel: () -> Unit,
     onUnlocked: () -> Unit
@@ -160,6 +189,17 @@ private fun UnlockContent(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            if (isUntrusted) {
+                Text(
+                    text = stringResource(R.string.autofill_untrusted_app),
+                    textAlign = TextAlign.Center,
+                    color = MaterialTheme.colorScheme.onBackground
+                )
+                Button(modifier = Modifier.padding(top = 16.dp), onClick = onCancel) {
+                    Text(text = stringResource(R.string.cancel))
+                }
+                return@Column
+            }
             when (state) {
                 // The first prompt starts by itself; after a cancel the user decides whether to try again.
                 VaultGateViewModel.State.Locked -> {

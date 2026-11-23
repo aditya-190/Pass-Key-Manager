@@ -10,6 +10,7 @@ import com.bhardwaj.passkey.utils.Constants.Companion.PREVIEW_TABLE
 import com.bhardwaj.passkey.utils.MIGRATION_1_2
 import com.bhardwaj.passkey.utils.MIGRATION_2_3
 import com.bhardwaj.passkey.utils.MIGRATION_3_4
+import com.bhardwaj.passkey.utils.MIGRATION_4_5
 import com.google.common.truth.Truth.assertThat
 import org.junit.Rule
 import org.junit.Test
@@ -247,6 +248,69 @@ class MigrationTester {
             MIGRATION_3_4
         )
 
+        db.query("SELECT * FROM $DETAILS_TABLE").apply {
+            assertThat(moveToFirst()).isTrue()
+            assertThat(getString(getColumnIndex("answer"))).isEqualTo("legacy")
+        }
+    }
+
+    @Test
+    fun migration_4_to_5_adds_autofill_trust_and_keeps_codes_and_history() {
+        var db = helper.createDatabase(DB_NAME, 4)
+        db.execSQL("INSERT INTO $PREVIEW_TABLE (heading, categoryName, sequence) VALUES ('Bank', 'BANKS', 0)")
+        db.execSQL(
+            "INSERT INTO $DETAILS_TABLE (previewId, question, answer, sequence, isSecret) " +
+                "VALUES (1, 'Password', 's3cret', 0, 1)"
+        )
+        db.execSQL(
+            "INSERT INTO totp_table (previewId, label, secret, issuer, algorithm, digits, periodSeconds) " +
+                "VALUES (1, 'Bank', 'GEZDGNBVGY3TQOJQ', 'Bank', 'SHA1', 6, 30)"
+        )
+        db.execSQL("INSERT INTO detail_history_table (detailsId, answer, changedAt) VALUES (1, 'old', 1)")
+        db.close()
+
+        db = helper.runMigrationsAndValidate(DB_NAME, 5, true, MIGRATION_4_5)
+
+        listOf("totp_table", "detail_history_table", DETAILS_TABLE).forEach { table ->
+            db.query("SELECT COUNT(*) FROM $table").apply {
+                assertThat(moveToFirst()).isTrue()
+                assertThat(getInt(0)).isEqualTo(1)
+            }
+        }
+        db.execSQL("INSERT INTO autofill_trust_table (packageName, signer, firstSeen) VALUES ('com.bank', 'ab', 1)")
+        // The first signer wins: a second insert for the same app is ignored by the DAO, rejected by the key here.
+        db.query("SELECT signer FROM autofill_trust_table WHERE packageName = 'com.bank'").apply {
+            assertThat(moveToFirst()).isTrue()
+            assertThat(getString(0)).isEqualTo("ab")
+        }
+    }
+
+    @Test
+    fun migration_4_to_5_is_safe_to_run_twice() {
+        var db = helper.createDatabase(DB_NAME, 4)
+        db.close()
+        db = helper.runMigrationsAndValidate(DB_NAME, 5, true, MIGRATION_4_5)
+        MIGRATION_4_5.migrate(db)
+    }
+
+    @Test
+    fun migration_chain_1_to_5_runs_end_to_end() {
+        var db = helper.createDatabase(DB_NAME, 1)
+        db.execSQL("INSERT INTO $PREVIEW_TABLE (heading, categoryName, priority) VALUES ('Old Entry', 'MAILS', 2)")
+        db.execSQL(
+            "INSERT INTO $DETAILS_TABLE (question, answer, priority, headingName, categoryName) " +
+                "VALUES ('Password', 'legacy', 2, 'Old Entry', 'MAILS')"
+        )
+        db.close()
+        db = helper.runMigrationsAndValidate(
+            DB_NAME,
+            5,
+            true,
+            MIGRATION_1_2,
+            MIGRATION_2_3,
+            MIGRATION_3_4,
+            MIGRATION_4_5
+        )
         db.query("SELECT * FROM $DETAILS_TABLE").apply {
             assertThat(moveToFirst()).isTrue()
             assertThat(getString(getColumnIndex("answer"))).isEqualTo("legacy")

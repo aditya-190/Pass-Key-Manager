@@ -166,7 +166,7 @@ internal class BackupCodec(
                     label = label,
                     config = TotpConfig(
                         secret = secret,
-                        issuer = totp.issuer,
+                        issuer = totp.issuer?.take(BackupPayload.MAX_HEADING_CHARS),
                         account = totp.account?.take(BackupPayload.MAX_HEADING_CHARS) ?: label,
                         algorithm = TotpAlgorithm.fromNameOrDefault(totp.algorithm),
                         digits = totp.digits.takeIf { it in TotpConfig.DIGIT_RANGE } ?: TotpConfig.DEFAULT_DIGITS,
