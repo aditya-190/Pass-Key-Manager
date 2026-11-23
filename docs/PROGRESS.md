@@ -31,9 +31,52 @@ Done:
   0 crashes, 0 ANRs. Vault still opens and decrypts afterwards. Monkey deleted the seeded detail (expected data churn).
 - No ANRs. The API 37 emulator is shared with another session, so no results were taken from it.
 
+## Phase 2: release 5.6.0 (branch `release/5.6.0`), in progress ⏸
+Done (each gated: ktlint, detekt, unit tests, lint, build; device checks on PassKey_API28):
+1. Toolchain `afacb64`: Gradle 9.7.1, AGP 9.4.0, Kotlin 2.4.20, KSP 2.3.14; release APK 28 → 13 MB; release build refuses
+   to package without PASS_PHRASE; upgrade check against real 5.5.1 passes.
+2. Encrypted backup `b4b114e`: `.pkbak` (AES-256-GCM, PBKDF2 600k), legacy CSV import, allowBackup=false; format logic in
+   BackupCodec with 7 restore tests.
+3. Auto-lock `ca916ba` + `93c7ef9`: LockPolicy (10 tests), SecurityViewModel prompt rules (7 tests); the lock screen prompts
+   on resume and always offers Unlock; Immediately no longer locks a vault in use; vault screens restored from Recents
+   after process death now lock (5.5.2 showed a secret there with no unlock). `scripts/e2e/lock_check.sh` 5/5.
+4. Backup hardening `f29c93b` (owner chose findings 1+2): decompression capped at 64 MB, PBKDF2 cost capped at 2M.
+5. isSecret `3877824` (PR #2 c8ede1e, Room 2→3): analysis works in every locale; a real 5.5.1 vault migrates on device.
+6. Secret switch `999524d`: per-field switch drives the keyboard and isSecret (5.5.2 finding #1); fixes PR #2's
+   never-reset wasGenerated flag.
+7. isSecret in backups `721795c` (finding #1).
+8. Studio baseline `b2ba381`: Remote Config, force update + maintenance overlays (UpdateHost), announcement banner,
+   About / Terms / Privacy / Licences screens replacing the Settings sheet; 52 strings × 17 languages.
+9. UX fixes `b204f5b`: labelled Add buttons + empty-state CTA, back buttons, confirm-then-undo delete, inline save errors
+   that keep typed input; fixed an unlabeled-FAB TalkBack bug found on device.
+Unit tests: 179, all passing. Instrumented: 10/10 on API 28. All gates green incl. release build.
+
+10. Remote policy `0cc129f`: maintenance mode ignored for an offline vault; announcement routes allowlisted.
+11. Release prep `31c747c`: version 5.6.0 (45); empty home shows illustration + text only (owner); Privacy Policy.md updated.
+
+### 5.6.0 health report (2026-11-23)
+| Area | Status | Evidence |
+|---|---|---|
+| Unit tests | 🟢 | 190 passing (17 at the start of 5.5.2) |
+| Integration / E2E | 🟢 | 10/10 instrumented on API 28; lock_check 5/5; real Play 5.5.1 vault migrates (schema 2→3) and decrypts |
+| Simulation | 🟢 | 17,370 seeded cases (Release560SimulationTest) + 18,000 from 5.5.2 |
+| Monkey | 🟠 | Skipped by owner partway: seed 5601 stopped at 243 events by a launcher ANR (not PassKey), 5602 partial; 0 PassKey crashes |
+| Security | 🟠 | Open Blocker: shared build-time DB key (scheduled 5.7.0). Accepted Lows: keyword false positives, Home during PIN prompt, Undo lost on lock |
+| Lint / ktlint / detekt | 🟢 | All clean; 16 pre-existing detekt findings baselined |
+| Performance | 🟠 | Not profiled yet (6.0.0 adds baseline profile + macrobenchmark) |
+| Size | 🟢 | Release APK 14 MB (28 MB in 5.5.1) |
+**Overall: 🟠 shippable** once the owner actions below are done; the DB-key Blocker is 5.7.0's job.
+
+
 ## Carried into 5.6.0
 - Per-field secret keyboard (attack-pass finding #1), built on the `isSecret` column.
 - A failed Android 10+ export is reported as success (`SettingsViewModel.kt:260`); replaced by the encrypted backup.
+
+## Owner actions for 5.6.0
+- [ ] Play Data-safety form: crash logs, diagnostics and app interactions are optional (consent); Remote Config request
+      with installation ID; no ad ID; nothing shared; vault content never collected; data encrypted in transit.
+- [ ] Native-speaker review of the machine-translated legal and About texts (17 languages).
+- [ ] Staged rollout (e.g. 10% → 50% → 100%) watching Crashlytics for users who opted in.
 
 ## Owner actions
 - [x] 5.5.2 attack pass: fixed #2 (keep pre-consent crash reports until the user decides) and #3 (no automatic screen reporting). #1 (per-field secret keyboard) moved to 5.6.0.

@@ -28,7 +28,6 @@
     <string name="search">搜索</string>
     <string name="title">标题</string>
     <string name="response">响应</string>
-    <string name="export_download">文件已导出到下载文件夹。</string>
     <string name="rate_app">评价应用</string>
     <string name="change_language">更改语言</string>
     <string name="privacy">隐私</string>
@@ -98,9 +97,6 @@
     <plurals name="password_used_times">
         <item quantity="other">已使用 %1$d 次</item>
     </plurals>
-    <string name="about_message">PassKey 是一款免费、开源的密码管理器，没有广告，也无需账号。\n\n你的条目保存在这部手机上的加密数据库中。PassKey 在显示前会要求指纹、面容或屏幕锁，会阻止截屏，能生成高强度密码，并检查已保存密码中是否有弱密码或重复使用的密码。\n\n源代码在 GitHub 上公开：github.com/aditya-190/Pass-Key-Manager</string>
-    <string name="privacy_message">你的保险库只留在你的手机上。PassKey 没有账号、没有同步，也没有自己的服务器，绝不会发送你保存的条目。\n\n只有在你允许时，应用才会通过 Google Firebase 发送：\n• 崩溃和性能报告：设备型号、Android 版本和应用版本等技术信息。\n• 使用统计：使用了哪些界面和功能，绝不包括你保存的内容。\n\n在你选择之前两者都处于关闭状态，你可以随时在“设置 › 隐私选项”中更改。PassKey 不使用广告 ID。应用通过 Google Play 检查更新。\n\n此版本导出的文件未加密。请妥善保管，不再需要时请删除。</string>
-    <string name="terms_n_condition_message">PassKey 免费提供，按现状提供，不附带任何形式的保证。\n\n你有责任保护好自己的手机、屏幕锁和导出的文件。你的数据从不离开手机，因此手机丢失或应用被删除后，任何人都无法恢复。请定期导出备份。\n\n使用 PassKey 即表示你同意本条款和隐私政策。</string>
     <string name="consent_title">帮助改进 PassKey</string>
     <string name="consent_body">你的密码绝不会离开这部手机。经你允许，PassKey 可以向 Google Firebase 发送匿名报告，用于修复崩溃并了解哪些功能被使用。报告中绝不包含你保存的任何内容。</string>
     <string name="consent_crash_title">崩溃和性能报告</string>
@@ -112,4 +108,97 @@
     <string name="consent_save">保存我的选择</string>
     <string name="consent_change_later">你可以随时在“设置 › 隐私选项”中更改。</string>
     <string name="privacy_options">隐私选项</string>
+    <string name="export_success">已保存加密备份。</string>
+    <string name="export_failed">无法保存备份。</string>
+    <string name="import_summary">已导入 %1$d 个条目和 %2$d 条详情。</string>
+    <string name="import_wrong_password">密码错误，或文件已损坏。</string>
+    <string name="import_file_too_large">该文件过大，不像是 PassKey 备份。</string>
+    <string name="import_unsupported_version">此备份由更新版本的 PassKey 创建。</string>
+    <string name="backup_password_title">保护你的备份</string>
+    <string name="backup_password_message">为此备份文件设置密码。这是恢复它的唯一方式，且无法找回。</string>
+    <string name="backup_password_hint">备份密码</string>
+    <string name="backup_password_confirm_hint">确认密码</string>
+    <string name="backup_password_mismatch">两次输入的密码不一致。</string>
+    <string name="backup_password_too_short">请至少使用 8 个字符。</string>
+    <string name="restore_password_title">恢复备份</string>
+    <string name="restore_password_message">请输入创建此备份文件时设置的密码。</string>
+    <string name="backup_confirm">继续</string>
+    <string name="update_required_title">需要更新</string>
+    <string name="update_required_message">此版本的 PassKey 已不再受支持。请更新后继续使用你的密码库。</string>
+    <string name="update_now">立即更新</string>
+    <string name="update_ready_message">有一个更新已准备好安装。</string>
+    <string name="update_restart">重启</string>
+    <string name="auto_lock">自动锁定</string>
+    <string name="auto_lock_immediately">立即</string>
+    <string name="auto_lock_15_seconds">15 秒后</string>
+    <string name="auto_lock_30_seconds">30 秒后</string>
+    <string name="auto_lock_1_minute">1 分钟后</string>
+    <string name="auto_lock_5_minutes">5 分钟后</string>
+    <string name="auto_lock_never">永不</string>
+    <string name="auto_lock_never_warning">在你关闭应用之前密码库将保持解锁。任何拿到你已解锁手机的人都能读取你的密码。</string>
+    <string-array name="secret_field_keywords">
+        <item>密码</item>
+        <item>口令</item>
+        <item>密钥</item>
+        <item>验证码</item>
+        <item>代码</item>
+        <item>秘密</item>
+        <item>登录</item>
+    </string-array>
+    <string name="secret_field_toggle">保密内容（密码、PIN、验证码）</string>
+    <string name="update_hard_title">该更新了</string>
+    <string name="update_hard_body">此版本已不再受支持。请更新后继续使用；你的保险库仍保存在这部手机上，不受影响。</string>
+    <string name="update_soft_title">新版本已就绪</string>
+    <string name="update_soft_body">更新以获取最新的安全改进和问题修复。</string>
+    <string name="update_action">更新</string>
+    <string name="update_later">稍后</string>
+    <string name="update_ready">更新已下载</string>
+    <string name="maintenance_title">马上回来</string>
+    <string name="maintenance_body">我们正在进行简短维护，请稍后再来看看。</string>
+    <string name="announcement_dismiss">关闭公告</string>
+    <string name="about_title">关于</string>
+    <string name="about_version">版本 %1$s (%2$d)</string>
+    <string name="about_studio_title">关于 PassKey</string>
+    <string name="about_studio_blurb">PassKey 是一款免费、开源的密码管理器，没有广告，也无需账号。你的保险库在这部手机上加密，且从不离开手机。源代码已在 GitHub 上公开。</string>
+    <string name="about_rate">给应用评分</string>
+    <string name="about_share">分享给朋友</string>
+    <string name="about_share_chooser">分享方式</string>
+    <string name="about_share_text">我用 %1$s 安全保管我的密码。在 Google Play 上获取：%2$s</string>
+    <string name="about_contact">联系我们</string>
+    <string name="about_contact_subject">%1$s 反馈（版本 %2$s）</string>
+    <string name="about_more_apps">我们的更多应用</string>
+    <string name="about_licences">开源许可</string>
+    <string name="about_footer">在印度用心打造</string>
+    <string name="legal_terms_title">服务条款</string>
+    <string name="legal_privacy_title">隐私政策</string>
+    <string name="legal_last_updated">最后更新：%1$s</string>
+    <string name="legal_read_online">在线阅读完整版本</string>
+    <string name="legal_back">返回</string>
+    <string name="legal_contact_heading">联系方式</string>
+    <string name="legal_contact_body">如有问题或请求：请使用“关于”页面或 Google Play 应用页面上的联系邮箱。</string>
+    <string name="legal_privacy_intro_heading">概述</string>
+    <string name="legal_privacy_intro_body">PassKey 没有账号、没有同步，也没有自己的服务器。我们从不收集、传输或存储你保存的条目，也无法读取或恢复它们。</string>
+    <string name="legal_privacy_device_heading">你的保险库</string>
+    <string name="legal_privacy_device_body">你的条目保存在这部手机上的加密数据库中，不包含在 Android 云备份和设备间迁移中。卸载应用时，它们会被删除。</string>
+    <string name="legal_privacy_analytics_heading">分析和崩溃报告</string>
+    <string name="legal_privacy_analytics_body">只有在你允许的情况下，Google Firebase 才会接收崩溃和性能报告（设备型号、Android 版本和应用版本）以及使用统计（使用了哪些页面和功能）。其中绝不包含你保存的任何内容。在你做出选择之前，两者均为关闭状态，你可以随时在“设置 › 隐私选项”中更改。PassKey 不使用广告 ID。为了显示更新提示和公告，应用会从 Google Firebase Remote Config 获取设置，并通过 Google Play 检查更新；这些请求带有一个应用安装标识符，不含你保存的任何内容。</string>
+    <string name="legal_privacy_backup_heading">备份</string>
+    <string name="legal_privacy_backup_body">导出的备份会使用你设置的密码加密（AES-256），并保存在你选择的位置。任何同时拥有该文件及其密码的人都能读取它。我们不保留任何副本，也无法找回密码。</string>
+    <string name="legal_privacy_children_heading">儿童</string>
+    <string name="legal_privacy_children_body">本应用并非面向 13 岁以下儿童，也不会故意收集他们的个人信息。</string>
+    <string name="legal_privacy_deletion_heading">删除你的数据</string>
+    <string name="legal_privacy_deletion_body">卸载会从这部手机上删除你的保险库和设置。我们在任何地方都不保存你数据的副本。</string>
+    <string name="legal_terms_use_heading">使用本应用</string>
+    <string name="legal_terms_use_body">PassKey 可免费用于个人用途。请勿滥用，也不要试图干扰他人使用。</string>
+    <string name="legal_terms_safety_heading">保护好你的保险库</string>
+    <string name="legal_terms_safety_body">你需要对自己的手机、手机的屏幕锁以及所有备份文件及其密码负责。你的数据从不离开你的手机，因此如果手机丢失或应用被删除，任何人都无法恢复数据。请定期导出加密备份。</string>
+    <string name="legal_terms_content_heading">内容与所有权</string>
+    <string name="legal_terms_content_body">你保存的条目归你所有。应用的原创内容归我们所有；开源组件按其各自的许可使用，列于“关于”页面中。</string>
+    <string name="legal_terms_liability_heading">无担保</string>
+    <string name="legal_terms_liability_body">本应用按原样提供，不附带任何担保。在法律允许的范围内，我们不对因使用本应用而产生的损失承担责任。</string>
+    <string name="legal_terms_changes_heading">变更</string>
+    <string name="legal_terms_changes_body">我们可能会更新这些条款。顶部的日期显示最新版本；继续使用即表示你接受该版本。</string>
+    <string name="entry_deleted">条目已删除</string>
+    <string name="field_deleted">字段已删除</string>
+    <string name="undo">撤销</string>
 </resources>

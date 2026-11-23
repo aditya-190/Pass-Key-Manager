@@ -7,24 +7,30 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.SwipeToDismissBox
 import androidx.compose.material3.SwipeToDismissBoxValue
 import androidx.compose.material3.Text
@@ -70,6 +76,7 @@ import sh.calvin.reorderable.rememberReorderableLazyListState
 fun DetailScreen(onPopBackStack: () -> Unit, viewModel: DetailViewModel = hiltViewModel()) {
     val detailTitle by viewModel.detailTitle.collectAsState()
     val detailResponse by viewModel.detailResponse.collectAsState()
+    val isSecretField by viewModel.isSecretField.collectAsState()
     val isEditingSheet by viewModel.isEditingSheet.collectAsState()
     // Resolved here rather than in the ViewModel so it follows the app locale.
     val bottomSheetHeading =
@@ -90,11 +97,23 @@ fun DetailScreen(onPopBackStack: () -> Unit, viewModel: DetailViewModel = hiltVi
     val isPasswordSettingsOpen = viewModel.isPasswordSettingsOpen
 
     val context = LocalContext.current
+    val undoLabel = stringResource(R.string.undo)
 
     LaunchedEffect(key1 = true) {
         viewModel.uiEvents.collect { event ->
             when (event) {
                 is UiEvents.PopBackStack -> onPopBackStack()
+                is UiEvents.ShowUndo -> {
+                    scope.launch {
+                        val result = snackBarHostState.showSnackbar(
+                            message = event.message.asString(context),
+                            actionLabel = undoLabel,
+                            duration = SnackbarDuration.Long
+                        )
+                        if (result == SnackbarResult.ActionPerformed) viewModel.onEvent(DetailEvents.OnUndoDelete)
+                    }
+                }
+
                 is UiEvents.ShowSnackBar -> {
                     scope.launch {
                         snackBarHostState.showSnackbar(
@@ -127,19 +146,17 @@ fun DetailScreen(onPopBackStack: () -> Unit, viewModel: DetailViewModel = hiltVi
     Scaffold(
         snackbarHost = { SnackbarHost(snackBarHostState) },
         floatingActionButton = {
-            FloatingActionButton(
-                onClick = {
-                    viewModel.onEvent(DetailEvents.OnAddDetailClick)
-                },
-                shape = CircleShape,
+            // Content-slot overload on purpose: the text/icon overload clears the label's semantics, which left
+            // TalkBack announcing an unlabeled button (found on device).
+            ExtendedFloatingActionButton(
+                onClick = { viewModel.onEvent(DetailEvents.OnAddDetailClick) },
                 containerColor = MaterialTheme.colorScheme.primary,
-                content = {
-                    Icon(
-                        imageVector = Icons.Default.Add,
-                        contentDescription = stringResource(R.string.cd_add_detail)
-                    )
-                }
-            )
+                contentColor = MaterialTheme.colorScheme.onPrimary
+            ) {
+                Icon(imageVector = Icons.Default.Add, contentDescription = null)
+                Spacer(modifier = Modifier.width(8.dp))
+                Text(text = stringResource(R.string.cd_add_detail))
+            }
         }
     ) { paddingValues ->
         Box(
@@ -150,11 +167,14 @@ fun DetailScreen(onPopBackStack: () -> Unit, viewModel: DetailViewModel = hiltVi
                 .padding(16.dp)
         ) {
             Column(modifier = Modifier.fillMaxSize()) {
-                Icon(
-                    painter = painterResource(id = R.drawable.icon_logo),
-                    contentDescription = null,
-                    tint = MaterialTheme.colorScheme.primary
-                )
+                // A visible way back: this screen had only the system Back gesture.
+                IconButton(onClick = onPopBackStack, modifier = Modifier.offset(x = (-12).dp)) {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                        contentDescription = stringResource(R.string.cd_back),
+                        tint = MaterialTheme.colorScheme.primary
+                    )
+                }
                 Text(
                     text = stringResource(id = R.string.details),
                     fontFamily = BebasNeue,
@@ -252,6 +272,9 @@ fun DetailScreen(onPopBackStack: () -> Unit, viewModel: DetailViewModel = hiltVi
                     bottomSheetHeading = bottomSheetHeading,
                     detailTitle = detailTitle,
                     detailResponse = detailResponse,
+                    isSecret = isSecretField,
+                    error = viewModel.sheetError?.asString(context),
+                    onSecretToggle = { viewModel.onEvent(DetailEvents.OnSecretToggle(it)) },
                     onTitleChange = {
                         viewModel.onEvent(DetailEvents.OnTitleChange(it))
                     },

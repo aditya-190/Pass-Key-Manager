@@ -30,6 +30,7 @@ interface CrashReporter {
 
 object CrashKeys {
     const val SCREEN = "screen"
+    const val REMOTE_CONFIG_VERSION = "remote_config_version"
 }
 
 class FirebaseCrashReporter(private val crashlytics: FirebaseCrashlytics) : CrashReporter {

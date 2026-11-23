@@ -161,3 +161,19 @@ class FakePasskeyRepository : PasskeyRepository {
         details.value = emptyList()
     }
 }
+
+class FakeClock(var now: Long = 1_700_000_000_000) : com.bhardwaj.passkey.core.Clock {
+    override fun nowMs() = now
+}
+
+/** Config with per-key overrides by Remote Config name; everything else is the in-app default. */
+class FakeConfig(overrides: Map<String, Any> = emptyMap()) : com.bhardwaj.passkey.config.ConfigProvider {
+    val flow =
+        MutableStateFlow(com.bhardwaj.passkey.config.AppConfig(com.bhardwaj.passkey.config.MapConfigReader(overrides)))
+
+    override val current: com.bhardwaj.passkey.config.AppConfig get() = flow.value
+
+    fun set(overrides: Map<String, Any>) {
+        flow.value = com.bhardwaj.passkey.config.AppConfig(com.bhardwaj.passkey.config.MapConfigReader(overrides))
+    }
+}

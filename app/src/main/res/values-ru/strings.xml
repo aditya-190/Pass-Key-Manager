@@ -28,7 +28,6 @@
     <string name="search">Поиск</string>
     <string name="title">Заголовок</string>
     <string name="response">Ответ</string>
-    <string name="export_download">Файл экспортирован в папку Загрузки.</string>
     <string name="rate_app">Оценить приложение</string>
     <string name="change_language">Изменить язык</string>
     <string name="privacy">Конфиденциальность</string>
@@ -101,9 +100,6 @@
         <item quantity="many">Использован %1$d раз</item>
         <item quantity="other">Использован %1$d раза</item>
     </plurals>
-    <string name="about_message">PassKey — бесплатный менеджер паролей с открытым исходным кодом, без рекламы и без аккаунта.\n\nВаши записи хранятся в зашифрованной базе данных на этом телефоне. Перед показом PassKey запрашивает отпечаток, лицо или блокировку экрана, блокирует снимки экрана, создаёт надёжные пароли и проверяет сохранённые пароли на слабые и повторяющиеся.\n\nИсходный код открыт на GitHub: github.com/aditya-190/Pass-Key-Manager</string>
-    <string name="privacy_message">Ваше хранилище остаётся на вашем телефоне. У PassKey нет аккаунта, синхронизации и собственного сервера, и он никогда не отправляет сохранённые вами записи.\n\nТолько с вашего разрешения приложение отправляет через Google Firebase:\n• Отчёты о сбоях и производительности: технические данные, например модель устройства, версию Android и версию приложения.\n• Статистику использования: какие экраны и функции используются, но никогда не то, что вы храните.\n\nОба варианта выключены, пока вы не сделаете выбор, и вы можете изменить его в любое время в разделе Настройки › Параметры конфиденциальности. PassKey не использует рекламный идентификатор. Google Play используется для проверки обновлений приложения.\n\nЭкспортированные файлы в этой версии не зашифрованы. Храните их в надёжном месте и удаляйте, когда они больше не нужны.</string>
-    <string name="terms_n_condition_message">PassKey предоставляется бесплатно, «как есть», без каких-либо гарантий.\n\nВы отвечаете за защиту своего телефона, блокировки экрана и экспортированных файлов. Ваши данные никогда не покидают телефон, поэтому никто не сможет их восстановить, если телефон потерян или приложение удалено. Регулярно экспортируйте резервную копию.\n\nИспользуя PassKey, вы соглашаетесь с этими условиями и политикой конфиденциальности.</string>
     <string name="consent_title">Помогите улучшить PassKey</string>
     <string name="consent_body">Ваши пароли никогда не покидают этот телефон. С вашего разрешения PassKey может отправлять анонимные отчёты в Google Firebase, которые помогают исправлять сбои и понимать, какие функции используются. В них никогда нет ничего из того, что вы сохраняете.</string>
     <string name="consent_crash_title">Отчёты о сбоях и производительности</string>
@@ -115,4 +111,96 @@
     <string name="consent_save">Сохранить мой выбор</string>
     <string name="consent_change_later">Это можно изменить в любое время в разделе Настройки › Параметры конфиденциальности.</string>
     <string name="privacy_options">Параметры конфиденциальности</string>
+    <string name="export_success">Зашифрованная резервная копия сохранена.</string>
+    <string name="export_failed">Не удалось сохранить резервную копию.</string>
+    <string name="import_summary">Импортировано записей: %1$d, сведений: %2$d.</string>
+    <string name="import_wrong_password">Неверный пароль или файл повреждён.</string>
+    <string name="import_file_too_large">Этот файл слишком велик для резервной копии PassKey.</string>
+    <string name="import_unsupported_version">Эта копия создана более новой версией PassKey.</string>
+    <string name="backup_password_title">Защитите резервную копию</string>
+    <string name="backup_password_message">Придумайте пароль для этого файла. Это единственный способ восстановить копию, и его нельзя восстановить.</string>
+    <string name="backup_password_hint">Пароль резервной копии</string>
+    <string name="backup_password_confirm_hint">Подтвердите пароль</string>
+    <string name="backup_password_mismatch">Пароли не совпадают.</string>
+    <string name="backup_password_too_short">Используйте не менее 8 символов.</string>
+    <string name="restore_password_title">Восстановление копии</string>
+    <string name="restore_password_message">Введите пароль, выбранный при создании этого файла.</string>
+    <string name="backup_confirm">Продолжить</string>
+    <string name="update_required_title">Требуется обновление</string>
+    <string name="update_required_message">Эта версия PassKey больше не поддерживается. Обновите приложение, чтобы продолжить пользоваться хранилищем.</string>
+    <string name="update_now">Обновить</string>
+    <string name="update_ready_message">Обновление готово к установке.</string>
+    <string name="update_restart">Перезапустить</string>
+    <string name="auto_lock">Автоблокировка</string>
+    <string name="auto_lock_immediately">Сразу</string>
+    <string name="auto_lock_15_seconds">Через 15 секунд</string>
+    <string name="auto_lock_30_seconds">Через 30 секунд</string>
+    <string name="auto_lock_1_minute">Через 1 минуту</string>
+    <string name="auto_lock_5_minutes">Через 5 минут</string>
+    <string name="auto_lock_never">Никогда</string>
+    <string name="auto_lock_never_warning">Хранилище останется разблокированным, пока вы не закроете приложение. Любой, у кого окажется разблокированный телефон, увидит ваши пароли.</string>
+    <string-array name="secret_field_keywords">
+        <item>пароль</item>
+        <item>пин</item>
+        <item>код</item>
+        <item>секрет</item>
+        <item>ключ</item>
+        <item>вход</item>
+    </string-array>
+    <string name="secret_field_toggle">Секрет (пароль, PIN-код, код)</string>
+    <string name="update_hard_title">Пора обновиться</string>
+    <string name="update_hard_body">Эта версия больше не поддерживается. Обновите приложение, чтобы продолжить; ваше хранилище остаётся на этом телефоне и не затрагивается.</string>
+    <string name="update_soft_title">Доступна новая версия</string>
+    <string name="update_soft_body">Обновите приложение, чтобы получить последние улучшения безопасности и исправления.</string>
+    <string name="update_action">Обновить</string>
+    <string name="update_later">Позже</string>
+    <string name="update_ready">Обновление загружено</string>
+    <string name="maintenance_title">Скоро вернёмся</string>
+    <string name="maintenance_body">Мы проводим небольшое техническое обслуживание. Загляните чуть позже.</string>
+    <string name="announcement_dismiss">Закрыть объявление</string>
+    <string name="about_title">О приложении</string>
+    <string name="about_version">Версия %1$s (%2$d)</string>
+    <string name="about_studio_title">О PassKey</string>
+    <string name="about_studio_blurb">PassKey — бесплатный менеджер паролей с открытым исходным кодом, без рекламы и без аккаунта. Ваше хранилище зашифровано на этом телефоне и никогда его не покидает. Исходный код открыт на GitHub.</string>
+    <string name="about_rate">Оценить приложение</string>
+    <string name="about_share">Поделиться с друзьями</string>
+    <string name="about_share_chooser">Поделиться через</string>
+    <string name="about_share_text">Я храню пароли в безопасности с %1$s. Скачайте в Google Play: %2$s</string>
+    <string name="about_contact">Связаться с нами</string>
+    <string name="about_contact_subject">Отзыв о %1$s (версия %2$s)</string>
+    <string name="about_more_apps">Другие наши приложения</string>
+    <string name="about_licences">Лицензии открытого ПО</string>
+    <string name="about_footer">Сделано с заботой в Индии</string>
+    <string name="legal_terms_title">Условия использования</string>
+    <string name="legal_privacy_title">Политика конфиденциальности</string>
+    <string name="legal_last_updated">Последнее обновление: %1$s</string>
+    <string name="legal_read_online">Читать полную версию онлайн</string>
+    <string name="legal_back">Назад</string>
+    <string name="legal_contact_heading">Контакты</string>
+    <string name="legal_contact_body">Вопросы или запросы: используйте контактный адрес электронной почты в разделе «О приложении» или на странице приложения в Google Play.</string>
+    <string name="legal_privacy_intro_heading">Коротко</string>
+    <string name="legal_privacy_intro_body">У PassKey нет аккаунта, синхронизации и собственного сервера. Мы никогда не собираем, не передаём и не храним сохранённые вами записи и не можем их прочитать или восстановить.</string>
+    <string name="legal_privacy_device_heading">Ваше хранилище</string>
+    <string name="legal_privacy_device_body">Ваши записи хранятся в зашифрованной базе данных на этом телефоне и исключены из облачного резервного копирования Android и переноса данных с устройства на устройство. Они удаляются, когда вы удаляете приложение.</string>
+    <string name="legal_privacy_analytics_heading">Аналитика и отчёты о сбоях</string>
+    <string name="legal_privacy_analytics_body">Только если вы разрешите, Google Firebase получает отчёты о сбоях и производительности (модель устройства, версии Android и приложения) и статистику использования (какие экраны и функции используются). В них никогда нет ничего из того, что вы сохраняете. И то и другое выключено, пока вы не сделаете выбор, и это можно изменить в любое время в разделе Настройки › Параметры конфиденциальности. PassKey не использует рекламный идентификатор. Чтобы показывать уведомления об обновлениях и объявления, приложение загружает настройки из Google Firebase Remote Config и проверяет наличие обновлений в Google Play; эти запросы содержат идентификатор установки приложения и ничего из того, что вы сохраняете.</string>
+    <string name="legal_privacy_backup_heading">Резервные копии</string>
+    <string name="legal_privacy_backup_body">Экспортированная резервная копия шифруется (AES-256) паролем, который вы выбираете, и сохраняется туда, куда вы укажете. Любой, у кого есть и файл, и его пароль, может её прочитать. Мы не храним копий и не можем восстановить пароль.</string>
+    <string name="legal_privacy_children_heading">Дети</string>
+    <string name="legal_privacy_children_body">Приложение не предназначено для детей младше 13 лет и сознательно не собирает их личную информацию.</string>
+    <string name="legal_privacy_deletion_heading">Удаление данных</string>
+    <string name="legal_privacy_deletion_body">При удалении приложения ваше хранилище и настройки удаляются с этого телефона. Мы нигде не храним копий ваших данных.</string>
+    <string name="legal_terms_use_heading">Использование приложения</string>
+    <string name="legal_terms_use_body">PassKey бесплатен для личного использования. Не злоупотребляйте им и не пытайтесь мешать другим людям им пользоваться.</string>
+    <string name="legal_terms_safety_heading">Безопасность хранилища</string>
+    <string name="legal_terms_safety_body">Вы отвечаете за свой телефон, его блокировку экрана, а также за любые файлы резервных копий и их пароли. Ваши данные никогда не покидают телефон, поэтому никто не сможет их восстановить, если телефон потерян или приложение удалено. Регулярно экспортируйте зашифрованную резервную копию.</string>
+    <string name="legal_terms_content_heading">Контент и права</string>
+    <string name="legal_terms_content_body">Сохранённые вами записи принадлежат вам. Оригинальный контент приложения принадлежит нам; компоненты с открытым исходным кодом используются по их собственным лицензиям, перечисленным в разделе «О приложении».</string>
+    <string name="legal_terms_liability_heading">Без гарантий</string>
+    <string name="legal_terms_liability_body">Приложение предоставляется «как есть», без гарантий. В пределах, допускаемых законом, мы не несём ответственности за убытки, возникшие в результате его использования.</string>
+    <string name="legal_terms_changes_heading">Изменения</string>
+    <string name="legal_terms_changes_body">Мы можем обновлять эти условия. Дата вверху указывает последнюю версию; продолжая пользоваться приложением, вы её принимаете.</string>
+    <string name="entry_deleted">Запись удалена</string>
+    <string name="field_deleted">Поле удалено</string>
+    <string name="undo">Отменить</string>
 </resources>

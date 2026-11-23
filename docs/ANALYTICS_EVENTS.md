@@ -30,3 +30,11 @@ User property: `consent_analytics` (`true` / `false`).
 - Activation: `tutorial_complete` → `consent_updated` → `vault_unlocked` → first `entry_created` → first `field_saved`.
 - Habit: users with `vault_unlocked` on 3+ distinct days in their first 7 (the D7 proxy).
 - Value moments: `password_generated` and `value_copied{sensitive=true}` per active user.
+
+## Studio baseline events (5.6.0, `analytics/BaselineEvents.kt`)
+`remote_config_fetch{success,duration_ms}`, `force_update_shown{version_code}`, `force_update_clicked`,
+`soft_update_shown{version_code}`, `soft_update_dismissed{version_code}`, `maintenance_shown`,
+`in_app_update_started{update_type}`, `in_app_update_result{update_type,result}`,
+`announcement_shown{id,style}`, `announcement_clicked{id,target}`, `announcement_dismissed{id}`,
+`about_action{action}`, `legal_viewed{document}`, `legal_opened_online{document}`.
+All validated by the template's EventValidator tests; none carry vault content.

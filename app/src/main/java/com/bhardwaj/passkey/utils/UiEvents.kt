@@ -16,5 +16,8 @@ sealed interface UiEvents {
      * only a focused app may write the clipboard, so it is an effect rather than something the
      * ViewModel does itself.
      */
+    /** A snackbar with an Undo action; the screen sends its OnUndoDelete event when Undo is tapped. */
+    data class ShowUndo(val message: UiText) : UiEvents
+
     data class CopyToClipboard(val value: String, val isSensitive: Boolean) : UiEvents
 }

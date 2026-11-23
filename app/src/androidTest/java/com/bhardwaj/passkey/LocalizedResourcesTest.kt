@@ -45,9 +45,10 @@ class LocalizedResourcesTest {
     @Test
     fun legalAndConsentTextIsTranslatedEverywhere() {
         val translated = listOf(
-            R.string.about_message,
-            R.string.privacy_message,
-            R.string.terms_n_condition_message,
+            R.string.about_studio_blurb,
+            R.string.legal_privacy_analytics_body,
+            R.string.legal_privacy_backup_body,
+            R.string.legal_terms_safety_body,
             R.string.consent_title,
             R.string.consent_body,
             R.string.privacy_options

@@ -4,6 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import com.bhardwaj.passkey.analytics.AppEventNames
 import com.bhardwaj.passkey.analytics.AppParams
 import com.bhardwaj.passkey.data.local.entity.Details
+import com.bhardwaj.passkey.data.security.VaultSession
 import com.bhardwaj.passkey.domain.events.DetailEvents
 import com.bhardwaj.passkey.domain.events.PreviewEvents
 import com.bhardwaj.passkey.domain.events.SecurityEvents
@@ -66,7 +67,7 @@ class VaultAnalyticsTest {
 
     @Test
     fun `generating a password logs a length bucket, not the password`() = runTest {
-        val vm = DetailViewModel(repository, SavedStateHandle(mapOf("previewId" to 1L)), analytics)
+        val vm = DetailViewModel(repository, SavedStateHandle(mapOf("previewId" to 1L)), analytics, { emptySet() })
         vm.onEvent(DetailEvents.OnGeneratePasswordClick)
 
         val generated = vm.detailResponse.value
@@ -79,7 +80,7 @@ class VaultAnalyticsTest {
 
     @Test
     fun `saving a field logs add versus edit without content`() = runTest {
-        val vm = DetailViewModel(repository, SavedStateHandle(mapOf("previewId" to 1L)), analytics)
+        val vm = DetailViewModel(repository, SavedStateHandle(mapOf("previewId" to 1L)), analytics, { emptySet() })
         vm.onEvent(DetailEvents.OnAddDetailClick)
         vm.onEvent(DetailEvents.OnTitleChange("Password"))
         vm.onEvent(DetailEvents.OnDescriptionChange("hunter2"))
@@ -93,7 +94,7 @@ class VaultAnalyticsTest {
 
     @Test
     fun `copying a secret logs that it was sensitive, not the value`() = runTest {
-        val vm = DetailViewModel(repository, SavedStateHandle(mapOf("previewId" to 1L)), analytics)
+        val vm = DetailViewModel(repository, SavedStateHandle(mapOf("previewId" to 1L)), analytics, { emptySet() })
         vm.onEvent(
             DetailEvents.OnLongPress(
                 Details(detailsId = 1, previewId = 1, question = "PIN", answer = "4321").answer
@@ -106,7 +107,7 @@ class VaultAnalyticsTest {
 
     @Test
     fun `unlock outcomes are counted`() = runTest {
-        val vm = SecurityViewModel(analytics)
+        val vm = SecurityViewModel(VaultSession { 0L }, analytics)
         vm.onEvent(SecurityEvents.OnAuthenticationError)
         vm.onEvent(SecurityEvents.OnAuthenticationSucceeded)
         assertEquals(listOf(AppEventNames.UNLOCK_FAILED, AppEventNames.VAULT_UNLOCKED), analytics.names)

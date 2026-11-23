@@ -23,14 +23,7 @@
     <string name="second_description">Store and manage all of your passwords from one place. Don’t remember hundreds of passwords, just remember one.</string>
     <string name="third_description">Your vault is encrypted on this phone and asks for your fingerprint, face or screen lock before it opens. No account, no cloud, no ads.</string>
 
-    <!--    About, Privacy and Terms    -->
-    <!--
-        Translators: these must stay factually exact. Every claim here is checked against what the
-        app actually does in this version. Do not add or soften claims.
-    -->
-    <string name="about_message">PassKey is a free, open-source password manager with no ads and no account.\n\nYour entries are stored in an encrypted database on this phone. PassKey asks for your fingerprint, face or screen lock before showing them, blocks screenshots, generates strong passwords and checks your saved passwords for weak or reused ones.\n\nThe source code is public on GitHub: github.com/aditya-190/Pass-Key-Manager</string>
-    <string name="privacy_message">Your vault stays on your phone. PassKey has no account, no sync and no server of its own, and it never sends the entries you save.\n\nOnly if you allow it, the app uses Google Firebase to send:\n• Crash and performance reports: technical details such as device model, Android version and app version.\n• Usage statistics: which screens and features are used, never what you store.\n\nBoth are off until you choose, and you can change your choice at any time in Settings › Privacy options. PassKey does not use an advertising ID. Google Play is used to check for app updates.\n\nExported files are not encrypted in this version. Keep them somewhere safe and delete them when you no longer need them.</string>
-    <string name="terms_n_condition_message">PassKey is provided free of charge, as is, without warranty of any kind.\n\nYou are responsible for keeping your phone, your screen lock and any exported files safe. Your data never leaves your phone, so nobody can recover it for you if the phone is lost or the app is removed. Export a backup regularly.\n\nBy using PassKey you agree to these terms and to the privacy policy.</string>
+    <!--    About, Privacy and Terms: see strings_baseline.xml    -->
 
     <!--    Consent    -->
     <string name="consent_title">Help make PassKey better</string>
@@ -58,7 +51,6 @@
     <string name="search">Search</string>
     <string name="title">Title</string>
     <string name="response">Response</string>
-    <string name="export_download">File Exported to Downloads folder.</string>
     <string name="rate_app">Rate App</string>
     <string name="change_language">Change Language</string>
     <string name="privacy">Privacy</string>
@@ -100,6 +92,9 @@
     <string name="confirm_delete_description_question">Are you sure you want to delete question?</string>
     <string name="confirm_delete_description_heading">Are you sure you want to delete heading?</string>
     <string name="heading_exists">Similar heading already exists.</string>
+    <string name="entry_deleted">Entry deleted</string>
+    <string name="field_deleted">Field deleted</string>
+    <string name="undo">Undo</string>
 
     <!-- Password Health Report -->
     <string name="analyze_passwords">Safety Status</string>
@@ -124,6 +119,7 @@
     <string name="cd_clear_search">Clear search</string>
     <string name="cd_open">Open</string>
     <string name="cd_back">Back</string>
+    <string name="secret_field_toggle">Secret (password, PIN, code)</string>
     <string name="password_settings">Password settings</string>
     <string name="password_length">Length: %1$d</string>
     <string name="security_score_percent">%1$d%%</string>
@@ -138,4 +134,55 @@
         <item quantity="one">Used %1$d time</item>
         <item quantity="other">Used %1$d times</item>
     </plurals>
+
+    <!--    Encrypted backup    -->
+    <string name="export_success">Encrypted backup saved.</string>
+    <string name="export_failed">Could not save the backup.</string>
+    <string name="import_summary">Imported %1$d entries and %2$d details.</string>
+    <string name="import_wrong_password">Wrong password, or the file is damaged.</string>
+    <string name="import_file_too_large">That file is too large to be a PassKey backup.</string>
+    <string name="import_unsupported_version">This backup was made by a newer version of PassKey.</string>
+    <string name="backup_password_title">Protect your backup</string>
+    <string name="backup_password_message">Choose a password for this backup file. It is the only way to restore it, and it cannot be recovered.</string>
+    <string name="backup_password_hint">Backup password</string>
+    <string name="backup_password_confirm_hint">Confirm password</string>
+    <string name="backup_password_mismatch">Passwords do not match.</string>
+    <string name="backup_password_too_short">Use at least 8 characters.</string>
+    <string name="restore_password_title">Restore backup</string>
+    <string name="restore_password_message">Enter the password you chose when you created this backup file.</string>
+    <string name="backup_confirm">Continue</string>
+
+    <!--    App updates    -->
+    <string name="update_required_title">Update required</string>
+    <string name="update_required_message">This version of PassKey is no longer supported. Update to continue using your vault.</string>
+    <string name="update_now">Update now</string>
+    <string name="update_ready_message">An update is ready to install.</string>
+    <string name="update_restart">Restart</string>
+
+    <!--    Auto-lock    -->
+    <string name="auto_lock">Auto-lock</string>
+    <string name="auto_lock_immediately">Immediately</string>
+    <string name="auto_lock_15_seconds">After 15 seconds</string>
+    <string name="auto_lock_30_seconds">After 30 seconds</string>
+    <string name="auto_lock_1_minute">After 1 minute</string>
+    <string name="auto_lock_5_minutes">After 5 minutes</string>
+    <string name="auto_lock_never">Never</string>
+    <string name="auto_lock_never_warning">The vault will stay unlocked until you close the app. Anyone with your unlocked phone can read your passwords.</string>
+
+    <!--
+        Translators: words that identify a field as holding a secret. Match how
+        people actually label these fields in your language; add variants freely.
+        Matching is case- and accent-insensitive and is a substring test.
+    -->
+    <string-array name="secret_field_keywords">
+        <item>password</item>
+        <item>pass</item>
+        <item>pin</item>
+        <item>passcode</item>
+        <item>secret</item>
+        <item>code</item>
+        <item>key</item>
+        <item>login</item>
+        <item>credential</item>
+    </string-array>
 </resources>

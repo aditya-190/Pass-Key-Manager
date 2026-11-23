@@ -18,6 +18,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.LiveRegionMode
+import androidx.compose.ui.semantics.liveRegion
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -37,6 +40,7 @@ fun PreviewBottomSheet(
     modifier: Modifier = Modifier,
     bottomSheetHeading: String,
     previewHeading: String,
+    error: String?,
     onHeadingChange: (heading: String) -> Unit,
     onDismiss: () -> Unit,
     onSave: () -> Unit
@@ -86,6 +90,17 @@ fun PreviewBottomSheet(
                     imeAction = ImeAction.Done,
                     modifier = Modifier.padding(top = 24.dp)
                 )
+                // Validation stays in the sheet, so nothing the user typed is lost.
+                if (error != null) {
+                    Text(
+                        text = error,
+                        color = MaterialTheme.colorScheme.error,
+                        style = MaterialTheme.typography.bodyMedium,
+                        modifier = Modifier
+                            .padding(top = 8.dp)
+                            .semantics { liveRegion = LiveRegionMode.Polite }
+                    )
+                }
                 PassKeyButton(
                     modifier = Modifier
                         .padding(vertical = 24.dp)

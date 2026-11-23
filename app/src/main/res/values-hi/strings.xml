@@ -28,7 +28,6 @@
     <string name="search">खोज</string>
     <string name="title">शीर्षक</string>
     <string name="response">उत्तर</string>
-    <string name="export_download">फ़ाइल डाउनलोड फ़ोल्डर में निर्यात की गई।</string>
     <string name="rate_app">ऐप रेटिंग</string>
     <string name="change_language">भाषा बदलें</string>
     <string name="privacy">प्राइवेसी</string>
@@ -99,9 +98,6 @@
         <item quantity="one">%1$d बार इस्तेमाल हुआ</item>
         <item quantity="other">%1$d बार इस्तेमाल हुआ</item>
     </plurals>
-    <string name="about_message">PassKey एक मुफ़्त, ओपन-सोर्स पासवर्ड मैनेजर है, जिसमें न विज्ञापन हैं और न अकाउंट।\n\nआपकी एंट्री इसी फ़ोन पर एक एन्क्रिप्टेड डेटाबेस में रहती हैं। PassKey उन्हें दिखाने से पहले आपका फ़िंगरप्रिंट, चेहरा या स्क्रीन लॉक माँगता है, स्क्रीनशॉट रोकता है, मज़बूत पासवर्ड बनाता है और सेव किए गए पासवर्ड में कमज़ोर या दोहराए गए पासवर्ड जाँचता है।\n\nसोर्स कोड GitHub पर सार्वजनिक है: github.com/aditya-190/Pass-Key-Manager</string>
-    <string name="privacy_message">आपका वॉल्ट आपके फ़ोन पर ही रहता है। PassKey का न कोई अकाउंट है, न सिंक, न अपना सर्वर, और यह आपकी सेव की गई एंट्री कभी नहीं भेजता।\n\nसिर्फ़ आपकी अनुमति से, ऐप Google Firebase के ज़रिए ये भेजता है:\n• क्रैश और परफ़ॉर्मेंस रिपोर्ट: तकनीकी जानकारी जैसे डिवाइस मॉडल, Android वर्शन और ऐप वर्शन।\n• इस्तेमाल के आँकड़े: कौन-सी स्क्रीन और सुविधाएँ इस्तेमाल होती हैं, आप क्या सेव करते हैं वह कभी नहीं।\n\nजब तक आप न चुनें, दोनों बंद रहते हैं, और आप सेटिंग्स › निजता विकल्प में कभी भी अपनी पसंद बदल सकते हैं। PassKey विज्ञापन आईडी का इस्तेमाल नहीं करता। ऐप अपडेट जाँचने के लिए Google Play का इस्तेमाल होता है।\n\nइस वर्शन में एक्सपोर्ट की गई फ़ाइलें एन्क्रिप्टेड नहीं हैं। उन्हें सुरक्षित जगह रखें और ज़रूरत न होने पर हटा दें।</string>
-    <string name="terms_n_condition_message">PassKey मुफ़्त में, जैसा है वैसा, बिना किसी वारंटी के दिया जाता है।\n\nअपने फ़ोन, स्क्रीन लॉक और एक्सपोर्ट की गई फ़ाइलों को सुरक्षित रखना आपकी ज़िम्मेदारी है। आपका डेटा कभी आपके फ़ोन से बाहर नहीं जाता, इसलिए फ़ोन खोने या ऐप हटाने पर कोई उसे वापस नहीं ला सकता। नियमित रूप से बैकअप एक्सपोर्ट करें।\n\nPassKey का इस्तेमाल करके आप इन शर्तों और निजता नीति से सहमत होते हैं।</string>
     <string name="consent_title">PassKey को बेहतर बनाने में मदद करें</string>
     <string name="consent_body">आपके पासवर्ड कभी इस फ़ोन से बाहर नहीं जाते। आपकी अनुमति से, PassKey Google Firebase को गुमनाम रिपोर्ट भेज सकता है, जिनसे क्रैश ठीक करने और यह समझने में मदद मिलती है कि कौन-सी सुविधाएँ इस्तेमाल होती हैं। इनमें आपकी सेव की गई कोई भी चीज़ कभी नहीं होती।</string>
     <string name="consent_crash_title">क्रैश और परफ़ॉर्मेंस रिपोर्ट</string>
@@ -113,4 +109,97 @@
     <string name="consent_save">मेरी पसंद सेव करें</string>
     <string name="consent_change_later">आप इसे सेटिंग्स › निजता विकल्प में कभी भी बदल सकते हैं।</string>
     <string name="privacy_options">निजता विकल्प</string>
+    <string name="export_success">एन्क्रिप्टेड बैकअप सहेजा गया।</string>
+    <string name="export_failed">बैकअप सहेजा नहीं जा सका।</string>
+    <string name="import_summary">%1$d प्रविष्टियाँ और %2$d विवरण आयात किए गए।</string>
+    <string name="import_wrong_password">गलत पासवर्ड, या फ़ाइल खराब है।</string>
+    <string name="import_file_too_large">यह फ़ाइल PassKey बैकअप के लिए बहुत बड़ी है।</string>
+    <string name="import_unsupported_version">यह बैकअप PassKey के नए संस्करण से बना है।</string>
+    <string name="backup_password_title">अपना बैकअप सुरक्षित करें</string>
+    <string name="backup_password_message">इस बैकअप फ़ाइल के लिए पासवर्ड चुनें। इसे पुनर्स्थापित करने का यही एकमात्र तरीका है, और इसे वापस नहीं पाया जा सकता।</string>
+    <string name="backup_password_hint">बैकअप पासवर्ड</string>
+    <string name="backup_password_confirm_hint">पासवर्ड की पुष्टि करें</string>
+    <string name="backup_password_mismatch">पासवर्ड मेल नहीं खाते।</string>
+    <string name="backup_password_too_short">कम से कम 8 अक्षर इस्तेमाल करें।</string>
+    <string name="restore_password_title">बैकअप पुनर्स्थापित करें</string>
+    <string name="restore_password_message">इस बैकअप फ़ाइल को बनाते समय चुना गया पासवर्ड दर्ज करें।</string>
+    <string name="backup_confirm">जारी रखें</string>
+    <string name="update_required_title">अपडेट ज़रूरी है</string>
+    <string name="update_required_message">PassKey का यह संस्करण अब समर्थित नहीं है। अपनी वॉल्ट इस्तेमाल करते रहने के लिए अपडेट करें।</string>
+    <string name="update_now">अभी अपडेट करें</string>
+    <string name="update_ready_message">एक अपडेट इंस्टॉल के लिए तैयार है।</string>
+    <string name="update_restart">पुनः आरंभ करें</string>
+    <string name="auto_lock">अपने आप लॉक</string>
+    <string name="auto_lock_immediately">तुरंत</string>
+    <string name="auto_lock_15_seconds">15 सेकंड बाद</string>
+    <string name="auto_lock_30_seconds">30 सेकंड बाद</string>
+    <string name="auto_lock_1_minute">1 मिनट बाद</string>
+    <string name="auto_lock_5_minutes">5 मिनट बाद</string>
+    <string name="auto_lock_never">कभी नहीं</string>
+    <string name="auto_lock_never_warning">ऐप बंद करने तक वॉल्ट खुली रहेगी। जिसके पास आपका अनलॉक फ़ोन होगा वह आपके पासवर्ड पढ़ सकता है।</string>
+    <string-array name="secret_field_keywords">
+        <item>पासवर्ड</item>
+        <item>पिन</item>
+        <item>कोड</item>
+        <item>गुप्त</item>
+        <item>गोपनीय</item>
+        <item>कुंजी</item>
+        <item>लॉगिन</item>
+    </string-array>
+    <string name="secret_field_toggle">गोपनीय (पासवर्ड, पिन, कोड)</string>
+    <string name="update_hard_title">अपडेट करने का समय</string>
+    <string name="update_hard_body">यह संस्करण अब समर्थित नहीं है। आगे इस्तेमाल करने के लिए अपडेट करें; आपका वॉल्ट इसी फ़ोन पर रहता है और इस पर कोई असर नहीं पड़ता।</string>
+    <string name="update_soft_title">नया संस्करण तैयार है</string>
+    <string name="update_soft_body">नवीनतम सुरक्षा सुधारों और फ़िक्स के लिए अपडेट करें।</string>
+    <string name="update_action">अपडेट करें</string>
+    <string name="update_later">बाद में</string>
+    <string name="update_ready">अपडेट डाउनलोड हो गया</string>
+    <string name="maintenance_title">जल्द ही वापस</string>
+    <string name="maintenance_body">हम थोड़ा-सा रखरखाव कर रहे हैं। कृपया कुछ देर बाद फिर देखें।</string>
+    <string name="announcement_dismiss">घोषणा हटाएँ</string>
+    <string name="about_title">ऐप के बारे में</string>
+    <string name="about_version">संस्करण %1$s (%2$d)</string>
+    <string name="about_studio_title">PassKey के बारे में</string>
+    <string name="about_studio_blurb">PassKey एक मुफ़्त, ओपन-सोर्स पासवर्ड मैनेजर है, जिसमें न विज्ञापन हैं, न अकाउंट। आपका वॉल्ट इसी फ़ोन पर एन्क्रिप्टेड रहता है और कभी इससे बाहर नहीं जाता। इसका सोर्स कोड GitHub पर सार्वजनिक है।</string>
+    <string name="about_rate">ऐप को रेटिंग दें</string>
+    <string name="about_share">दोस्तों के साथ शेयर करें</string>
+    <string name="about_share_chooser">इससे शेयर करें</string>
+    <string name="about_share_text">मेरे पासवर्ड %1$s में सुरक्षित रहते हैं। इसे Google Play पर पाएँ: %2$s</string>
+    <string name="about_contact">हमसे संपर्क करें</string>
+    <string name="about_contact_subject">%1$s फ़ीडबैक (संस्करण %2$s)</string>
+    <string name="about_more_apps">हमारे और ऐप</string>
+    <string name="about_licences">ओपन-सोर्स लाइसेंस</string>
+    <string name="about_footer">भारत में पूरी लगन से बनाया गया</string>
+    <string name="legal_terms_title">सेवा की शर्तें</string>
+    <string name="legal_privacy_title">निजता नीति</string>
+    <string name="legal_last_updated">पिछला अपडेट: %1$s</string>
+    <string name="legal_read_online">पूरा संस्करण ऑनलाइन पढ़ें</string>
+    <string name="legal_back">वापस</string>
+    <string name="legal_contact_heading">संपर्क</string>
+    <string name="legal_contact_body">सवाल या अनुरोध: “ऐप के बारे में” में या Google Play पर ऐप के पेज पर दिया गया संपर्क ईमेल इस्तेमाल करें।</string>
+    <string name="legal_privacy_intro_heading">सारांश</string>
+    <string name="legal_privacy_intro_body">PassKey में न कोई अकाउंट है, न सिंक, न उसका अपना कोई सर्वर। आप जो एंट्री सहेजते हैं, उन्हें हम कभी इकट्ठा, प्रसारित या संग्रहीत नहीं करते, और हम उन्हें न पढ़ सकते हैं, न वापस ला सकते हैं।</string>
+    <string name="legal_privacy_device_heading">आपका वॉल्ट</string>
+    <string name="legal_privacy_device_body">आपकी एंट्री इसी फ़ोन पर एक एन्क्रिप्टेड डेटाबेस में रहती हैं और Android क्लाउड बैकअप तथा एक डिवाइस से दूसरे डिवाइस में ट्रांसफ़र से बाहर रखी जाती हैं। ऐप अनइंस्टॉल करने पर वे हट जाती हैं।</string>
+    <string name="legal_privacy_analytics_heading">एनालिटिक्स और क्रैश रिपोर्ट</string>
+    <string name="legal_privacy_analytics_body">केवल आपकी अनुमति होने पर ही Google Firebase को क्रैश और परफ़ॉर्मेंस रिपोर्ट (डिवाइस मॉडल, Android और ऐप संस्करण) और उपयोग के आँकड़े (कौन-सी स्क्रीन और फ़ीचर इस्तेमाल होते हैं) मिलते हैं। इनमें आपकी सहेजी कोई भी चीज़ कभी शामिल नहीं होती। आपके चुनने तक दोनों बंद रहते हैं, और आप इसे सेटिंग्स › निजता विकल्प में कभी भी बदल सकते हैं। PassKey विज्ञापन आईडी का इस्तेमाल नहीं करता। अपडेट की सूचनाएँ और घोषणाएँ दिखाने के लिए ऐप Google Firebase Remote Config से सेटिंग्स लाता है और अपडेट के लिए Google Play जाँचता है; इन अनुरोधों में एक ऐप-इंस्टॉलेशन पहचानकर्ता होता है, आपकी सहेजी कोई चीज़ नहीं।</string>
+    <string name="legal_privacy_backup_heading">बैकअप</string>
+    <string name="legal_privacy_backup_body">एक्सपोर्ट किया गया बैकअप आपके चुने पासवर्ड से एन्क्रिप्ट (AES-256) होता है और आपकी चुनी जगह पर सहेजा जाता है। जिसके पास फ़ाइल और उसका पासवर्ड दोनों हों, वह उसे पढ़ सकता है। हम कोई कॉपी नहीं रखते और पासवर्ड वापस नहीं ला सकते।</string>
+    <string name="legal_privacy_children_heading">बच्चे</string>
+    <string name="legal_privacy_children_body">यह ऐप 13 साल से कम उम्र के बच्चों के लिए नहीं है और जानबूझकर उनकी निजी जानकारी इकट्ठा नहीं करता।</string>
+    <string name="legal_privacy_deletion_heading">अपना डेटा मिटाना</string>
+    <string name="legal_privacy_deletion_body">अनइंस्टॉल करने से आपका वॉल्ट और सेटिंग्स इस फ़ोन से हट जाते हैं। हम आपके डेटा की कोई कॉपी कहीं भी नहीं रखते।</string>
+    <string name="legal_terms_use_heading">ऐप का इस्तेमाल</string>
+    <string name="legal_terms_use_body">PassKey निजी इस्तेमाल के लिए मुफ़्त है। इसका दुरुपयोग न करें और दूसरों के इसके इस्तेमाल में बाधा डालने की कोशिश न करें।</string>
+    <string name="legal_terms_safety_heading">अपना वॉल्ट सुरक्षित रखना</string>
+    <string name="legal_terms_safety_body">अपने फ़ोन, उसके स्क्रीन लॉक और किसी भी बैकअप फ़ाइल व उसके पासवर्ड की ज़िम्मेदारी आपकी है। आपका डेटा कभी आपके फ़ोन से बाहर नहीं जाता, इसलिए फ़ोन खो जाने या ऐप हटा दिए जाने पर कोई भी उसे वापस नहीं ला सकता। नियमित रूप से एन्क्रिप्टेड बैकअप एक्सपोर्ट करें।</string>
+    <string name="legal_terms_content_heading">सामग्री और स्वामित्व</string>
+    <string name="legal_terms_content_body">आप जो एंट्री सहेजते हैं, वे आपकी हैं। ऐप की मूल सामग्री हमारी है; ओपन-सोर्स घटक अपने-अपने लाइसेंस के तहत इस्तेमाल होते हैं, जिनकी सूची “ऐप के बारे में” में है।</string>
+    <string name="legal_terms_liability_heading">कोई वारंटी नहीं</string>
+    <string name="legal_terms_liability_body">ऐप जैसा है वैसा ही, बिना किसी वारंटी के दिया जाता है। कानून जहाँ तक अनुमति देता है, इसके इस्तेमाल से होने वाले नुकसान के लिए हम ज़िम्मेदार नहीं हैं।</string>
+    <string name="legal_terms_changes_heading">बदलाव</string>
+    <string name="legal_terms_changes_body">हम इन शर्तों को अपडेट कर सकते हैं। ऊपर दी गई तारीख नवीनतम संस्करण दिखाती है; इस्तेमाल जारी रखने का मतलब है कि आप उसे स्वीकार करते हैं।</string>
+    <string name="entry_deleted">एंट्री हटाई गई</string>
+    <string name="field_deleted">फ़ील्ड हटाया गया</string>
+    <string name="undo">वापस लाएँ</string>
 </resources>

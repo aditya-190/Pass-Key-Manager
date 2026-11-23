@@ -14,7 +14,9 @@ import com.bhardwaj.passkey.data.local.entity.Details
 import com.bhardwaj.passkey.data.repository.PasskeyRepository
 import com.bhardwaj.passkey.domain.events.DetailEvents
 import com.bhardwaj.passkey.utils.Constants.Companion.BOTTOM_SHEET_HEADING
+import com.bhardwaj.passkey.utils.PasswordAnalyzer
 import com.bhardwaj.passkey.utils.PasswordGenerator
+import com.bhardwaj.passkey.utils.SecretKeywords
 import com.bhardwaj.passkey.utils.UiEvents
 import com.bhardwaj.passkey.utils.UiText
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -33,7 +35,8 @@ import kotlinx.coroutines.launch
 class DetailViewModel @Inject constructor(
     private val repository: PasskeyRepository,
     private val savedStateHandle: SavedStateHandle,
-    private val analytics: AnalyticsTracker
+    private val analytics: AnalyticsTracker,
+    private val secretKeywords: SecretKeywords
 ) : ViewModel() {
     private val _uiEvents = Channel<UiEvents>()
     val uiEvents = _uiEvents.receiveAsFlow()
@@ -45,6 +48,19 @@ class DetailViewModel @Inject constructor(
     // death is the correct trade here.
     private val _detailTitle = MutableStateFlow("")
     val detailTitle = _detailTitle.asStateFlow()
+
+    /**
+     * Whether the value being edited is a secret: drives the keyboard (a password keyboard never learns what
+     * is typed) and is stored as Details.isSecret. Suggested from the title until the user sets it.
+     */
+    private val _isSecretField = MutableStateFlow(false)
+    val isSecretField = _isSecretField.asStateFlow()
+    private var secretSetByUser = false
+
+    private fun resetSecretField(isSecret: Boolean = false, setByUser: Boolean = false) {
+        _isSecretField.value = isSecret
+        secretSetByUser = setByUser
+    }
 
     private val _detailResponse = MutableStateFlow("")
     val detailResponse = _detailResponse.asStateFlow()
@@ -94,17 +110,26 @@ class DetailViewModel @Inject constructor(
     var includeSpecial by mutableStateOf(false)
         private set
 
-    private var deletedDetail: Details? = null
+    private var pendingDelete: Details? = null
+    private var lastDeleted: Details? = null
+
+    /** Shown inside the add/edit sheet; a failed save keeps the sheet and what was typed. */
+    var sheetError by mutableStateOf<UiText?>(null)
+        private set
 
     fun onEvent(event: DetailEvents) {
         when (event) {
             DetailEvents.OnAddDetailClick -> {
+                sheetError = null
+                resetSecretField()
                 savedStateHandle[BOTTOM_SHEET_HEADING] = false
                 isSheetOpen = true
                 _searchText.value = ""
             }
 
             DetailEvents.OnDismissBottomSheet -> {
+                sheetError = null
+                resetSecretField()
                 _detailTitle.value = ""
                 _detailResponse.value = ""
                 isSheetOpen = false
@@ -118,30 +143,36 @@ class DetailViewModel @Inject constructor(
                         savedStateHandle[BOTTOM_SHEET_HEADING] = true
                         _detailTitle.value = event.details.question
                         _detailResponse.value = event.details.answer
+                        // A stored choice is the user's; only legacy rows fall back to the title.
+                        resetSecretField(
+                            isSecret =
+                            detail.isSecret || PasswordAnalyzer.looksSecret(detail.question, secretKeywords.all()),
+                            setByUser = true
+                        )
                         this@DetailViewModel.detail = detail
                     }
                 }
             }
 
             is DetailEvents.OnTitleChange -> {
+                sheetError = null
                 _detailTitle.value = event.newTitle
+                if (!secretSetByUser) {
+                    _isSecretField.value = PasswordAnalyzer.looksSecret(event.newTitle, secretKeywords.all())
+                }
             }
 
+            is DetailEvents.OnSecretToggle -> resetSecretField(isSecret = event.isSecret, setByUser = true)
+
             is DetailEvents.OnDescriptionChange -> {
+                sheetError = null
                 _detailResponse.value = event.newDescription
             }
 
             DetailEvents.OnSaveClick -> {
                 viewModelScope.launch {
                     if (detailTitle.value.isBlank() or detailResponse.value.isBlank()) {
-                        isSheetOpen = false
-                        _detailTitle.value = ""
-                        _detailResponse.value = ""
-                        sendUiEvents(
-                            UiEvents.ShowSnackBar(
-                                message = UiText.StringResource(R.string.enter_valid_title_n_response)
-                            )
-                        )
+                        sheetError = UiText.StringResource(R.string.enter_valid_title_n_response)
                         return@launch
                     }
                     if (previewId.toInt() == -1) {
@@ -156,7 +187,8 @@ class DetailViewModel @Inject constructor(
                     val newDetail = Details(
                         previewId = previewId,
                         question = detailTitle.value.trim(),
-                        answer = detailResponse.value.trim()
+                        answer = detailResponse.value.trim(),
+                        isSecret = isSecretField.value
                     )
 
                     detail?.let {
@@ -166,7 +198,8 @@ class DetailViewModel @Inject constructor(
                                 // Trimmed to match the create path above. A trailing space in a
                                 // stored password fails silently wherever it is pasted.
                                 question = newDetail.question,
-                                answer = newDetail.answer
+                                answer = newDetail.answer,
+                                isSecret = isSecretField.value
                             )
                         )
                     } ?: repository.upsertDetails(newDetail)
@@ -184,33 +217,32 @@ class DetailViewModel @Inject constructor(
                 analytics.log(AppEvents.valueCopied(sensitive = true))
             }
 
+            // Nothing is written until the user confirms; a delete can be undone from the snackbar.
             is DetailEvents.OnSwipedLeft -> {
-                viewModelScope.launch {
-                    isAlertOpen = true
-                    repository.deleteDetail(event.details)
-                    deletedDetail = event.details
-                }
+                pendingDelete = event.details
+                isAlertOpen = true
             }
 
-            DetailEvents.OnDismissAlertDialog -> {
-                viewModelScope.launch {
-                    isAlertOpen = false
-                    deletedDetail?.let { repository.upsertDetails(it) }
-                    deletedDetail = null
-                }
-            }
-
-            DetailEvents.OnCancelClick -> {
-                viewModelScope.launch {
-                    isAlertOpen = false
-                    deletedDetail?.let { repository.upsertDetails(it) }
-                    deletedDetail = null
-                }
+            DetailEvents.OnDismissAlertDialog, DetailEvents.OnCancelClick -> {
+                pendingDelete = null
+                isAlertOpen = false
             }
 
             is DetailEvents.OnDeleteClick -> {
+                val detail = pendingDelete ?: return
+                pendingDelete = null
                 isAlertOpen = false
-                deletedDetail = null
+                viewModelScope.launch {
+                    repository.deleteDetail(detail)
+                    lastDeleted = detail
+                    sendUiEvents(UiEvents.ShowUndo(UiText.StringResource(R.string.field_deleted)))
+                }
+            }
+
+            DetailEvents.OnUndoDelete -> {
+                val detail = lastDeleted ?: return
+                lastDeleted = null
+                viewModelScope.launch { repository.upsertDetails(detail) }
             }
 
             is DetailEvents.OnSearchTextUpdate -> {
@@ -239,6 +271,8 @@ class DetailViewModel @Inject constructor(
             }
 
             DetailEvents.OnGeneratePasswordClick -> {
+                // A generated value is unambiguously a secret.
+                resetSecretField(isSecret = true, setByUser = true)
                 val newPassword = PasswordGenerator.generate(
                     length = passwordLength.toInt(),
                     includeUpper = includeUpper,

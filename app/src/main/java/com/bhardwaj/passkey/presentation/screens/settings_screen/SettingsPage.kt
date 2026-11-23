@@ -1,9 +1,7 @@
 package com.bhardwaj.passkey.presentation.screens.settings_screen
 
-import android.content.ContentResolver
 import android.content.Context
 import android.net.Uri
-import android.provider.OpenableColumns
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
@@ -13,13 +11,16 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.BottomSheetScaffold
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.ModalBottomSheetProperties
@@ -27,35 +28,42 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
-import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.SecureFlagPolicy
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.bhardwaj.passkey.R
+import com.bhardwaj.passkey.data.backup.BackupFormat
+import com.bhardwaj.passkey.data.backup.ImportMode
 import com.bhardwaj.passkey.domain.events.SettingsEvents
 import com.bhardwaj.passkey.domain.viewModels.SettingsViewModel
 import com.bhardwaj.passkey.presentation.navigation.Routes
 import com.bhardwaj.passkey.presentation.screens.settings_screen.components.AnalysisBottomSheet
-import com.bhardwaj.passkey.presentation.screens.settings_screen.components.FaqItem
+import com.bhardwaj.passkey.presentation.screens.settings_screen.components.AutoLockDialog
+import com.bhardwaj.passkey.presentation.screens.settings_screen.components.BackupPasswordDialog
 import com.bhardwaj.passkey.presentation.screens.settings_screen.components.LanguageBottomSheet
 import com.bhardwaj.passkey.presentation.screens.settings_screen.components.SettingsText
 import com.bhardwaj.passkey.presentation.theme.BebasNeue
 import com.bhardwaj.passkey.presentation.theme.Poppins
-import com.bhardwaj.passkey.utils.Constants.Companion.FILE_TYPE
 import com.bhardwaj.passkey.utils.UiEvents
 import com.bhardwaj.passkey.utils.asString
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -67,28 +75,67 @@ fun SettingsScreen(
 ) {
     val snackBarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
-    val scaffoldState = rememberBottomSheetScaffoldState()
 
     val context = LocalContext.current
-    val invalidFileMessage = stringResource(R.string.invalid_file_selected)
+    // Backup file selection. The password is collected only after a destination or source is
+    // chosen, so the user is never asked for one and then cancels out of the picker.
+    var pendingExportUri by remember { mutableStateOf<Uri?>(null) }
+    var pendingImportUri by remember { mutableStateOf<Uri?>(null) }
 
-    val importDataLauncher = rememberLauncherForActivityResult(
+    val exportLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.CreateDocument("application/octet-stream")
+    ) { uri -> pendingExportUri = uri }
+
+    val importLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.OpenDocument()
-    ) { document ->
-        document?.let { uri ->
-            if (isPasskeyFile(uri, context)) {
-                context.contentResolver.openInputStream(uri)?.use { inputStream ->
-                    val content = inputStream.bufferedReader().use { text -> text.readText() }
-                    viewModel.onEvent(SettingsEvents.OnImportDataClick(content))
-                }
+    ) { uri ->
+        uri?.let {
+            if (isEncryptedBackup(it, context)) {
+                pendingImportUri = it
             } else {
-                scope.launch {
-                    snackBarHostState.showSnackbar(
-                        message = invalidFileMessage
+                // A legacy plaintext .passkey CSV needs no password; restore it directly.
+                viewModel.onEvent(
+                    SettingsEvents.OnImportFileChosen(
+                        uri = it,
+                        password = null,
+                        mode = ImportMode.MERGE
                     )
-                }
+                )
             }
         }
+    }
+
+    val autoLockTimeout by viewModel.autoLockTimeout.collectAsStateWithLifecycle()
+    if (viewModel.isAutoLockDialogOpen) {
+        AutoLockDialog(
+            current = autoLockTimeout,
+            onDismiss = { viewModel.onEvent(SettingsEvents.OnDismissAutoLockDialog) },
+            onSelect = { viewModel.onEvent(SettingsEvents.OnAutoLockTimeoutChange(it)) }
+        )
+    }
+
+    pendingExportUri?.let { uri ->
+        BackupPasswordDialog(
+            confirmMode = true,
+            onDismiss = { pendingExportUri = null },
+            onConfirm = { password ->
+                pendingExportUri = null
+                viewModel.onEvent(SettingsEvents.OnExportFileChosen(uri, password))
+            }
+        )
+    }
+
+    pendingImportUri?.let { uri ->
+        BackupPasswordDialog(
+            confirmMode = false,
+            onDismiss = { pendingImportUri = null },
+            onConfirm = { password ->
+                pendingImportUri = null
+                viewModel.onEvent(
+                    SettingsEvents.OnImportFileChosen(uri, password, ImportMode.MERGE)
+                )
+            }
+        )
     }
 
     val isAnalysisSheetOpen = viewModel.isAnalysisSheetOpen
@@ -116,20 +163,8 @@ fun SettingsScreen(
     Scaffold(
         snackbarHost = { SnackbarHost(snackBarHostState) }
     ) { paddingValues ->
-        BottomSheetScaffold(
-            modifier = Modifier.padding(paddingValues),
-            scaffoldState = scaffoldState,
-            sheetPeekHeight = 0.dp,
-            sheetShape = RectangleShape,
-            sheetSwipeEnabled = true,
-            sheetDragHandle = {},
-            // Only the Privacy/Terms/About text lives in this sheet. The language picker is a ModalBottomSheet in
-            // its own window; hosting it here left this sheet expanded at 0 px, and Material3's overscroll scale
-            // divides by the sheet height, so a bouncing drag crashed with "scaleY = Infinity" (monkey seed 5521).
-            sheetContent = {
-                FaqItem(openedBy = viewModel.bottomSheetOpenedBy)
-            }
-        ) {
+        // Privacy, Terms and About are full screens now; no scaffold sheet (its 0 px state crashed, seed 5521).
+        Box(modifier = Modifier.padding(paddingValues)) {
             Box(
                 modifier = Modifier
                     .fillMaxSize()
@@ -147,11 +182,13 @@ fun SettingsScreen(
                         modifier = Modifier.fillMaxWidth(),
                         verticalArrangement = Arrangement.Top
                     ) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.icon_logo),
-                            contentDescription = null,
-                            tint = MaterialTheme.colorScheme.primary
-                        )
+                        IconButton(onClick = onPopBackStack, modifier = Modifier.offset(x = (-12).dp)) {
+                            Icon(
+                                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                                contentDescription = stringResource(R.string.cd_back),
+                                tint = MaterialTheme.colorScheme.primary
+                            )
+                        }
                         Text(
                             text = stringResource(id = R.string.more),
                             fontFamily = BebasNeue,
@@ -178,26 +215,26 @@ fun SettingsScreen(
                             SettingsText(text = stringResource(id = R.string.rate_app)) {
                                 viewModel.onEvent(SettingsEvents.OnRateAppClick)
                             }
+                            SettingsText(text = stringResource(id = R.string.auto_lock)) {
+                                viewModel.onEvent(SettingsEvents.OnAutoLockClick)
+                            }
                             SettingsText(text = stringResource(id = R.string.import_data)) {
-                                importDataLauncher.launch(arrayOf("*/*"))
+                                importLauncher.launch(arrayOf("*/*"))
                             }
                             SettingsText(text = stringResource(id = R.string.export_data)) {
-                                viewModel.onEvent(SettingsEvents.OnExportDataClick)
+                                exportLauncher.launch(defaultBackupFileName())
                             }
                             SettingsText(text = stringResource(id = R.string.privacy)) {
-                                viewModel.onEvent(SettingsEvents.OnPrivacyClick)
-                                scope.launch { scaffoldState.bottomSheetState.expand() }
+                                onNavigate(Routes.LEGAL_PAGE + "/PRIVACY")
                             }
                             SettingsText(text = stringResource(id = R.string.privacy_options)) {
                                 onNavigate(Routes.CONSENT_PAGE + "?${Routes.CONSENT_FROM_SETTINGS_ARG}=true")
                             }
                             SettingsText(text = stringResource(id = R.string.terms_n_condition)) {
-                                viewModel.onEvent(SettingsEvents.OnTermsAndConditionClick)
-                                scope.launch { scaffoldState.bottomSheetState.expand() }
+                                onNavigate(Routes.LEGAL_PAGE + "/TERMS")
                             }
                             SettingsText(text = stringResource(id = R.string.about)) {
-                                viewModel.onEvent(SettingsEvents.OnAboutClick)
-                                scope.launch { scaffoldState.bottomSheetState.expand() }
+                                onNavigate(Routes.ABOUT_PAGE)
                             }
                         }
                     }
@@ -250,20 +287,23 @@ fun SettingsScreen(
     }
 }
 
-private fun isPasskeyFile(uri: Uri, context: Context): Boolean {
-    val contentResolver: ContentResolver = context.contentResolver
-    return try {
-        contentResolver.query(uri, null, null, null, null)?.use { cursor ->
-            val nameIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
-            if (nameIndex != -1 && cursor.moveToFirst()) {
-                val fileName = cursor.getString(nameIndex)
-                fileName.endsWith(FILE_TYPE)
-            } else {
-                false
-            }
-        } == true
-    } catch (e: Exception) {
-        e.printStackTrace()
-        false
-    }
+/**
+ * Detects the encrypted `.pkbak` format by its magic bytes rather than by filename.
+ *
+ * The previous check matched a display name ending in "passkey", which would have rejected
+ * every new backup, and trusted a user-supplied filename to decide how to parse the contents.
+ */
+private fun isEncryptedBackup(uri: Uri, context: Context): Boolean = try {
+    context.contentResolver.openInputStream(uri)?.use { input ->
+        val magic = ByteArray(8)
+        val read = input.read(magic)
+        read == magic.size && BackupFormat.hasMagic(magic)
+    } == true
+} catch (_: Exception) {
+    false
+}
+
+private fun defaultBackupFileName(): String {
+    val stamp = SimpleDateFormat("yyyyMMdd_HHmm", Locale.US).format(Date())
+    return "passkey_backup_$stamp.pkbak"
 }

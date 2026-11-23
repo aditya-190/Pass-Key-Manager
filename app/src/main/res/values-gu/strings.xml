@@ -28,7 +28,6 @@
     <string name="search">શોધો</string>
     <string name="title">શીર્ષક</string>
     <string name="response">જવાબ</string>
-    <string name="export_download">ફાઇલ ડાઉનલોડ કરી ગઈ છે.</string>
     <string name="rate_app">એપ્લિકેશન રેટ કરો</string>
     <string name="change_language">ભાષા બદલો</string>
     <string name="privacy">ગોપનીયતા</string>
@@ -99,9 +98,6 @@
         <item quantity="one">%1$d વાર વપરાયેલ</item>
         <item quantity="other">%1$d વાર વપરાયેલ</item>
     </plurals>
-    <string name="about_message">PassKey એક મફત, ઓપન-સોર્સ પાસવર્ડ મેનેજર છે, જેમાં જાહેરાતો નથી અને એકાઉન્ટની જરૂર નથી.\n\nતમારી એન્ટ્રીઓ આ જ ફોન પર એન્ક્રિપ્ટ થયેલા ડેટાબેસમાં સચવાય છે. PassKey તેમને બતાવતાં પહેલાં તમારી ફિંગરપ્રિન્ટ, ચહેરો કે સ્ક્રીન લૉક માગે છે, સ્ક્રીનશૉટ રોકે છે, મજબૂત પાસવર્ડ બનાવે છે અને સાચવેલા પાસવર્ડમાં નબળા કે ફરી વપરાયેલા પાસવર્ડ તપાસે છે.\n\nસોર્સ કોડ GitHub પર જાહેર છે: github.com/aditya-190/Pass-Key-Manager</string>
-    <string name="privacy_message">તમારું વૉલ્ટ તમારા ફોન પર જ રહે છે. PassKey નું ન કોઈ એકાઉન્ટ છે, ન સિંક, ન પોતાનું સર્વર, અને તે તમારી સાચવેલી એન્ટ્રીઓ ક્યારેય મોકલતું નથી.\n\nમાત્ર તમારી મંજૂરીથી, ઍપ Google Firebase દ્વારા આ મોકલે છે:\n• ક્રૅશ અને પર્ફોર્મન્સ રિપોર્ટ: ડિવાઇસ મૉડલ, Android વર્ઝન અને ઍપ વર્ઝન જેવી ટેક્નિકલ માહિતી.\n• ઉપયોગના આંકડા: કઈ સ્ક્રીન અને સુવિધાઓ વપરાય છે, તમે શું સાચવો છો તે ક્યારેય નહીં.\n\nતમે પસંદ ન કરો ત્યાં સુધી બંને બંધ રહે છે, અને સેટિંગ્સ › ગોપનીયતા વિકલ્પોમાં તમે ગમે ત્યારે પસંદગી બદલી શકો છો. PassKey જાહેરાત ID નો ઉપયોગ કરતું નથી. ઍપ અપડેટ તપાસવા Google Play નો ઉપયોગ થાય છે.\n\nઆ વર્ઝનમાં એક્સપોર્ટ કરેલી ફાઇલો એન્ક્રિપ્ટ થયેલી નથી. તેમને સુરક્ષિત જગ્યાએ રાખો અને જરૂર ન હોય ત્યારે ડિલીટ કરો.</string>
-    <string name="terms_n_condition_message">PassKey મફત, જેમ છે તેમ, કોઈ પણ વૉરંટી વગર આપવામાં આવે છે.\n\nતમારો ફોન, સ્ક્રીન લૉક અને એક્સપોર્ટ કરેલી ફાઇલો સુરક્ષિત રાખવી એ તમારી જવાબદારી છે. તમારો ડેટા ક્યારેય ફોનની બહાર જતો નથી, તેથી ફોન ખોવાય કે ઍપ દૂર થાય તો કોઈ તેને પાછો લાવી શકતું નથી. નિયમિત રીતે બૅકઅપ એક્સપોર્ટ કરો.\n\nPassKey નો ઉપયોગ કરીને તમે આ શરતો અને ગોપનીયતા નીતિ સાથે સંમત થાઓ છો.</string>
     <string name="consent_title">PassKey ને વધુ સારું બનાવવામાં મદદ કરો</string>
     <string name="consent_body">તમારા પાસવર્ડ ક્યારેય આ ફોનની બહાર જતા નથી. તમારી મંજૂરીથી, PassKey Google Firebase ને અનામી રિપોર્ટ મોકલી શકે છે, જે ક્રૅશ સુધારવામાં અને કઈ સુવિધાઓ વપરાય છે તે સમજવામાં મદદ કરે છે. તેમાં તમે સાચવેલું કંઈ પણ ક્યારેય હોતું નથી.</string>
     <string name="consent_crash_title">ક્રૅશ અને પર્ફોર્મન્સ રિપોર્ટ</string>
@@ -113,4 +109,96 @@
     <string name="consent_save">મારી પસંદગી સાચવો</string>
     <string name="consent_change_later">તમે આ સેટિંગ્સ › ગોપનીયતા વિકલ્પોમાં ગમે ત્યારે બદલી શકો છો.</string>
     <string name="privacy_options">ગોપનીયતા વિકલ્પો</string>
+    <string name="export_success">એન્ક્રિપ્ટેડ બૅકઅપ સાચવ્યું.</string>
+    <string name="export_failed">બૅકઅપ સાચવી શકાયું નહીં.</string>
+    <string name="import_summary">%1$d એન્ટ્રી અને %2$d વિગતો આયાત થઈ.</string>
+    <string name="import_wrong_password">ખોટો પાસવર્ડ, અથવા ફાઇલ બગડેલી છે.</string>
+    <string name="import_file_too_large">આ ફાઇલ PassKey બૅકઅપ માટે ઘણી મોટી છે.</string>
+    <string name="import_unsupported_version">આ બૅકઅપ PassKey ના નવા સંસ્કરણથી બન્યું છે.</string>
+    <string name="backup_password_title">તમારું બૅકઅપ સુરક્ષિત કરો</string>
+    <string name="backup_password_message">આ બૅકઅપ ફાઇલ માટે પાસવર્ડ પસંદ કરો. પુનઃસ્થાપનનો આ એકમાત્ર રસ્તો છે, અને તે પાછો મેળવી શકાતો નથી.</string>
+    <string name="backup_password_hint">બૅકઅપ પાસવર્ડ</string>
+    <string name="backup_password_confirm_hint">પાસવર્ડની પુષ્ટિ કરો</string>
+    <string name="backup_password_mismatch">પાસવર્ડ મેળ ખાતા નથી.</string>
+    <string name="backup_password_too_short">ઓછામાં ઓછા 8 અક્ષર વાપરો.</string>
+    <string name="restore_password_title">બૅકઅપ પુનઃસ્થાપિત કરો</string>
+    <string name="restore_password_message">આ બૅકઅપ ફાઇલ બનાવતી વખતે પસંદ કરેલો પાસવર્ડ દાખલ કરો.</string>
+    <string name="backup_confirm">ચાલુ રાખો</string>
+    <string name="update_required_title">અપડેટ જરૂરી છે</string>
+    <string name="update_required_message">PassKey નું આ સંસ્કરણ હવે સમર્થિત નથી. તમારી વૉલ્ટ વાપરવાનું ચાલુ રાખવા અપડેટ કરો.</string>
+    <string name="update_now">હમણાં અપડેટ કરો</string>
+    <string name="update_ready_message">એક અપડેટ ઇન્સ્ટોલ કરવા તૈયાર છે.</string>
+    <string name="update_restart">ફરી શરૂ કરો</string>
+    <string name="auto_lock">ઑટો-લૉક</string>
+    <string name="auto_lock_immediately">તરત જ</string>
+    <string name="auto_lock_15_seconds">15 સેકન્ડ પછી</string>
+    <string name="auto_lock_30_seconds">30 સેકન્ડ પછી</string>
+    <string name="auto_lock_1_minute">1 મિનિટ પછી</string>
+    <string name="auto_lock_5_minutes">5 મિનિટ પછી</string>
+    <string name="auto_lock_never">ક્યારેય નહીં</string>
+    <string name="auto_lock_never_warning">ઍપ બંધ ન કરો ત્યાં સુધી વૉલ્ટ ખુલ્લી રહેશે. તમારો અનલૉક કરેલો ફોન જેની પાસે હશે તે તમારા પાસવર્ડ વાંચી શકશે.</string>
+    <string-array name="secret_field_keywords">
+        <item>પાસવર્ડ</item>
+        <item>પિન</item>
+        <item>કોડ</item>
+        <item>ગુપ્ત</item>
+        <item>ચાવી</item>
+        <item>લૉગિન</item>
+    </string-array>
+    <string name="secret_field_toggle">ગુપ્ત (પાસવર્ડ, પિન, કોડ)</string>
+    <string name="update_hard_title">અપડેટ કરવાનો સમય</string>
+    <string name="update_hard_body">આ સંસ્કરણ હવે સમર્થિત નથી. વાપરવાનું ચાલુ રાખવા અપડેટ કરો; તમારું વૉલ્ટ આ જ ફોન પર રહે છે અને તેના પર કોઈ અસર થતી નથી.</string>
+    <string name="update_soft_title">નવું સંસ્કરણ તૈયાર છે</string>
+    <string name="update_soft_body">નવીનતમ સુરક્ષા સુધારા અને ફિક્સ માટે અપડેટ કરો.</string>
+    <string name="update_action">અપડેટ કરો</string>
+    <string name="update_later">પછી</string>
+    <string name="update_ready">અપડેટ ડાઉનલોડ થઈ ગયું</string>
+    <string name="maintenance_title">થોડી વારમાં પાછા આવીએ છીએ</string>
+    <string name="maintenance_body">અમે થોડું જાળવણીનું કામ કરી રહ્યા છીએ. કૃપા કરીને થોડી વાર પછી ફરી જુઓ.</string>
+    <string name="announcement_dismiss">ઘોષણા બંધ કરો</string>
+    <string name="about_title">ઍપ વિશે</string>
+    <string name="about_version">સંસ્કરણ %1$s (%2$d)</string>
+    <string name="about_studio_title">PassKey વિશે</string>
+    <string name="about_studio_blurb">PassKey એક મફત, ઓપન-સોર્સ પાસવર્ડ મેનેજર છે, જેમાં ન જાહેરાતો છે, ન એકાઉન્ટ. તમારું વૉલ્ટ આ જ ફોન પર એન્ક્રિપ્ટ થયેલું રહે છે અને ક્યારેય ફોનની બહાર જતું નથી. સોર્સ કોડ GitHub પર જાહેર છે.</string>
+    <string name="about_rate">ઍપને રેટિંગ આપો</string>
+    <string name="about_share">મિત્રો સાથે શેર કરો</string>
+    <string name="about_share_chooser">આના દ્વારા શેર કરો</string>
+    <string name="about_share_text">હું મારા પાસવર્ડ %1$s વડે સુરક્ષિત રાખું છું. Google Play પરથી મેળવો: %2$s</string>
+    <string name="about_contact">અમારો સંપર્ક કરો</string>
+    <string name="about_contact_subject">%1$s પ્રતિસાદ (સંસ્કરણ %2$s)</string>
+    <string name="about_more_apps">અમારી વધુ ઍપ્સ</string>
+    <string name="about_licences">ઓપન-સોર્સ લાઇસન્સ</string>
+    <string name="about_footer">ભારતમાં કાળજીપૂર્વક બનાવેલ</string>
+    <string name="legal_terms_title">સેવાની શરતો</string>
+    <string name="legal_privacy_title">ગોપનીયતા નીતિ</string>
+    <string name="legal_last_updated">છેલ્લે અપડેટ: %1$s</string>
+    <string name="legal_read_online">સંપૂર્ણ સંસ્કરણ ઑનલાઇન વાંચો</string>
+    <string name="legal_back">પાછળ</string>
+    <string name="legal_contact_heading">સંપર્ક</string>
+    <string name="legal_contact_body">પ્રશ્નો કે વિનંતીઓ: “ઍપ વિશે” માં અથવા Google Play પર ઍપના પેજ પર આપેલું સંપર્ક ઇમેઇલ વાપરો.</string>
+    <string name="legal_privacy_intro_heading">સારાંશ</string>
+    <string name="legal_privacy_intro_body">PassKey માં કોઈ એકાઉન્ટ, સિંક કે પોતાનું સર્વર નથી. તમે સાચવેલી એન્ટ્રીઓ અમે ક્યારેય એકત્ર કરતા નથી, મોકલતા નથી કે સંગ્રહતા નથી, અને અમે તેને વાંચી કે પાછી મેળવી શકતા નથી.</string>
+    <string name="legal_privacy_device_heading">તમારું વૉલ્ટ</string>
+    <string name="legal_privacy_device_body">તમારી એન્ટ્રીઓ આ જ ફોન પરના એન્ક્રિપ્ટ થયેલા ડેટાબેસમાં રાખવામાં આવે છે અને Android ક્લાઉડ બૅકઅપ તથા એક ડિવાઇસથી બીજા ડિવાઇસમાં ટ્રાન્સફરમાંથી બાકાત રાખવામાં આવે છે. ઍપ અનઇન્સ્ટોલ કરો ત્યારે તે દૂર થઈ જાય છે.</string>
+    <string name="legal_privacy_analytics_heading">ઍનાલિટિક્સ અને ક્રેશ રિપોર્ટ</string>
+    <string name="legal_privacy_analytics_body">ફક્ત તમે મંજૂરી આપો તો જ Google Firebase ને ક્રેશ અને પર્ફોર્મન્સ રિપોર્ટ (ડિવાઇસ મોડેલ, Android અને ઍપનું સંસ્કરણ) અને વપરાશના આંકડા (કઈ સ્ક્રીન અને ફીચર વપરાય છે) મળે છે. તેમાં તમે સાચવેલું કંઈ પણ ક્યારેય હોતું નથી. તમે પસંદ ન કરો ત્યાં સુધી બંને બંધ રહે છે, અને તમે આ સેટિંગ્સ › ગોપનીયતા વિકલ્પોમાં ગમે ત્યારે બદલી શકો છો. PassKey જાહેરાત ID વાપરતું નથી. અપડેટની સૂચનાઓ અને ઘોષણાઓ બતાવવા માટે ઍપ Google Firebase Remote Config માંથી સેટિંગ્સ મેળવે છે અને અપડેટ માટે Google Play તપાસે છે; આ વિનંતીઓમાં એક ઍપ-ઇન્સ્ટોલેશન ઓળખકર્તા હોય છે, તમે સાચવેલું કંઈ નહીં.</string>
+    <string name="legal_privacy_backup_heading">બૅકઅપ</string>
+    <string name="legal_privacy_backup_body">એક્સપોર્ટ કરેલું બૅકઅપ તમે પસંદ કરેલા પાસવર્ડથી એન્ક્રિપ્ટ (AES-256) થાય છે અને તમે પસંદ કરો ત્યાં સાચવાય છે. જેની પાસે ફાઇલ અને તેનો પાસવર્ડ બંને હોય તે તેને વાંચી શકે છે. અમે કોઈ નકલ રાખતા નથી અને પાસવર્ડ પાછો મેળવી શકતા નથી.</string>
+    <string name="legal_privacy_children_heading">બાળકો</string>
+    <string name="legal_privacy_children_body">આ ઍપ 13 વર્ષથી ઓછી ઉંમરના બાળકો માટે નથી અને જાણીજોઈને તેમની વ્યક્તિગત માહિતી એકત્ર કરતી નથી.</string>
+    <string name="legal_privacy_deletion_heading">તમારો ડેટા ડિલીટ કરવો</string>
+    <string name="legal_privacy_deletion_body">અનઇન્સ્ટોલ કરવાથી તમારું વૉલ્ટ અને સેટિંગ્સ આ ફોનમાંથી દૂર થાય છે. અમે તમારા ડેટાની કોઈ નકલ ક્યાંય રાખતા નથી.</string>
+    <string name="legal_terms_use_heading">ઍપનો ઉપયોગ</string>
+    <string name="legal_terms_use_body">PassKey વ્યક્તિગત ઉપયોગ માટે મફત છે. તેનો દુરુપયોગ ન કરો અને બીજાના ઉપયોગમાં દખલ કરવાનો પ્રયાસ ન કરો.</string>
+    <string name="legal_terms_safety_heading">તમારું વૉલ્ટ સુરક્ષિત રાખવું</string>
+    <string name="legal_terms_safety_body">તમારો ફોન, તેનું સ્ક્રીન લૉક અને કોઈ પણ બૅકઅપ ફાઇલો અને તેના પાસવર્ડની જવાબદારી તમારી છે. તમારો ડેટા ક્યારેય તમારા ફોનની બહાર જતો નથી, તેથી ફોન ખોવાઈ જાય કે ઍપ દૂર થાય તો કોઈ તેને પાછો મેળવી શકતું નથી. નિયમિત રીતે એન્ક્રિપ્ટ થયેલું બૅકઅપ એક્સપોર્ટ કરો.</string>
+    <string name="legal_terms_content_heading">સામગ્રી અને માલિકી</string>
+    <string name="legal_terms_content_body">તમે સાચવેલી એન્ટ્રીઓ તમારી છે. ઍપની મૂળ સામગ્રી અમારી છે; ઓપન-સોર્સ ઘટકો તેમના પોતાના લાઇસન્સ હેઠળ વપરાય છે, જેની યાદી “ઍપ વિશે” માં છે.</string>
+    <string name="legal_terms_liability_heading">કોઈ વૉરંટી નથી</string>
+    <string name="legal_terms_liability_body">ઍપ જેવી છે તેવી, કોઈ વૉરંટી વિના આપવામાં આવે છે. કાયદો મંજૂરી આપે તે હદ સુધી, તેના ઉપયોગથી થતા નુકસાન માટે અમે જવાબદાર નથી.</string>
+    <string name="legal_terms_changes_heading">ફેરફારો</string>
+    <string name="legal_terms_changes_body">અમે આ શરતો અપડેટ કરી શકીએ છીએ. ઉપરની તારીખ નવીનતમ સંસ્કરણ બતાવે છે; ઉપયોગ ચાલુ રાખવાનો અર્થ એ છે કે તમે તેને સ્વીકારો છો.</string>
+    <string name="entry_deleted">એન્ટ્રી કાઢી નાખી</string>
+    <string name="field_deleted">ફીલ્ડ કાઢી નાખ્યું</string>
+    <string name="undo">પાછું લાવો</string>
 </resources>

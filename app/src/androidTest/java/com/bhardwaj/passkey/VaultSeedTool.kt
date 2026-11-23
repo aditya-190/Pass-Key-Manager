@@ -31,7 +31,7 @@ class VaultSeedTool {
         val context = InstrumentationRegistry.getInstrumentation().targetContext
         val db = Room.databaseBuilder(context, PassKeyDatabase::class.java, Constants.PASS_KEY_DATABASE)
             .addMigrations(MIGRATION_1_2)
-            .openHelperFactory(SupportOpenHelperFactory(BuildConfig.PASS_PHRASE.toByteArray()))
+            .openHelperFactory(SupportOpenHelperFactory(BuildConfig.LEGACY_PASS_PHRASE.toByteArray()))
             .build()
         runBlocking {
             val existing = db.previewDao.getPreviews().first().firstOrNull { it.heading == HEADING }
