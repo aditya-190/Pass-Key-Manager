@@ -86,6 +86,18 @@ Owner decisions: PBKDF2 recovery slot (no argon2kt), mandatory one-time recovery
   10k-character value measured in under 1 ms. Gates green: ktlint, detekt, 200 unit tests, lint, release build.
 Open: invalidation on enrollment change (needs a physical device), staged rollout.
 
+## Phase 4: release 5.8.0 "Daily-use features" (branch `release/5.8.0`), in progress ⏸
+Owner: 5.7.0 → 100% rollout (owner sets it in Play Console); physical checks on the Moto G34 (not yet connected).
+### 4a: architecture (no user-visible change), code-complete
+- Layering fixed, typed PreferencesRepository (`c823935`); domain models, entities confined to data (`ebd0d94`);
+  lifecycle-aware collection (`6907fbf`); type-safe navigation for all 10 routes (`1ec2a66`); single-state MVI for
+  home (`419b10b`), fields (`708bf85`), Settings (`6889cf8`); per-screen effects, UiEvents deleted (`3a46b15`).
+- Tests: NavRouteTest 5, PreviewViewModelTest 10, DetailViewModelTest 7, SettingsViewModelTest 10 (Settings' first).
+  227 unit tests pass. Simulation: 2 × 1,000 seeded intent sequences, 0 failures.
+- Device (API 28): default suite OK (26), vault untouched; minified release walked through all routes but Onboarding;
+  home/details/settings smoke (tabs, swipe → confirm → cancel, generator marks secret, dialogs) with no crash.
+- Local fix: the schema folder's case-only rename needed a two-step `mv` on macOS (MigrationTester could not find it).
+
 ## Carried into 5.6.0
 - Per-field secret keyboard (attack-pass finding #1), built on the `isSecret` column.
 - A failed Android 10+ export is reported as success (`SettingsViewModel.kt:260`); replaced by the encrypted backup.
