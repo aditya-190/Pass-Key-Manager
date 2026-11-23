@@ -88,6 +88,10 @@ Owner decisions: PBKDF2 recovery slot (no argon2kt), mandatory one-time recovery
   biometric key; adding a fingerprint invalidated it, PassKey fell back to the screen-lock key, unlocked, and rebuilt
   the fingerprint key (next start used it); removing that fingerprint kept the key valid (Android invalidates only on
   a new enrollment or when all are removed). Device suite 34/34. No crashes.
+- Moto G34 autofill in Chrome 157 (2026-11-23): Chrome sends requests to PassKey only after "Autofill using another
+  service" is chosen in Chrome's settings; the form then shows only "Unlock to fill · PassKey". Found: Android never
+  offers to save a new login (the authentication response carries no SaveInfo) - see 5.8.0 device findings. The
+  phone's autofill service, Chrome's setting and stay-on were restored; the debug app and test vault were kept.
 Open: the real Play 5.5.1 → 5.7.0 upgrade needs a Play internal testing track (a debug build cannot replace a
 Play-signed install without uninstalling). Rollout set by the owner (100%).
 
