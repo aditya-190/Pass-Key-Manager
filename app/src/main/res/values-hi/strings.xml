@@ -269,4 +269,12 @@
     <string name="tour_backup_description">फ़ाइलें निर्यात करें आपके चुने पासवर्ड से एन्क्रिप्टेड बैकअप बनाता है, और फ़ाइलें आयात करें उसे किसी भी फ़ोन पर वापस लाता है। स्क्रीन लॉक बदलने पर आपका रिकवरी पासवर्ड वॉल्ट खोलता है।</string>
     <string name="tour_privacy_heading">ऐप छोड़ते ही\n[[लॉक]]।</string>
     <string name="tour_privacy_description">सेटिंग्स में अपने आप लॉक का समय चुनें। स्क्रीनशॉट ब्लॉक रहते हैं, कॉपी किए पासवर्ड अपने-आप हट जाते हैं, और आपका सहेजा कुछ भी इस फ़ोन से बाहर नहीं जाता।</string>
+
+    <!-- 6.0.0 backup confidence -->
+    <string name="verify_backup">बैकअप जाँचें</string>
+    <string name="verify_backup_ok">बैकअप ठीक है: %1$d एंट्री और %2$d ऑथेंटिकेटर, %3$s को सहेजा गया। कुछ भी इम्पोर्ट नहीं हुआ।</string>
+    <string name="verify_backup_ok_legacy">बैकअप पढ़ा जा सकता है: %1$d एंट्री। यह पुरानी बिना एन्क्रिप्शन वाली फ़ाइल है, इसलिए नया एन्क्रिप्टेड बैकअप एक्सपोर्ट करें।</string>
+    <string name="backup_reminder_title">अपने वॉल्ट का बैकअप लें</string>
+    <string name="backup_reminder_body">अगर यह फ़ोन खो जाए या रीसेट हो जाए, तो बैकअप ही आपके पासवर्ड वापस पाने का एकमात्र तरीका है।</string>
+    <string name="backup_reminder_cta">अभी बैकअप लें</string>
 </resources>

@@ -270,4 +270,12 @@
     <string name="tour_backup_description">Daten exportieren erstellt ein verschlüsseltes Backup mit einem Passwort deiner Wahl, Daten importieren stellt es auf jedem Telefon wieder her. Ändert sich deine Displaysperre, öffnet dein Wiederherstellungspasswort den Tresor.</string>
     <string name="tour_privacy_heading">Gesperrt,\nsobald du\n[[gehst]].</string>
     <string name="tour_privacy_description">Lege die Zeit für Automatisch sperren in den Einstellungen fest. Screenshots sind blockiert, kopierte Passwörter werden automatisch gelöscht, und nichts, was du speicherst, verlässt dieses Telefon.</string>
+
+    <!-- 6.0.0 backup confidence -->
+    <string name="verify_backup">Backup prüfen</string>
+    <string name="verify_backup_ok">Backup ist in Ordnung: %1$d Einträge und %2$d Authenticatoren, gespeichert am %3$s. Es wurde nichts importiert.</string>
+    <string name="verify_backup_ok_legacy">Backup ist lesbar: %1$d Einträge. Es ist eine alte unverschlüsselte Datei, exportiere daher ein neues verschlüsseltes Backup.</string>
+    <string name="backup_reminder_title">Sichere deinen Tresor</string>
+    <string name="backup_reminder_body">Geht dieses Telefon verloren oder wird es zurückgesetzt, ist ein Backup der einzige Weg zurück zu deinen Passwörtern.</string>
+    <string name="backup_reminder_cta">Jetzt sichern</string>
 </resources>

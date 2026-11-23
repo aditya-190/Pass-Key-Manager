@@ -72,6 +72,13 @@ class BackupRepository @Inject constructor(
             }
         }
 
+    /** Reads and decrypts a backup the same way import does, but only reports what it holds (6.0.0). */
+    suspend fun verify(uri: Uri, password: CharArray?): Result<BackupCheck> = withContext(Dispatchers.IO) {
+        val bytes = readLimited(uri)
+            ?: return@withContext Result.failure(BackupException(BackupError.ReadFailed))
+        codec.decode(bytes, password).map(codec::check)
+    }
+
     private fun readLimited(uri: Uri): ByteArray? = runCatching {
         context.contentResolver.openInputStream(uri)?.use { input ->
             val out = ByteArrayOutputStream()

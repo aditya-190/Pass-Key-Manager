@@ -3,6 +3,7 @@ package com.bhardwaj.passkey.di
 import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
+import com.bhardwaj.passkey.data.datastore.BackupReminderStoreImpl
 import com.bhardwaj.passkey.data.datastore.PreferencesRepositoryImpl
 import com.bhardwaj.passkey.data.datastore.passkeyDataStore
 import com.bhardwaj.passkey.data.local.VaultDatabaseProvider
@@ -11,6 +12,7 @@ import com.bhardwaj.passkey.data.repository.PasskeyRepositoryImpl
 import com.bhardwaj.passkey.data.security.DefaultKeyDerivation
 import com.bhardwaj.passkey.data.security.KeyDerivation
 import com.bhardwaj.passkey.domain.repository.AutofillTrustStore
+import com.bhardwaj.passkey.domain.repository.BackupReminderStore
 import com.bhardwaj.passkey.domain.repository.PasskeyRepository
 import com.bhardwaj.passkey.domain.repository.PreferencesRepository
 import com.bhardwaj.passkey.utils.ResourceSecretKeywords
@@ -49,6 +51,11 @@ object AppModule {
     @Singleton
     fun providePreferencesRepository(dataStore: DataStore<Preferences>): PreferencesRepository =
         PreferencesRepositoryImpl(dataStore)
+
+    @Provides
+    @Singleton
+    fun provideBackupReminderStore(dataStore: DataStore<Preferences>): BackupReminderStore =
+        BackupReminderStoreImpl(dataStore)
 
     @Provides
     @Singleton

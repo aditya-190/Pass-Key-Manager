@@ -269,4 +269,12 @@
     <string name="tour_backup_description">তথ্য রপ্তানি আপনার বেছে নেওয়া পাসওয়ার্ড দিয়ে এনক্রিপ্টেড ব্যাকআপ বানায়, আর তথ্য আমদানি যেকোনো ফোনে তা ফিরিয়ে আনে। স্ক্রিন লক বদলালে রিকভারি পাসওয়ার্ড দিয়ে ভল্ট খুলবে।</string>
     <string name="tour_privacy_heading">বেরোলেই\n[[লক]]।</string>
     <string name="tour_privacy_description">সেটিংস-এ স্বয়ংক্রিয় লক-এর সময় বেছে নিন। স্ক্রিনশট বন্ধ থাকে, কপি করা পাসওয়ার্ড নিজে থেকে মুছে যায়, আর আপনার সেভ করা কিছুই এই ফোনের বাইরে যায় না।</string>
+
+    <!-- 6.0.0 backup confidence -->
+    <string name="verify_backup">ব্যাকআপ যাচাই করুন</string>
+    <string name="verify_backup_ok">ব্যাকআপ ঠিক আছে: %1$d এন্ট্রি ও %2$d অথেন্টিকেটর, %3$s তারিখে সেভ করা। কিছুই ইমপোর্ট হয়নি।</string>
+    <string name="verify_backup_ok_legacy">ব্যাকআপ পড়া যায়: %1$d এন্ট্রি। এটি পুরোনো এনক্রিপশনহীন ফাইল, তাই নতুন এনক্রিপ্টেড ব্যাকআপ এক্সপোর্ট করুন।</string>
+    <string name="backup_reminder_title">আপনার ভল্টের ব্যাকআপ নিন</string>
+    <string name="backup_reminder_body">এই ফোন হারালে বা রিসেট হলে, ব্যাকআপই পাসওয়ার্ড ফিরে পাওয়ার একমাত্র উপায়।</string>
+    <string name="backup_reminder_cta">এখনই ব্যাকআপ নিন</string>
 </resources>

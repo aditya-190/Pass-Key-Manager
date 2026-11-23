@@ -29,6 +29,8 @@ object AppEventNames {
     const val FEATURE_TOUR_STARTED = "feature_tour_started"
     const val FEATURE_TOUR_COMPLETED = "feature_tour_completed"
     const val FEATURE_TOUR_SKIPPED = "feature_tour_skipped"
+    const val BACKUP_REMINDER_TAPPED = "backup_reminder_tapped"
+    const val BACKUP_REMINDER_SNOOZED = "backup_reminder_snoozed"
 }
 
 object AppParams {

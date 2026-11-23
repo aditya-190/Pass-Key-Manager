@@ -94,6 +94,7 @@ fun SettingsScreen(
     // chosen, so the user is never asked for one and then cancels out of the picker.
     var pendingExportUri by remember { mutableStateOf<Uri?>(null) }
     var pendingImportUri by remember { mutableStateOf<Uri?>(null) }
+    var pendingVerifyUri by remember { mutableStateOf<Uri?>(null) }
 
     val exportLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.CreateDocument("application/octet-stream")
@@ -108,6 +109,18 @@ fun SettingsScreen(
             } else {
                 // A legacy plaintext .passkey CSV needs no password; restore it directly.
                 onIntent(SettingsIntent.ImportChosen(uri = it, password = null, mode = ImportMode.MERGE))
+            }
+        }
+    }
+
+    val verifyLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.OpenDocument()
+    ) { uri ->
+        uri?.let {
+            if (isEncryptedBackup(it, context)) {
+                pendingVerifyUri = it
+            } else {
+                onIntent(SettingsIntent.VerifyChosen(uri = it, password = null))
             }
         }
     }
@@ -166,6 +179,17 @@ fun SettingsScreen(
             onConfirm = { password ->
                 pendingExportUri = null
                 onIntent(SettingsIntent.ExportChosen(uri, password))
+            }
+        )
+    }
+
+    pendingVerifyUri?.let { uri ->
+        BackupPasswordDialog(
+            confirmMode = false,
+            onDismiss = { pendingVerifyUri = null },
+            onConfirm = { password ->
+                pendingVerifyUri = null
+                onIntent(SettingsIntent.VerifyChosen(uri, password))
             }
         )
     }
@@ -285,6 +309,9 @@ fun SettingsScreen(
                             }
                             SettingsText(text = stringResource(id = R.string.export_data)) {
                                 exportLauncher.launch(defaultBackupFileName())
+                            }
+                            SettingsText(text = stringResource(id = R.string.verify_backup)) {
+                                verifyLauncher.launch(arrayOf("*/*"))
                             }
                             SettingsText(text = stringResource(id = R.string.privacy)) {
                                 onNavigate(NavRoute.Legal(LegalDocument.PRIVACY.name))

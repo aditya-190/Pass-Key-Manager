@@ -271,4 +271,12 @@
     <string name="tour_backup_description">Esporta Dati crea un backup crittografato con una password scelta da te, e Importa Dati lo ripristina su qualsiasi telefono. La password di recupero apre la cassaforte se cambia il blocco schermo.</string>
     <string name="tour_privacy_heading">Bloccata\nquando\n[[esci]].</string>
     <string name="tour_privacy_description">Scegli il tempo di Blocco automatico in Impostazioni. Gli screenshot sono bloccati, le password copiate si cancellano da sole e niente di ciò che salvi lascia questo telefono.</string>
+
+    <!-- 6.0.0 backup confidence -->
+    <string name="verify_backup">Verifica un backup</string>
+    <string name="verify_backup_ok">Il backup è valido: %1$d voci e %2$d autenticatori, salvato il %3$s. Non è stato importato nulla.</string>
+    <string name="verify_backup_ok_legacy">Il backup è leggibile: %1$d voci. È un vecchio file non crittografato, quindi esporta un nuovo backup crittografato.</string>
+    <string name="backup_reminder_title">Fai il backup della cassaforte</string>
+    <string name="backup_reminder_body">Se perdi o ripristini questo telefono, un backup è l\'unico modo per recuperare le tue password.</string>
+    <string name="backup_reminder_cta">Fai il backup ora</string>
 </resources>

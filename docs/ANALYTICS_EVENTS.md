@@ -16,6 +16,8 @@ Nothing is sent unless the user allowed "Usage statistics" (`ConsentApplier`; th
 | `feature_tour_started` | — | Settings › Feature tour (or an announcement) opens the tour on its own | 6.0.0 |
 | `feature_tour_completed` | — | The last tour page's Next | 6.0.0 |
 | `feature_tour_skipped` | `page` (1-based, tour pages only) | Skip in the replayed tour | 6.0.0 |
+| `backup_reminder_tapped` | — | "Back up now" on Home's backup reminder (opens Settings; the card rests a day) | 6.0.0 |
+| `backup_reminder_snoozed` | — | The backup reminder dismissed (back in 7 days) | 6.0.0 |
 | `entry_created` | `category`: banks / mails / apps / others | A new entry (heading) is saved; renames don't count | 5.5.2 |
 | `field_saved` | `is_edit` (bool) | A detail field is saved | 5.5.2 |
 | `password_generated` | `length_bucket`: 0, 1-7, 8-11, 12-15, 16-23, 24+ | The generator button | 5.5.2 |

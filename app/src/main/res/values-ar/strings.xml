@@ -277,4 +277,12 @@
     <string name="tour_backup_description">ينشئ تصدير البيانات نسخة احتياطية مشفّرة بكلمة مرور تختارها، ويستعيدها استيراد البيانات على أي هاتف. وتفتح كلمة مرور الاسترداد الخزنة إذا تغيّر قفل الشاشة.</string>
     <string name="tour_privacy_heading">تُقفل\nعندما\n[[تغادر]].</string>
     <string name="tour_privacy_description">اختر وقت القفل التلقائي من الإعدادات. لقطات الشاشة محظورة، وكلمات المرور المنسوخة تُمسح تلقائيًا، ولا يغادر أي شيء تحفظه هذا الهاتف.</string>
+
+    <!-- 6.0.0 backup confidence -->
+    <string name="verify_backup">التحقق من نسخة احتياطية</string>
+    <string name="verify_backup_ok">النسخة الاحتياطية سليمة: %1$d إدخالًا و%2$d أداة مصادقة، محفوظة في %3$s. لم يُستورد أي شيء.</string>
+    <string name="verify_backup_ok_legacy">يمكن قراءة النسخة الاحتياطية: %1$d إدخالًا. إنها ملف قديم غير مشفّر، لذا صدّر نسخة احتياطية مشفّرة جديدة.</string>
+    <string name="backup_reminder_title">احفظ نسخة احتياطية من خزنتك</string>
+    <string name="backup_reminder_body">إذا فُقد هذا الهاتف أو أُعيد ضبطه، فالنسخة الاحتياطية هي الطريقة الوحيدة لاستعادة كلمات مرورك.</string>
+    <string name="backup_reminder_cta">نسخ احتياطي الآن</string>
 </resources>

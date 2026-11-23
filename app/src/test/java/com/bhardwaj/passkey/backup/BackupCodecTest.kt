@@ -1,5 +1,6 @@
 package com.bhardwaj.passkey.backup
 
+import com.bhardwaj.passkey.data.backup.BackupCheck
 import com.bhardwaj.passkey.data.backup.BackupCodec
 import com.bhardwaj.passkey.data.backup.BackupError
 import com.bhardwaj.passkey.data.backup.BackupException
@@ -191,5 +192,31 @@ class BackupCodecTest {
         val target = FakePasskeyRepository()
         BackupCodec(target).restore(hostile, ImportMode.MERGE)
         assertTrue(target.allTotp.single().config.issuer!!.length <= 256)
+    }
+
+    @Test
+    fun `verifying reads what a backup holds and changes nothing`() = runTest {
+        // 6.0.0 "Verify a backup".
+        val source = FakePasskeyRepository().seed()
+        source.createTotp(source.allPreviews.first().id, "me", TotpConfig(secret = byteArrayOf(1, 2, 3, 4, 5)))
+        val bytes = BackupCodec(source).encode(password.copyOf(), exportedAt = 1_234L, appVersion = "test")
+
+        val target = FakePasskeyRepository()
+        val codec = BackupCodec(target)
+        val check = codec.check(codec.decode(bytes, password.copyOf()).getOrThrow())
+        assertEquals(
+            BackupCheck(entries = 2, fields = 3, authenticators = 1, exportedAt = 1_234L, legacyFormat = false),
+            check
+        )
+        assertTrue("nothing imported", target.allPreviews.isEmpty() && target.transactions == 0)
+    }
+
+    @Test
+    fun `an old CSV backup verifies as legacy, with no date`() = runTest {
+        val csv = "Bank,BANKS,PIN,4321\nMail,MAILS,Password,hunter2\n".toByteArray()
+        val codec = BackupCodec(FakePasskeyRepository())
+        val check = codec.check(codec.decode(csv, null).getOrThrow())
+        assertEquals(true, check.legacyFormat)
+        assertEquals(null, check.exportedAt)
     }
 }

@@ -267,4 +267,12 @@
     <string name="tour_backup_description">“导出数据”会用你设定的密码创建加密备份，“导入数据”可在任何手机上恢复。即使屏幕锁定方式改变，恢复密码也能打开保险库。</string>
     <string name="tour_privacy_heading">离开即\n[[锁定]]。</string>
     <string name="tour_privacy_description">在“设置”中设置“自动锁定”时间。截屏被阻止，复制的密码会自动清除，你保存的任何内容都不会离开这部手机。</string>
+
+    <!-- 6.0.0 backup confidence -->
+    <string name="verify_backup">验证备份</string>
+    <string name="verify_backup_ok">备份完好：%1$d 个条目和 %2$d 个验证器，保存于 %3$s。未导入任何内容。</string>
+    <string name="verify_backup_ok_legacy">备份可以读取：%1$d 个条目。这是旧的未加密文件，请导出新的加密备份。</string>
+    <string name="backup_reminder_title">备份你的保险库</string>
+    <string name="backup_reminder_body">如果手机丢失或重置，备份是找回密码的唯一方式。</string>
+    <string name="backup_reminder_cta">立即备份</string>
 </resources>

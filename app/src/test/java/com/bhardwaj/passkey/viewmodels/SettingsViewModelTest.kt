@@ -3,6 +3,8 @@ package com.bhardwaj.passkey.viewmodels
 import android.net.Uri
 import com.bhardwaj.passkey.BuildConfig
 import com.bhardwaj.passkey.R
+import com.bhardwaj.passkey.core.Clock
+import com.bhardwaj.passkey.data.backup.BackupCheck
 import com.bhardwaj.passkey.data.backup.BackupError
 import com.bhardwaj.passkey.data.backup.BackupException
 import com.bhardwaj.passkey.data.backup.BackupRepository
@@ -18,6 +20,7 @@ import com.bhardwaj.passkey.presentation.screens.settings_screen.SettingsDialog
 import com.bhardwaj.passkey.presentation.screens.settings_screen.SettingsEffect
 import com.bhardwaj.passkey.presentation.screens.settings_screen.SettingsIntent
 import com.bhardwaj.passkey.presentation.screens.settings_screen.SettingsViewModel
+import com.bhardwaj.passkey.testing.FakeBackupReminderStore
 import com.bhardwaj.passkey.testing.FakePasskeyRepository
 import com.bhardwaj.passkey.testing.MainDispatcherRule
 import com.bhardwaj.passkey.utils.UiText
@@ -50,6 +53,7 @@ class SettingsViewModelTest {
     private val backups = mockk<BackupRepository>()
     private val keyManager = mockk<DatabaseKeyManager>()
     private val uri = mockk<Uri>()
+    private val reminders = FakeBackupReminderStore()
 
     private fun TestScope.vm() = SettingsViewModel(
         repository = vault,
@@ -57,6 +61,8 @@ class SettingsViewModelTest {
         backupRepository = backups,
         secretKeywords = { setOf("pin") },
         keyManager = keyManager,
+        reminderStore = reminders,
+        clock = Clock { NOW },
         workDispatcher = UnconfinedTestDispatcher(testScheduler)
     ).also { vm -> backgroundScope.launch(UnconfinedTestDispatcher(testScheduler)) { vm.state.collect {} } }
 
@@ -156,6 +162,54 @@ class SettingsViewModelTest {
     }
 
     @Test
+    fun `a successful export is remembered for the backup reminder, a failed one is not`() = runTest {
+        coEvery { backups.export(any(), any()) } returns Result.failure(BackupException(BackupError.WriteFailed))
+        val vm = vm()
+        vm.onIntent(SettingsIntent.ExportChosen(uri, "p".toCharArray()))
+        vm.effects.first()
+        assertNull(reminders.flow.value.lastBackupAt)
+
+        coEvery { backups.export(any(), any()) } returns Result.success(Unit)
+        vm.onIntent(SettingsIntent.ExportChosen(uri, "p".toCharArray()))
+        vm.effects.first()
+        assertEquals(NOW, reminders.flow.value.lastBackupAt)
+    }
+
+    @Test
+    fun `verifying a backup reports what it holds, imports nothing and wipes the password`() = runTest {
+        coEvery { backups.verify(any(), any()) } returns
+            Result.success(
+                BackupCheck(entries = 12, fields = 30, authenticators = 2, exportedAt = NOW, legacyFormat = false)
+            )
+        val vm = vm()
+        val password = "backup pass".toCharArray()
+        vm.onIntent(SettingsIntent.VerifyChosen(uri, password))
+        val message = (vm.effects.first() as SettingsEffect.ShowSnackbar).message as UiText.StringResource
+        assertEquals(R.string.verify_backup_ok, message.resId)
+        assertEquals(listOf(12, 2), message.args.take(2))
+        assertTrue(password.all { it == Char(0) })
+        coVerify(exactly = 0) { backups.import(any(), any(), any()) }
+
+        coEvery { backups.verify(any(), any()) } returns
+            Result.success(
+                BackupCheck(entries = 4, fields = 4, authenticators = 0, exportedAt = null, legacyFormat = true)
+            )
+        vm.onIntent(SettingsIntent.VerifyChosen(uri, null))
+        assertEquals(
+            SettingsEffect.ShowSnackbar(UiText.StringResource(R.string.verify_backup_ok_legacy, listOf(4))),
+            vm.effects.first()
+        )
+
+        coEvery { backups.verify(any(), any()) } returns
+            Result.failure(BackupException(BackupError.WrongPasswordOrCorrupt))
+        vm.onIntent(SettingsIntent.VerifyChosen(uri, "x".toCharArray()))
+        assertEquals(
+            SettingsEffect.ShowSnackbar(UiText.StringResource(R.string.import_wrong_password)),
+            vm.effects.first()
+        )
+    }
+
+    @Test
     fun `import maps each failure to a message the user can act on`() = runTest {
         coEvery { backups.import(any(), any(), any()) } returns
             Result.failure(BackupException(BackupError.WrongPasswordOrCorrupt))
@@ -216,6 +270,10 @@ class SettingsViewModelTest {
         vm.onIntent(SettingsIntent.AutofillHelpContinue)
         assertNull(vm.state.value.dialog)
         assertEquals(SettingsEffect.OpenAutofillSettings, vm.effects.first())
+    }
+
+    private companion object {
+        const val NOW = 1_800_000_000_000L
     }
 
     private class FakePreferences : PreferencesRepository {

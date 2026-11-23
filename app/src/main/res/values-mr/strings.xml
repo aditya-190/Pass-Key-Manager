@@ -269,4 +269,12 @@
     <string name="tour_backup_description">डेटा निर्यात करा तुम्ही निवडलेल्या पासवर्डने एन्क्रिप्टेड बॅकअप बनवते, आणि डेटा आयात करा तो कोणत्याही फोनवर परत आणते. स्क्रीन लॉक बदलल्यास तुमचा रिकव्हरी पासवर्ड व्हॉल्ट उघडतो.</string>
     <string name="tour_privacy_heading">बाहेर पडताच\n[[लॉक]].</string>
     <string name="tour_privacy_description">सेटिंग्ज मध्ये स्वयं-लॉक ची वेळ निवडा. स्क्रीनशॉट बंद असतात, कॉपी केलेले पासवर्ड आपोआप पुसले जातात, आणि तुम्ही जतन केलेले काहीही या फोनबाहेर जात नाही.</string>
+
+    <!-- 6.0.0 backup confidence -->
+    <string name="verify_backup">बॅकअप तपासा</string>
+    <string name="verify_backup_ok">बॅकअप ठीक आहे: %1$d नोंदी आणि %2$d ऑथेंटिकेटर, %3$s रोजी जतन. काहीही इम्पोर्ट झाले नाही.</string>
+    <string name="verify_backup_ok_legacy">बॅकअप वाचता येतो: %1$d नोंदी. ही जुनी एन्क्रिप्शन नसलेली फाइल आहे, म्हणून नवीन एन्क्रिप्टेड बॅकअप एक्सपोर्ट करा.</string>
+    <string name="backup_reminder_title">तुमच्या व्हॉल्टचा बॅकअप घ्या</string>
+    <string name="backup_reminder_body">हा फोन हरवला किंवा रीसेट झाला, तर बॅकअप हाच तुमचे पासवर्ड परत मिळवण्याचा एकमेव मार्ग आहे.</string>
+    <string name="backup_reminder_cta">आता बॅकअप घ्या</string>
 </resources>

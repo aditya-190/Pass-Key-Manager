@@ -254,4 +254,12 @@
     <string name="tour_backup_description">Export Data makes an encrypted backup with a password you choose, and Import Data restores it on any phone. Your recovery password opens the vault if your screen lock changes.</string>
     <string name="tour_privacy_heading">Locked\nWhen You\n[[Leave]].</string>
     <string name="tour_privacy_description">Set your Auto-lock time in Settings. Screenshots are blocked, copied passwords clear themselves, and nothing you save leaves this phone.</string>
+
+    <!-- 6.0.0 backup confidence -->
+    <string name="verify_backup">Verify a backup</string>
+    <string name="verify_backup_ok">Backup is good: %1$d entries and %2$d authenticators, saved on %3$s. Nothing was imported.</string>
+    <string name="verify_backup_ok_legacy">Backup can be read: %1$d entries. It is an old unencrypted file, so export a new encrypted backup.</string>
+    <string name="backup_reminder_title">Back up your vault</string>
+    <string name="backup_reminder_body">If this phone is lost or reset, a backup is the only way to get your passwords back.</string>
+    <string name="backup_reminder_cta">Back up now</string>
 </resources>

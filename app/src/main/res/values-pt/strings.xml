@@ -271,4 +271,12 @@
     <string name="tour_backup_description">Exportar Dados cria um backup criptografado com uma senha que você escolhe, e Importar Dados o restaura em qualquer celular. Sua senha de recuperação abre o cofre se o bloqueio de tela mudar.</string>
     <string name="tour_privacy_heading">Bloqueado\nquando você\n[[sai]].</string>
     <string name="tour_privacy_description">Escolha o tempo de Bloqueio automático em Configurações. Capturas de tela são bloqueadas, senhas copiadas se apagam sozinhas e nada do que você salva sai deste celular.</string>
+
+    <!-- 6.0.0 backup confidence -->
+    <string name="verify_backup">Verificar um backup</string>
+    <string name="verify_backup_ok">O backup está ok: %1$d entradas e %2$d autenticadores, salvo em %3$s. Nada foi importado.</string>
+    <string name="verify_backup_ok_legacy">O backup pode ser lido: %1$d entradas. É um arquivo antigo sem criptografia, então exporte um novo backup criptografado.</string>
+    <string name="backup_reminder_title">Faça backup do seu cofre</string>
+    <string name="backup_reminder_body">Se este celular for perdido ou redefinido, um backup é a única forma de recuperar suas senhas.</string>
+    <string name="backup_reminder_cta">Fazer backup agora</string>
 </resources>

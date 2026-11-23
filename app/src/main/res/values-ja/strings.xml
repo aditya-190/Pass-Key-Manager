@@ -266,4 +266,12 @@
     <string name="tour_backup_description">「データをエクスポート」で自分で決めたパスワード付きの暗号化バックアップを作成し、「データをインポート」でどのスマートフォンにも復元できます。画面ロックが変わっても、復旧用パスワードで保管庫を開けます。</string>
     <string name="tour_privacy_heading">離れたら\n[[すぐロック]]。</string>
     <string name="tour_privacy_description">「設定」で「自動ロック」の時間を選べます。スクリーンショットはブロックされ、コピーしたパスワードは自動で消え、保存した内容がこのスマートフォンの外に出ることはありません。</string>
+
+    <!-- 6.0.0 backup confidence -->
+    <string name="verify_backup">バックアップを確認</string>
+    <string name="verify_backup_ok">バックアップは正常です: エントリ %1$d 件、認証システム %2$d 件、%3$s に保存。何もインポートしていません。</string>
+    <string name="verify_backup_ok_legacy">バックアップを読み取れます: エントリ %1$d 件。暗号化されていない古いファイルのため、新しい暗号化バックアップをエクスポートしてください。</string>
+    <string name="backup_reminder_title">保管庫をバックアップ</string>
+    <string name="backup_reminder_body">このスマートフォンを紛失したりリセットしたりした場合、パスワードを取り戻す方法はバックアップだけです。</string>
+    <string name="backup_reminder_cta">今すぐバックアップ</string>
 </resources>

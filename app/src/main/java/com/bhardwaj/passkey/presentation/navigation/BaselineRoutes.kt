@@ -5,8 +5,10 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.bhardwaj.passkey.R
 import com.bhardwaj.passkey.about.AboutEffectsHandler
 import com.bhardwaj.passkey.about.AboutScreen
 import com.bhardwaj.passkey.about.AboutViewModel
@@ -14,10 +16,14 @@ import com.bhardwaj.passkey.about.ExternalLinks
 import com.bhardwaj.passkey.about.LicencesScreen
 import com.bhardwaj.passkey.about.OssLibrary
 import com.bhardwaj.passkey.about.baselineLibraries
+import com.bhardwaj.passkey.backupreminder.BackupReminderIntent
+import com.bhardwaj.passkey.backupreminder.BackupReminderViewModel
+import com.bhardwaj.passkey.banner.Announcement
 import com.bhardwaj.passkey.banner.AnnouncementBanner
 import com.bhardwaj.passkey.banner.AnnouncementEffect
 import com.bhardwaj.passkey.banner.AnnouncementIntent
 import com.bhardwaj.passkey.banner.AnnouncementRoutes
+import com.bhardwaj.passkey.banner.AnnouncementStyle
 import com.bhardwaj.passkey.banner.AnnouncementViewModel
 import com.bhardwaj.passkey.legal.LegalDocument
 import com.bhardwaj.passkey.legal.LegalEffect
@@ -80,10 +86,42 @@ fun HomeAnnouncement(onNavigate: (NavRoute) -> Unit, modifier: Modifier = Modifi
             }
         }
     }
+    // The backup reminder (6.0.0) uses the same card, and only when no announcement is live: one card at a time.
+    val reminderViewModel: BackupReminderViewModel = hiltViewModel()
+    val reminderDue by reminderViewModel.isDue.collectAsStateWithLifecycle()
+    val reminder = if (reminderDue) {
+        Announcement(
+            id = BACKUP_REMINDER_ID,
+            title = stringResource(R.string.backup_reminder_title),
+            body = stringResource(R.string.backup_reminder_body),
+            ctaLabel = stringResource(R.string.backup_reminder_cta),
+            route = BACKUP_REMINDER_ROUTE,
+            style = AnnouncementStyle.INFO
+        )
+    } else {
+        null
+    }
     AnnouncementBanner(
-        announcement = announcement,
-        onCta = { viewModel.onIntent(AnnouncementIntent.CtaClicked(it)) },
-        onDismiss = { viewModel.onIntent(AnnouncementIntent.Dismissed(it)) },
+        announcement = announcement ?: reminder,
+        onCta = {
+            if (it.id == BACKUP_REMINDER_ID) {
+                reminderViewModel.onIntent(BackupReminderIntent.BackUpNow)
+                onNavigate(NavRoute.Settings)
+            } else {
+                viewModel.onIntent(AnnouncementIntent.CtaClicked(it))
+            }
+        },
+        onDismiss = {
+            if (it.id == BACKUP_REMINDER_ID) {
+                reminderViewModel.onIntent(BackupReminderIntent.Later)
+            } else {
+                viewModel.onIntent(AnnouncementIntent.Dismissed(it))
+            }
+        },
         modifier = modifier
     )
 }
+
+/** Local id: Remote Config ids are free text, so this one is prefixed to never collide with them. */
+private const val BACKUP_REMINDER_ID = "local_backup_reminder"
+private const val BACKUP_REMINDER_ROUTE = "settings_page"

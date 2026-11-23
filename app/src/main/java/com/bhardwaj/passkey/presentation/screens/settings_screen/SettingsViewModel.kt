@@ -4,12 +4,15 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bhardwaj.passkey.BuildConfig
 import com.bhardwaj.passkey.R
+import com.bhardwaj.passkey.core.Clock
+import com.bhardwaj.passkey.data.backup.BackupCheck
 import com.bhardwaj.passkey.data.backup.BackupError
 import com.bhardwaj.passkey.data.backup.BackupException
 import com.bhardwaj.passkey.data.backup.BackupRepository
 import com.bhardwaj.passkey.data.security.DatabaseKeyManager
 import com.bhardwaj.passkey.di.WorkDispatcher
 import com.bhardwaj.passkey.domain.model.AutoLockTimeout
+import com.bhardwaj.passkey.domain.repository.BackupReminderStore
 import com.bhardwaj.passkey.domain.repository.PasskeyRepository
 import com.bhardwaj.passkey.domain.repository.PreferencesRepository
 import com.bhardwaj.passkey.presentation.navigation.NavRoute
@@ -17,7 +20,9 @@ import com.bhardwaj.passkey.utils.PasswordAnalyzer
 import com.bhardwaj.passkey.utils.SecretKeywords
 import com.bhardwaj.passkey.utils.UiText
 import dagger.hilt.android.lifecycle.HiltViewModel
+import java.text.DateFormat
 import java.util.Arrays
+import java.util.Date
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.channels.Channel
@@ -41,6 +46,8 @@ class SettingsViewModel @Inject constructor(
     private val backupRepository: BackupRepository,
     private val secretKeywords: SecretKeywords,
     private val keyManager: DatabaseKeyManager,
+    private val reminderStore: BackupReminderStore,
+    private val clock: Clock,
     @param:WorkDispatcher private val workDispatcher: CoroutineDispatcher
 ) : ViewModel() {
     private val _effects = Channel<SettingsEffect>(Channel.BUFFERED)
@@ -88,10 +95,29 @@ class SettingsViewModel @Inject constructor(
                 showDialog(null)
             }
 
+            is SettingsIntent.ExportChosen,
+            is SettingsIntent.VerifyChosen,
+            is SettingsIntent.ImportChosen -> onBackupIntent(intent)
+        }
+    }
+
+    /** Export, verify and import: one at a time, passwords always wiped. */
+    private fun onBackupIntent(intent: SettingsIntent) {
+        when (intent) {
             is SettingsIntent.ExportChosen -> runBackup {
                 val result = backupRepository.export(intent.uri, intent.password)
                 Arrays.fill(intent.password, Char(0))
+                if (result.isSuccess) reminderStore.recordBackup(clock.nowMs())
                 snackbar(if (result.isSuccess) R.string.export_success else R.string.export_failed)
+            }
+
+            is SettingsIntent.VerifyChosen -> runBackup {
+                val result = backupRepository.verify(intent.uri, intent.password)
+                intent.password?.let { Arrays.fill(it, Char(0)) }
+                result.fold(
+                    onSuccess = { check -> send(SettingsEffect.ShowSnackbar(verifyMessage(check))) },
+                    onFailure = { error -> snackbar(importFailureMessage(error)) }
+                )
             }
 
             is SettingsIntent.ImportChosen -> runBackup {
@@ -111,6 +137,7 @@ class SettingsViewModel @Inject constructor(
                     onFailure = { error -> snackbar(importFailureMessage(error)) }
                 )
             }
+            else -> Unit
         }
     }
 
@@ -180,6 +207,13 @@ class SettingsViewModel @Inject constructor(
         BackupError.FileTooLarge -> R.string.import_file_too_large
         is BackupError.UnsupportedVersion -> R.string.import_unsupported_version
         else -> R.string.import_failed
+    }
+
+    private fun verifyMessage(check: BackupCheck): UiText = if (check.legacyFormat) {
+        UiText.StringResource(R.string.verify_backup_ok_legacy, listOf(check.entries))
+    } else {
+        val date = check.exportedAt?.let { DateFormat.getDateInstance(DateFormat.MEDIUM).format(Date(it)) } ?: "?"
+        UiText.StringResource(R.string.verify_backup_ok, listOf(check.entries, check.authenticators, date))
     }
 
     private fun snackbar(message: Int) = send(SettingsEffect.ShowSnackbar(UiText.StringResource(message)))

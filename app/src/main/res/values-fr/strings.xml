@@ -271,4 +271,12 @@
     <string name="tour_backup_description">Exporter les données crée une sauvegarde chiffrée avec le mot de passe de votre choix, et Importer les données la restaure sur n\'importe quel téléphone. Votre mot de passe de récupération ouvre le coffre si le verrouillage de l\'écran change.</string>
     <string name="tour_privacy_heading">Verrouillé\ndès que vous\n[[partez]].</string>
     <string name="tour_privacy_description">Réglez le délai de Verrouillage auto dans Paramètres. Les captures d\'écran sont bloquées, les mots de passe copiés s\'effacent seuls et rien de ce que vous enregistrez ne quitte ce téléphone.</string>
+
+    <!-- 6.0.0 backup confidence -->
+    <string name="verify_backup">Vérifier une sauvegarde</string>
+    <string name="verify_backup_ok">Sauvegarde valide : %1$d entrées et %2$d authentificateurs, enregistrée le %3$s. Rien n\'a été importé.</string>
+    <string name="verify_backup_ok_legacy">Sauvegarde lisible : %1$d entrées. C\'est un ancien fichier non chiffré, exportez donc une nouvelle sauvegarde chiffrée.</string>
+    <string name="backup_reminder_title">Sauvegardez votre coffre</string>
+    <string name="backup_reminder_body">Si ce téléphone est perdu ou réinitialisé, une sauvegarde est le seul moyen de récupérer vos mots de passe.</string>
+    <string name="backup_reminder_cta">Sauvegarder maintenant</string>
 </resources>

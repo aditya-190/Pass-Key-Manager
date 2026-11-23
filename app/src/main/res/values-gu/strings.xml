@@ -268,4 +268,12 @@
     <string name="tour_backup_description">ડેટા નિર્યાત કરો તમારા પસંદ કરેલા પાસવર્ડથી એન્ક્રિપ્ટેડ બૅકઅપ બનાવે છે, અને ડેટા આયાત કરો તેને કોઈપણ ફોન પર પાછું લાવે છે. સ્ક્રીન લૉક બદલાય તો તમારો રિકવરી પાસવર્ડ વૉલ્ટ ખોલે છે.</string>
     <string name="tour_privacy_heading">બહાર જતાં જ\n[[લૉક]].</string>
     <string name="tour_privacy_description">સેટિંગ્સ માં ઑટો-લૉક નો સમય પસંદ કરો. સ્ક્રીનશૉટ બંધ રહે છે, કૉપિ કરેલા પાસવર્ડ જાતે ભૂંસાઈ જાય છે, અને તમે સાચવેલું કશું આ ફોનની બહાર જતું નથી.</string>
+
+    <!-- 6.0.0 backup confidence -->
+    <string name="verify_backup">બૅકઅપ ચકાસો</string>
+    <string name="verify_backup_ok">બૅકઅપ બરાબર છે: %1$d એન્ટ્રી અને %2$d ઑથેન્ટિકેટર, %3$s ના રોજ સાચવેલ. કશું ઇમ્પોર્ટ થયું નથી.</string>
+    <string name="verify_backup_ok_legacy">બૅકઅપ વાંચી શકાય છે: %1$d એન્ટ્રી. આ જૂની એન્ક્રિપ્શન વગરની ફાઇલ છે, તેથી નવો એન્ક્રિપ્ટેડ બૅકઅપ એક્સપોર્ટ કરો.</string>
+    <string name="backup_reminder_title">તમારા વૉલ્ટનો બૅકઅપ લો</string>
+    <string name="backup_reminder_body">આ ફોન ખોવાય કે રીસેટ થાય, તો બૅકઅપ જ તમારા પાસવર્ડ પાછા મેળવવાનો એકમાત્ર રસ્તો છે.</string>
+    <string name="backup_reminder_cta">હમણાં બૅકઅપ લો</string>
 </resources>

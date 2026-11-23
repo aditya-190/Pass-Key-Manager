@@ -247,3 +247,24 @@ class FakeConfig(overrides: Map<String, Any> = emptyMap()) : com.bhardwaj.passke
         flow.value = com.bhardwaj.passkey.config.AppConfig(com.bhardwaj.passkey.config.MapConfigReader(overrides))
     }
 }
+
+/** In-memory backup reminder store (6.0.0). */
+class FakeBackupReminderStore(
+    initial: com.bhardwaj.passkey.domain.repository.BackupReminderState =
+        com.bhardwaj.passkey.domain.repository.BackupReminderState()
+) : com.bhardwaj.passkey.domain.repository.BackupReminderStore {
+    val flow = kotlinx.coroutines.flow.MutableStateFlow(initial)
+    override val state: kotlinx.coroutines.flow.Flow<com.bhardwaj.passkey.domain.repository.BackupReminderState> = flow
+
+    override suspend fun recordBackup(at: Long) {
+        flow.value = flow.value.copy(lastBackupAt = at)
+    }
+
+    override suspend fun markFirstSeen(at: Long) {
+        if (flow.value.firstSeenAt == null) flow.value = flow.value.copy(firstSeenAt = at)
+    }
+
+    override suspend fun snooze(until: Long) {
+        flow.value = flow.value.copy(snoozedUntil = until)
+    }
+}

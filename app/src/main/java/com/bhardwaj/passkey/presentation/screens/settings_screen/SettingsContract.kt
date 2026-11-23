@@ -55,6 +55,9 @@ sealed interface SettingsIntent {
 
     /** [password] is null for a legacy plaintext .passkey file, which needs none. */
     class ImportChosen(val uri: Uri, val password: CharArray?, val mode: ImportMode) : SettingsIntent
+
+    /** Read a backup and report what it holds, without importing (6.0.0). [password] is null for old CSV files. */
+    class VerifyChosen(val uri: Uri, val password: CharArray?) : SettingsIntent
 }
 
 sealed interface SettingsEffect {

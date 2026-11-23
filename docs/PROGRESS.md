@@ -186,3 +186,15 @@ Owner direction (2026-11-23): no UI change; additive, update-safe features; goal
   process death re-counted `feature_tour_started` → flag in SavedStateHandle (red → green). #5 translations → native
   review list.
 - Gates green (307 unit); instrumented 35/35 on the Moto G34 (via `am instrument`, app data kept).
+
+### 6b: backup confidence, code-complete
+- Settings › "Verify a backup" (after Export Data): same file picker and password dialog as Import; reports entries,
+  authenticators and the backup's date, or the same error messages as Import. Nothing is imported.
+- Home backup reminder in the existing announcement card (only when no announcement is live): 3 days after the first
+  look if never backed up, 30 days after the last successful export. "Back up now" opens Settings (rests 1 day);
+  dismiss = 7 days. Never for an empty vault. Clock-safe.
+- 6 strings in 17 languages. Events `backup_reminder_tapped`, `backup_reminder_snoozed`.
+- TDD: 10 red → green (`BackupReminderTest` 6 of 7, `BackupCodecTest` 2, `SettingsViewModelTest` 2). Simulation:
+  2,000 reminder seeds (empty vault, snooze, fresh backup, liveness) and 40 encrypted verify runs with tampered,
+  truncated and wrong-password files, 0 failures.
+

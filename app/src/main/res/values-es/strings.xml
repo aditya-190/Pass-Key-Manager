@@ -271,4 +271,12 @@
     <string name="tour_backup_description">Exportar Datos crea una copia cifrada con una contraseña que tú eliges, e Importar Datos la restaura en cualquier teléfono. Tu contraseña de recuperación abre la bóveda si cambia el bloqueo de pantalla.</string>
     <string name="tour_privacy_heading">Se bloquea\ncuando te\n[[vas]].</string>
     <string name="tour_privacy_description">Elige el tiempo de Bloqueo automático en Ajustes. Las capturas de pantalla están bloqueadas, las contraseñas copiadas se borran solas y nada de lo que guardas sale de este teléfono.</string>
+
+    <!-- 6.0.0 backup confidence -->
+    <string name="verify_backup">Verificar una copia</string>
+    <string name="verify_backup_ok">La copia está bien: %1$d entradas y %2$d autenticadores, guardada el %3$s. No se importó nada.</string>
+    <string name="verify_backup_ok_legacy">La copia se puede leer: %1$d entradas. Es un archivo antiguo sin cifrar, así que exporta una copia cifrada nueva.</string>
+    <string name="backup_reminder_title">Haz una copia de tu bóveda</string>
+    <string name="backup_reminder_body">Si pierdes o restableces este teléfono, una copia es la única forma de recuperar tus contraseñas.</string>
+    <string name="backup_reminder_cta">Hacer copia ahora</string>
 </resources>

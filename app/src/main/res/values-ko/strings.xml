@@ -267,4 +267,12 @@
     <string name="tour_backup_description">데이터 내보내기 기능은 직접 정한 비밀번호로 암호화된 백업을 만들고, 데이터 가져오기 기능으로 어떤 휴대전화에서든 복원할 수 있습니다. 화면 잠금이 바뀌어도 복구 비밀번호로 보관함을 열 수 있습니다.</string>
     <string name="tour_privacy_heading">떠나면\n[[바로 잠금]].</string>
     <string name="tour_privacy_description">설정에서 자동 잠금 시간을 정하세요. 스크린샷은 차단되고, 복사한 비밀번호는 저절로 지워지며, 저장한 내용은 이 휴대전화 밖으로 나가지 않습니다.</string>
+
+    <!-- 6.0.0 backup confidence -->
+    <string name="verify_backup">백업 확인</string>
+    <string name="verify_backup_ok">백업이 정상입니다: 항목 %1$d개, 인증기 %2$d개, %3$s에 저장됨. 아무것도 가져오지 않았습니다.</string>
+    <string name="verify_backup_ok_legacy">백업을 읽을 수 있습니다: 항목 %1$d개. 암호화되지 않은 이전 파일이므로 새 암호화 백업을 내보내세요.</string>
+    <string name="backup_reminder_title">보관함을 백업하세요</string>
+    <string name="backup_reminder_body">휴대전화를 잃어버리거나 초기화하면 백업만이 비밀번호를 되찾는 유일한 방법입니다.</string>
+    <string name="backup_reminder_cta">지금 백업</string>
 </resources>
