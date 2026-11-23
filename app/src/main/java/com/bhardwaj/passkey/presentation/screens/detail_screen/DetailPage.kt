@@ -57,7 +57,6 @@ import com.bhardwaj.passkey.R
 import com.bhardwaj.passkey.presentation.screens.common.ObserveAsEvents
 import com.bhardwaj.passkey.presentation.screens.common.PassKeyButton
 import com.bhardwaj.passkey.presentation.screens.common.PasskeySearchBar
-import com.bhardwaj.passkey.presentation.screens.detail_screen.DetailEvents
 import com.bhardwaj.passkey.presentation.screens.detail_screen.DetailViewModel
 import com.bhardwaj.passkey.presentation.screens.detail_screen.components.DetailsBottomSheet
 import com.bhardwaj.passkey.presentation.screens.detail_screen.components.DetailsItem
@@ -65,7 +64,6 @@ import com.bhardwaj.passkey.presentation.screens.detail_screen.components.Passwo
 import com.bhardwaj.passkey.presentation.theme.BebasNeue
 import com.bhardwaj.passkey.utils.ButtonType
 import com.bhardwaj.passkey.utils.SecureClipboard
-import com.bhardwaj.passkey.utils.UiEvents
 import com.bhardwaj.passkey.utils.UiText
 import com.bhardwaj.passkey.utils.asString
 import kotlinx.coroutines.launch
@@ -75,54 +73,41 @@ import sh.calvin.reorderable.rememberReorderableLazyListState
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun DetailScreen(onPopBackStack: () -> Unit, viewModel: DetailViewModel = hiltViewModel()) {
-    val detailTitle by viewModel.detailTitle.collectAsStateWithLifecycle()
-    val detailResponse by viewModel.detailResponse.collectAsStateWithLifecycle()
-    val isSecretField by viewModel.isSecretField.collectAsStateWithLifecycle()
-    val isEditingSheet by viewModel.isEditingSheet.collectAsStateWithLifecycle()
+    val uiState by viewModel.state.collectAsStateWithLifecycle()
+    // Stable, so rows do not recompose on every search keystroke.
+    val onIntent = remember(viewModel) { viewModel::onIntent }
     // Resolved here rather than in the ViewModel so it follows the app locale.
-    val bottomSheetHeading =
-        stringResource(if (isEditingSheet) R.string.edit else R.string.add)
-    val searchText by viewModel.searchText.collectAsStateWithLifecycle()
-    val details by viewModel.details.collectAsStateWithLifecycle()
+    val bottomSheetHeading = stringResource(if (uiState.editor?.isEdit == true) R.string.edit else R.string.add)
+    val searchText = uiState.query
+    val details = uiState.items
 
     val snackBarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
     val view = LocalView.current
     val lazyListState = rememberLazyListState()
     val reorderableLazyColumnState = rememberReorderableLazyListState(lazyListState) { from, to ->
-        viewModel.onEvent(DetailEvents.OnReorderDetails(from, to))
+        onIntent(DetailIntent.Moved(from.index, to.index))
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
             view.performHapticFeedback(HapticFeedbackConstants.SEGMENT_FREQUENT_TICK)
         }
     }
-    val isPasswordSettingsOpen = viewModel.isPasswordSettingsOpen
-
     val context = LocalContext.current
     val undoLabel = stringResource(R.string.undo)
 
-    ObserveAsEvents(viewModel.uiEvents) { event ->
+    ObserveAsEvents(viewModel.effects) { event ->
         when (event) {
-            is UiEvents.PopBackStack -> onPopBackStack()
-            is UiEvents.ShowUndo -> {
+            is DetailEffect.ShowUndo -> {
                 scope.launch {
                     val result = snackBarHostState.showSnackbar(
                         message = event.message.asString(context),
                         actionLabel = undoLabel,
                         duration = SnackbarDuration.Long
                     )
-                    if (result == SnackbarResult.ActionPerformed) viewModel.onEvent(DetailEvents.OnUndoDelete)
+                    if (result == SnackbarResult.ActionPerformed) onIntent(DetailIntent.UndoDelete)
                 }
             }
 
-            is UiEvents.ShowSnackBar -> {
-                scope.launch {
-                    snackBarHostState.showSnackbar(
-                        message = event.message.asString(context),
-                        actionLabel = event.action?.asString(context)
-                    )
-                }
-            }
-            is UiEvents.CopyToClipboard -> {
+            is DetailEffect.CopyToClipboard -> {
                 SecureClipboard.copy(
                     context = context,
                     text = event.value,
@@ -137,8 +122,6 @@ fun DetailScreen(onPopBackStack: () -> Unit, viewModel: DetailViewModel = hiltVi
                     }
                 }
             }
-
-            else -> Unit
         }
     }
 
@@ -148,7 +131,7 @@ fun DetailScreen(onPopBackStack: () -> Unit, viewModel: DetailViewModel = hiltVi
             // Content-slot overload on purpose: the text/icon overload clears the label's semantics, which left
             // TalkBack announcing an unlabeled button (found on device).
             ExtendedFloatingActionButton(
-                onClick = { viewModel.onEvent(DetailEvents.OnAddDetailClick) },
+                onClick = { onIntent(DetailIntent.AddClicked) },
                 containerColor = MaterialTheme.colorScheme.primary,
                 contentColor = MaterialTheme.colorScheme.onPrimary
             ) {
@@ -187,14 +170,17 @@ fun DetailScreen(onPopBackStack: () -> Unit, viewModel: DetailViewModel = hiltVi
                             .fillMaxWidth()
                             .padding(top = 8.dp, bottom = 16.dp),
                         query = searchText,
-                        onQueryChange = { viewModel.onEvent(DetailEvents.OnSearchTextUpdate(newText = it)) },
+                        onQueryChange = { onIntent(DetailIntent.QueryChanged(it)) },
                         onTrailingIconClick = {
-                            viewModel.onEvent(DetailEvents.OnSearchTextUpdate(newText = ""))
+                            onIntent(DetailIntent.QueryChanged(""))
                         }
                     )
                 }
 
-                if (details.isEmpty()) {
+                if (uiState.isLoading) {
+                    // Blank while the first rows load, instead of flashing the empty illustration.
+                    Spacer(modifier = Modifier.weight(1F))
+                } else if (details.isEmpty()) {
                     Image(
                         modifier = Modifier
                             .weight(1F)
@@ -212,7 +198,7 @@ fun DetailScreen(onPopBackStack: () -> Unit, viewModel: DetailViewModel = hiltVi
                             key = { item -> item.id }
                         ) { detail ->
                             if (searchText.isNotBlank()) {
-                                DetailsItem(details = detail, onEvent = viewModel::onEvent)
+                                DetailsItem(details = detail, onIntent = onIntent)
                             } else {
                                 val state = rememberSwipeToDismissBoxState(
                                     initialValue = SwipeToDismissBoxValue.Settled,
@@ -221,7 +207,7 @@ fun DetailScreen(onPopBackStack: () -> Unit, viewModel: DetailViewModel = hiltVi
 
                                 LaunchedEffect(state.currentValue) {
                                     if (state.currentValue == SwipeToDismissBoxValue.EndToStart) {
-                                        viewModel.onEvent(DetailEvents.OnSwipedLeft(detail))
+                                        onIntent(DetailIntent.SwipedToDelete(detail))
                                         state.snapTo(SwipeToDismissBoxValue.Settled)
                                     }
                                 }
@@ -253,7 +239,7 @@ fun DetailScreen(onPopBackStack: () -> Unit, viewModel: DetailViewModel = hiltVi
                                             DetailsItem(
                                                 scope = this@ReorderableItem,
                                                 details = detail,
-                                                onEvent = viewModel::onEvent
+                                                onIntent = onIntent
                                             )
                                         },
                                         enableDismissFromEndToStart = true,
@@ -265,77 +251,51 @@ fun DetailScreen(onPopBackStack: () -> Unit, viewModel: DetailViewModel = hiltVi
                     }
                 }
             }
-            if (viewModel.isSheetOpen) {
+            uiState.editor?.let { editor ->
                 DetailsBottomSheet(
                     modifier = Modifier,
                     bottomSheetHeading = bottomSheetHeading,
-                    detailTitle = detailTitle,
-                    detailResponse = detailResponse,
-                    isSecret = isSecretField,
-                    error = viewModel.sheetError?.asString(context),
-                    onSecretToggle = { viewModel.onEvent(DetailEvents.OnSecretToggle(it)) },
-                    onTitleChange = {
-                        viewModel.onEvent(DetailEvents.OnTitleChange(it))
-                    },
-                    onDescriptionChange = {
-                        viewModel.onEvent(DetailEvents.OnDescriptionChange(it))
-                    },
-                    onDismiss = {
-                        viewModel.onEvent(DetailEvents.OnDismissBottomSheet)
-                    },
-                    onSave = {
-                        viewModel.onEvent(DetailEvents.OnSaveClick)
-                    },
-                    onGeneratePasswordClicked = {
-                        viewModel.onEvent(DetailEvents.OnGeneratePasswordClick)
-                    },
-                    onPasswordSettingsClicked = {
-                        viewModel.onEvent(DetailEvents.OnPasswordSettingsClick)
-                    }
+                    detailTitle = editor.question,
+                    detailResponse = editor.answer,
+                    isSecret = editor.isSecret,
+                    error = editor.error?.asString(context),
+                    onSecretToggle = { onIntent(DetailIntent.SecretToggled(it)) },
+                    onTitleChange = { onIntent(DetailIntent.QuestionChanged(it)) },
+                    onDescriptionChange = { onIntent(DetailIntent.AnswerChanged(it)) },
+                    onDismiss = { onIntent(DetailIntent.EditorDismissed) },
+                    onSave = { onIntent(DetailIntent.SaveClicked) },
+                    onGeneratePasswordClicked = { onIntent(DetailIntent.GenerateClicked) },
+                    onPasswordSettingsClicked = { onIntent(DetailIntent.PolicyClicked) }
                 )
             }
         }
-        if (isPasswordSettingsOpen) {
+        if (uiState.isPolicySheetOpen) {
             PasswordSettingsSheet(
-                length = viewModel.passwordLength,
-                includeUpper = viewModel.includeUpper,
-                includeLower = viewModel.includeLower,
-                includeNumbers = viewModel.includeNumbers,
-                includeSpecial = viewModel.includeSpecial,
-                onPasswordLengthChange = {
-                    viewModel.onEvent(DetailEvents.OnPasswordLengthChange(it))
-                },
-                onDismissPasswordSettings = {
-                    viewModel.onEvent(DetailEvents.OnDismissPasswordSettings)
-                },
-                onTogglePasswordOption = { type, checked ->
-                    viewModel.onEvent(DetailEvents.OnTogglePasswordOption(type, checked))
+                policy = uiState.policy,
+                onPasswordLengthChange = { onIntent(DetailIntent.LengthChanged(it)) },
+                onDismissPasswordSettings = { onIntent(DetailIntent.PolicyDismissed) },
+                onToggle = { characterClass, checked ->
+                    onIntent(DetailIntent.CharacterClassToggled(characterClass, checked))
                 }
             )
         }
-        if (viewModel.isAlertOpen) {
+        if (uiState.pendingDelete != null) {
             AlertDialog(
                 properties = DialogProperties(securePolicy = SecureFlagPolicy.SecureOn),
                 containerColor = MaterialTheme.colorScheme.background,
-                onDismissRequest = {
-                    viewModel.onEvent(DetailEvents.OnDismissAlertDialog)
-                },
+                onDismissRequest = { onIntent(DetailIntent.DeleteCancelled) },
                 title = { Text(text = stringResource(id = R.string.confirm_delete_title)) },
                 text = { Text(text = stringResource(id = R.string.confirm_delete_description_question)) },
                 confirmButton = {
                     PassKeyButton(
-                        onClick = {
-                            viewModel.onEvent(DetailEvents.OnDeleteClick)
-                        },
+                        onClick = { onIntent(DetailIntent.DeleteConfirmed) },
                         text = stringResource(id = R.string.delete),
                         buttonType = ButtonType.DEFAULT
                     )
                 },
                 dismissButton = {
                     PassKeyButton(
-                        onClick = {
-                            viewModel.onEvent(DetailEvents.OnCancelClick)
-                        },
+                        onClick = { onIntent(DetailIntent.DeleteCancelled) },
                         text = stringResource(id = R.string.cancel),
                         buttonType = ButtonType.OUTLINED
                     )

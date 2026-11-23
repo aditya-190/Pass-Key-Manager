@@ -1,9 +1,5 @@
 package com.bhardwaj.passkey.presentation.screens.detail_screen
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableFloatStateOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -11,12 +7,11 @@ import com.bhardwaj.passkey.R
 import com.bhardwaj.passkey.analytics.AnalyticsTracker
 import com.bhardwaj.passkey.analytics.AppEvents
 import com.bhardwaj.passkey.domain.model.Detail
+import com.bhardwaj.passkey.domain.model.PasswordPolicy
 import com.bhardwaj.passkey.domain.repository.PasskeyRepository
-import com.bhardwaj.passkey.utils.Constants.Companion.BOTTOM_SHEET_HEADING
 import com.bhardwaj.passkey.utils.PasswordAnalyzer
 import com.bhardwaj.passkey.utils.PasswordGenerator
 import com.bhardwaj.passkey.utils.SecretKeywords
-import com.bhardwaj.passkey.utils.UiEvents
 import com.bhardwaj.passkey.utils.UiText
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -24,298 +19,192 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 @HiltViewModel
 class DetailViewModel @Inject constructor(
     private val repository: PasskeyRepository,
-    private val savedStateHandle: SavedStateHandle,
+    savedStateHandle: SavedStateHandle,
     private val analytics: AnalyticsTracker,
     private val secretKeywords: SecretKeywords
 ) : ViewModel() {
-    // BUFFERED, not the RENDEZVOUS default: with lifecycle-aware collection a backgrounded
-    // screen has no active collector, and a rendezvous channel would suspend the coroutine
-    // that emitted the effect until the user came back.
-    private val _uiEvents = Channel<UiEvents>(Channel.BUFFERED)
-    val uiEvents = _uiEvents.receiveAsFlow()
+    private val _effects = Channel<DetailEffect>(Channel.BUFFERED)
+    val effects = _effects.receiveAsFlow()
 
-    // Deliberately NOT in SavedStateHandle. That is serialized into the saved-instance-state
-    // bundle, which the system writes to disk under /data/system_ce/<user>/ for task
-    // persistence - so the in-progress secret, including a freshly generated password, would be
-    // stored in cleartext outside the encrypted database. Losing a half-typed entry to process
-    // death is the correct trade here.
-    private val _detailTitle = MutableStateFlow("")
-    val detailTitle = _detailTitle.asStateFlow()
+    /** From the typed NavRoute.Details argument, which always carries it. */
+    private val previewId: Long =
+        checkNotNull(savedStateHandle.get<Long>("previewId")) { "Details opened without an entry" }
+
+    private val query = MutableStateFlow("")
 
     /**
-     * Whether the value being edited is a secret: drives the keyboard (a password keyboard never learns what
-     * is typed) and is stored as Detail.isSecret. Suggested from the title until the user sets it.
+     * Deliberately NOT in SavedStateHandle: that bundle is written to disk outside the encrypted database for
+     * task persistence, so an in-progress secret (including a freshly generated password) would be stored in
+     * cleartext. Losing a half-typed field to process death is the right trade.
      */
-    private val _isSecretField = MutableStateFlow(false)
-    val isSecretField = _isSecretField.asStateFlow()
-    private var secretSetByUser = false
+    private val local = MutableStateFlow(Local())
 
-    private fun resetSecretField(isSecret: Boolean = false, setByUser: Boolean = false) {
-        _isSecretField.value = isSecret
-        secretSetByUser = setByUser
-    }
+    private data class Local(
+        val editor: DetailState.Editor? = null,
+        val pendingDelete: Detail? = null,
+        val policy: PasswordPolicy = PasswordPolicy(),
+        val isPolicySheetOpen: Boolean = false
+    )
 
-    private val _detailResponse = MutableStateFlow("")
-    val detailResponse = _detailResponse.asStateFlow()
-
-    /** true = editing an existing row, false = adding. Resolved to text by the UI. */
-    val isEditingSheet = savedStateHandle.getStateFlow(BOTTOM_SHEET_HEADING, false)
-    val previewId = savedStateHandle.get<Long>("previewId") ?: -1
-
-    private val _searchText = MutableStateFlow("")
-    val searchText = _searchText.asStateFlow()
-
-    val details: StateFlow<List<Detail>> = repository.getDetailsByPreviewId(previewId = previewId)
-        .combine(searchText) { details, text ->
-            if (text.isBlank()) {
-                details
-            } else {
-                details.filter {
-                    it.question.contains(
-                        text,
-                        ignoreCase = true
-                    ) or it.answer.contains(text, ignoreCase = true)
-                }
-            }
-        }
-        .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
-
-    var isSheetOpen by mutableStateOf(false)
-        private set
-
-    var isAlertOpen by mutableStateOf(false)
-        private set
-
-    var detail by mutableStateOf<Detail?>(null)
-        private set
-
-    var isPasswordSettingsOpen by mutableStateOf(false)
-        private set
-
-    var passwordLength by mutableFloatStateOf(12f)
-        private set
-    var includeUpper by mutableStateOf(true)
-        private set
-    var includeLower by mutableStateOf(true)
-        private set
-    var includeNumbers by mutableStateOf(true)
-        private set
-    var includeSpecial by mutableStateOf(false)
-        private set
-
-    private var pendingDelete: Detail? = null
     private var lastDeleted: Detail? = null
 
-    /** Shown inside the add/edit sheet; a failed save keeps the sheet and what was typed. */
-    var sheetError by mutableStateOf<UiText?>(null)
-        private set
-
-    fun onEvent(event: DetailEvents) {
-        when (event) {
-            DetailEvents.OnAddDetailClick -> {
-                sheetError = null
-                resetSecretField()
-                savedStateHandle[BOTTOM_SHEET_HEADING] = false
-                isSheetOpen = true
-                _searchText.value = ""
-            }
-
-            DetailEvents.OnDismissBottomSheet -> {
-                sheetError = null
-                resetSecretField()
-                _detailTitle.value = ""
-                _detailResponse.value = ""
-                isSheetOpen = false
-            }
-
-            is DetailEvents.OnChangeClick -> {
-                viewModelScope.launch {
-                    _searchText.value = ""
-                    repository.getDetailById(event.details.id)?.let { detail ->
-                        isSheetOpen = true
-                        savedStateHandle[BOTTOM_SHEET_HEADING] = true
-                        _detailTitle.value = event.details.question
-                        _detailResponse.value = event.details.answer
-                        // A stored choice is the user's; only legacy rows fall back to the title.
-                        resetSecretField(
-                            isSecret =
-                            detail.isSecret || PasswordAnalyzer.looksSecret(detail.question, secretKeywords.all()),
-                            setByUser = true
-                        )
-                        this@DetailViewModel.detail = detail
-                    }
+    val state: StateFlow<DetailState> = combine(
+        repository.getDetailsByPreviewId(previewId),
+        query,
+        local
+    ) { rows, currentQuery, ui ->
+        DetailState(
+            query = currentQuery,
+            items = rows
+                .filter {
+                    currentQuery.isBlank() ||
+                        it.question.contains(currentQuery, ignoreCase = true) ||
+                        it.answer.contains(currentQuery, ignoreCase = true)
                 }
+                .filterNot { it.id == ui.pendingDelete?.id },
+            isLoading = false,
+            editor = ui.editor,
+            pendingDelete = ui.pendingDelete,
+            policy = ui.policy,
+            isPolicySheetOpen = ui.isPolicySheetOpen
+        )
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(STOP_TIMEOUT_MS), DetailState())
+
+    fun onIntent(intent: DetailIntent) {
+        when (intent) {
+            is DetailIntent.QueryChanged -> query.value = intent.query
+
+            DetailIntent.AddClicked -> openEditor(DetailState.Editor())
+            is DetailIntent.EditClicked -> openEditor(
+                DetailState.Editor(
+                    question = intent.detail.question,
+                    answer = intent.detail.answer,
+                    editingId = intent.detail.id,
+                    // A stored choice is the user's; only legacy rows fall back to the title.
+                    isSecret = intent.detail.isSecret || looksSecret(intent.detail.question),
+                    secretSetByUser = true
+                )
+            )
+
+            is DetailIntent.QuestionChanged -> editEditor {
+                it.copy(
+                    question = intent.question,
+                    isSecret = if (it.secretSetByUser) it.isSecret else looksSecret(intent.question),
+                    error = null
+                )
             }
 
-            is DetailEvents.OnTitleChange -> {
-                sheetError = null
-                _detailTitle.value = event.newTitle
-                if (!secretSetByUser) {
-                    _isSecretField.value = PasswordAnalyzer.looksSecret(event.newTitle, secretKeywords.all())
-                }
-            }
-
-            is DetailEvents.OnSecretToggle -> resetSecretField(isSecret = event.isSecret, setByUser = true)
-
-            is DetailEvents.OnDescriptionChange -> {
-                sheetError = null
-                _detailResponse.value = event.newDescription
-            }
-
-            DetailEvents.OnSaveClick -> {
-                viewModelScope.launch {
-                    if (detailTitle.value.isBlank() or detailResponse.value.isBlank()) {
-                        sheetError = UiText.StringResource(R.string.enter_valid_title_n_response)
-                        return@launch
-                    }
-                    if (previewId.toInt() == -1) {
-                        isSheetOpen = false
-                        sendUiEvents(
-                            UiEvents.ShowSnackBar(
-                                message = UiText.StringResource(R.string.something_went_wrong)
-                            )
-                        )
-                        return@launch
-                    }
-                    // Trimmed on both paths. A trailing space in a stored password fails silently
-                    // wherever it is pasted.
-                    val question = detailTitle.value.trim()
-                    val answer = detailResponse.value.trim()
-
-                    detail?.let {
-                        repository.updateDetail(
-                            it.copy(
-                                previewId = previewId,
-                                question = question,
-                                answer = answer,
-                                isSecret = isSecretField.value
-                            )
-                        )
-                    } ?: repository.createDetail(
-                        previewId = previewId,
-                        question = question,
-                        answer = answer,
-                        isSecret = isSecretField.value
-                    )
-                    analytics.log(AppEvents.fieldSaved(isEdit = detail != null))
-
-                    detail = null
-                    _detailTitle.value = ""
-                    _detailResponse.value = ""
-                    isSheetOpen = false
-                }
-            }
-
-            is DetailEvents.OnLongPress -> {
-                sendUiEvents(UiEvents.CopyToClipboard(value = event.detailsDescription, isSensitive = true))
-                analytics.log(AppEvents.valueCopied(sensitive = true))
-            }
+            is DetailIntent.AnswerChanged -> editEditor { it.copy(answer = intent.answer, error = null) }
+            is DetailIntent.SecretToggled -> editEditor { it.copy(isSecret = intent.isSecret, secretSetByUser = true) }
+            DetailIntent.EditorDismissed -> local.update { it.copy(editor = null) }
+            DetailIntent.SaveClicked -> save()
 
             // Nothing is written until the user confirms; a delete can be undone from the snackbar.
-            is DetailEvents.OnSwipedLeft -> {
-                pendingDelete = event.details
-                isAlertOpen = true
-            }
-
-            DetailEvents.OnDismissAlertDialog, DetailEvents.OnCancelClick -> {
-                pendingDelete = null
-                isAlertOpen = false
-            }
-
-            is DetailEvents.OnDeleteClick -> {
-                val detail = pendingDelete ?: return
-                pendingDelete = null
-                isAlertOpen = false
-                viewModelScope.launch {
-                    repository.deleteDetail(detail)
-                    lastDeleted = detail
-                    sendUiEvents(UiEvents.ShowUndo(UiText.StringResource(R.string.field_deleted)))
-                }
-            }
-
-            DetailEvents.OnUndoDelete -> {
-                val detail = lastDeleted ?: return
+            is DetailIntent.SwipedToDelete -> local.update { it.copy(pendingDelete = intent.detail) }
+            DetailIntent.DeleteCancelled -> local.update { it.copy(pendingDelete = null) }
+            DetailIntent.DeleteConfirmed -> deletePending()
+            DetailIntent.UndoDelete -> lastDeleted?.let { detail ->
                 lastDeleted = null
                 viewModelScope.launch { repository.updateDetail(detail) }
             }
 
-            is DetailEvents.OnSearchTextUpdate -> {
-                _searchText.value = event.newText
+            is DetailIntent.Moved -> move(intent.fromIndex, intent.toIndex)
+
+            is DetailIntent.LongPressed -> {
+                send(DetailEffect.CopyToClipboard(intent.value, isSensitive = true))
+                analytics.log(AppEvents.valueCopied(sensitive = true))
             }
 
-            is DetailEvents.OnReorderDetails -> {
-                viewModelScope.launch {
-                    val newList = details.value.toMutableList().apply {
-                        add(event.to.index, removeAt(event.from.index))
-                    }
+            DetailIntent.PolicyClicked -> local.update { it.copy(isPolicySheetOpen = true) }
+            DetailIntent.PolicyDismissed -> local.update { it.copy(isPolicySheetOpen = false) }
+            is DetailIntent.LengthChanged -> local.update { it.copy(policy = it.policy.withLength(intent.length)) }
+            is DetailIntent.CharacterClassToggled ->
+                local.update { it.copy(policy = it.policy.toggle(intent.characterClass, intent.enabled)) }
 
-                    val updatedList = newList.mapIndexed { index, detail ->
-                        detail.copy(sequence = index.toLong())
-                    }
+            DetailIntent.GenerateClicked -> generate()
+        }
+    }
 
-                    repository.runInTransaction {
-                        updatedList.forEach { detail ->
-                            repository.updateDetailSequence(
-                                detailId = detail.id,
-                                sequence = detail.sequence
-                            )
-                        }
-                    }
-                }
+    private fun looksSecret(title: String) = PasswordAnalyzer.looksSecret(title, secretKeywords.all())
+
+    private fun openEditor(editor: DetailState.Editor) {
+        query.value = ""
+        local.update { it.copy(editor = editor) }
+    }
+
+    private inline fun editEditor(crossinline transform: (DetailState.Editor) -> DetailState.Editor) =
+        local.update { it.copy(editor = it.editor?.let(transform)) }
+
+    private fun save() {
+        val editor = local.value.editor ?: return
+        // Trimmed on both paths: a trailing space in a stored password fails silently wherever it is pasted.
+        val question = editor.question.trim()
+        val answer = editor.answer.trim()
+        if (question.isEmpty() || answer.isEmpty()) {
+            return editEditor { it.copy(error = UiText.StringResource(R.string.enter_valid_title_n_response)) }
+        }
+        viewModelScope.launch {
+            val existing = editor.editingId?.let { repository.getDetailById(it) }
+            if (existing != null) {
+                repository.updateDetail(existing.copy(question = question, answer = answer, isSecret = editor.isSecret))
+            } else {
+                repository.createDetail(previewId, question, answer, isSecret = editor.isSecret)
             }
+            analytics.log(AppEvents.fieldSaved(isEdit = existing != null))
+            local.update { it.copy(editor = null) }
+        }
+    }
 
-            DetailEvents.OnGeneratePasswordClick -> {
-                // A generated value is unambiguously a secret.
-                resetSecretField(isSecret = true, setByUser = true)
-                val newPassword = PasswordGenerator.generate(
-                    length = passwordLength.toInt(),
-                    includeUpper = includeUpper,
-                    includeLower = includeLower,
-                    includeNumbers = includeNumbers,
-                    includeSpecial = includeSpecial
-                )
-                _detailResponse.value = newPassword
-                analytics.log(AppEvents.passwordGenerated(length = newPassword.length))
-            }
+    private fun deletePending() {
+        val target = local.value.pendingDelete ?: return
+        viewModelScope.launch {
+            repository.deleteDetail(target)
+            lastDeleted = target
+            local.update { it.copy(pendingDelete = null) }
+            send(DetailEffect.ShowUndo(UiText.StringResource(R.string.field_deleted)))
+        }
+    }
 
-            DetailEvents.OnPasswordSettingsClick -> {
-                isPasswordSettingsOpen = true
-            }
-
-            DetailEvents.OnDismissPasswordSettings -> {
-                isPasswordSettingsOpen = false
-            }
-
-            is DetailEvents.OnPasswordLengthChange -> {
-                passwordLength = event.length
-            }
-
-            is DetailEvents.OnTogglePasswordOption -> {
-                when (event.option) {
-                    "Upper" -> includeUpper = event.value
-                    "Lower" -> includeLower = event.value
-                    "Number" -> includeNumbers = event.value
-                    "Special" -> includeSpecial = event.value
-                }
-                if (!includeUpper && !includeLower && !includeNumbers && !includeSpecial) {
-                    includeLower = true
-                }
+    private fun move(fromIndex: Int, toIndex: Int) {
+        val current = state.value
+        if (current.query.isNotBlank() || current.pendingDelete != null) return
+        if (fromIndex !in current.items.indices || toIndex !in current.items.indices) return
+        val reordered = current.items.toMutableList().apply { add(toIndex, removeAt(fromIndex)) }
+        viewModelScope.launch {
+            repository.runInTransaction {
+                reordered.forEachIndexed { index, detail -> repository.updateDetailSequence(detail.id, index.toLong()) }
             }
         }
     }
 
-    private fun sendUiEvents(events: UiEvents) {
-        viewModelScope.launch {
-            _uiEvents.send(events)
-        }
+    private fun generate() {
+        val policy = local.value.policy
+        val password = PasswordGenerator.generate(
+            length = policy.length,
+            includeUpper = policy.includeUppercase,
+            includeLower = policy.includeLowercase,
+            includeNumbers = policy.includeDigits,
+            includeSpecial = policy.includeSymbols
+        )
+        // A generated value is unambiguously a secret.
+        editEditor { it.copy(answer = password, isSecret = true, secretSetByUser = true, error = null) }
+        analytics.log(AppEvents.passwordGenerated(length = password.length))
+    }
+
+    private fun send(effect: DetailEffect) {
+        viewModelScope.launch { _effects.send(effect) }
+    }
+
+    private companion object {
+        const val STOP_TIMEOUT_MS = 5_000L
     }
 }

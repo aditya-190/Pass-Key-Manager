@@ -5,7 +5,7 @@ import com.bhardwaj.passkey.analytics.AppEventNames
 import com.bhardwaj.passkey.analytics.AppParams
 import com.bhardwaj.passkey.domain.model.Category
 import com.bhardwaj.passkey.domain.model.Detail
-import com.bhardwaj.passkey.presentation.screens.detail_screen.DetailEvents
+import com.bhardwaj.passkey.presentation.screens.detail_screen.DetailIntent
 import com.bhardwaj.passkey.presentation.screens.detail_screen.DetailViewModel
 import com.bhardwaj.passkey.presentation.screens.preview_screen.PreviewIntent
 import com.bhardwaj.passkey.presentation.screens.preview_screen.PreviewViewModel
@@ -13,6 +13,8 @@ import com.bhardwaj.passkey.testing.FakePasskeyRepository
 import com.bhardwaj.passkey.testing.MainDispatcherRule
 import com.bhardwaj.passkey.testing.RecordingAnalyticsTracker
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
@@ -66,9 +68,11 @@ class VaultAnalyticsTest {
     @Test
     fun `generating a password logs a length bucket, not the password`() = runTest {
         val vm = DetailViewModel(repository, SavedStateHandle(mapOf("previewId" to 1L)), analytics, { emptySet() })
-        vm.onEvent(DetailEvents.OnGeneratePasswordClick)
+        backgroundScope.launch(UnconfinedTestDispatcher(testScheduler)) { vm.state.collect {} }
+        vm.onIntent(DetailIntent.AddClicked)
+        vm.onIntent(DetailIntent.GenerateClicked)
 
-        val generated = vm.detailResponse.value
+        val generated = vm.state.value.editor!!.answer
         assertEquals(12, generated.length)
         val event = analytics.events.single()
         assertEquals(AppEventNames.PASSWORD_GENERATED, event.name)
@@ -79,10 +83,10 @@ class VaultAnalyticsTest {
     @Test
     fun `saving a field logs add versus edit without content`() = runTest {
         val vm = DetailViewModel(repository, SavedStateHandle(mapOf("previewId" to 1L)), analytics, { emptySet() })
-        vm.onEvent(DetailEvents.OnAddDetailClick)
-        vm.onEvent(DetailEvents.OnTitleChange("Password"))
-        vm.onEvent(DetailEvents.OnDescriptionChange("hunter2"))
-        vm.onEvent(DetailEvents.OnSaveClick)
+        vm.onIntent(DetailIntent.AddClicked)
+        vm.onIntent(DetailIntent.QuestionChanged("Password"))
+        vm.onIntent(DetailIntent.AnswerChanged("hunter2"))
+        vm.onIntent(DetailIntent.SaveClicked)
 
         assertEquals(1, repository.allDetails.size)
         assertEquals(AppEventNames.FIELD_SAVED, analytics.events.single().name)
@@ -93,8 +97,8 @@ class VaultAnalyticsTest {
     @Test
     fun `copying a secret logs that it was sensitive, not the value`() = runTest {
         val vm = DetailViewModel(repository, SavedStateHandle(mapOf("previewId" to 1L)), analytics, { emptySet() })
-        vm.onEvent(
-            DetailEvents.OnLongPress(
+        vm.onIntent(
+            DetailIntent.LongPressed(
                 Detail(id = 1, previewId = 1, question = "PIN", answer = "4321").answer
             )
         )
