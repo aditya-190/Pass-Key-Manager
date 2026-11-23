@@ -84,7 +84,12 @@ Owner decisions: PBKDF2 recovery slot (no argon2kt), mandatory one-time recovery
 - Destructive VaultMigrationTest / KeyStoreWrapperTest skipped by owner decision (they stay opt-in).
 - Simulation: 5,000 seeded random passwords (all scripts, empty, 10k chars) + 5,000 repeat/run cases: 0 failures;
   10k-character value measured in under 1 ms. Gates green: ktlint, detekt, 200 unit tests, lint, release build.
-Open: invalidation on enrollment change (needs a physical device), staged rollout.
+- Physical device (Moto G34, Android 15, 2026-11-23, debug 5.8.0 on a test vault): fingerprint unlock through the
+  biometric key; adding a fingerprint invalidated it, PassKey fell back to the screen-lock key, unlocked, and rebuilt
+  the fingerprint key (next start used it); removing that fingerprint kept the key valid (Android invalidates only on
+  a new enrollment or when all are removed). Device suite 34/34. No crashes.
+Open: the real Play 5.5.1 → 5.7.0 upgrade needs a Play internal testing track (a debug build cannot replace a
+Play-signed install without uninstalling). Rollout set by the owner (100%).
 
 ## Phase 4: release 5.8.0 "Daily-use features" (branch `release/5.8.0`), in progress ⏸
 Owner: 5.7.0 → 100% rollout (owner sets it in Play Console); physical checks on the Moto G34 (not yet connected).
@@ -139,4 +144,5 @@ Owner: 5.7.0 → 100% rollout (owner sets it in Play Console); physical checks o
       nothing shared, vault content never collected.
 - [ ] Get a native-speaker review of the machine-translated legal texts (at least hi, es, pt, de, fr).
 - [ ] Share Play Console retention (D1/D7/D30), uninstall data and vitals so the success metrics in `SPEC.md` have a baseline.
-- [ ] Before 5.7.0: a physical device with a fingerprint enrolled, plus the Play 5.5.1 build installed with sample data.
+- [x] Before 5.7.0: fingerprint checks on a physical device (Moto G34, done 2026-11-23).
+- [ ] Before 5.7.0 ships: Play 5.5.1 → 5.7.0 upgrade through an internal testing track, with sample data.
