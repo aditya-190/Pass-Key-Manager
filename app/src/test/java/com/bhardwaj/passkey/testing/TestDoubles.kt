@@ -201,8 +201,11 @@ class FakePasskeyRepository : PasskeyRepository {
         totp.value = totp.value.filterNot { it.id == entry.id }
     }
 
+    /** Past values by detail id; the real repository writes these itself on every secret change. */
+    val history = mutableMapOf<Long, List<PasswordHistoryEntry>>()
+
     override fun getHistoryForDetail(detailId: Long): Flow<List<PasswordHistoryEntry>> =
-        kotlinx.coroutines.flow.flowOf(emptyList())
+        kotlinx.coroutines.flow.flowOf(history[detailId].orEmpty())
 
     override suspend fun lastChangedAt(detailId: Long): Long? = null
 

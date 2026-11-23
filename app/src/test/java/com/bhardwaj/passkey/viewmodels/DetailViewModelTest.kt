@@ -5,6 +5,7 @@ import com.bhardwaj.passkey.R
 import com.bhardwaj.passkey.analytics.AppEventNames
 import com.bhardwaj.passkey.analytics.AppParams
 import com.bhardwaj.passkey.domain.model.PasswordCharacterClass
+import com.bhardwaj.passkey.domain.model.PasswordHistoryEntry
 import com.bhardwaj.passkey.domain.model.PasswordPolicy
 import com.bhardwaj.passkey.presentation.screens.detail_screen.DetailEffect
 import com.bhardwaj.passkey.presentation.screens.detail_screen.DetailIntent
@@ -160,5 +161,66 @@ class DetailViewModelTest {
         vm.onIntent(DetailIntent.SaveClicked)
         gate.complete(Unit)
         assertEquals(1, repository.allDetails.size)
+    }
+
+    @Test
+    fun `an authenticator is added from an otpauth link or a typed secret, and junk is refused`() = runTest {
+        val vm = vm()
+        vm.onIntent(DetailIntent.AddAuthenticatorClicked)
+        vm.onIntent(DetailIntent.AuthenticatorInputChanged("not a key!"))
+        vm.onIntent(DetailIntent.AuthenticatorSaveClicked)
+        assertTrue(vm.state.value.totpEditor!!.isInvalid)
+        assertTrue(repository.allTotp.isEmpty())
+
+        vm.onIntent(
+            DetailIntent.AuthenticatorInputChanged("otpauth://totp/GitHub:me?secret=JBSWY3DPEHPK3PXP&issuer=GitHub")
+        )
+        assertFalse("typing clears the error", vm.state.value.totpEditor!!.isInvalid)
+        vm.onIntent(DetailIntent.AuthenticatorSaveClicked)
+        assertNull(vm.state.value.totpEditor)
+
+        vm.onIntent(DetailIntent.AddAuthenticatorClicked)
+        vm.onIntent(DetailIntent.AuthenticatorInputChanged("jbsw y3dp ehpk 3pxp"))
+        vm.onIntent(DetailIntent.AuthenticatorSaveClicked)
+        assertEquals(listOf("GitHub", "Authenticator"), vm.state.value.authenticators.map { it.label })
+    }
+
+    @Test
+    fun `removing an authenticator asks first, because losing it can lock the user out`() = runTest {
+        vm().let { vm ->
+            vm.onIntent(DetailIntent.AddAuthenticatorClicked)
+            vm.onIntent(DetailIntent.AuthenticatorInputChanged("JBSWY3DPEHPK3PXP"))
+            vm.onIntent(DetailIntent.AuthenticatorSaveClicked)
+            val entry = vm.state.value.authenticators.single()
+
+            vm.onIntent(DetailIntent.AuthenticatorDeleteClicked(entry))
+            assertEquals(entry, vm.state.value.pendingTotpDelete)
+            assertEquals(1, repository.allTotp.size)
+            vm.onIntent(DetailIntent.AuthenticatorDeleteCancelled)
+            assertEquals(1, repository.allTotp.size)
+
+            vm.onIntent(DetailIntent.AuthenticatorDeleteClicked(entry))
+            vm.onIntent(DetailIntent.AuthenticatorDeleteConfirmed)
+            assertNull(vm.state.value.pendingTotpDelete)
+            assertTrue(repository.allTotp.isEmpty())
+        }
+    }
+
+    @Test
+    fun `a copied code and a copied old password are both sensitive`() = runTest {
+        val vm = vm()
+        vm.onIntent(DetailIntent.AuthenticatorCodeCopied("123456"))
+        assertEquals(DetailEffect.CopyToClipboard("123456", isSensitive = true), vm.effects.first())
+    }
+
+    @Test
+    fun `history shows a secret's past values and closes`() = runTest {
+        val id = repository.createDetail(1, "Password", "new", isSecret = true)
+        repository.history[id] = listOf(PasswordHistoryEntry(id = 1, detailId = id, answer = "old", changedAt = 5))
+        val vm = vm()
+        vm.onIntent(DetailIntent.HistoryClicked(vm.state.value.items.single()))
+        assertEquals(listOf("old"), vm.state.value.history!!.entries.map { it.answer })
+        vm.onIntent(DetailIntent.HistoryDismissed)
+        assertNull(vm.state.value.history)
     }
 }

@@ -8,7 +8,11 @@ import com.bhardwaj.passkey.analytics.AnalyticsTracker
 import com.bhardwaj.passkey.analytics.AppEvents
 import com.bhardwaj.passkey.domain.model.Detail
 import com.bhardwaj.passkey.domain.model.PasswordPolicy
+import com.bhardwaj.passkey.domain.model.TotpEntry
 import com.bhardwaj.passkey.domain.repository.PasskeyRepository
+import com.bhardwaj.passkey.domain.totp.Base32
+import com.bhardwaj.passkey.domain.totp.OtpAuthUri
+import com.bhardwaj.passkey.domain.totp.TotpConfig
 import com.bhardwaj.passkey.utils.PasswordAnalyzer
 import com.bhardwaj.passkey.utils.PasswordGenerator
 import com.bhardwaj.passkey.utils.SecretKeywords
@@ -20,6 +24,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
@@ -52,16 +57,20 @@ class DetailViewModel @Inject constructor(
         val editor: DetailState.Editor? = null,
         val pendingDelete: Detail? = null,
         val policy: PasswordPolicy = PasswordPolicy(),
-        val isPolicySheetOpen: Boolean = false
+        val isPolicySheetOpen: Boolean = false,
+        val totpEditor: DetailState.TotpEditor? = null,
+        val pendingTotpDelete: TotpEntry? = null,
+        val history: DetailState.History? = null
     )
 
     private var lastDeleted: Detail? = null
 
     val state: StateFlow<DetailState> = combine(
         repository.getDetailsByPreviewId(previewId),
+        repository.getTotpByPreviewId(previewId),
         query,
         local
-    ) { rows, currentQuery, ui ->
+    ) { rows, authenticators, currentQuery, ui ->
         DetailState(
             query = currentQuery,
             items = rows
@@ -75,7 +84,11 @@ class DetailViewModel @Inject constructor(
             editor = ui.editor,
             pendingDelete = ui.pendingDelete,
             policy = ui.policy,
-            isPolicySheetOpen = ui.isPolicySheetOpen
+            isPolicySheetOpen = ui.isPolicySheetOpen,
+            authenticators = authenticators.filterNot { it.id == ui.pendingTotpDelete?.id },
+            totpEditor = ui.totpEditor,
+            pendingTotpDelete = ui.pendingTotpDelete,
+            history = ui.history
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(STOP_TIMEOUT_MS), DetailState())
 
@@ -131,6 +144,52 @@ class DetailViewModel @Inject constructor(
                 local.update { it.copy(policy = it.policy.toggle(intent.characterClass, intent.enabled)) }
 
             DetailIntent.GenerateClicked -> generate()
+            else -> onAuthenticatorOrHistoryIntent(intent)
+        }
+    }
+
+    private fun onAuthenticatorOrHistoryIntent(intent: DetailIntent) {
+        when (intent) {
+            DetailIntent.AddAuthenticatorClicked -> local.update { it.copy(totpEditor = DetailState.TotpEditor()) }
+            is DetailIntent.AuthenticatorInputChanged ->
+                local.update { it.copy(totpEditor = it.totpEditor?.copy(input = intent.input, isInvalid = false)) }
+            DetailIntent.AuthenticatorEditorDismissed -> local.update { it.copy(totpEditor = null) }
+            DetailIntent.AuthenticatorSaveClicked -> addAuthenticator()
+            is DetailIntent.AuthenticatorDeleteClicked -> local.update { it.copy(pendingTotpDelete = intent.entry) }
+            DetailIntent.AuthenticatorDeleteCancelled -> local.update { it.copy(pendingTotpDelete = null) }
+            DetailIntent.AuthenticatorDeleteConfirmed -> {
+                val target = local.value.pendingTotpDelete ?: return
+                local.update { it.copy(pendingTotpDelete = null) }
+                viewModelScope.launch { repository.deleteTotp(target) }
+            }
+
+            is DetailIntent.AuthenticatorCodeCopied -> send(
+                DetailEffect.CopyToClipboard(intent.code, isSensitive = true)
+            )
+            is DetailIntent.HistoryClicked -> viewModelScope.launch {
+                val entries = repository.getHistoryForDetail(intent.detail.id).first()
+                local.update { it.copy(history = DetailState.History(intent.detail, entries)) }
+            }
+
+            DetailIntent.HistoryDismissed -> local.update { it.copy(history = null) }
+            else -> Unit
+        }
+    }
+
+    /** Accepts the otpauth:// link behind a QR code or the Base32 secret printed beside it. */
+    private fun addAuthenticator() {
+        val input = local.value.totpEditor?.input?.trim().orEmpty()
+        val config = OtpAuthUri.parse(input) ?: Base32.decode(input)?.let { TotpConfig(secret = it) }
+        if (config == null) {
+            local.update { it.copy(totpEditor = it.totpEditor?.copy(isInvalid = true)) }
+            return
+        }
+        local.update { it.copy(totpEditor = null) }
+        viewModelScope.launch {
+            val label = config.issuer?.takeIf { it.isNotBlank() }
+                ?: config.account?.takeIf { it.isNotBlank() }
+                ?: DEFAULT_AUTHENTICATOR_LABEL
+            repository.createTotp(previewId = previewId, label = label, config = config)
         }
     }
 
@@ -209,5 +268,8 @@ class DetailViewModel @Inject constructor(
 
     private companion object {
         const val STOP_TIMEOUT_MS = 5_000L
+
+        /** Only reached by a hand-typed secret, which carries no issuer or account. */
+        const val DEFAULT_AUTHENTICATOR_LABEL = "Authenticator"
     }
 }

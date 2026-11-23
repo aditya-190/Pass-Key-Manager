@@ -21,12 +21,14 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Timer
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SmallFloatingActionButton
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -58,8 +60,11 @@ import com.bhardwaj.passkey.presentation.screens.common.ObserveAsEvents
 import com.bhardwaj.passkey.presentation.screens.common.PassKeyButton
 import com.bhardwaj.passkey.presentation.screens.common.PasskeySearchBar
 import com.bhardwaj.passkey.presentation.screens.detail_screen.DetailViewModel
+import com.bhardwaj.passkey.presentation.screens.detail_screen.components.AuthenticatorCard
+import com.bhardwaj.passkey.presentation.screens.detail_screen.components.AuthenticatorDialog
 import com.bhardwaj.passkey.presentation.screens.detail_screen.components.DetailsBottomSheet
 import com.bhardwaj.passkey.presentation.screens.detail_screen.components.DetailsItem
+import com.bhardwaj.passkey.presentation.screens.detail_screen.components.PasswordHistorySheet
 import com.bhardwaj.passkey.presentation.screens.detail_screen.components.PasswordSettingsSheet
 import com.bhardwaj.passkey.presentation.theme.BebasNeue
 import com.bhardwaj.passkey.utils.ButtonType
@@ -128,16 +133,29 @@ fun DetailScreen(onPopBackStack: () -> Unit, viewModel: DetailViewModel = hiltVi
     Scaffold(
         snackbarHost = { SnackbarHost(snackBarHostState) },
         floatingActionButton = {
-            // Content-slot overload on purpose: the text/icon overload clears the label's semantics, which left
-            // TalkBack announcing an unlabeled button (found on device).
-            ExtendedFloatingActionButton(
-                onClick = { onIntent(DetailIntent.AddClicked) },
-                containerColor = MaterialTheme.colorScheme.primary,
-                contentColor = MaterialTheme.colorScheme.onPrimary
-            ) {
-                Icon(imageVector = Icons.Default.Add, contentDescription = null)
-                Spacer(modifier = Modifier.width(8.dp))
-                Text(text = stringResource(R.string.cd_add_detail))
+            Column(horizontalAlignment = Alignment.End) {
+                SmallFloatingActionButton(
+                    modifier = Modifier.padding(bottom = 12.dp),
+                    onClick = { onIntent(DetailIntent.AddAuthenticatorClicked) },
+                    containerColor = MaterialTheme.colorScheme.background,
+                    contentColor = MaterialTheme.colorScheme.primary
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Timer,
+                        contentDescription = stringResource(R.string.add_authenticator)
+                    )
+                }
+                // Content-slot overload on purpose: the text/icon overload clears the label's semantics, which left
+                // TalkBack announcing an unlabeled button (found on device).
+                ExtendedFloatingActionButton(
+                    onClick = { onIntent(DetailIntent.AddClicked) },
+                    containerColor = MaterialTheme.colorScheme.primary,
+                    contentColor = MaterialTheme.colorScheme.onPrimary
+                ) {
+                    Icon(imageVector = Icons.Default.Add, contentDescription = null)
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text(text = stringResource(R.string.cd_add_detail))
+                }
             }
         }
     ) { paddingValues ->
@@ -163,6 +181,16 @@ fun DetailScreen(onPopBackStack: () -> Unit, viewModel: DetailViewModel = hiltVi
                     fontSize = 64.sp,
                     color = MaterialTheme.colorScheme.secondary
                 )
+
+                // Codes sit above the fields; each card runs its own one-second clock, so the list does not
+                // recompose every second.
+                uiState.authenticators.forEach { entry ->
+                    AuthenticatorCard(
+                        entry = entry,
+                        onCopy = { onIntent(DetailIntent.AuthenticatorCodeCopied(it)) },
+                        onDelete = { onIntent(DetailIntent.AuthenticatorDeleteClicked(entry)) }
+                    )
+                }
 
                 if (searchText.isNotBlank() || details.isNotEmpty()) {
                     PasskeySearchBar(
@@ -276,6 +304,44 @@ fun DetailScreen(onPopBackStack: () -> Unit, viewModel: DetailViewModel = hiltVi
                 onDismissPasswordSettings = { onIntent(DetailIntent.PolicyDismissed) },
                 onToggle = { characterClass, checked ->
                     onIntent(DetailIntent.CharacterClassToggled(characterClass, checked))
+                }
+            )
+        }
+        uiState.totpEditor?.let { editor ->
+            AuthenticatorDialog(
+                editor = editor,
+                onInputChange = { onIntent(DetailIntent.AuthenticatorInputChanged(it)) },
+                onDismiss = { onIntent(DetailIntent.AuthenticatorEditorDismissed) },
+                onSave = { onIntent(DetailIntent.AuthenticatorSaveClicked) }
+            )
+        }
+        uiState.history?.let { history ->
+            PasswordHistorySheet(
+                history = history,
+                onCopy = { onIntent(DetailIntent.LongPressed(it)) },
+                onDismiss = { onIntent(DetailIntent.HistoryDismissed) }
+            )
+        }
+        if (uiState.pendingTotpDelete != null) {
+            AlertDialog(
+                properties = DialogProperties(securePolicy = SecureFlagPolicy.SecureOn),
+                containerColor = MaterialTheme.colorScheme.background,
+                onDismissRequest = { onIntent(DetailIntent.AuthenticatorDeleteCancelled) },
+                title = { Text(text = stringResource(id = R.string.cd_remove_authenticator)) },
+                text = { Text(text = stringResource(id = R.string.remove_authenticator_confirm)) },
+                confirmButton = {
+                    PassKeyButton(
+                        onClick = { onIntent(DetailIntent.AuthenticatorDeleteConfirmed) },
+                        text = stringResource(id = R.string.delete),
+                        buttonType = ButtonType.DEFAULT
+                    )
+                },
+                dismissButton = {
+                    PassKeyButton(
+                        onClick = { onIntent(DetailIntent.AuthenticatorDeleteCancelled) },
+                        text = stringResource(id = R.string.cancel),
+                        buttonType = ButtonType.OUTLINED
+                    )
                 }
             )
         }
