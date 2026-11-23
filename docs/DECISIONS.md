@@ -78,4 +78,5 @@
 | 2026-11-23 | A shortcut on an open vault pops back to Home before it runs | 6c attack #4 |
 | 2026-11-23 | Theme: `PassKeyAppTheme` for both activities draws once the choice is read (no main-thread wait) and, on Android 12+, calls `UiModeManager.setApplicationNightMode` so the launch screen and the autofill prompt match. Android 9–11 still show the phone's scheme in the split-second launch screen (no API there) | 6c attack #1, #5, #6. Changing the theme recreates the activity once (a configuration change), as Android does for any night-mode switch |
 | 2026-11-23 | Word mode shows a hint that some sites limit length | 6c attack #7 |
+| 2026-11-23 | Import from other password managers (CSV) is not in 6.0.0 | Owner decision: not offered for now. Work was stopped before it was committed |
 

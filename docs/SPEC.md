@@ -21,7 +21,7 @@ and your vault never leaves your phone.**
 | 5.6.0 | Hardened plus studio baseline: toolchain, encrypted `.pkbak` backup, auto-lock, lock on process-death restore, Remote Config, force update, banner, About/Legal, visible Add button, undo delete, input kept on errors | rest of PR #2 + template | Medium |
 | 5.7.0 | Per-install vault key (BIO/CRED/REC slots), safe migration, rescue export | PR #3 | **High**: ships alone, staged |
 | 5.8.0 | 4a MVI and type-safe navigation (no UI change); 4b AutofillService, TOTP, password history | PR #4 | Medium |
-| 6.0.0 | **Same UI, more features (re-scoped 2026-11-23):** optional feature tour (first run + Settings), import from other managers' CSV, verify-backup and an in-app backup reminder, passphrase generator, search by field name, app shortcuts, old-password check, theme mode, smart in-app review prompt, Share PassKey, Credential Manager provider | new | Medium |
+| 6.0.0 | **Same UI, more features (re-scoped 2026-11-23):** optional feature tour (first run + Settings), verify-backup and an in-app backup reminder, passphrase generator, search by field name, app shortcuts, old-password check, theme mode, smart in-app review prompt, Share PassKey, Credential Manager provider | new | Medium |
 | 6.1.0 | Passkey (FIDO) storage through Credential Manager | new | **Parked** (owner, 2026-11-23): high risk |
 
 ## Screens

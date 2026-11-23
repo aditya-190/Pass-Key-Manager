@@ -214,3 +214,5 @@ Owner direction (2026-11-23): no UI change; additive, update-safe features; goal
   launch screen and autofill prompt match); #2 min 4 words; #3 name matches first; #4 shortcut returns to Home; #7
   long-passphrase hint; #8 layout test waits for the pager. TDD 4 red → green.
 
+### 6d: import from other apps — not built (owner decision, 2026-11-23)
+
