@@ -68,7 +68,7 @@ fun LicencesRoute(onBack: () -> Unit) = LicencesScreen(libraries = passKeyLibrar
 
 /** Remote Config announcement card for the vault home. Routes in announcements are app routes. */
 @Composable
-fun HomeAnnouncement(onNavigate: (String) -> Unit, modifier: Modifier = Modifier) {
+fun HomeAnnouncement(onNavigate: (NavRoute) -> Unit, modifier: Modifier = Modifier) {
     val viewModel: AnnouncementViewModel = hiltViewModel()
     val announcement by viewModel.announcement.collectAsStateWithLifecycle()
     val context = LocalContext.current

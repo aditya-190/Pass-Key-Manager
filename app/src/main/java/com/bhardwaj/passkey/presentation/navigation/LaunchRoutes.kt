@@ -2,9 +2,9 @@ package com.bhardwaj.passkey.presentation.navigation
 
 import com.bhardwaj.passkey.launch.LaunchStep
 
-val LaunchStep.route: String
+val LaunchStep.route: NavRoute
     get() = when (this) {
-        LaunchStep.Onboarding -> Routes.ONBOARDING_PAGE
-        LaunchStep.Consent -> Routes.CONSENT_PAGE
-        LaunchStep.Unlock -> Routes.SECURITY_PAGE
+        LaunchStep.Onboarding -> NavRoute.Onboarding
+        LaunchStep.Consent -> NavRoute.Consent()
+        LaunchStep.Unlock -> NavRoute.Security
     }

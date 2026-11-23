@@ -24,6 +24,7 @@ complexity:
     thresholdInClasses: 20
     thresholdInInterfaces: 25 # Room DAOs: one function per query
     thresholdInObjects: 100 # analytics/Events.kt is a typed event catalog
+    ignoreOverridden: true # an implementation is already counted through its interface
 exceptions:
   SwallowedException:
     # Expected outcomes mapped to result values, not lost errors.

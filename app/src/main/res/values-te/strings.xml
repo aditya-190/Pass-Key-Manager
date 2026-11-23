@@ -234,5 +234,24 @@
         <item quantity="one">కనీసం %1$d అక్షరాలు వాడండి.</item>
         <item quantity="other">కనీసం %1$d అక్షరాలు వాడండి.</item>
     </plurals>
+    <string name="store_unavailable">ఈ పరికరంలో Google Play అందుబాటులో లేదు.</string>
+    <string name="autofill">ఆటోఫిల్</string>
+    <string name="autofill_unlock">నింపడానికి అన్‌లాక్ చేయండి</string>
+    <string name="autofill_open_app">మీ వాల్ట్ సెటప్ పూర్తి చేయడానికి PassKey తెరిచి, మళ్లీ ప్రయత్నించండి.</string>
+    <string name="autofill_save_failed">ఈ లాగిన్‌ను సేవ్ చేయలేకపోయాం.</string>
+    <string name="autofill_save_locked">ఈ లాగిన్‌ను సేవ్ చేయడానికి PassKey అన్‌లాక్ చేయండి.</string>
+    <string name="autofill_unsupported">ఈ పరికరంలో ఆటోఫిల్ అందుబాటులో లేదు.</string>
+    <string name="authenticator">ప్రామాణీకరణి</string>
+    <string name="add_authenticator">ప్రామాణీకరణిని జోడించు</string>
+    <string name="authenticator_input_hint">otpauth:// లింక్‌ను అతికించండి లేదా రహస్య కీని టైప్ చేయండి</string>
+    <string name="authenticator_invalid">ఇది చెల్లుబాటు అయ్యే ప్రామాణీకరణ కీ కాదు.</string>
+    <string name="password_history">పాస్‌వర్డ్ చరిత్ర</string>
+    <string name="password_history_empty">ఈ పాస్‌వర్డ్ ఇంకా మార్చబడలేదు.</string>
+    <string name="cd_remove_authenticator">ప్రామాణీకరణిని తీసివేయి</string>
+    <string name="remove_authenticator_confirm">ఈ ఆథెంటికేటర్‌ను తీసివేయాలా? దాని కోడ్‌లు ఇక్కడ ఆగిపోతాయి, సైన్ ఇన్ చేయడానికి ఖాతా రికవరీ కోడ్‌లు అవసరం కావచ్చు.</string>
+    <string name="legal_privacy_autofill_heading">ఆటోఫిల్</string>
+    <string name="legal_privacy_autofill_body">PassKeyను ఆటోఫిల్ సేవగా ఆన్ చేస్తే, మీరు నింపుతున్న ఫారమ్‌ను Android దానికి చూపిస్తుంది: ప్రతి ఫీల్డ్ రకం, అది ఏ యాప్ లేదా వెబ్ చిరునామాకు చెందినదో, సరిపోలే ఎంట్రీలను సూచించడానికి. ఇది మీ ఫోన్‌లోనే జరుగుతుంది; ఫారమ్, సైట్ లేదా సూచించిన ఎంట్రీల గురించి ఏదీ పంపబడదు, లాగ్ చేయబడదు, నిల్వ చేయబడదు. వాల్ట్ లాక్ అయి ఉన్నప్పుడు PassKey ఒకే ఒక \"అన్‌లాక్\" సూచనను చూపిస్తుంది, ఏ ఎంట్రీ పేరునూ కాదు. Android సెట్టింగ్‌లలో ఆన్ చేసే వరకు ఆటోఫిల్ ఆఫ్‌లో ఉంటుంది, అక్కడే ఎప్పుడైనా ఆఫ్ చేయవచ్చు.</string>
+    <string name="autofill_untrusted_app">ఈ పేరుతో PassKey ఇంతకు ముందు నింపిన యాప్ ఇది కాదు, కాబట్టి ఏమీ నింపలేదు. వేరే స్టోర్ నుండి మళ్లీ ఇన్‌స్టాల్ చేసి ఉంటే, PassKeyలో లాగిన్‌ను తీసివేసి మళ్లీ జోడించండి.</string>
+    <string name="autofill_setup_help">తర్వాతి స్క్రీన్‌లో PassKeyను Android ఆటోఫిల్ సేవగా ఎంచుకోండి. Chromeకు దాని స్వంత సెట్టింగ్ కూడా ఉంది: Chrome › సెట్టింగ్‌లు › ఆటోఫిల్ సేవలు తెరిచి \"వేరే సేవతో ఆటోఫిల్ చేయి\" ఎంచుకోండి.</string>
 </resources>
 

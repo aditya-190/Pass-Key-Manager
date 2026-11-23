@@ -222,4 +222,21 @@
 
     <string name="migration_export_first">Export a backup first</string>
     <string name="migration_export_now">Export my vault now</string>
+    <string name="store_unavailable">Google Play is not available on this device.</string>
+    <string name="autofill">Autofill</string>
+    <string name="autofill_unlock">Unlock to fill</string>
+    <string name="autofill_open_app">Open PassKey to finish setting up your vault, then try again.</string>
+    <string name="autofill_save_failed">Could not save this login.</string>
+    <string name="autofill_save_locked">Unlock PassKey to save this login.</string>
+    <string name="autofill_unsupported">Autofill is not available on this device.</string>
+    <string name="authenticator">Authenticator</string>
+    <string name="add_authenticator">Add authenticator</string>
+    <string name="authenticator_input_hint">Paste an otpauth:// link or type the secret key</string>
+    <string name="authenticator_invalid">That is not a valid authenticator key.</string>
+    <string name="password_history">Password history</string>
+    <string name="password_history_empty">This password has not been changed yet.</string>
+    <string name="cd_remove_authenticator">Remove authenticator</string>
+    <string name="remove_authenticator_confirm">Remove this authenticator? Its codes will stop here, and you may need the account\'s recovery codes to sign in.</string>
+    <string name="autofill_untrusted_app">This app isn\'t the one PassKey filled before under this name, so nothing was filled. If you reinstalled it from a different store, remove and re-add the login in PassKey.</string>
+    <string name="autofill_setup_help">On the next screen, choose PassKey as Android\'s autofill service. Chrome also has its own setting: open Chrome › Settings › Autofill services and choose \"Autofill using another service\".</string>
 </resources>

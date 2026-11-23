@@ -29,24 +29,22 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.bhardwaj.passkey.R
-import com.bhardwaj.passkey.domain.events.SplashEvents
-import com.bhardwaj.passkey.domain.viewModels.SplashViewModel
+import com.bhardwaj.passkey.presentation.navigation.NavRoute
+import com.bhardwaj.passkey.presentation.screens.common.ObserveAsEvents
+import com.bhardwaj.passkey.presentation.screens.splash_screen.SplashEvents
+import com.bhardwaj.passkey.presentation.screens.splash_screen.SplashViewModel
 import com.bhardwaj.passkey.presentation.theme.Poppins
-import com.bhardwaj.passkey.utils.UiEvents
 import kotlinx.coroutines.delay
 
 @Composable
-fun SplashPage(onNavigate: (UiEvents.Navigate) -> Unit, viewModel: SplashViewModel = hiltViewModel()) {
+fun SplashPage(onNavigate: (NavRoute) -> Unit, viewModel: SplashViewModel = hiltViewModel()) {
     val scale = remember {
         Animatable(0.3F)
     }
 
-    LaunchedEffect(key1 = true) {
-        viewModel.uiEvents.collect { event ->
-            when (event) {
-                is UiEvents.Navigate -> onNavigate(event)
-                else -> Unit
-            }
+    ObserveAsEvents(viewModel.effects) { event ->
+        when (event) {
+            is SplashEffect.Navigate -> onNavigate(event.route)
         }
     }
 

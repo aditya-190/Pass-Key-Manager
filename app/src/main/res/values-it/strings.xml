@@ -237,4 +237,23 @@
         <item quantity="many">Usa almeno %1$d caratteri.</item>
         <item quantity="other">Usa almeno %1$d caratteri.</item>
     </plurals>
+    <string name="store_unavailable">Google Play non è disponibile su questo dispositivo.</string>
+    <string name="autofill">Compilazione automatica</string>
+    <string name="autofill_unlock">Sblocca per compilare</string>
+    <string name="autofill_open_app">Apri PassKey per completare la configurazione della cassaforte, poi riprova.</string>
+    <string name="autofill_save_failed">Impossibile salvare queste credenziali.</string>
+    <string name="autofill_save_locked">Sblocca PassKey per salvare queste credenziali.</string>
+    <string name="autofill_unsupported">La compilazione automatica non è disponibile su questo dispositivo.</string>
+    <string name="authenticator">Autenticatore</string>
+    <string name="add_authenticator">Aggiungi autenticatore</string>
+    <string name="authenticator_input_hint">Incolla un link otpauth:// o digita la chiave segreta</string>
+    <string name="authenticator_invalid">Questa non è una chiave di autenticazione valida.</string>
+    <string name="password_history">Cronologia password</string>
+    <string name="password_history_empty">Questa password non è ancora stata cambiata.</string>
+    <string name="cd_remove_authenticator">Rimuovi autenticatore</string>
+    <string name="remove_authenticator_confirm">Rimuovere questo autenticatore? I suoi codici non compariranno più qui e potrebbero servirti i codici di recupero dell\'account per accedere.</string>
+    <string name="legal_privacy_autofill_heading">Compilazione automatica</string>
+    <string name="legal_privacy_autofill_body">Se attivi PassKey come servizio di compilazione automatica, Android gli mostra il modulo che stai compilando: il tipo di ogni campo e l\'app o l\'indirizzo web a cui appartiene, così può suggerire le voci corrispondenti. Tutto avviene solo sul tuo telefono; nulla del modulo, del sito o delle voci suggerite viene inviato, registrato o conservato. Quando la cassaforte è bloccata, PassKey mostra un solo suggerimento «Sblocca» e nessun nome di voce. La compilazione automatica resta disattivata finché non la attivi nelle impostazioni di Android, dove puoi disattivarla in qualsiasi momento.</string>
+    <string name="autofill_untrusted_app">Questa non è l\'app che PassKey ha compilato in precedenza con questo nome, quindi non è stato compilato nulla. Se l\'hai reinstallata da un altro store, rimuovi l\'accesso in PassKey e aggiungilo di nuovo.</string>
+    <string name="autofill_setup_help">Nella schermata successiva scegli PassKey come servizio di compilazione automatica di Android. Anche Chrome ha una sua impostazione: apri Chrome › Impostazioni › Servizi di compilazione automatica e scegli «Compilazione automatica con un altro servizio».</string>
 </resources>

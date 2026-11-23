@@ -232,4 +232,23 @@
     <plurals name="password_min_length">
         <item quantity="other">%1$d 文字以上にしてください。</item>
     </plurals>
+    <string name="store_unavailable">このデバイスでは Google Play を利用できません。</string>
+    <string name="autofill">自動入力</string>
+    <string name="autofill_unlock">ロックを解除して入力</string>
+    <string name="autofill_open_app">PassKey を開いて保管庫の設定を完了してから、もう一度お試しください。</string>
+    <string name="autofill_save_failed">このログイン情報を保存できませんでした。</string>
+    <string name="autofill_save_locked">このログイン情報を保存するには PassKey のロックを解除してください。</string>
+    <string name="autofill_unsupported">このデバイスでは自動入力を利用できません。</string>
+    <string name="authenticator">認証アプリ</string>
+    <string name="add_authenticator">認証アプリを追加</string>
+    <string name="authenticator_input_hint">otpauth:// リンクを貼り付けるか、秘密鍵を入力してください</string>
+    <string name="authenticator_invalid">有効な認証キーではありません。</string>
+    <string name="password_history">パスワード履歴</string>
+    <string name="password_history_empty">このパスワードはまだ変更されていません。</string>
+    <string name="cd_remove_authenticator">認証アプリを削除</string>
+    <string name="remove_authenticator_confirm">この認証システムを削除しますか？ここにコードが表示されなくなり、ログインにはアカウントの復旧コードが必要になる場合があります。</string>
+    <string name="legal_privacy_autofill_heading">自動入力</string>
+    <string name="legal_privacy_autofill_body">PassKey を自動入力サービスとして有効にすると、Android は入力中のフォームを PassKey に見せます。各欄の種類と、そのフォームが属するアプリまたはウェブアドレスで、一致するエントリを提案するためです。これはスマートフォン内だけで行われ、フォーム、サイト、提案したエントリについての情報が送信、記録、保存されることはありません。保管庫がロックされている間は、「ロック解除」の候補を 1 つだけ表示し、エントリ名は表示しません。自動入力は Android の設定で有効にするまでオフのままで、いつでもそこでオフにできます。</string>
+    <string name="autofill_untrusted_app">これは PassKey が以前この名前で入力したアプリではないため、何も入力しませんでした。別のストアから再インストールした場合は、PassKey でログイン情報を削除してから追加し直してください。</string>
+    <string name="autofill_setup_help">次の画面で、Android の自動入力サービスとして PassKey を選んでください。Chrome にも独自の設定があります。Chrome › 設定 › 自動入力サービス を開き、「別のサービスを使用して自動入力」を選んでください。</string>
 </resources>

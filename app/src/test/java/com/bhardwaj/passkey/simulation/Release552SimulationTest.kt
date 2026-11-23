@@ -7,12 +7,12 @@ import com.bhardwaj.passkey.consent.ConsentEffect
 import com.bhardwaj.passkey.consent.ConsentIntent
 import com.bhardwaj.passkey.consent.ConsentViewModel
 import com.bhardwaj.passkey.consent.FakeConsentStore
+import com.bhardwaj.passkey.domain.model.Category
 import com.bhardwaj.passkey.launch.LaunchRouter
 import com.bhardwaj.passkey.launch.LaunchStep
 import com.bhardwaj.passkey.presentation.screens.onboarding_screens.components.parseHighlightMarkup
 import com.bhardwaj.passkey.testing.MainDispatcherRule
 import com.bhardwaj.passkey.testing.RecordingAnalyticsTracker
-import com.bhardwaj.passkey.utils.Categories
 import com.bhardwaj.passkey.utils.PasswordGenerator
 import java.util.Random
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -87,7 +87,7 @@ class Release552SimulationTest {
                 AppEvents.backupImported(rnd.nextBoolean(), rnd.nextInt()),
                 AppEvents.safetyCheckViewed(rnd.nextInt()),
                 AppEvents.onboardingPageView(rnd.nextInt(3) + 1),
-                AppEvents.entryCreated(Categories.entries[rnd.nextInt(Categories.entries.size)]),
+                AppEvents.entryCreated(Category.entries[rnd.nextInt(Category.entries.size)]),
                 AppEvents.screenView("details_page?previewId=$secretId"),
                 AppEvents.languageChanged("x".repeat(rnd.nextInt(300)))
             )

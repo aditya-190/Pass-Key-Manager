@@ -1,6 +1,6 @@
 package com.bhardwaj.passkey.analytics
 
-import com.bhardwaj.passkey.utils.Categories
+import com.bhardwaj.passkey.domain.model.Category
 
 /** Every event the app sends. Catalogued in docs/ANALYTICS_EVENTS.md; keep both in step. */
 object AppEventNames {
@@ -22,6 +22,10 @@ object AppEventNames {
     const val RECOVERY_SETUP_SHOWN = "recovery_setup_shown"
     const val RECOVERY_SETUP_COMPLETED = "recovery_setup_completed"
     const val VAULT_MIGRATION_FAILED = "vault_migration_failed"
+    const val AUTOFILL_UNLOCK_SHOWN = "autofill_unlock_shown"
+    const val AUTOFILL_FILLED = "autofill_filled"
+    const val AUTOFILL_SAVED = "autofill_saved"
+    const val AUTHENTICATOR_ADDED = "authenticator_added"
 }
 
 object AppParams {
@@ -40,6 +44,9 @@ object AppParams {
     const val LANGUAGE = "language"
     const val EXISTING_VAULT = "existing_vault"
     const val REASON = "reason"
+    const val MATCH = "match"
+    const val RESULT = "result"
+    const val SOURCE = "source"
 }
 
 object AppUserProps {
@@ -73,7 +80,7 @@ object AppEvents {
 
     fun onboardingComplete() = AnalyticsEvent(AppEventNames.ONBOARDING_COMPLETE)
 
-    fun entryCreated(category: Categories) =
+    fun entryCreated(category: Category) =
         AnalyticsEvent(AppEventNames.ENTRY_CREATED, mapOf(AppParams.CATEGORY to category.name.lowercase()))
 
     fun fieldSaved(isEdit: Boolean) = AnalyticsEvent(AppEventNames.FIELD_SAVED, mapOf(AppParams.IS_EDIT to isEdit))
@@ -139,4 +146,26 @@ object AppEvents {
         score < 80 -> "50-79"
         else -> "80-100"
     }
+
+    /** A locked-vault suggestion was offered. Nothing about the form or app is sent. */
+    fun autofillUnlockShown() = AnalyticsEvent(AppEventNames.AUTOFILL_UNLOCK_SHOWN, emptyMap())
+
+    fun autofillFilled(matches: Int) = AnalyticsEvent(
+        AppEventNames.AUTOFILL_FILLED,
+        mapOf(
+            AppParams.MATCH to when (matches) {
+                0 -> "none"
+                1 -> "one"
+                else -> "many"
+            }
+        )
+    )
+
+    enum class AutofillSaveResult { CREATED, UPDATED, UNCHANGED, REFUSED_LOCKED, REFUSED_UNTRUSTED, FAILED }
+
+    fun autofillSaved(result: AutofillSaveResult) =
+        AnalyticsEvent(AppEventNames.AUTOFILL_SAVED, mapOf(AppParams.RESULT to result.name.lowercase()))
+
+    fun authenticatorAdded(fromLink: Boolean) =
+        AnalyticsEvent(AppEventNames.AUTHENTICATOR_ADDED, mapOf(AppParams.SOURCE to if (fromLink) "link" else "key"))
 }

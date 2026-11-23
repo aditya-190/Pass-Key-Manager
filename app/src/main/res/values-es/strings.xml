@@ -237,4 +237,23 @@
         <item quantity="many">Usa al menos %1$d caracteres.</item>
         <item quantity="other">Usa al menos %1$d caracteres.</item>
     </plurals>
+    <string name="store_unavailable">Google Play no está disponible en este dispositivo.</string>
+    <string name="autofill">Autocompletar</string>
+    <string name="autofill_unlock">Desbloquea para completar</string>
+    <string name="autofill_open_app">Abre PassKey para terminar de configurar tu caja fuerte y vuelve a intentarlo.</string>
+    <string name="autofill_save_failed">No se pudo guardar este inicio de sesión.</string>
+    <string name="autofill_save_locked">Desbloquea PassKey para guardar este inicio de sesión.</string>
+    <string name="autofill_unsupported">Autocompletar no está disponible en este dispositivo.</string>
+    <string name="authenticator">Autenticador</string>
+    <string name="add_authenticator">Añadir autenticador</string>
+    <string name="authenticator_input_hint">Pega un enlace otpauth:// o escribe la clave secreta</string>
+    <string name="authenticator_invalid">Esa no es una clave de autenticador válida.</string>
+    <string name="password_history">Historial de contraseñas</string>
+    <string name="password_history_empty">Esta contraseña aún no se ha cambiado.</string>
+    <string name="cd_remove_authenticator">Quitar autenticador</string>
+    <string name="remove_authenticator_confirm">¿Quitar este autenticador? Sus códigos dejarán de aparecer aquí y puede que necesites los códigos de recuperación de la cuenta para iniciar sesión.</string>
+    <string name="legal_privacy_autofill_heading">Autocompletar</string>
+    <string name="legal_privacy_autofill_body">Si activas PassKey como servicio de autocompletar, Android le muestra el formulario que estás rellenando: el tipo de cada campo y la app o dirección web a la que pertenece, para que pueda sugerir entradas que coincidan. Esto ocurre solo en tu teléfono; no se envía, registra ni guarda nada sobre el formulario, el sitio o las entradas sugeridas. Mientras la bóveda está bloqueada, PassKey ofrece una única sugerencia «Desbloquear» y ningún nombre de entrada. Autocompletar está desactivado hasta que lo activas en los ajustes de Android, y puedes desactivarlo allí cuando quieras.</string>
+    <string name="autofill_untrusted_app">Esta no es la app que PassKey rellenó antes con este nombre, así que no se ha rellenado nada. Si la reinstalaste desde otra tienda, quita el inicio de sesión en PassKey y vuelve a añadirlo.</string>
+    <string name="autofill_setup_help">En la siguiente pantalla, elige PassKey como servicio de autocompletar de Android. Chrome también tiene su propio ajuste: abre Chrome › Configuración › Servicios de autocompletar y elige «Autocompletar con otro servicio».</string>
 </resources>

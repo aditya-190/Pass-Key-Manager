@@ -237,4 +237,23 @@
         <item quantity="many">Utilisez au moins %1$d caractères.</item>
         <item quantity="other">Utilisez au moins %1$d caractères.</item>
     </plurals>
+    <string name="store_unavailable">Google Play n\'est pas disponible sur cet appareil.</string>
+    <string name="autofill">Saisie automatique</string>
+    <string name="autofill_unlock">Déverrouiller pour remplir</string>
+    <string name="autofill_open_app">Ouvre PassKey pour terminer la configuration de ton coffre, puis réessaie.</string>
+    <string name="autofill_save_failed">Impossible d\'enregistrer ces identifiants.</string>
+    <string name="autofill_save_locked">Déverrouille PassKey pour enregistrer ces identifiants.</string>
+    <string name="autofill_unsupported">La saisie automatique n\'est pas disponible sur cet appareil.</string>
+    <string name="authenticator">Authentificateur</string>
+    <string name="add_authenticator">Ajouter un authentificateur</string>
+    <string name="authenticator_input_hint">Colle un lien otpauth:// ou saisis la clé secrète</string>
+    <string name="authenticator_invalid">Cette clé d\'authentificateur n\'est pas valide.</string>
+    <string name="password_history">Historique des mots de passe</string>
+    <string name="password_history_empty">Ce mot de passe n\'a pas encore été modifié.</string>
+    <string name="cd_remove_authenticator">Supprimer l\'authentificateur</string>
+    <string name="remove_authenticator_confirm">Supprimer cet authentificateur ? Ses codes n\'apparaîtront plus ici et vous aurez peut-être besoin des codes de récupération du compte pour vous connecter.</string>
+    <string name="legal_privacy_autofill_heading">Saisie automatique</string>
+    <string name="legal_privacy_autofill_body">Si vous activez PassKey comme service de saisie automatique, Android lui montre le formulaire que vous remplissez : le type de chaque champ et l\'application ou l\'adresse web à laquelle il appartient, afin de proposer les entrées correspondantes. Cela se passe uniquement sur votre téléphone ; rien sur le formulaire, le site ou les entrées proposées n\'est envoyé, journalisé ni conservé. Tant que le coffre est verrouillé, PassKey ne propose qu\'une suggestion « Déverrouiller » et aucun nom d\'entrée. La saisie automatique reste désactivée tant que vous ne l\'activez pas dans les paramètres d\'Android, où vous pouvez la désactiver à tout moment.</string>
+    <string name="autofill_untrusted_app">Ce n\'est pas l\'application que PassKey a déjà remplie sous ce nom, donc rien n\'a été rempli. Si vous l\'avez réinstallée depuis une autre boutique, supprimez l\'identifiant dans PassKey puis ajoutez-le à nouveau.</string>
+    <string name="autofill_setup_help">Sur l\'écran suivant, choisissez PassKey comme service de saisie automatique d\'Android. Chrome a aussi son propre réglage : ouvrez Chrome › Paramètres › Services de saisie automatique et choisissez « Saisie automatique avec un autre service ».</string>
 </resources>

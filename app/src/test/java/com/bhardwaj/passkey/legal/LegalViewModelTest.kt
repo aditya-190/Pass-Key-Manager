@@ -61,7 +61,7 @@ class LegalViewModelTest {
         val withExtras = LegalTexts(privacyExtras = listOf(extra), termsExtras = listOf(extra))
         assertFalse(extra in base.privacy.sections || extra in base.terms.sections)
         assertEquals(base.privacy.sections.size + 1, withExtras.privacy.sections.size)
-        assertEquals(3, withExtras.privacy.sections.indexOf(extra)) // after intro, device, analytics
+        assertEquals(4, withExtras.privacy.sections.indexOf(extra)) // after intro, device, autofill, analytics
         assertEquals(1, withExtras.terms.sections.indexOf(extra)) // after "Using the app"
         assertEquals(base.privacy.sections.last(), withExtras.privacy.sections.last()) // Contact stays last
     }

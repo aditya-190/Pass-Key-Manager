@@ -17,6 +17,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Apps
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.History
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -33,8 +34,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.bhardwaj.passkey.R
-import com.bhardwaj.passkey.data.local.entity.Details
-import com.bhardwaj.passkey.domain.events.DetailEvents
+import com.bhardwaj.passkey.domain.model.Detail
+import com.bhardwaj.passkey.presentation.screens.detail_screen.DetailIntent
 import com.bhardwaj.passkey.presentation.theme.BebasNeue
 import com.bhardwaj.passkey.presentation.theme.Poppins
 import sh.calvin.reorderable.ReorderableCollectionItemScope
@@ -43,8 +44,8 @@ import sh.calvin.reorderable.ReorderableCollectionItemScope
 fun DetailsItem(
     modifier: Modifier = Modifier,
     scope: ReorderableCollectionItemScope? = null,
-    details: Details,
-    onEvent: (DetailEvents) -> Unit
+    details: Detail,
+    onIntent: (DetailIntent) -> Unit
 ) {
     val view = LocalView.current
     Box(
@@ -95,7 +96,7 @@ fun DetailsItem(
                     .combinedClickable(
                         onClick = {},
                         onLongClick = {
-                            onEvent(DetailEvents.OnLongPress(details.answer))
+                            onIntent(DetailIntent.LongPressed(details.answer))
                         },
                         indication = null,
                         interactionSource = remember { MutableInteractionSource() }
@@ -107,11 +108,28 @@ fun DetailsItem(
                 color = MaterialTheme.colorScheme.onBackground
             )
 
+            // History exists only for secrets (the repository writes it on every change), so the icon appears
+            // exactly where there is something behind it.
+            if (details.isSecret) {
+                Icon(
+                    modifier = Modifier
+                        .padding(end = 12.dp)
+                        .clickable(
+                            onClick = { onIntent(DetailIntent.HistoryClicked(details)) },
+                            indication = null,
+                            interactionSource = remember { MutableInteractionSource() }
+                        ),
+                    imageVector = Icons.Default.History,
+                    contentDescription = stringResource(R.string.password_history),
+                    tint = MaterialTheme.colorScheme.primary
+                )
+            }
+
             if (scope != null) {
                 Icon(
                     modifier = Modifier.clickable(
                         onClick = {
-                            onEvent(DetailEvents.OnChangeClick(details))
+                            onIntent(DetailIntent.EditClicked(details))
                         },
                         indication = null,
                         interactionSource = remember { MutableInteractionSource() }

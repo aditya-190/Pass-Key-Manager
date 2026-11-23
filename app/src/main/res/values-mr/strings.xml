@@ -235,4 +235,23 @@
         <item quantity="one">किमान %1$d अक्षरे वापरा.</item>
         <item quantity="other">किमान %1$d अक्षरे वापरा.</item>
     </plurals>
+    <string name="store_unavailable">या डिव्हाइसवर Google Play उपलब्ध नाही.</string>
+    <string name="autofill">ऑटोफिल</string>
+    <string name="autofill_unlock">भरण्यासाठी अनलॉक करा</string>
+    <string name="autofill_open_app">तुमचे व्हॉल्ट सेटअप पूर्ण करण्यासाठी PassKey उघडा, नंतर पुन्हा प्रयत्न करा.</string>
+    <string name="autofill_save_failed">हे लॉगिन जतन करता आले नाही.</string>
+    <string name="autofill_save_locked">हे लॉगिन जतन करण्यासाठी PassKey अनलॉक करा.</string>
+    <string name="autofill_unsupported">या डिव्हाइसवर ऑटोफिल उपलब्ध नाही.</string>
+    <string name="authenticator">ऑथेंटिकेटर</string>
+    <string name="add_authenticator">ऑथेंटिकेटर जोडा</string>
+    <string name="authenticator_input_hint">otpauth:// दुवा पेस्ट करा किंवा गुप्त की टाइप करा</string>
+    <string name="authenticator_invalid">ही वैध ऑथेंटिकेटर की नाही.</string>
+    <string name="password_history">पासवर्ड इतिहास</string>
+    <string name="password_history_empty">हा पासवर्ड अद्याप बदललेला नाही.</string>
+    <string name="cd_remove_authenticator">ऑथेंटिकेटर काढा</string>
+    <string name="remove_authenticator_confirm">हा ऑथेंटिकेटर काढायचा? त्याचे कोड इथे येणे थांबेल, आणि साइन इनसाठी खात्याचे रिकव्हरी कोड लागू शकतात.</string>
+    <string name="legal_privacy_autofill_heading">ऑटोफिल</string>
+    <string name="legal_privacy_autofill_body">तुम्ही PassKey ऑटोफिल सेवा म्हणून सुरू केल्यास, Android त्याला तुम्ही भरत असलेला फॉर्म दाखवते: प्रत्येक फील्डचा प्रकार आणि ते कोणत्या ॲप किंवा वेब पत्त्याचे आहे, जेणेकरून जुळणाऱ्या नोंदी सुचवता येतील. हे फक्त तुमच्या फोनवर होते; फॉर्म, साइट किंवा सुचवलेल्या नोंदींबद्दल काहीही पाठवले, लॉग किंवा साठवले जात नाही. व्हॉल्ट लॉक असताना PassKey फक्त एक \"अनलॉक\" सूचना दाखवते, कोणत्याही नोंदीचे नाव नाही. Android सेटिंग्जमध्ये सुरू करेपर्यंत ऑटोफिल बंद असते आणि तिथे ते कधीही बंद करता येते.</string>
+    <string name="autofill_untrusted_app">हे ते ॲप नाही ज्यात PassKey ने आधी याच नावाने भरले होते, म्हणून काहीही भरले नाही. तुम्ही ते दुसऱ्या स्टोअरमधून पुन्हा इन्स्टॉल केले असल्यास, PassKey मध्ये लॉगिन काढून पुन्हा जोडा.</string>
+    <string name="autofill_setup_help">पुढील स्क्रीनवर PassKey ला Android ची ऑटोफिल सेवा म्हणून निवडा. Chrome ची स्वतःची सेटिंगही आहे: Chrome › सेटिंग्ज › ऑटोफिल सेवा उघडा आणि \"दुसऱ्या सेवेने ऑटोफिल करा\" निवडा.</string>
 </resources>

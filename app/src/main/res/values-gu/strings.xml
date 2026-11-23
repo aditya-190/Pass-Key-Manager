@@ -234,4 +234,23 @@
         <item quantity="one">ઓછામાં ઓછા %1$d અક્ષર વાપરો.</item>
         <item quantity="other">ઓછામાં ઓછા %1$d અક્ષર વાપરો.</item>
     </plurals>
+    <string name="store_unavailable">આ ઉપકરણ પર Google Play ઉપલબ્ધ નથી.</string>
+    <string name="autofill">ઑટોફિલ</string>
+    <string name="autofill_unlock">ભરવા માટે અનલૉક કરો</string>
+    <string name="autofill_open_app">તમારું વૉલ્ટ સેટઅપ પૂરું કરવા PassKey ખોલો, પછી ફરી પ્રયાસ કરો.</string>
+    <string name="autofill_save_failed">આ લૉગિન સાચવી શકાયું નહીં.</string>
+    <string name="autofill_save_locked">આ લૉગિન સાચવવા માટે PassKey અનલૉક કરો.</string>
+    <string name="autofill_unsupported">આ ઉપકરણ પર ઑટોફિલ ઉપલબ્ધ નથી.</string>
+    <string name="authenticator">ઑથેન્ટિકેટર</string>
+    <string name="add_authenticator">ઑથેન્ટિકેટર ઉમેરો</string>
+    <string name="authenticator_input_hint">otpauth:// લિંક પેસ્ટ કરો અથવા ગુપ્ત કી લખો</string>
+    <string name="authenticator_invalid">આ માન્ય ઑથેન્ટિકેટર કી નથી.</string>
+    <string name="password_history">પાસવર્ડ ઇતિહાસ</string>
+    <string name="password_history_empty">આ પાસવર્ડ હજી બદલાયો નથી.</string>
+    <string name="cd_remove_authenticator">ઑથેન્ટિકેટર દૂર કરો</string>
+    <string name="remove_authenticator_confirm">આ ઑથેન્ટિકેટર દૂર કરવો છે? તેના કોડ અહીં બંધ થઈ જશે, અને સાઇન ઇન માટે ખાતાના રિકવરી કોડની જરૂર પડી શકે.</string>
+    <string name="legal_privacy_autofill_heading">ઑટોફિલ</string>
+    <string name="legal_privacy_autofill_body">જો તમે PassKey ને ઑટોફિલ સેવા તરીકે ચાલુ કરો, તો Android તેને તમે ભરી રહ્યા છો તે ફૉર્મ બતાવે છે: દરેક ફીલ્ડનો પ્રકાર અને તે કઈ ઍપ કે વેબ સરનામાનું છે, જેથી મેળ ખાતી એન્ટ્રી સૂચવી શકાય. આ ફક્ત તમારા ફોન પર થાય છે; ફૉર્મ, સાઇટ કે સૂચવેલી એન્ટ્રી વિશે કંઈ મોકલાતું, લૉગ થતું કે સાચવાતું નથી. વૉલ્ટ લૉક હોય ત્યારે PassKey ફક્ત એક \"અનલૉક\" સૂચન બતાવે છે, કોઈ એન્ટ્રીનું નામ નહીં. Android સેટિંગમાં ચાલુ ન કરો ત્યાં સુધી ઑટોફિલ બંધ રહે છે, અને ત્યાંથી ગમે ત્યારે બંધ કરી શકાય છે.</string>
+    <string name="autofill_untrusted_app">આ એ ઍપ નથી જેમાં PassKey એ પહેલાં આ નામે ભર્યું હતું, તેથી કંઈ ભરાયું નથી. જો તમે તેને બીજા સ્ટોરમાંથી ફરી ઇન્સ્ટૉલ કરી હોય, તો PassKey માં લૉગિન કાઢીને ફરી ઉમેરો.</string>
+    <string name="autofill_setup_help">આગલી સ્ક્રીન પર PassKey ને Android ની ઑટોફિલ સેવા તરીકે પસંદ કરો. Chrome નું પોતાનું સેટિંગ પણ છે: Chrome › સેટિંગ › ઑટોફિલ સેવાઓ ખોલો અને \"બીજી સેવાથી ઑટોફિલ કરો\" પસંદ કરો.</string>
 </resources>

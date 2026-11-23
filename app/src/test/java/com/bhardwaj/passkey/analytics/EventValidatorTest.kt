@@ -1,6 +1,6 @@
 package com.bhardwaj.passkey.analytics
 
-import com.bhardwaj.passkey.utils.Categories
+import com.bhardwaj.passkey.domain.model.Category
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
@@ -14,7 +14,7 @@ class EventValidatorTest {
             AppEvents.onboardingPageView(1),
             AppEvents.onboardingSkipped(2),
             AppEvents.onboardingComplete(),
-            AppEvents.entryCreated(Categories.BANKS),
+            AppEvents.entryCreated(Category.BANKS),
             AppEvents.fieldSaved(isEdit = true),
             AppEvents.passwordGenerated(length = 16),
             AppEvents.valueCopied(sensitive = true),

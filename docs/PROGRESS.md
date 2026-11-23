@@ -84,7 +84,57 @@ Owner decisions: PBKDF2 recovery slot (no argon2kt), mandatory one-time recovery
 - Destructive VaultMigrationTest / KeyStoreWrapperTest skipped by owner decision (they stay opt-in).
 - Simulation: 5,000 seeded random passwords (all scripts, empty, 10k chars) + 5,000 repeat/run cases: 0 failures;
   10k-character value measured in under 1 ms. Gates green: ktlint, detekt, 200 unit tests, lint, release build.
-Open: invalidation on enrollment change (needs a physical device), staged rollout.
+- Physical device (Moto G34, Android 15, 2026-11-23, debug 5.8.0 on a test vault): fingerprint unlock through the
+  biometric key; adding a fingerprint invalidated it, PassKey fell back to the screen-lock key, unlocked, and rebuilt
+  the fingerprint key (next start used it); removing that fingerprint kept the key valid (Android invalidates only on
+  a new enrollment or when all are removed). Device suite 34/34. No crashes.
+- Moto G34 autofill in Chrome 157 (2026-11-23): Chrome sends requests to PassKey only after "Autofill using another
+  service" is chosen in Chrome's settings; the form then shows only "Unlock to fill · PassKey". Found: Android never
+  offers to save a new login (the authentication response carries no SaveInfo) - see 5.8.0 device findings. The
+  phone's autofill service, Chrome's setting and stay-on were restored; the debug app and test vault were kept.
+- Device findings fixed: A save is offered (SaveInfo on both responses); B shared-hosting suffixes; C Chrome guidance
+  dialog (17 languages). Tests red → green; 298 unit, 34 instrumented; +1,000-seed hosting simulation. Emulator
+  (API 28): typed login → "Save to PassKey?" → saved as an entry with a secret password → "Unlock to fill" →
+  fingerprint → the login fills.
+- Moto G34 + Chrome 157 round trip after the fixes (2026-11-23): practice login typed → "Save username and password
+  to PassKey?" → saved as the-internet.herokuapp.com (username, secret password) → fresh form shows only "Unlock to
+  fill · PassKey" → fingerprint → login offered → both fields filled. Phone settings restored afterwards.
+Open: the real Play 5.5.1 → 5.7.0 upgrade needs a Play internal testing track (a debug build cannot replace a
+Play-signed install without uninstalling). Rollout set by the owner (100%).
+
+## Phase 4: release 5.8.0 "Daily-use features" (branch `release/5.8.0`), in progress ⏸
+Owner: 5.7.0 → 100% rollout (owner sets it in Play Console); physical checks on the Moto G34 (not yet connected).
+### 4a: architecture (no user-visible change), code-complete
+- Layering fixed, typed PreferencesRepository (`c823935`); domain models, entities confined to data (`ebd0d94`);
+  lifecycle-aware collection (`6907fbf`); type-safe navigation for all 10 routes (`1ec2a66`); single-state MVI for
+  home (`419b10b`), fields (`708bf85`), Settings (`6889cf8`); per-screen effects, UiEvents deleted (`3a46b15`).
+- Tests: NavRouteTest 5, PreviewViewModelTest 10, DetailViewModelTest 7, SettingsViewModelTest 10 (Settings' first).
+  227 unit tests pass. Simulation: 2 × 1,000 seeded intent sequences, 0 failures.
+- Device (API 28): default suite OK (26), vault untouched; minified release walked through all routes but Onboarding;
+  home/details/settings smoke (tabs, swipe → confirm → cancel, generator marks secret, dialogs) with no crash.
+- Local fix: the schema folder's case-only rename needed a two-step `mv` on macOS (MigrationTester could not find it).
+- Attack pass, owner chose to fix all: #1 double-tap Delete then Undo lost the entry's fields (dialog now closes
+  before the write; a second tap is a no-op); #2 double-tap Save made duplicates (editor isSaving guard, both
+  screens); #3 a backup picked during another job was dropped with its password unwiped (backups now queue on a
+  mutex); #4 saving an edit of a vanished entry dropped it (saved as new). 5 tests red → green; 232 unit tests;
+  #1 re-checked on device (double-tap Delete → Undo → entry and field back). #5 (schema folder case) is local only.
+
+### 4b: daily-use features, code-complete
+- Autofill (`e171c11`): matcher hardened against look-alike apps and sites (4 phishing tests red → green); unlock screen
+  on the 5.7.0 prompt policy. Room 3→4 with TOTP and password history (`6712f0b`); backup carries authenticators
+  (account now included, no duplicates on re-import). Entry screen shows codes, confirm-before-remove, history
+  (`f5311c5`). 5.8.0 (47), autofill privacy text in 17 languages, AppLanguage single list, SecureModalBottomSheet guard
+  on `check` (`1dbdac9`).
+- Tests: 276 unit, 31 instrumented (API 28). Simulation: 6,000 seeded matcher/TOTP runs + 30 encrypted backup round
+  trips, 0 failures.
+- Device (API 28): real vault migrated 3→4 with data intact; locked autofill shows only "Unlock to fill" (no entry
+  names); unlock → fingerprint → back to the form; cancel shows a button instead of re-prompting.
+- Not taken from PR #4: Robolectric backup test (new dependency), its update-controller tests (code replaced in 5.6.0).
+- 4b attack pass, owner chose all fixes: #1 every fill authenticates; #2 save updates the existing password (history
+  keeps the old one); #3 trust on first use for apps (Room v5); #4 Undo restores authenticators and history (found
+  while planning: entry delete cascaded the codes); #5 issuer/account capped; #6 four autofill/authenticator events.
+  13 tests red → green; 289 unit, 34 instrumented. Simulation +3,000 seeds (saves, trust, delete/undo), 0 failures.
+  Device: real vault v4→v5 intact; with the vault unlocked the form still shows only "Unlock to fill".
 
 ## Carried into 5.6.0
 - Per-field secret keyboard (attack-pass finding #1), built on the `isSecret` column.
@@ -105,4 +155,5 @@ Open: invalidation on enrollment change (needs a physical device), staged rollou
       nothing shared, vault content never collected.
 - [ ] Get a native-speaker review of the machine-translated legal texts (at least hi, es, pt, de, fr).
 - [ ] Share Play Console retention (D1/D7/D30), uninstall data and vitals so the success metrics in `SPEC.md` have a baseline.
-- [ ] Before 5.7.0: a physical device with a fingerprint enrolled, plus the Play 5.5.1 build installed with sample data.
+- [x] Before 5.7.0: fingerprint checks on a physical device (Moto G34, done 2026-11-23).
+- [ ] Before 5.7.0 ships: Play 5.5.1 → 5.7.0 upgrade through an internal testing track, with sample data.

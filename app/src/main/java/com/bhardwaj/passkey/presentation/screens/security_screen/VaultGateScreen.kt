@@ -35,7 +35,7 @@ import androidx.lifecycle.compose.LifecycleEventEffect
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.bhardwaj.passkey.R
-import com.bhardwaj.passkey.domain.viewModels.VaultGateViewModel
+import com.bhardwaj.passkey.presentation.screens.security_screen.VaultGateViewModel
 import com.bhardwaj.passkey.presentation.screens.settings_screen.components.BackupPasswordDialog
 import java.text.SimpleDateFormat
 import java.util.Date

@@ -238,4 +238,23 @@
         <item quantity="many">Используйте не менее %1$d символов.</item>
         <item quantity="other">Используйте не менее %1$d символов.</item>
     </plurals>
+    <string name="store_unavailable">Google Play недоступен на этом устройстве.</string>
+    <string name="autofill">Автозаполнение</string>
+    <string name="autofill_unlock">Разблокируйте для заполнения</string>
+    <string name="autofill_open_app">Откройте PassKey, чтобы завершить настройку хранилища, и повторите попытку.</string>
+    <string name="autofill_save_failed">Не удалось сохранить эти данные для входа.</string>
+    <string name="autofill_save_locked">Разблокируйте PassKey, чтобы сохранить эти данные для входа.</string>
+    <string name="autofill_unsupported">Автозаполнение недоступно на этом устройстве.</string>
+    <string name="authenticator">Аутентификатор</string>
+    <string name="add_authenticator">Добавить аутентификатор</string>
+    <string name="authenticator_input_hint">Вставьте ссылку otpauth:// или введите секретный ключ</string>
+    <string name="authenticator_invalid">Это недействительный ключ аутентификатора.</string>
+    <string name="password_history">История паролей</string>
+    <string name="password_history_empty">Этот пароль ещё не менялся.</string>
+    <string name="cd_remove_authenticator">Удалить аутентификатор</string>
+    <string name="remove_authenticator_confirm">Удалить этот аутентификатор? Его коды здесь больше не появятся, и для входа могут понадобиться резервные коды аккаунта.</string>
+    <string name="legal_privacy_autofill_heading">Автозаполнение</string>
+    <string name="legal_privacy_autofill_body">Если вы включите PassKey как службу автозаполнения, Android покажет ему заполняемую форму: тип каждого поля и приложение или веб-адрес, к которому она относится, чтобы он мог предложить подходящие записи. Это происходит только на вашем телефоне; ничего о форме, сайте или предложенных записях не отправляется, не записывается в журналы и не сохраняется. Пока хранилище заблокировано, PassKey показывает только одну подсказку «Разблокировать» и никаких названий записей. Автозаполнение выключено, пока вы не включите его в настройках Android, и там же его можно выключить в любой момент.</string>
+    <string name="autofill_untrusted_app">Это не то приложение, которое PassKey раньше заполнял под этим названием, поэтому ничего не заполнено. Если вы переустановили его из другого магазина, удалите вход в PassKey и добавьте снова.</string>
+    <string name="autofill_setup_help">На следующем экране выберите PassKey службой автозаполнения Android. У Chrome есть и собственная настройка: откройте Chrome › Настройки › Сервисы автозаполнения и выберите «Автозаполнение через другой сервис».</string>
 </resources>

@@ -243,4 +243,23 @@
         <item quantity="many">استخدم %1$d أحرف على الأقل.</item>
         <item quantity="other">استخدم %1$d أحرف على الأقل.</item>
     </plurals>
+    <string name="store_unavailable">خدمة Google Play غير متوفرة على هذا الجهاز.</string>
+    <string name="autofill">الملء التلقائي</string>
+    <string name="autofill_unlock">افتح القفل للملء</string>
+    <string name="autofill_open_app">افتح PassKey لإكمال إعداد خزنتك، ثم أعد المحاولة.</string>
+    <string name="autofill_save_failed">تعذر حفظ بيانات تسجيل الدخول.</string>
+    <string name="autofill_save_locked">افتح قفل PassKey لحفظ بيانات تسجيل الدخول.</string>
+    <string name="autofill_unsupported">الملء التلقائي غير متوفر على هذا الجهاز.</string>
+    <string name="authenticator">المصادقة</string>
+    <string name="add_authenticator">إضافة مصادقة</string>
+    <string name="authenticator_input_hint">الصق رابط otpauth:// أو اكتب المفتاح السري</string>
+    <string name="authenticator_invalid">هذا ليس مفتاح مصادقة صالحًا.</string>
+    <string name="password_history">سجل كلمات المرور</string>
+    <string name="password_history_empty">لم يتم تغيير كلمة المرور هذه بعد.</string>
+    <string name="cd_remove_authenticator">إزالة المصادقة</string>
+    <string name="remove_authenticator_confirm">إزالة أداة المصادقة هذه؟ ستتوقف رموزها هنا، وقد تحتاج إلى رموز الاسترداد الخاصة بالحساب لتسجيل الدخول.</string>
+    <string name="legal_privacy_autofill_heading">الملء التلقائي</string>
+    <string name="legal_privacy_autofill_body">إذا شغّلت PassKey كخدمة للملء التلقائي، يعرض عليه Android النموذج الذي تملؤه: نوع كل حقل والتطبيق أو عنوان الويب الذي ينتمي إليه، حتى يقترح الإدخالات المطابقة. يحدث هذا على هاتفك فقط؛ لا يُرسل أو يُسجَّل أو يُخزَّن أي شيء عن النموذج أو الموقع أو الإدخالات المقترحة. وعندما تكون الخزنة مقفلة، يعرض PassKey اقتراحًا واحدًا \"فتح القفل\" دون أي أسماء إدخالات. يبقى الملء التلقائي متوقفًا حتى تشغّله من إعدادات Android، ويمكنك إيقافه من هناك في أي وقت.</string>
+    <string name="autofill_untrusted_app">هذا ليس التطبيق الذي ملأه PassKey سابقًا بهذا الاسم، لذا لم يُملأ شيء. إذا أعدت تثبيته من متجر آخر، فاحذف تسجيل الدخول من PassKey وأضفه مجددًا.</string>
+    <string name="autofill_setup_help">في الشاشة التالية، اختر PassKey خدمةً للملء التلقائي في Android. ولـ Chrome إعداده الخاص أيضًا: افتح Chrome › الإعدادات › خدمات الملء التلقائي واختر \"الملء التلقائي باستخدام خدمة أخرى\".</string>
 </resources>

@@ -237,4 +237,23 @@
         <item quantity="many">Use pelo menos %1$d caracteres.</item>
         <item quantity="other">Use pelo menos %1$d caracteres.</item>
     </plurals>
+    <string name="store_unavailable">O Google Play não está disponível neste dispositivo.</string>
+    <string name="autofill">Preenchimento automático</string>
+    <string name="autofill_unlock">Desbloqueie para preencher</string>
+    <string name="autofill_open_app">Abra o PassKey para concluir a configuração do cofre e tente novamente.</string>
+    <string name="autofill_save_failed">Não foi possível salvar este login.</string>
+    <string name="autofill_save_locked">Desbloqueie o PassKey para salvar este login.</string>
+    <string name="autofill_unsupported">O preenchimento automático não está disponível neste dispositivo.</string>
+    <string name="authenticator">Autenticador</string>
+    <string name="add_authenticator">Adicionar autenticador</string>
+    <string name="authenticator_input_hint">Cole um link otpauth:// ou digite a chave secreta</string>
+    <string name="authenticator_invalid">Essa não é uma chave de autenticador válida.</string>
+    <string name="password_history">Histórico de senhas</string>
+    <string name="password_history_empty">Esta senha ainda não foi alterada.</string>
+    <string name="cd_remove_authenticator">Remover autenticador</string>
+    <string name="remove_authenticator_confirm">Remover este autenticador? Os códigos dele deixarão de aparecer aqui, e você pode precisar dos códigos de recuperação da conta para entrar.</string>
+    <string name="legal_privacy_autofill_heading">Preenchimento automático</string>
+    <string name="legal_privacy_autofill_body">Se você ativar o PassKey como serviço de preenchimento automático, o Android mostra a ele o formulário que você está preenchendo: o tipo de cada campo e o app ou endereço web a que pertence, para que ele sugira entradas correspondentes. Isso acontece só no seu telefone; nada sobre o formulário, o site ou as entradas sugeridas é enviado, registrado ou guardado. Enquanto o cofre está bloqueado, o PassKey oferece uma única sugestão \"Desbloquear\" e nenhum nome de entrada. O preenchimento automático fica desativado até você ativá-lo nas configurações do Android, onde pode desativá-lo a qualquer momento.</string>
+    <string name="autofill_untrusted_app">Este não é o app que o PassKey preencheu antes com este nome, então nada foi preenchido. Se você o reinstalou de outra loja, remova o login no PassKey e adicione-o novamente.</string>
+    <string name="autofill_setup_help">Na próxima tela, escolha o PassKey como serviço de preenchimento automático do Android. O Chrome também tem sua própria configuração: abra Chrome › Configurações › Serviços de preenchimento automático e escolha \"Preencher automaticamente com outro serviço\".</string>
 </resources>

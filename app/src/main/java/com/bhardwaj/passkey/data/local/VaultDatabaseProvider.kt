@@ -5,6 +5,8 @@ import androidx.room.Room
 import com.bhardwaj.passkey.utils.Constants
 import com.bhardwaj.passkey.utils.MIGRATION_1_2
 import com.bhardwaj.passkey.utils.MIGRATION_2_3
+import com.bhardwaj.passkey.utils.MIGRATION_3_4
+import com.bhardwaj.passkey.utils.MIGRATION_4_5
 import java.util.Arrays
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -30,24 +32,24 @@ import net.zetetic.database.sqlcipher.SupportOpenHelperFactory
 class VaultDatabaseProvider @Inject constructor(private val application: Application) {
     private val mutex = Mutex()
 
-    private val _database = MutableStateFlow<PassKeyDatabase?>(null)
-    val database: StateFlow<PassKeyDatabase?> = _database.asStateFlow()
+    private val _database = MutableStateFlow<PasskeyDatabase?>(null)
+    val database: StateFlow<PasskeyDatabase?> = _database.asStateFlow()
 
     /** Kept so it can be zeroed on lock; see [closeAndWipe]. */
     private var keyBytes: ByteArray? = null
 
     val isOpen: Boolean get() = _database.value != null
 
-    suspend fun open(dek: ByteArray): PassKeyDatabase = mutex.withLock {
+    suspend fun open(dek: ByteArray): PasskeyDatabase = mutex.withLock {
         _database.value?.let { return@withLock it }
         withContext(Dispatchers.IO) {
             val key = dek.toSqlCipherRawKey()
             val db = Room.databaseBuilder(
                 context = application,
-                klass = PassKeyDatabase::class.java,
+                klass = PasskeyDatabase::class.java,
                 name = Constants.PASS_KEY_DATABASE
             )
-                .addMigrations(MIGRATION_1_2, MIGRATION_2_3)
+                .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5)
                 .openHelperFactory(
                     // clearPassphrase = false: the default zeroes the array after the first
                     // open, and Room may reopen the helper (after close, or a migration), which
@@ -62,7 +64,7 @@ class VaultDatabaseProvider @Inject constructor(private val application: Applica
     }
 
     /** Suspends until the vault is unlocked. */
-    suspend fun requireDb(): PassKeyDatabase = _database.filterNotNull().first()
+    suspend fun requireDb(): PasskeyDatabase = _database.filterNotNull().first()
 
     suspend fun closeAndWipe() = mutex.withLock {
         withContext(Dispatchers.IO) {

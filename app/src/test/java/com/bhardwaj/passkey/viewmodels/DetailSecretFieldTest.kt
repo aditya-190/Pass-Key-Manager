@@ -1,15 +1,17 @@
 package com.bhardwaj.passkey.viewmodels
 
 import androidx.lifecycle.SavedStateHandle
-import com.bhardwaj.passkey.data.local.entity.Details
-import com.bhardwaj.passkey.domain.events.DetailEvents
-import com.bhardwaj.passkey.domain.viewModels.DetailViewModel
+import com.bhardwaj.passkey.presentation.screens.detail_screen.DetailIntent
+import com.bhardwaj.passkey.presentation.screens.detail_screen.DetailViewModel
 import com.bhardwaj.passkey.testing.FakePasskeyRepository
 import com.bhardwaj.passkey.testing.MainDispatcherRule
 import com.bhardwaj.passkey.testing.RecordingAnalyticsTracker
 import com.bhardwaj.passkey.utils.PasswordAnalyzer
 import com.bhardwaj.passkey.utils.SecretKeywords
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.test.TestScope
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
@@ -29,43 +31,44 @@ class DetailSecretFieldTest {
     private val repository = FakePasskeyRepository()
     private val keywords = SecretKeywords { setOf("password", "contraseña", "pin") }
 
-    private fun vm() =
+    private fun TestScope.vm() =
         DetailViewModel(repository, SavedStateHandle(mapOf("previewId" to 1L)), RecordingAnalyticsTracker(), keywords)
+            .also { vm -> backgroundScope.launch(UnconfinedTestDispatcher(testScheduler)) { vm.state.collect {} } }
 
     @Test
-    fun `the switch follows the title until the user sets it`() {
+    fun `the switch follows the title until the user sets it`() = runTest {
         val vm = vm()
-        vm.onEvent(DetailEvents.OnAddDetailClick)
-        vm.onEvent(DetailEvents.OnTitleChange("Contrasena del banco"))
-        assertTrue(vm.isSecretField.value)
-        vm.onEvent(DetailEvents.OnTitleChange("Username"))
-        assertFalse(vm.isSecretField.value)
+        vm.onIntent(DetailIntent.AddClicked)
+        vm.onIntent(DetailIntent.QuestionChanged("Contrasena del banco"))
+        assertTrue(vm.state.value.editor!!.isSecret)
+        vm.onIntent(DetailIntent.QuestionChanged("Username"))
+        assertFalse(vm.state.value.editor!!.isSecret)
 
-        vm.onEvent(DetailEvents.OnSecretToggle(true))
-        vm.onEvent(DetailEvents.OnTitleChange("Email"))
-        assertTrue("a manual choice is never overridden", vm.isSecretField.value)
+        vm.onIntent(DetailIntent.SecretToggled(true))
+        vm.onIntent(DetailIntent.QuestionChanged("Email"))
+        assertTrue("a manual choice is never overridden", vm.state.value.editor!!.isSecret)
     }
 
     @Test
-    fun `a generated password is always a secret`() {
+    fun `a generated password is always a secret`() = runTest {
         val vm = vm()
-        vm.onEvent(DetailEvents.OnAddDetailClick)
-        vm.onEvent(DetailEvents.OnTitleChange("Note"))
-        vm.onEvent(DetailEvents.OnGeneratePasswordClick)
-        assertTrue(vm.isSecretField.value)
+        vm.onIntent(DetailIntent.AddClicked)
+        vm.onIntent(DetailIntent.QuestionChanged("Note"))
+        vm.onIntent(DetailIntent.GenerateClicked)
+        assertTrue(vm.state.value.editor!!.isSecret)
     }
 
     @Test
     fun `the choice is saved with the field`() = runTest {
         val vm = vm()
-        vm.onEvent(DetailEvents.OnAddDetailClick)
-        vm.onEvent(DetailEvents.OnTitleChange("Username"))
-        vm.onEvent(DetailEvents.OnDescriptionChange("aditya"))
-        vm.onEvent(DetailEvents.OnSaveClick)
-        vm.onEvent(DetailEvents.OnAddDetailClick)
-        vm.onEvent(DetailEvents.OnTitleChange("PIN"))
-        vm.onEvent(DetailEvents.OnDescriptionChange("4321"))
-        vm.onEvent(DetailEvents.OnSaveClick)
+        vm.onIntent(DetailIntent.AddClicked)
+        vm.onIntent(DetailIntent.QuestionChanged("Username"))
+        vm.onIntent(DetailIntent.AnswerChanged("aditya"))
+        vm.onIntent(DetailIntent.SaveClicked)
+        vm.onIntent(DetailIntent.AddClicked)
+        vm.onIntent(DetailIntent.QuestionChanged("PIN"))
+        vm.onIntent(DetailIntent.AnswerChanged("4321"))
+        vm.onIntent(DetailIntent.SaveClicked)
 
         assertEquals(false, repository.allDetails.single { it.question == "Username" }.isSecret)
         assertEquals(true, repository.allDetails.single { it.question == "PIN" }.isSecret)
@@ -73,24 +76,24 @@ class DetailSecretFieldTest {
 
     @Test
     fun `editing a stored secret keeps it secret, and turning it off sticks`() = runTest {
-        val id = repository.upsertDetails(Details(previewId = 1, question = "Wi-Fi", answer = "x", isSecret = true))
+        val id = repository.createDetail(previewId = 1, question = "Wi-Fi", answer = "x", isSecret = true)
         val vm = vm()
-        vm.onEvent(DetailEvents.OnChangeClick(repository.getDetailById(id)!!))
-        assertTrue(vm.isSecretField.value)
+        vm.onIntent(DetailIntent.EditClicked(repository.getDetailById(id)!!))
+        assertTrue(vm.state.value.editor!!.isSecret)
 
-        vm.onEvent(DetailEvents.OnSecretToggle(false))
-        vm.onEvent(DetailEvents.OnSaveClick)
+        vm.onIntent(DetailIntent.SecretToggled(false))
+        vm.onIntent(DetailIntent.SaveClicked)
         assertEquals(false, repository.getDetailById(id)!!.isSecret)
     }
 
     @Test
-    fun `closing the sheet resets the switch for the next field`() {
+    fun `closing the sheet resets the switch for the next field`() = runTest {
         val vm = vm()
-        vm.onEvent(DetailEvents.OnAddDetailClick)
-        vm.onEvent(DetailEvents.OnSecretToggle(true))
-        vm.onEvent(DetailEvents.OnDismissBottomSheet)
-        vm.onEvent(DetailEvents.OnAddDetailClick)
-        assertFalse(vm.isSecretField.value)
+        vm.onIntent(DetailIntent.AddClicked)
+        vm.onIntent(DetailIntent.SecretToggled(true))
+        vm.onIntent(DetailIntent.EditorDismissed)
+        vm.onIntent(DetailIntent.AddClicked)
+        assertFalse(vm.state.value.editor!!.isSecret)
     }
 
     @Test
